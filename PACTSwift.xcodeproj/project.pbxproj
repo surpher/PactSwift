@@ -28,7 +28,7 @@
 		AD881802242C715A00BF510D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD881807242C715B00BF510D /* PACTSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PACTSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD88180C242C715B00BF510D /* PACTSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PACTSwiftTests.swift; sourceTree = "<group>"; };
-		AD88180E242C715B00BF510D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD88180E242C715B00BF510D /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,9 +53,10 @@
 		AD8817F4242C715A00BF510D = {
 			isa = PBXGroup;
 			children = (
-				AD881800242C715A00BF510D /* PACTSwift */,
-				AD88180B242C715B00BF510D /* PACTSwiftTests */,
+				ADCB2562242C83E20048BD18 /* Configurations */,
 				AD8817FF242C715A00BF510D /* Products */,
+				ADCB2560242C83670048BD18 /* Sources */,
+				ADCB2561242C83710048BD18 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,22 +69,45 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AD881800242C715A00BF510D /* PACTSwift */ = {
+		ADCB2560242C83670048BD18 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				ADCB2563242C844B0048BD18 /* Headers */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		ADCB2561242C83710048BD18 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				ADCB2564242C84570048BD18 /* Headers */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		ADCB2562242C83E20048BD18 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				AD881802242C715A00BF510D /* Info.plist */,
+				AD88180E242C715B00BF510D /* TestsInfo.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		ADCB2563242C844B0048BD18 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
 				AD881801242C715A00BF510D /* PACTSwift.h */,
-				AD881802242C715A00BF510D /* Info.plist */,
 			);
-			path = PACTSwift;
+			path = Headers;
 			sourceTree = "<group>";
 		};
-		AD88180B242C715B00BF510D /* PACTSwiftTests */ = {
+		ADCB2564242C84570048BD18 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
 				AD88180C242C715B00BF510D /* PACTSwiftTests.swift */,
-				AD88180E242C715B00BF510D /* Info.plist */,
 			);
-			path = PACTSwiftTests;
+			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,7 +369,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PACTSwift/Info.plist;
+				INFOPLIST_FILE = Configurations/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -368,7 +392,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PACTSwift/Info.plist;
+				INFOPLIST_FILE = Configurations/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -387,7 +411,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PACTSwiftTests/Info.plist;
+				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -404,7 +428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PACTSwiftTests/Info.plist;
+				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
