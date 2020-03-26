@@ -1,7 +1,0 @@
-#!/bin/sh
-
-set -eo pipefail
-
-cd ../..
-swift test --parallel
-swift build -c release

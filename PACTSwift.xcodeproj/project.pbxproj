@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD11DD5E242D6C9D00BABA09 /* PACTMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD11DD5D242D6C9D00BABA09 /* PACTMockService.swift */; };
+		AD11DD60242D6D7A00BABA09 /* PFTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD11DD5F242D6D7A00BABA09 /* PFTestCase.swift */; };
 		AD881808242C715B00BF510D /* PACTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PACTSwift.framework */; };
 		AD88180D242C715B00BF510D /* PACTSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD88180C242C715B00BF510D /* PACTSwiftTests.swift */; };
 		AD88180F242C715B00BF510D /* PACTSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PACTSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +26,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD11DD5D242D6C9D00BABA09 /* PACTMockService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PACTMockService.swift; sourceTree = "<group>"; };
+		AD11DD5F242D6D7A00BABA09 /* PFTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFTestCase.swift; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB263242CC0B900D991F0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
 		AD2CB264242CC10600D991F0 /* Target-Framework-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Framework-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -72,6 +76,7 @@
 				ADE02804242CD6B7007BCDA1 /* CONTRIBUTING.md */,
 				AD8817FF242C715A00BF510D /* Products */,
 				ADD6993C242C85A200C5C2C2 /* README.md */,
+				AD8A32D3242CCEEC00283080 /* Resources */,
 				AD8A32D6242CCF5600283080 /* Scripts */,
 				ADCB2560242C83670048BD18 /* Sources */,
 				ADCB2561242C83710048BD18 /* Tests */,
@@ -91,13 +96,14 @@
 			isa = PBXGroup;
 			children = (
 			);
-			path = Resources;
+			name = Resources;
+			path = Sources/Resources;
 			sourceTree = "<group>";
 		};
 		ADCB2560242C83670048BD18 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AD8A32D3242CCEEC00283080 /* Resources */,
+				AD11DD5D242D6C9D00BABA09 /* PACTMockService.swift */,
 				ADCB2563242C844B0048BD18 /* Headers */,
 			);
 			path = Sources;
@@ -108,6 +114,7 @@
 			children = (
 				ADE02802242CD148007BCDA1 /* Resources */,
 				ADCB2564242C84570048BD18 /* Headers */,
+				AD11DD5F242D6D7A00BABA09 /* PFTestCase.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -345,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD11DD5E242D6C9D00BABA09 /* PACTMockService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD88180D242C715B00BF510D /* PACTSwiftTests.swift in Sources */,
+				AD11DD60242D6D7A00BABA09 /* PFTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

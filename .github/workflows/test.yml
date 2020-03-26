@@ -7,16 +7,35 @@ on:
     branches:
       - master
 jobs:
-  test:
-    name: Testing Swift Package and iOS framework
+  test_ios:
+    name: Test iOS framework
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@master
-      - name: Force XCode 11.3
-        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
-      - name: Testing Swift package
+      - name: Force Xcode 11.4
+        run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
+      - name: Test SPM
         run: |
           swift test --parallel
-      - name: Testing iOS framework
-        run: exec ./.github/scripts/test
+          swift build -c debug
+          swift build -c release
+      - name: Test project - iOS framework
+        run: |
+          xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcpretty
+  test_macOS:
+    name: Test macOS framework
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Force Xcode 11.4
+        run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
+      - name: Test SPM
+        run: |
+          swift test --parallel
+          swift build -c debug
+          swift build -c release
+      - name: Test project - macOS framework
+        run: |
+          xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=macOS" | xcpretty

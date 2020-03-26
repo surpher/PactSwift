@@ -16,6 +16,11 @@ let package = Package(
       name: "PACTSwift",
       dependencies: [],
       path: "./Sources"
-    )
+    ),
+    .testTarget(
+            name: "PACTSwiftTests",
+            dependencies: ["PACTSwift"],
+            path: "./Tests"
+        ),
   ]
 )
