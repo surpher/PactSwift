@@ -1,0 +1,61 @@
+disabled_rules:
+  - force_cast
+  - identifier_name
+  - large_tuple
+  - operator_whitespace
+  - trailing_whitespace
+opt_in_rules:
+  - attributes
+  - closure_body_length
+  - closure_end_indentation
+  - closure_parameter_position
+  - closure_spacing
+  - collection_alignment
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - convenience_type
+  - discouraged_object_literal
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - empty_xctest_method
+  - explicit_init
+  - first_where
+  - flatmap_over_map_reduce
+  - identical_operands
+  - implicit_return
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - legacy_random
+  - literal_expression_end_indentation
+  - lower_acl_than_parent
+  - modifier_order
+  - number_separator
+  - operator_usage_whitespace
+  - overridden_super_call
+  - override_in_extension
+  - private_action
+  - prohibited_super_call
+  - reduce_into
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - sorted_first_last
+  - sorted_imports
+  - static_operator
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - unused_declaration
+  - unused_import
+  - yoda_condition
+  - xct_specific_matcher
+
+attributes:
+  always_on_same_line: ["@IBAction", "@objc"]
+line_length:
+  ignores_function_declarations: true
+  ignores_comments: true
+modifier_order:
+  preferred_modifier_order: [acl, override]

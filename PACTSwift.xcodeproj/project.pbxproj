@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		AD881808242C715B00BF510D /* PACTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PACTSwift.framework */; };
 		AD88180D242C715B00BF510D /* PACTSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD88180C242C715B00BF510D /* PACTSwiftTests.swift */; };
 		AD88180F242C715B00BF510D /* PACTSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PACTSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADD69942242C9B8900C5C2C2 /* PactMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD69941242C9B8900C5C2C2 /* PactMockService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,9 @@
 		AD88180C242C715B00BF510D /* PACTSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PACTSwiftTests.swift; sourceTree = "<group>"; };
 		AD88180E242C715B00BF510D /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
 		ADD6993C242C85A200C5C2C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		ADD6993D242C861600C5C2C2 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		ADD6993F242C86DB00C5C2C2 /* build_file_list_and_swiftlint.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = build_file_list_and_swiftlint.sh; sourceTree = "<group>"; };
+		ADD69941242C9B8900C5C2C2 /* PactMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactMockService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,9 +58,11 @@
 		AD8817F4242C715A00BF510D = {
 			isa = PBXGroup;
 			children = (
+				ADD6993D242C861600C5C2C2 /* .swiftlint.yml */,
 				ADCB2562242C83E20048BD18 /* Configurations */,
 				AD8817FF242C715A00BF510D /* Products */,
 				ADD6993C242C85A200C5C2C2 /* README.md */,
+				ADD6993E242C86A300C5C2C2 /* Scripts */,
 				ADCB2560242C83670048BD18 /* Sources */,
 				ADCB2561242C83710048BD18 /* Tests */,
 			);
@@ -75,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				ADCB2563242C844B0048BD18 /* Headers */,
+				ADD69941242C9B8900C5C2C2 /* PactMockService.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -112,6 +119,14 @@
 			path = Headers;
 			sourceTree = "<group>";
 		};
+		ADD6993E242C86A300C5C2C2 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				ADD6993F242C86DB00C5C2C2 /* build_file_list_and_swiftlint.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -131,6 +146,7 @@
 			buildConfigurationList = AD881812242C715B00BF510D /* Build configuration list for PBXNativeTarget "PACTSwift" */;
 			buildPhases = (
 				AD8817F9242C715A00BF510D /* Headers */,
+				ADD69940242C87E900C5C2C2 /* SwiftLint */,
 				AD8817FA242C715A00BF510D /* Sources */,
 				AD8817FB242C715A00BF510D /* Frameworks */,
 				AD8817FC242C715A00BF510D /* Resources */,
@@ -174,6 +190,7 @@
 				TargetAttributes = {
 					AD8817FD242C715A00BF510D = {
 						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
 					};
 					AD881806242C715B00BF510D = {
 						CreatedOnToolsVersion = 11.4;
@@ -216,11 +233,35 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		ADD69940242C87E900C5C2C2 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/PACTSwift.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/swiftlint.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint.sh PACTSwift ../.swiftlint.yml\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AD8817FA242C715A00BF510D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD69942242C9B8900C5C2C2 /* PactMockService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +407,7 @@
 		AD881813242C715B00BF510D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -381,6 +423,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "au.com.pact-foundation.PACTSwift";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -389,6 +432,7 @@
 		AD881814242C715B00BF510D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -412,6 +456,7 @@
 		AD881816242C715B00BF510D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -429,6 +474,7 @@
 		AD881817242C715B00BF510D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
