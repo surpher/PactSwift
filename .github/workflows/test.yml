@@ -1,0 +1,22 @@
+name: Test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  test:
+    name: Testing Swift Package and iOS framework
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Force XCode 11.3
+        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
+      - name: Testing Swift package
+        run: |
+          swift test --parallel
+      - name: Testing iOS framework
+        run: exec ./.github/scripts/test

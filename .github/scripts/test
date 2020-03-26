@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -eo pipefail
+
+xcodebuild \
+        -project PACTSwift.xcodeproj \
+        -scheme pact-swift \
+        -destination platform=iOS\ Simulator,OS=13.3,name=iPhone\ 11\
+        clean test | xcpretty
