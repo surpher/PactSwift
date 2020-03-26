@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -eu
+
+echo "--- 🤖 Linting ${TARGET_NAME} Target Structure..."
+
+#### Variables
+
+STRIPPED_TARGET_NAME=${TARGET_NAME#"PACTSwift"}
+TARGET_SRCROOT="${SRCROOT}/${STRIPPED_TARGET_NAME}"
+
+errors=()
+
+#### Script steps
+
+if [[ ! -z "${INFOPLIST_FILE}" && ! -f "${INFOPLIST_FILE}" ]]; then
+    errors+=("error: Could not find Info.plist file "${INFOPLIST_FILE}" for target '${TARGET_NAME}'.")
+fi
+
+if [[ ! -d "${TARGET_SRCROOT}" ]]; then
+    errors+=("error: Could not find root folder '${TARGET_SRCROOT}' for target '${TARGET_NAME}'.")
+fi
+
+if [ ${#errors[@]} -ne 0 ]; then
+    for i in "${errors[@]}"; do
+        echo $i
+    done
+    exit 1
+fi
+
+echo "--- 👍 Linting ${TARGET_NAME} successful!"

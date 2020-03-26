@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eu
+
+echo "--- 🤖 Linting ${PROJECT_NAME} Project..."
+
+SCRIPT_DIR="${BASH_SOURCE[0]%/*}"
+
+echo "Setting the scripts dir to ${SCRIPT_DIR}"
+
+"${SCRIPT_DIR}"/validate-build-settings
+"${SCRIPT_DIR}"/validate-project-config
+
+echo "--- 👍 ${PROJECT_NAME} project successfully validated and linted."
