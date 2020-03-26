@@ -29,6 +29,7 @@
 		AD881807242C715B00BF510D /* PACTSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PACTSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD88180C242C715B00BF510D /* PACTSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PACTSwiftTests.swift; sourceTree = "<group>"; };
 		AD88180E242C715B00BF510D /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
+		ADD6993C242C85A200C5C2C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +56,7 @@
 			children = (
 				ADCB2562242C83E20048BD18 /* Configurations */,
 				AD8817FF242C715A00BF510D /* Products */,
+				ADD6993C242C85A200C5C2C2 /* README.md */,
 				ADCB2560242C83670048BD18 /* Sources */,
 				ADCB2561242C83710048BD18 /* Tests */,
 			);
