@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+# Overridable Environment
+SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 12 Pro'}
+SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+
+# Determine architecture of current machine
+ACTIVE_ARCH=$(uname -m)
+
+# Check for dependencies
+$SCRIPTS_DIR/check_build_tools
+
+# Carthage build
+echo "📦  Building as a Carthage dependency"
+if [[ $ACTIVE_ARCH == "x86_64" ]]; then
+	${SCRIPTS_DIR}/carthage build --no-skip-current --use-xcframeworks
+else
+	carthage build --no-skip-current --use-xcframeworks
+fi
+
+# Build and test for SPM
+echo "📦  Verifying it works using Swift Package Manager"
+
+echo "ℹ️ Resolving package dependencies"
+xcodebuild -resolvePackageDependencies
+
+echo "🏗 Building"
+swift build
+
+echo "🤖 Running tests"
+swift test
+
+# Run iOS tests
+echo "📱  Running iOS tests"
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=${SIMULATOR_NAME}" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+
+# Run macOS tests
+echo "🖥  Running macOS tests"
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=${ACTIVE_ARCH}" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES| xcbeautify
+
+# A-OK?
+
+echo "👍  All hunky dory!"

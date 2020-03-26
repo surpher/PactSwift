@@ -1,0 +1,5 @@
+#include "Configurations/Target-macOS-Tests-Shared.xcconfig"
+SWIFT_OPTIMIZATION_LEVEL = -O
+ENABLE_NS_ASSERTIONS = NO
+MTL_ENABLE_DEBUG_INFO = NO
+SWIFT_COMPILATION_MODE = wholemodule

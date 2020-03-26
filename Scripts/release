@@ -1,0 +1,221 @@
+#!/usr/bin/env bash
+
+# release
+#
+# Runs the required steps to prepare and tag new version of PactSwift.
+# Usage: `./Scripts/release 1.0.0 'Bugfix Release' [-d]`
+#
+# Notes:
+# Updates PactSwift version number in PactSwiftVersion.swift file
+# Updates Marketing version number in Project-Shared.xcconfig file
+# Updates CHANGELOG.md
+# Commits the updates in the repo
+# Creates a tag on the last commit
+# Pushes the updates and tags to `remote`
+#
+# 🚨🚨🚨 WARNING 🚨🚨🚨
+# This is an extremely fragile script... because I just can't find decent time to DRY it up and set it up correctly.
+# If you end up editing it, just be ready for a world of pain. Or not. Either way, you have been warned.
+#
+
+# set -x
+set -o pipefail
+
+####################
+# Utilities        #
+####################
+
+function help {
+	echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
+	echo
+	echo "VERSION should be the version to release and should not include the 'v' prefix"
+	echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
+	echo
+	echo "FLAGS"
+	echo "  -d  Dry run, won't push anything"
+	echo
+	echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
+	echo
+	exit 2
+}
+
+function die {
+	echo "🚨  [ERROR] $@"
+	echo
+	exit 1
+}
+
+function handleInput {
+	if [[ ! $1 =~ ^[Yy]$ ]]; then
+		echo "⚠️  Release aborted!"
+		exit 1
+	fi
+}
+
+#####################
+# Preliminary checks #
+#####################
+
+if [ $# -lt 2 ]; then
+    help
+fi
+
+##############################
+# Overridable Environment   #
+##############################
+
+if [[ "$CI" == true ]] ; then
+	die "🚨  Running on CI is not supported! Requires user input while running the release script."
+else
+	echo "👮‍♀️  Running on local machine: 👍"
+	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+fi
+
+##############################
+# Pre-release checks         #
+##############################
+
+# Get the latest release tag
+LATEST_TAG=`git describe --match "v[0-9].*" --abbrev=0 HEAD`
+
+echo "ℹ️  The last release tag number is: ${LATEST_TAG}"
+
+read -r -p "Did you provide the correctly incremented number for the new release tag? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+echo
+
+read -r -p "Have you updated all the documentation files? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+echo
+
+echo "ℹ️  The following commits will be recorded with the tag:"
+git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD
+echo
+
+read -r -p "Have you prepared a draft release on GitHub.com? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+
+read -r -p "You named the release name with something meaningful like \"Bugfix\" or \"Feature \". Right? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+
+####################
+# Variables        #
+####################
+
+CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
+VERSION_FILE="${SCRIPTS_DIR}/../Sources/Model/PactSwiftVersion.swift"
+RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
+REMOTE_BRANCH=main
+VERSION=$1
+RELEASE_NAME=$2
+DRY_RUN=$3
+VERSION_TAG="v$VERSION"
+
+####################
+# Setup            #
+####################
+
+function updateVersionFile {
+	sed -i '' "2s/.*/let pactSwiftVersion = \"$@\"/" $VERSION_FILE
+
+	MARKETING_VERSION="MARKETING_VERSION = $@"
+	sed -i '' "2s/.*/$MARKETING_VERSION/" $CONFIGURATION_FILE
+}
+
+function pushNewVersion {
+	updateVersionFile "$VERSION"
+
+	echo ${RELEASE_NAME} > TAG_MESSAGE_FILE.md
+	git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> TAG_MESSAGE_FILE.md
+
+	git add $VERSION_FILE
+	git add $CONFIGURATION_FILE
+	git add $RELEASE_NOTES
+
+	git commit -m "${RELEASE_NAME}"
+
+	echo "🏷  Tagging the current commit"
+	git tag "$VERSION_TAG" -F TAG_MESSAGE_FILE.md || die "Failed to tag version"
+
+	echo "🚀  Tagging the current commit"
+	git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
+
+}
+
+####################
+# Release flow     #
+####################
+
+echo "👮‍♀️  Verifying if version tag is reasonable..."
+
+echo $VERSION_TAG | grep -q "^vv"
+if [ $? -eq 0 ]; then
+    die "This tag ($VERSION) is in an incorrect format. You should remove the 'v' prefix."
+fi
+
+echo $VERSION_TAG | grep -q -E "^v[0-9]+\.[0-9]+\.[0-9]+(-\w+(\.\d)?)?$"
+if [ $? -ne 0 ]; then
+    die "This tag $VERSION is in an incorrect format. It should be in 'v{MAJOR}.{MINOR}.{PATCH}(-{PRERELEASE_NAME}.{PRERELEASE_VERSION})' form."
+fi
+
+echo "👮‍♀️  Verifying version ($VERSION) is unique..."
+git describe --exact-match "$VERSION_TAG" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    die "Tag ($VERSION) already exists! Aborting."
+else
+    echo "👍 Tag is unique"
+fi
+
+echo "🏗  Generating release notes into $RELEASE_NOTES"
+# backup the existing CHANGELOG.md to CHANGELOG.backup
+cp $RELEASE_NOTES ${RELEASE_NOTES}.backup
+
+# Prepare the title for this release
+echo "# ${VERSION} - ${RELEASE_NAME}" > ${RELEASE_NOTES}.next
+
+# Get the commits from last change
+git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> ${RELEASE_NOTES}.next
+
+# Stage the updated CHANGELOG.md
+git add $RELEASE_NOTES || { die "Failed to add ${RELEASE_NOTES} to INDEX"; }
+
+# Read the notes for this release and append them to the old CHANGELOG.md
+cat $RELEASE_NOTES.next | cat - ${RELEASE_NOTES}.backup > ${RELEASE_NOTES}
+
+echo "🚢  Releasing version $VERSION (tag: $VERSION_TAG)..."
+
+echo "⛓  Ensuring no differences to origin/$REMOTE_BRANCH"
+git fetch origin || die "Failed to fetch origin"
+git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to origin/$REMOTE_BRANCH. Cannot update version safely."
+
+echo "🏷  Tagging release version..."
+
+if [ -z "$DRY_RUN" ]; then
+	echo "🚅  Pushing release version tag to origin..."
+
+	pushNewVersion
+
+	echo
+	echo "--------  🎉  Created a new PactSwift version tag  🎉 --------------------------------"
+	echo "--------  🏷   Version:	$VERSION_TAG"
+	echo "--------  ✏️   Name: 	$RELEASE_NAME"
+	echo "--------"
+	echo "--------  🚀  Go and link you draft release for '$VERSION_TAG' with this tagged commit."
+	echo "--------  🔗  https://github.com/surpher/PactSwift/releases"
+	echo
+
+else
+	echo "-> Dry run completed."
+fi
+
+####################
+# Cleanup          #
+####################
+
+rm ${RELEASE_NOTES}.next
+rm ${RELEASE_NOTES}.backup
+rm TAG_MESSAGE_FILE.md

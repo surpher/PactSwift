@@ -1,0 +1,18 @@
+//:configuration = Debug
+SDKROOT = macosx
+MACOSX_DEPLOYMENT_TARGET = 10.15
+
+CODE_SIGN_STYLE = Automatic
+COMBINE_HIDPI_IMAGES = YES
+
+INFOPLIST_FILE = Configurations/Info-macOS-Tests.plist
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
+
+PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.macOS.PactSwift-Tests
+PRODUCT_NAME = $(TARGET_NAME)
+
+MTL_FAST_MATH = YES
+
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+
+DEAD_CODE_STRIPPING = YES
