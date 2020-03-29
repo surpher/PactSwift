@@ -56,6 +56,6 @@ attributes:
   always_on_same_line: ["@IBAction", "@objc"]
 line_length:
   ignores_function_declarations: true
-  ignores_comments: true
+  ignores_comments: false
 modifier_order:
   preferred_modifier_order: [acl, override]
