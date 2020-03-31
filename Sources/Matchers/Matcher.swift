@@ -44,8 +44,9 @@ public extension Matcher {
 
 private extension Matcher {
 
+	typealias RawValue = String
+
 	enum PactJSONClass {
-		typealias RawValue = String
 
 		case array
 		case expression
