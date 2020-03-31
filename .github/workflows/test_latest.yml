@@ -16,6 +16,9 @@ jobs:
         uses: actions/checkout@master
       - name: Force Xcode 11.4
         run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
+      - name: Prepare Tools
+        run: |
+          brew install swiftlint
       - name: Compile for SPM
         run: |
           swift build -c debug
@@ -31,6 +34,9 @@ jobs:
         uses: actions/checkout@master
       - name: Force Xcode 11.4
         run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
+      - name: Prepare Tools
+        run: |
+          brew install swiftlint
       - name: Compile for SPM
         run: |
           swift build -c debug
