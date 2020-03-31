@@ -16,9 +16,8 @@ jobs:
         uses: actions/checkout@master
       - name: Force Xcode 11.4
         run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
-      - name: Test SPM
+      - name: Compile for SPM
         run: |
-          swift test --parallel
           swift build -c debug
           swift build -c release
       - name: Test project - iOS framework
@@ -32,9 +31,8 @@ jobs:
         uses: actions/checkout@master
       - name: Force Xcode 11.4
         run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
-      - name: Test SPM
+      - name: Compile for SPM
         run: |
-          swift test --parallel
           swift build -c debug
           swift build -c release
       - name: Test project - macOS framework
