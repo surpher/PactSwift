@@ -3,3 +3,6 @@ $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Expression.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/EachLike.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Matcher.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/PACTHTTPMethod.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Response.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Request.swift
