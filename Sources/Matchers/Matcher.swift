@@ -14,15 +14,15 @@ public enum Matcher {
 
 	// MARK: - Failable inits
 
-	init?(_ set: EachLike) {
+	init(_ set: EachLike) {
 		self = .set(set)
 	}
 
-	init?(_ somethingLike: SomethingLike) {
+	init(_ somethingLike: SomethingLike) {
 		self = .type(somethingLike)
 	}
 
-	init?(_ expression: Expression) {
+	init(_ expression: Expression) {
 		self = .expression(expression)
 	}
 
