@@ -18,14 +18,15 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_11.3.1.app
       - name: Prepare Tools
         run: |
-          brew install swiftlint
+          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+          brew install swiftlint xcbeautify
       - name: Compile for SPM
         run: |
           swift build -c debug
           swift build -c release
       - name: Test project - iOS framework
         run: |
-          xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcpretty
+          set -o pipefail && xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
   test_macOS:
     name: Test macOS framework
     runs-on: macOS-latest
@@ -36,11 +37,12 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_11.3.1.app
       - name: Prepare Tools
         run: |
-          brew install swiftlint
+          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+          brew install swiftlint xcbeautify
       - name: Compile for SPM
         run: |
           swift build -c debug
           swift build -c release
       - name: Test project - macOS framework
         run: |
-          xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=macOS" | xcpretty
+          set -o pipefail && xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=macOS" | xcbeautify
