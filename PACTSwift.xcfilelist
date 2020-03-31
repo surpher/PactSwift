@@ -1,0 +1,5 @@
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Extensions/Dictionary+PACT.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Expression.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/SomethingLike.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/EachLike.swift
+$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Matchers/Matcher.swift
