@@ -364,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint.sh PACTSwift ../.swiftlint.yml\n";
+			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint PACTSwift ../.swiftlint.yml\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
