@@ -44,9 +44,9 @@ public extension Matcher {
 
 private extension Matcher {
 
-	enum PactJSONClass {
-		typealias RawValue = String
+	typealias RawValue = [String: String]
 
+	enum PactJSONClass {
 		case array
 		case expression
 		case type
@@ -55,11 +55,15 @@ private extension Matcher {
 			"Pact::"
 		}
 
+		private var jsonClass: String {
+			"json_class"
+		}
+
 		var rawValue: RawValue {
 			switch self {
-			case .array: 				return prefix + "ArrayLike"
-			case .expression: 	return prefix + "Term"
-			case .type: 				return prefix + "SomethingLike"
+			case .array: 				return [jsonClass: prefix + "ArrayLike"]
+			case .expression: 	return [jsonClass: prefix + "Term"]
+			case .type: 				return [jsonClass: prefix + "SomethingLike"]
 			}
 		}
 	}
@@ -67,12 +71,10 @@ private extension Matcher {
 	// MARK: - Private properties
 
 	var jsonClass: [String: String] {
-		let jsonClass = "json_class"
-
 		switch self {
-		case .expression: 	return [jsonClass: PactJSONClass.expression.rawValue]
-		case .set: 					return [jsonClass: PactJSONClass.array.rawValue]
-		case .type: 				return [jsonClass: PactJSONClass.type.rawValue]
+		case .expression: 	return PactJSONClass.expression.rawValue
+		case .set: 					return PactJSONClass.array.rawValue
+		case .type: 				return PactJSONClass.type.rawValue
 		}
 	}
 
