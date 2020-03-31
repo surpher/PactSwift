@@ -30,7 +30,7 @@ public enum Matcher {
 
 public extension Matcher {
 
-	/// The rule for the PACT contract
+	/// Rule for the PACT contract
 	var rule: [String: Any] {
 		var matcherRule = merge(jsonClass, with: value)
 		if let data = data { matcherRule = merge(matcherRule, with: data) }
@@ -44,14 +44,35 @@ public extension Matcher {
 
 private extension Matcher {
 
+	enum PactJSONClass {
+		typealias RawValue = String
+
+		case array
+		case expression
+		case type
+
+		private var prefix: String {
+			"Pact::"
+		}
+
+		var rawValue: RawValue {
+			switch self {
+			case .array: 				return prefix + "ArrayLike"
+			case .expression: 	return prefix + "Term"
+			case .type: 				return prefix + "SomethingLike"
+			}
+		}
+	}
+
+	// MARK: - Private properties
+
 	var jsonClass: [String: String] {
 		let jsonClass = "json_class"
-		let pactPrefix = "Pact::"
 
 		switch self {
-		case .expression: 	return [jsonClass: pactPrefix + "Term"]
-		case .set: 					return [jsonClass: pactPrefix + "ArrayLike"]
-		case .type: 				return [jsonClass: pactPrefix + "SomethingLike"]
+		case .expression: 	return [jsonClass: PactJSONClass.expression.rawValue]
+		case .set: 					return [jsonClass: PactJSONClass.array.rawValue]
+		case .type: 				return [jsonClass: PactJSONClass.type.rawValue]
 		}
 	}
 
