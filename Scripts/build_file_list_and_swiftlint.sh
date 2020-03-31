@@ -13,16 +13,19 @@ fi
 
 if which swiftlint >/dev/null; then
 		# Build a list of Swift files in the Sources directory
+		echo "SRCROOT: \$(SRCROOT)/"
+		echo "DERIVED_FILE_DIR: \$(DERIVED_FILE_DIR)"
+		echo "first arg: \$(1)"
 		find Sources -name *.swift -exec echo "\$(SRCROOT)/"{} \; > $DERIVED_FILE_DIR/$1.xcfilelist
 
 		# Update the xcfilelist if the list of Swift files has changed
 		cmp --silent $SRCROOT/$1.xcfilelist $DERIVED_FILE_DIR/$1.xcfilelist || cp -f $DERIVED_FILE_DIR/$1.xcfilelist $SRCROOT/$1.xcfilelist
 
 		# Run swiftlint
-		swiftlint --path Sources --config $2
+		swiftlint --path Sources --config /Users/marko/$2
 
 		# Output an empty derived file
 		touch $DERIVED_FILE_DIR/swiftlint.txt
 else
-    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+		echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
 fi
