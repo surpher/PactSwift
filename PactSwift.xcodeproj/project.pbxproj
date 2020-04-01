@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD01C9312432A1A400B75C9D /* MatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01C9302432A1A400B75C9D /* MatcherTests.swift */; };
 		AD01C9382432A28A00B75C9D /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01C9372432A28A00B75C9D /* Matcher.swift */; };
-		AD881808242C715B00BF510D /* PACTSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PACTSwift.framework */; };
+		AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PactSwift.framework */; };
 		AD88180F242C715B00BF510D /* PACTSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PACTSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD8A32D7242CCF5600283080 /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = AD8A32D6242CCF5600283080 /* Scripts */; };
 		ADB7C1142432D2F400A16CDE /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1132432D2F400A16CDE /* Expression.swift */; };
@@ -17,7 +17,7 @@
 		ADB7C1182432D33500A16CDE /* SomethingLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1172432D33500A16CDE /* SomethingLike.swift */; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+PACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+PACT.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
-		ADB7C1692433280100A16CDE /* PACTHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PACTHTTPMethod.swift */; };
+		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
 		ADB7C16B2433283400A16CDE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C16A2433283400A16CDE /* Response.swift */; };
 		ADC6FAE124302BA800026714 /* Documentation in Resources */ = {isa = PBXBuildFile; fileRef = ADC6FAE024302BA800026714 /* Documentation */; };
 /* End PBXBuildFile section */
@@ -44,10 +44,10 @@
 		AD4FC5DD242CC2B20039342D /* Project-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD4FC5DE242CC2C30039342D /* Target-Framework-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Framework-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD4FC5DF242CC2CB0039342D /* Target-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
-		AD8817FE242C715A00BF510D /* PACTSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PACTSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8817FE242C715A00BF510D /* PactSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD881801242C715A00BF510D /* PACTSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PACTSwift.h; sourceTree = "<group>"; };
 		AD881802242C715A00BF510D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AD881807242C715B00BF510D /* PACTSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PACTSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD881807242C715B00BF510D /* PactSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD88180E242C715B00BF510D /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
 		AD8A32D6242CCF5600283080 /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		ADB7C1132432D2F400A16CDE /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		ADB7C1172432D33500A16CDE /* SomethingLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLike.swift; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+PACT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+PACT.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
-		ADB7C1682433280100A16CDE /* PACTHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PACTHTTPMethod.swift; sourceTree = "<group>"; };
+		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
 		ADB7C16A2433283400A16CDE /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ADC6FAE024302BA800026714 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		ADD6993C242C85A200C5C2C2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD881808242C715B00BF510D /* PACTSwift.framework in Frameworks */,
+				AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,8 +120,8 @@
 		AD8817FF242C715A00BF510D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AD8817FE242C715A00BF510D /* PACTSwift.framework */,
-				AD881807242C715B00BF510D /* PACTSwiftTests.xctest */,
+				AD8817FE242C715A00BF510D /* PactSwift.framework */,
+				AD881807242C715B00BF510D /* PactSwiftTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -145,7 +145,7 @@
 		ADB7C167243327E300A16CDE /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
-				ADB7C1682433280100A16CDE /* PACTHTTPMethod.swift */,
+				ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */,
 				ADB7C1602433269B00A16CDE /* Request.swift */,
 				ADB7C16A2433283400A16CDE /* Response.swift */,
 			);
@@ -211,9 +211,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		AD8817FD242C715A00BF510D /* PACTSwift */ = {
+		AD8817FD242C715A00BF510D /* PactSwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD881812242C715B00BF510D /* Build configuration list for PBXNativeTarget "PACTSwift" */;
+			buildConfigurationList = AD881812242C715B00BF510D /* Build configuration list for PBXNativeTarget "PactSwift" */;
 			buildPhases = (
 				AD8817F9242C715A00BF510D /* Headers */,
 				ADC3C4CC242CCCEB00D3FDCE /* Lint Project */,
@@ -227,14 +227,14 @@
 			);
 			dependencies = (
 			);
-			name = PACTSwift;
+			name = PactSwift;
 			productName = PACTSwift;
-			productReference = AD8817FE242C715A00BF510D /* PACTSwift.framework */;
+			productReference = AD8817FE242C715A00BF510D /* PactSwift.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		AD881806242C715B00BF510D /* PACTSwiftTests */ = {
+		AD881806242C715B00BF510D /* PactSwiftTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AD881815242C715B00BF510D /* Build configuration list for PBXNativeTarget "PACTSwiftTests" */;
+			buildConfigurationList = AD881815242C715B00BF510D /* Build configuration list for PBXNativeTarget "PactSwiftTests" */;
 			buildPhases = (
 				ADC3C4CE242CCD0100D3FDCE /* Lint Target */,
 				AD881803242C715B00BF510D /* Sources */,
@@ -246,9 +246,9 @@
 			dependencies = (
 				AD88180A242C715B00BF510D /* PBXTargetDependency */,
 			);
-			name = PACTSwiftTests;
+			name = PactSwiftTests;
 			productName = PACTSwiftTests;
-			productReference = AD881807242C715B00BF510D /* PACTSwiftTests.xctest */;
+			productReference = AD881807242C715B00BF510D /* PactSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -270,7 +270,7 @@
 					};
 				};
 			};
-			buildConfigurationList = AD8817F8242C715A00BF510D /* Build configuration list for PBXProject "PACTSwift" */;
+			buildConfigurationList = AD8817F8242C715A00BF510D /* Build configuration list for PBXProject "PactSwift" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -283,8 +283,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AD8817FD242C715A00BF510D /* PACTSwift */,
-				AD881806242C715B00BF510D /* PACTSwiftTests */,
+				AD8817FD242C715A00BF510D /* PactSwift */,
+				AD881806242C715B00BF510D /* PactSwiftTests */,
 			);
 		};
 /* End PBXProject section */
@@ -396,7 +396,7 @@
 				ADB7C1182432D33500A16CDE /* SomethingLike.swift in Sources */,
 				AD01C9382432A28A00B75C9D /* Matcher.swift in Sources */,
 				ADB7C1142432D2F400A16CDE /* Expression.swift in Sources */,
-				ADB7C1692433280100A16CDE /* PACTHTTPMethod.swift in Sources */,
+				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+PACT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -414,7 +414,7 @@
 /* Begin PBXTargetDependency section */
 		AD88180A242C715B00BF510D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AD8817FD242C715A00BF510D /* PACTSwift */;
+			target = AD8817FD242C715A00BF510D /* PactSwift */;
 			targetProxy = AD881809242C715B00BF510D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -465,7 +465,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		AD8817F8242C715A00BF510D /* Build configuration list for PBXProject "PACTSwift" */ = {
+		AD8817F8242C715A00BF510D /* Build configuration list for PBXProject "PactSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD881810242C715B00BF510D /* Debug */,
@@ -474,7 +474,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD881812242C715B00BF510D /* Build configuration list for PBXNativeTarget "PACTSwift" */ = {
+		AD881812242C715B00BF510D /* Build configuration list for PBXNativeTarget "PactSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD881813242C715B00BF510D /* Debug */,
@@ -483,7 +483,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AD881815242C715B00BF510D /* Build configuration list for PBXNativeTarget "PACTSwiftTests" */ = {
+		AD881815242C715B00BF510D /* Build configuration list for PBXNativeTarget "PactSwiftTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AD881816242C715B00BF510D /* Debug */,

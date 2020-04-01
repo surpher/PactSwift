@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #  build_file_list_and_swiftlint
-#  PACTSwift
+#  PactSwift
 #
 #  Created by Marko Justinek on 26/3/20.
 #  Copyright © 2020 PACT Foundation. All rights reserved.
@@ -20,7 +20,8 @@ if which swiftlint >/dev/null; then
 		# Update the xcfilelist if the list of Swift files has changed
 		cmp --silent $SRCROOT/$1.xcfilelist $DERIVED_FILE_DIR/$1.xcfilelist || cp -f $DERIVED_FILE_DIR/$1.xcfilelist $SRCROOT/$1.xcfilelist
 
-		# Run swiftlint
+		# Run swiftlint (TODO: - swiftlint by iterating through the $1.xcfilelist)
+		# swiftlint --config $2 -- #filename0 #filename1 #filename2 ...
 		swiftlint --path Sources --config $2
 
 		# Output an empty derived file
