@@ -10,7 +10,21 @@ import Foundation
 
 enum Metadata {
 
-	static let pactSpecification = ["version": "3.0.0"]
-	static let pactSwift = ["version": Bundle.pact.shortVersion]
+	typealias MetadataTypeValue = [String: [String: [String: String]]]
+
+	static let values: MetadataTypeValue = [
+		"metadata": [
+			"pactSpecification": Metadata.pactSpecVersion,
+			"pact-swift": Metadata.pactSwiftVersion
+		]
+	]
+
+	static private var pactSpecVersion: [String: String] {
+		["version": "3.0.0"]
+	}
+
+	static private var pactSwiftVersion: [String: String] {
+		["version": Bundle.pact.shortVersion!]
+	}
 
 }

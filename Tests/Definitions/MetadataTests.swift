@@ -14,13 +14,13 @@ class MetadataTests: XCTestCase {
 
 	func testMetadata_SetsPactSwiftVersion() throws {
 		let expectedResult = try XCTUnwrap(bundleVersion())
-		let testResult = try XCTUnwrap(Metadata.pactSwift["version"] as? String)
+		let testResult = try XCTUnwrap(Metadata.values["metadata"]?["pact-swift"]?["version"])
 
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
 	func testMetadata_SetsPactSpecificationVersion() {
-		XCTAssertEqual(Metadata.pactSpecification["version"] , "3.0.0")
+		XCTAssertEqual(Metadata.values["metadata"]?["pactSpecification"]?["version"] , "3.0.0")
 	}
 
 }
