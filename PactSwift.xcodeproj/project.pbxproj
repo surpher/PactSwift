@@ -463,7 +463,7 @@
 		};
 		AD881814242C715B00BF510D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD2CB266242CC11700D991F0 /* Target-Tests-Debug.xcconfig */;
+			baseConfigurationReference = AD2CB265242CC10E00D991F0 /* Target-Framework-Release.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
