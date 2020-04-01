@@ -151,8 +151,8 @@
 		ADB7C11B2432D41100A16CDE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */,
 				AD641A322434331300785CE1 /* Bundle+Pact.swift */,
+				ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -160,10 +160,10 @@
 		ADB7C167243327E300A16CDE /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
+				AD641A342434345500785CE1 /* Metadata.swift */,
 				ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */,
 				ADB7C1602433269B00A16CDE /* Request.swift */,
 				ADB7C16A2433283400A16CDE /* Response.swift */,
-				AD641A342434345500785CE1 /* Metadata.swift */,
 			);
 			path = Definitions;
 			sourceTree = "<group>";
