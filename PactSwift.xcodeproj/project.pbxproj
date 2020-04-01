@@ -15,7 +15,7 @@
 		ADB7C1142432D2F400A16CDE /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1132432D2F400A16CDE /* Expression.swift */; };
 		ADB7C1162432D31A00A16CDE /* EachLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1152432D31A00A16CDE /* EachLike.swift */; };
 		ADB7C1182432D33500A16CDE /* SomethingLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1172432D33500A16CDE /* SomethingLike.swift */; };
-		ADB7C11D2432D41F00A16CDE /* Dictionary+PACT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+PACT.swift */; };
+		ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
 		ADB7C16B2433283400A16CDE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C16A2433283400A16CDE /* Response.swift */; };
@@ -53,7 +53,7 @@
 		ADB7C1132432D2F400A16CDE /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
 		ADB7C1152432D31A00A16CDE /* EachLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLike.swift; sourceTree = "<group>"; };
 		ADB7C1172432D33500A16CDE /* SomethingLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLike.swift; sourceTree = "<group>"; };
-		ADB7C11C2432D41E00A16CDE /* Dictionary+PACT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+PACT.swift"; sourceTree = "<group>"; };
+		ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Pact.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
 		ADB7C16A2433283400A16CDE /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		ADB7C11B2432D41100A16CDE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				ADB7C11C2432D41E00A16CDE /* Dictionary+PACT.swift */,
+				ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -397,7 +397,7 @@
 				AD01C9382432A28A00B75C9D /* Matcher.swift in Sources */,
 				ADB7C1142432D2F400A16CDE /* Expression.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
-				ADB7C11D2432D41F00A16CDE /* Dictionary+PACT.swift in Sources */,
+				ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
