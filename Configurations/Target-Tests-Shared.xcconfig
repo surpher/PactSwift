@@ -1,10 +1,8 @@
 TARGETED_DEVICE_FAMILY = 1,2
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 INFOPLIST_FILE = Configurations/TestsInfo.plist
-PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.PACTSwiftTests
+PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.PactSwiftTests
 PRODUCT_NAME = $(TARGET_NAME)
 SWIFT_VERSION = 5.0
-
-// Code signing
-CODE_SIGN_STYLE = Automatic
 CODE_SIGN_IDENTITY[sdk=macosx*] = -
+

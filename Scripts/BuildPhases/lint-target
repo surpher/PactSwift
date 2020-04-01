@@ -6,7 +6,7 @@ echo "--- 🤖 Linting ${TARGET_NAME} Target Structure..."
 
 #### Variables
 
-STRIPPED_TARGET_NAME=${TARGET_NAME#"PACTSwift"}
+STRIPPED_TARGET_NAME=${TARGET_NAME#"PactSwift"}
 TARGET_SRCROOT="${SRCROOT}/${STRIPPED_TARGET_NAME}"
 
 errors=()
