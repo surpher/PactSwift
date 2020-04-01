@@ -26,7 +26,7 @@ jobs:
           swift build -c release
       - name: Test project - iOS framework
         run: |
-          set -o pipefail && xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme pact-swift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
   test_macOS:
     name: Test macOS framework
     runs-on: macOS-latest
@@ -45,4 +45,4 @@ jobs:
           swift build -c release
       - name: Test project - macOS framework
         run: |
-          set -o pipefail && xcodebuild clean test -project PACTSwift.xcodeproj -scheme pact-swift -destination "platform=macOS" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme pact-swift -destination "platform=macOS" | xcbeautify
