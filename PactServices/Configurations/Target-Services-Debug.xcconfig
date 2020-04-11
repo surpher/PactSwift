@@ -1,0 +1,3 @@
+#include "Target-Services-Shared.xcconfig"
+
+SWIFT_OPTIMIZATION_LEVEL = -Onone
