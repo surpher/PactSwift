@@ -41,6 +41,9 @@
 		ADAC3D4A24428DBF0078CCC7 /* Target-Services-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Services-Shared.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4B24428DBF0078CCC7 /* Project-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Shared.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4C24428DBF0078CCC7 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
+		ADAC3D4D2442903D0078CCC7 /* Target-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
+		ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
+		ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,13 +95,16 @@
 		ADAC3D2F244282F30078CCC7 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
+				ADAC3D10244282980078CCC7 /* Info.plist */,
 				ADAC3D4824428DBF0078CCC7 /* Project-Debug.xcconfig */,
 				ADAC3D4C24428DBF0078CCC7 /* Project-Release.xcconfig */,
 				ADAC3D4B24428DBF0078CCC7 /* Project-Shared.xcconfig */,
 				ADAC3D4924428DBF0078CCC7 /* Target-Services-Debug.xcconfig */,
 				ADAC3D4724428DBF0078CCC7 /* Target-Services-Release.xcconfig */,
 				ADAC3D4A24428DBF0078CCC7 /* Target-Services-Shared.xcconfig */,
-				ADAC3D10244282980078CCC7 /* Info.plist */,
+				ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */,
+				ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */,
+				ADAC3D4D2442903D0078CCC7 /* Target-Tests-Shared.xcconfig */,
 				ADAC3D322442854E0078CCC7 /* TestsInfo.plist */,
 			);
 			path = Configurations;
@@ -304,39 +310,15 @@
 		};
 		ADAC3D24244282980078CCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Configurations/TestsInfo.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pact-foundation.PactServicesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		ADAC3D25244282980078CCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = Configurations/TestsInfo.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.pact-foundation.PactServicesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
