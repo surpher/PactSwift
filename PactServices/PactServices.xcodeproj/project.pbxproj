@@ -10,6 +10,9 @@
 		ADAC3D16244282980078CCC7 /* PactServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* PactServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */; };
 		ADAC3D1D244282980078CCC7 /* PactServices.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC3D0F244282980078CCC7 /* PactServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */; };
+		ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D37244286060078CCC7 /* HTTPService.swift */; };
+		ADAC3D3A244286D30078CCC7 /* PactMockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* PactMockServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +31,10 @@
 		ADAC3D10244282980078CCC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADAC3D15244282980078CCC7 /* PactServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactServicesTests.swift; sourceTree = "<group>"; };
-		ADAC3D1C244282980078CCC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADAC3D322442854E0078CCC7 /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
+		ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPAPIService.swift; sourceTree = "<group>"; };
+		ADAC3D37244286060078CCC7 /* HTTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
+		ADAC3D39244286D30078CCC7 /* PactMockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactMockServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,9 +59,10 @@
 		ADAC3D02244282980078CCC7 = {
 			isa = PBXGroup;
 			children = (
-				ADAC3D0E244282980078CCC7 /* PactServices */,
-				ADAC3D19244282980078CCC7 /* PactServicesTests */,
+				ADAC3D2F244282F30078CCC7 /* Configurations */,
 				ADAC3D0D244282980078CCC7 /* Products */,
+				ADAC3D30244283280078CCC7 /* Sources */,
+				ADAC3D19244282980078CCC7 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,22 +75,56 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ADAC3D0E244282980078CCC7 /* PactServices */ = {
-			isa = PBXGroup;
-			children = (
-				ADAC3D0F244282980078CCC7 /* PactServices.h */,
-				ADAC3D10244282980078CCC7 /* Info.plist */,
-			);
-			path = PactServices;
-			sourceTree = "<group>";
-		};
-		ADAC3D19244282980078CCC7 /* PactServicesTests */ = {
+		ADAC3D19244282980078CCC7 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */,
-				ADAC3D1C244282980078CCC7 /* Info.plist */,
 			);
-			path = PactServicesTests;
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		ADAC3D2F244282F30078CCC7 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC3D10244282980078CCC7 /* Info.plist */,
+				ADAC3D322442854E0078CCC7 /* TestsInfo.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		ADAC3D30244283280078CCC7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC3D31244283440078CCC7 /* Headers */,
+				ADAC3D332442857E0078CCC7 /* HTTP */,
+				ADAC3D34244285860078CCC7 /* PactMockServer */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		ADAC3D31244283440078CCC7 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC3D0F244282980078CCC7 /* PactServices.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		ADAC3D332442857E0078CCC7 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */,
+				ADAC3D37244286060078CCC7 /* HTTPService.swift */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		ADAC3D34244285860078CCC7 /* PactMockServer */ = {
+			isa = PBXGroup;
+			children = (
+				ADAC3D39244286D30078CCC7 /* PactMockServer.swift */,
+			);
+			path = PactMockServer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +189,7 @@
 				TargetAttributes = {
 					ADAC3D0B244282980078CCC7 = {
 						CreatedOnToolsVersion = 11.4;
+						LastSwiftMigration = 1140;
 					};
 					ADAC3D14244282980078CCC7 = {
 						CreatedOnToolsVersion = 11.4;
@@ -195,6 +237,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */,
+				ADAC3D3A244286D30078CCC7 /* PactMockServer.swift in Sources */,
+				ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,12 +385,13 @@
 		ADAC3D21244282980078CCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PactServices/Info.plist;
+				INFOPLIST_FILE = Configurations/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -355,6 +401,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pact-foundation.PactServices";
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -363,12 +410,13 @@
 		ADAC3D22244282980078CCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = PactServices/Info.plist;
+				INFOPLIST_FILE = Configurations/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -386,8 +434,10 @@
 		ADAC3D24244282980078CCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PactServicesTests/Info.plist;
+				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -403,8 +453,10 @@
 		ADAC3D25244282980078CCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = PactServicesTests/Info.plist;
+				INFOPLIST_FILE = Configurations/TestsInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
