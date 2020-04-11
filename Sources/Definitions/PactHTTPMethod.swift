@@ -6,6 +6,8 @@
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 
+import Foundation
+
 public enum PactHTTPMethod: String {
 
 	case GET = "get"
@@ -17,5 +19,18 @@ public enum PactHTTPMethod: String {
 	case TRACE = "trace"
 	case CONNECT = "connect"
 	case OPTIONS = "options"
+
+}
+
+extension PactHTTPMethod: Encodable {
+
+	enum CodingKeys: CodingKey {
+		case method
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(rawValue)
+	}
 
 }

@@ -8,23 +8,32 @@
 
 import Foundation
 
-enum Metadata {
+struct Metadata {
 
-	typealias MetadataTypeValue = [String: [String: [String: String]]]
+	let pactSpec = PactVersion("3.0.0")
+	let pactSwift = PactVersion(Bundle.pact.shortVersion!)
 
-	static let values: MetadataTypeValue = [
-		"metadata": [
-			"pactSpecification": Metadata.pactSpecVersion,
-			"pact-swift": Metadata.pactSwiftVersion
-		]
-	]
+	struct PactVersion: Encodable {
+		let version: String
 
-	static private var pactSpecVersion: [String: String] {
-		["version": "3.0.0"]
+		init(_ version: String) {
+			self.version = version
+		}
 	}
 
-	static private var pactSwiftVersion: [String: String] {
-		["version": Bundle.pact.shortVersion!]
+}
+
+extension Metadata: Encodable {
+
+	enum CodingKeys: String, CodingKey {
+		case pactSpec = "pactSpecification"
+		case pactSwift = "pact-swift"
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(pactSpec, forKey: .pactSpec)
+		try container.encode(pactSwift, forKey: .pactSwift)
 	}
 
 }
