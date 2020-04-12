@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PactServices
 
 struct Pact: Encodable {
 
