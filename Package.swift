@@ -11,7 +11,7 @@ let package = Package(
     .library(name: "PactSwift", targets: ["PactSwift"])
   ],
   dependencies: [ 
-    .package(path: "PactServices") 
+    .package(path: "PactSwiftServices") 
   ],
   targets: [
     .target(
