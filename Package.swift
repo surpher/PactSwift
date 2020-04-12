@@ -3,23 +3,25 @@
 import PackageDescription
 
 let package = Package(
-  name: "PACTSwift",
+  name: "PactSwift",
   platforms: [
     .macOS(.v10_12), .iOS(.v12), .tvOS(.v12)
   ],
   products: [
-    .library(name: "pact-swift", targets: ["PACTSwift"])
+    .library(name: "PactSwift", targets: ["PactSwift"])
   ],
-  dependencies: [ ],
+  dependencies: [ 
+    .package(path: "PactServices") 
+  ],
   targets: [
     .target(
-      name: "PACTSwift",
-      dependencies: [],
+      name: "PactSwift",
+      dependencies: [ "PactSwiftServices" ],
       path: "./Sources"
     ),
     .testTarget(
-            name: "PACTSwiftTests",
-            dependencies: ["PACTSwift"],
+            name: "PactSwiftTests",
+            dependencies: ["PactSwift"],
             path: "./Tests"
         ),
   ]
