@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		ADAC3D16244282980078CCC7 /* PactServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactServices.framework */; };
+		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* PactServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */; };
-		ADAC3D1D244282980078CCC7 /* PactServices.h in Headers */ = {isa = PBXBuildFile; fileRef = ADAC3D0F244282980078CCC7 /* PactServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */; };
 		ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D37244286060078CCC7 /* HTTPService.swift */; };
 		ADAC3D3A244286D30078CCC7 /* PactMockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* PactMockServer.swift */; };
@@ -26,10 +25,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		ADAC3D0C244282980078CCC7 /* PactServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADAC3D0F244282980078CCC7 /* PactServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PactServices.h; sourceTree = "<group>"; };
+		ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwiftServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC3D10244282980078CCC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ADAC3D15244282980078CCC7 /* PactServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADAC3D15244282980078CCC7 /* PactSwiftServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactSwiftServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactServicesTests.swift; sourceTree = "<group>"; };
 		ADAC3D322442854E0078CCC7 /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
 		ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPAPIService.swift; sourceTree = "<group>"; };
@@ -58,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADAC3D16244282980078CCC7 /* PactServices.framework in Frameworks */,
+				ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,8 +76,8 @@
 		ADAC3D0D244282980078CCC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ADAC3D0C244282980078CCC7 /* PactServices.framework */,
-				ADAC3D15244282980078CCC7 /* PactServicesTests.xctest */,
+				ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */,
+				ADAC3D15244282980078CCC7 /* PactSwiftServicesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,19 +111,10 @@
 		ADAC3D30244283280078CCC7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				ADAC3D31244283440078CCC7 /* Headers */,
 				ADAC3D332442857E0078CCC7 /* HTTP */,
 				ADAC3D34244285860078CCC7 /* PactMockServer */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		ADAC3D31244283440078CCC7 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				ADAC3D0F244282980078CCC7 /* PactServices.h */,
-			);
-			path = Headers;
 			sourceTree = "<group>";
 		};
 		ADAC3D332442857E0078CCC7 /* HTTP */ = {
@@ -152,16 +141,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADAC3D1D244282980078CCC7 /* PactServices.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		ADAC3D0B244282980078CCC7 /* PactServices */ = {
+		ADAC3D0B244282980078CCC7 /* PactSwiftServices */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ADAC3D20244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactServices" */;
+			buildConfigurationList = ADAC3D20244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactSwiftServices" */;
 			buildPhases = (
 				ADAC3D07244282980078CCC7 /* Headers */,
 				ADAC3D08244282980078CCC7 /* Sources */,
@@ -172,14 +160,14 @@
 			);
 			dependencies = (
 			);
-			name = PactServices;
+			name = PactSwiftServices;
 			productName = PactServices;
-			productReference = ADAC3D0C244282980078CCC7 /* PactServices.framework */;
+			productReference = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		ADAC3D14244282980078CCC7 /* PactServicesTests */ = {
+		ADAC3D14244282980078CCC7 /* PactSwiftServicesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ADAC3D23244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactServicesTests" */;
+			buildConfigurationList = ADAC3D23244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactSwiftServicesTests" */;
 			buildPhases = (
 				ADAC3D11244282980078CCC7 /* Sources */,
 				ADAC3D12244282980078CCC7 /* Frameworks */,
@@ -190,9 +178,9 @@
 			dependencies = (
 				ADAC3D18244282980078CCC7 /* PBXTargetDependency */,
 			);
-			name = PactServicesTests;
+			name = PactSwiftServicesTests;
 			productName = PactServicesTests;
-			productReference = ADAC3D15244282980078CCC7 /* PactServicesTests.xctest */;
+			productReference = ADAC3D15244282980078CCC7 /* PactSwiftServicesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +202,7 @@
 					};
 				};
 			};
-			buildConfigurationList = ADAC3D06244282980078CCC7 /* Build configuration list for PBXProject "PactServices" */;
+			buildConfigurationList = ADAC3D06244282980078CCC7 /* Build configuration list for PBXProject "PactSwiftServices" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -227,8 +215,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ADAC3D0B244282980078CCC7 /* PactServices */,
-				ADAC3D14244282980078CCC7 /* PactServicesTests */,
+				ADAC3D0B244282980078CCC7 /* PactSwiftServices */,
+				ADAC3D14244282980078CCC7 /* PactSwiftServicesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -274,7 +262,7 @@
 /* Begin PBXTargetDependency section */
 		ADAC3D18244282980078CCC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = ADAC3D0B244282980078CCC7 /* PactServices */;
+			target = ADAC3D0B244282980078CCC7 /* PactSwiftServices */;
 			targetProxy = ADAC3D17244282980078CCC7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -298,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4924428DBF0078CCC7 /* Target-Services-Debug.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = PactSwiftServices;
 			};
 			name = Debug;
 		};
@@ -305,6 +294,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4724428DBF0078CCC7 /* Target-Services-Release.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = PactSwiftServices;
 			};
 			name = Release;
 		};
@@ -312,6 +302,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = PactSwiftServicesTests;
 			};
 			name = Debug;
 		};
@@ -319,13 +310,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */;
 			buildSettings = {
+				PRODUCT_NAME = PactSwiftServicesTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ADAC3D06244282980078CCC7 /* Build configuration list for PBXProject "PactServices" */ = {
+		ADAC3D06244282980078CCC7 /* Build configuration list for PBXProject "PactSwiftServices" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ADAC3D1E244282980078CCC7 /* Debug */,
@@ -334,7 +326,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ADAC3D20244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactServices" */ = {
+		ADAC3D20244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactSwiftServices" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ADAC3D21244282980078CCC7 /* Debug */,
@@ -343,7 +335,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ADAC3D23244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactServicesTests" */ = {
+		ADAC3D23244282980078CCC7 /* Build configuration list for PBXNativeTarget "PactSwiftServicesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ADAC3D24244282980078CCC7 /* Debug */,

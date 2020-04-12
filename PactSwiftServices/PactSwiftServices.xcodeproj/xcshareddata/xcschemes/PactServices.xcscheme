@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ADAC3D0B244282980078CCC7"
-               BuildableName = "PactServices.framework"
-               BlueprintName = "PactServices"
-               ReferencedContainer = "container:PactServices.xcodeproj">
+               BuildableName = "PactSwiftServices.framework"
+               BlueprintName = "PactSwiftServices"
+               ReferencedContainer = "container:PactSwiftServices.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "ADAC3D14244282980078CCC7"
-               BuildableName = "PactServicesTests.xctest"
-               BlueprintName = "PactServicesTests"
-               ReferencedContainer = "container:PactServices.xcodeproj">
+               BuildableName = "PactSwiftServicesTests.xctest"
+               BlueprintName = "PactSwiftServicesTests"
+               ReferencedContainer = "container:PactSwiftServices.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "ADAC3D0B244282980078CCC7"
-            BuildableName = "PactServices.framework"
-            BlueprintName = "PactServices"
-            ReferencedContainer = "container:PactServices.xcodeproj">
+            BuildableName = "PactSwiftServices.framework"
+            BlueprintName = "PactSwiftServices"
+            ReferencedContainer = "container:PactSwiftServices.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
