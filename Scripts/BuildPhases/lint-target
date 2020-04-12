@@ -6,8 +6,8 @@ echo "--- 🤖 Linting ${TARGET_NAME} Target Structure..."
 
 #### Variables
 
-STRIPPED_TARGET_NAME=${TARGET_NAME#"PactSwift"}
-TARGET_SRCROOT="${SRCROOT}/${STRIPPED_TARGET_NAME}"
+#### Expecting for source files to be in ./Sources file (SPM file structure)
+TARGET_SRCROOT="${SRCROOT}/Sources"
 
 errors=()
 
