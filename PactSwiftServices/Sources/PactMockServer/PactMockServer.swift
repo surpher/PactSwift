@@ -8,4 +8,11 @@
 
 import Foundation
 
-class PactMockServer { }
+class PactMockServer {
+
+	init() {
+		let mockServer = create_mock_server(nil, nil)
+		print("#warning: mockServer returned Int32: \(mockServer)")
+	}
+
+}
