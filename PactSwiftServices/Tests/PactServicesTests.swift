@@ -12,11 +12,11 @@ import XCTest
 
 class PactServicesTests: XCTestCase {
 
-	func testDud() {
+	func testMockServer_ReturnsError_WhenNoPactProvided() {
 		// PactMockServer.init() will call `create_mock_server()` by passing nils for all arguments. The debug console should print response and contain `-1` - missing Pact String
-		_ = MockServer()
+		let mockServerPort = MockServer().mockServerPort
 		
-		XCTAssertTrue(true, "Only to make the `swift build -c && swift test` pass")
+		XCTAssertEqual(mockServerPort, -1)
 	}
 
 }

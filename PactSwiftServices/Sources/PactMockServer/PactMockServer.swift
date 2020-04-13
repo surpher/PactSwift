@@ -15,9 +15,10 @@ import PactMockServer
 
 class MockServer {
 
+	let mockServerPort: Int32
+
 	init() {
-		let mockServer = create_mock_server(nil, nil)
-		print("#warning: mockServer returned Int32: \(mockServer)")
+		mockServerPort = create_mock_server(nil, nil)
 	}
 
 }
