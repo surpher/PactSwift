@@ -1,5 +1,3 @@
-#ifndef pact_mock_server_h
-#define pact_mock_server_h
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdint.h>

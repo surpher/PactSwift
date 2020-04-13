@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AD22CEDB24440C5F0089C951 /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD22CEDA24440C5F0089C951 /* pact_mock_server.h */; };
-		AD22CEDD24440C790089C951 /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD22CEDC24440C790089C951 /* libpact_mock_server.a */; };
+		AD2377BF24442DB6003C4C4E /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */; };
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* PactServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* PactServicesTests.swift */; };
 		ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */; };
@@ -28,8 +28,8 @@
 
 /* Begin PBXFileReference section */
 		AD22CEDA24440C5F0089C951 /* pact_mock_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pact_mock_server.h; sourceTree = "<group>"; };
-		AD22CEDC24440C790089C951 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pact_swift_services-bridging_header.h"; sourceTree = "<group>"; };
+		AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwiftServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC3D10244282980078CCC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADAC3D15244282980078CCC7 /* PactSwiftServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactSwiftServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD22CEDD24440C790089C951 /* libpact_mock_server.a in Frameworks */,
+				AD2377BF24442DB6003C4C4E /* libpact_mock_server.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +72,7 @@
 		AD22CED824440C440089C951 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AD22CEDC24440C790089C951 /* libpact_mock_server.a */,
+				AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
