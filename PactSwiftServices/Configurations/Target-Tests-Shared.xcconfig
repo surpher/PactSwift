@@ -2,8 +2,8 @@ ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 TARGETED_DEVICE_FAMILY = 1,2
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
 INFOPLIST_FILE = Configurations/TestsInfo.plist
-PRODUCT_BUNDLE_IDENTIFIER = com.pact-foundation.PactServicesTests
-PRODUCT_NAME = PactServicesTests
+PRODUCT_BUNDLE_IDENTIFIER = com.pact-foundation.PactSwiftServicesTests
+PRODUCT_NAME = PactSwiftServicesTests
 CODE_SIGN_IDENTITY[sdk=macosx*] = -
 CODE_SIGN_STYLE = Automatic
 SWIFT_VERSION = 5.0
