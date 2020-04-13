@@ -1,4 +1,4 @@
-module SwiftMockServer {
+module PactMockServer {
     header "pact_mock_server.h"
     export *
     link "pact_mock_server"

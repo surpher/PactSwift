@@ -8,7 +8,12 @@
 
 import Foundation
 
-class PactMockServer {
+#if SWIFT_PACKAGE
+import PactMockServer
+#endif
+
+
+class MockServer {
 
 	init() {
 		let mockServer = create_mock_server(nil, nil)

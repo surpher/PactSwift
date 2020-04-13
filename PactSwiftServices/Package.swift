@@ -10,11 +10,13 @@ import PackageDescription
     products: [
         .library(name: "PactSwiftServices", targets: ["PactSwiftServices"])
     ],
-    dependencies: [ ],
+    dependencies: [ 
+        .package(path: "../PactMockServer")
+    ],
     targets: [
         .target(
             name: "PactSwiftServices",
-            dependencies: [],
+            dependencies: ["PactMockServer"],
             path: "./Sources"
         ),
         .testTarget(
