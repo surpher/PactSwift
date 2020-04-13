@@ -1,4 +1,4 @@
-# Contributing to PACTSwift project
+# Contributing to PactSwift project
 
 ## Continuous Integration - GitHub Actions
 
