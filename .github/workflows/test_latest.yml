@@ -27,22 +27,3 @@ jobs:
       - name: Test project - iOS framework
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
-  test_macOS:
-    name: Test macOS framework
-    runs-on: macOS-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@master
-      - name: Force Xcode 11.4
-        run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
-      - name: Prepare Tools
-        run: |
-          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
-          brew install swiftlint xcbeautify
-      - name: Compile for SPM
-        run: |
-          swift build -c debug
-          swift build -c release
-      - name: Test project - macOS framework
-        run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=macOS" | xcbeautify
