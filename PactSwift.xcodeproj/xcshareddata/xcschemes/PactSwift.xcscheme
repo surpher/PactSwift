@@ -17,7 +17,7 @@
                BlueprintIdentifier = "AD8817FD242C715A00BF510D"
                BuildableName = "PactSwift.framework"
                BlueprintName = "PactSwift"
-               ReferencedContainer = "container:PACTSwift.xcodeproj">
+               ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,7 +36,7 @@
                BlueprintIdentifier = "AD881806242C715B00BF510D"
                BuildableName = "PactSwiftTests.xctest"
                BlueprintName = "PactSwiftTests"
-               ReferencedContainer = "container:PACTSwift.xcodeproj">
+               ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -64,7 +64,7 @@
             BlueprintIdentifier = "AD8817FD242C715A00BF510D"
             BuildableName = "PactSwift.framework"
             BlueprintName = "PactSwift"
-            ReferencedContainer = "container:PACTSwift.xcodeproj">
+            ReferencedContainer = "container:PactSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

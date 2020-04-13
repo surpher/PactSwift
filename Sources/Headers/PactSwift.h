@@ -8,11 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-//! Project version number for PACTSwift.
-FOUNDATION_EXPORT double PACTSwiftVersionNumber;
+//! Project version number for PactSwift.
+FOUNDATION_EXPORT double PactSwiftVersionNumber;
 
-//! Project version string for PACTSwift.
-FOUNDATION_EXPORT const unsigned char PACTSwiftVersionString[];
+//! Project version string for PactSwift.
+FOUNDATION_EXPORT const unsigned char PactSwiftVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <PactSwift/PublicHeader.h>
-
