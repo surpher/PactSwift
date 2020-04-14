@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum MockServerError: Int, Error {
+public enum MockServerError: Error {
 	
-	case nullPointer = -1
-	case invalidPactJSON = -2
-	case failedToStart = -3
-	case methodPanicked = -4
-	case invalidSocketAddress = -5
-	case unknown = -999
+	case nullPointer
+	case invalidPactJSON
+	case failedToStart
+	case methodPanicked
+	case invalidSocketAddress
+	case unknown
 
 	init(code: Int) {
 		switch code {
@@ -49,12 +49,8 @@ public enum MockServerError: Int, Error {
 
 	// MARK: - Private
 
-	private var messagePrefix: String {
-		"Failed to start PactMockServer:"
-	}
-
 	private func describing(_ message: String) -> String {
-		[messagePrefix, message].joined(separator: " ")
+		["Failed to start PactMockServer:", message].joined(separator: " ")
 	}
 
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035AF2445710B002C97CA /* MockServer+Extension.swift */; };
 		AD1035B224458239002C97CA /* MockServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B124458239002C97CA /* MockServerError.swift */; };
+		AD1035B424458909002C97CA /* VerificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B324458909002C97CA /* VerificationError.swift */; };
 		AD22CEDB24440C5F0089C951 /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD22CEDA24440C5F0089C951 /* pact_mock_server.h */; };
 		AD2377BF24442DB6003C4C4E /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */; };
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		AD1035AF2445710B002C97CA /* MockServer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServer+Extension.swift"; sourceTree = "<group>"; };
 		AD1035B124458239002C97CA /* MockServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServerError.swift; sourceTree = "<group>"; };
+		AD1035B324458909002C97CA /* VerificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationError.swift; sourceTree = "<group>"; };
 		AD22CEDA24440C5F0089C951 /* pact_mock_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pact_mock_server.h; sourceTree = "<group>"; };
 		AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pact_swift_services-bridging_header.h"; sourceTree = "<group>"; };
 		AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
@@ -73,6 +75,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD1035B524458BF8002C97CA /* Definitions */ = {
+			isa = PBXGroup;
+			children = (
+				AD1035B124458239002C97CA /* MockServerError.swift */,
+				AD1035B324458909002C97CA /* VerificationError.swift */,
+			);
+			path = Definitions;
+			sourceTree = "<group>";
+		};
 		AD22CED824440C440089C951 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +150,7 @@
 		ADAC3D30244283280078CCC7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AD1035B524458BF8002C97CA /* Definitions */,
 				AD22CED924440C500089C951 /* Headers */,
 				ADAC3D332442857E0078CCC7 /* HTTP */,
 				ADAC3D34244285860078CCC7 /* MockServer */,
@@ -160,7 +172,6 @@
 			children = (
 				ADAC3D39244286D30078CCC7 /* MockServer.swift */,
 				AD1035AF2445710B002C97CA /* MockServer+Extension.swift */,
-				AD1035B124458239002C97CA /* MockServerError.swift */,
 			);
 			path = MockServer;
 			sourceTree = "<group>";
@@ -276,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */,
+				AD1035B424458909002C97CA /* VerificationError.swift in Sources */,
 				ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */,
 				AD1035B224458239002C97CA /* MockServerError.swift in Sources */,
 				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
