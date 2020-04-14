@@ -13,13 +13,11 @@ internal extension MockServer {
 
 	func unusedPort() -> Int32 {
 		var port = randomPort
-		var (available, description) = tcpPortAvailable(port: port)
+		var (available, _) = tcpPortAvailable(port: port)
 		while !available {
-			log(description)
 			port = randomPort
-			(available, description) = tcpPortAvailable(port: port)
+			(available, _) = tcpPortAvailable(port: port)
 		}
-		log(description)
 		return Int32(port)
 	}
 
