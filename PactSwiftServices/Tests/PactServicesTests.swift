@@ -10,13 +10,18 @@ import XCTest
 
 @testable import PactSwiftServices
 
-class PactServicesTests: XCTestCase {
+class MockServerTests: XCTestCase {
 
 	func testMockServer_ReturnsError_WhenNoPactProvided() {
-		// PactMockServer.init() will call `create_mock_server()` by passing nils for all arguments. The debug console should print response and contain `-1` - missing Pact String
-		let mockServerPort = MockServer().mockServerPort
-		
-		XCTAssertEqual(mockServerPort, -1)
+		let mockServer = MockServer()
+		let testResult = mockServer.setup(pact: "{\"foo\":\"bar\"}".data(using: .utf8)!)
+
+		switch testResult {
+		case .success(let port):
+			XCTAssertTrue(port > 1200)
+		default:
+			XCTFail("Expected Pact Mock Server to start on a port greater than 1200")
+		}
 	}
 
 }
