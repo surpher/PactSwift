@@ -1,9 +1,9 @@
 //
-//  pact_swift_services-bridging_header.h
-//  PactSwiftServices
+//  CwlCatchException.m
+//  CwlAssertionTesting
 //
-//  Created by Marko Justinek on 13/4/20.
-//  Copyright © 2020 Pact Foundation. All rights reserved.
+//  Created by Matt Gallagher on 2016/01/10.
+//  Copyright © 2016 Matt Gallagher ( https://www.cocoawithlove.com ). All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -18,16 +18,17 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#ifndef pact_swift_services_bridging_header_h
-#define pact_swift_services_bridging_header_h
+#import "CwlCatchException.h"
 
-#import "pact_mock_server.h"
-
-//#import "NMBExceptionCapture.h"
-
-#import <PactSwiftServices/CwlMachBadInstructionHandler.h>
-#if TARGET_OS_OSX || TARGET_OS_IOS
-    #import <PactSwiftServices/CwlCatchException.h>
-#endif
-
-#endif /* pact_swift_services_bridging_header_h */
+NSException* __nullable catchExceptionOfKind(Class __nonnull type, void (^ __nonnull inBlock)(void)) {
+	@try {
+		inBlock();
+	} @catch (NSException *exception) {
+		if ([exception isKindOfClass:type]) {
+			return exception;
+		} else {
+			@throw;
+		}
+	}
+	return nil;
+}

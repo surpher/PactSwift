@@ -10,13 +10,23 @@
 		AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035AF2445710B002C97CA /* MockServer+Extension.swift */; };
 		AD1035B224458239002C97CA /* MockServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B124458239002C97CA /* MockServerError.swift */; };
 		AD1035B424458909002C97CA /* VerificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B324458909002C97CA /* VerificationError.swift */; };
-		AD22CEDB24440C5F0089C951 /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD22CEDA24440C5F0089C951 /* pact_mock_server.h */; };
+		AD22CEDB24440C5F0089C951 /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD22CEDA24440C5F0089C951 /* pact_mock_server.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD2377BF24442DB6003C4C4E /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */; };
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* MockServerTests.swift */; };
 		ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */; };
 		ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D37244286060078CCC7 /* HTTPService.swift */; };
 		ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* MockServer.swift */; };
+		ADD735002446CF1700B23B21 /* CwlCatchException.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD734FF2446CF1700B23B21 /* CwlCatchException.swift */; };
+		ADD735022446CF4100B23B21 /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD735012446CF4100B23B21 /* CwlCatchException.m */; };
+		ADD735042446CF4A00B23B21 /* CwlCatchException.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD735032446CF4A00B23B21 /* CwlCatchException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADD735082446CF7400B23B21 /* CwlMachBadInstructionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD735052446CF7400B23B21 /* CwlMachBadInstructionHandler.m */; };
+		ADD735092446CF7400B23B21 /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD735062446CF7400B23B21 /* mach_excServer.c */; };
+		ADD7350C2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD7350B2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADD735102446CF9B00B23B21 /* CwlCatchBadInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7350D2446CF9B00B23B21 /* CwlCatchBadInstruction.swift */; };
+		ADD735112446CF9B00B23B21 /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7350E2446CF9B00B23B21 /* CwlBadInstructionException.swift */; };
+		ADD735122446CF9B00B23B21 /* CwlDarwinDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7350F2446CF9B00B23B21 /* CwlDarwinDefinitions.swift */; };
+		ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +63,16 @@
 		ADAC3D4D2442903D0078CCC7 /* Target-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Release.xcconfig"; sourceTree = "<group>"; };
+		ADD734FF2446CF1700B23B21 /* CwlCatchException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlCatchException.swift; sourceTree = "<group>"; };
+		ADD735012446CF4100B23B21 /* CwlCatchException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CwlCatchException.m; sourceTree = "<group>"; };
+		ADD735032446CF4A00B23B21 /* CwlCatchException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CwlCatchException.h; sourceTree = "<group>"; };
+		ADD735052446CF7400B23B21 /* CwlMachBadInstructionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CwlMachBadInstructionHandler.m; sourceTree = "<group>"; };
+		ADD735062446CF7400B23B21 /* mach_excServer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mach_excServer.c; sourceTree = "<group>"; };
+		ADD735072446CF7400B23B21 /* mach_excServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mach_excServer.h; sourceTree = "<group>"; };
+		ADD7350B2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CwlMachBadInstructionHandler.h; sourceTree = "<group>"; };
+		ADD7350D2446CF9B00B23B21 /* CwlCatchBadInstruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlCatchBadInstruction.swift; sourceTree = "<group>"; };
+		ADD7350E2446CF9B00B23B21 /* CwlBadInstructionException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlBadInstructionException.swift; sourceTree = "<group>"; };
+		ADD7350F2446CF9B00B23B21 /* CwlDarwinDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlDarwinDefinitions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +124,7 @@
 		ADAC3D02244282980078CCC7 = {
 			isa = PBXGroup;
 			children = (
+				ADD734F22446CD1F00B23B21 /* Carthage-Checkouts */,
 				ADAC3D2F244282F30078CCC7 /* Configurations */,
 				ADAC3D0D244282980078CCC7 /* Products */,
 				AD22CED824440C440089C951 /* Resources */,
@@ -176,6 +197,90 @@
 			path = MockServer;
 			sourceTree = "<group>";
 		};
+		ADD734F22446CD1F00B23B21 /* Carthage-Checkouts */ = {
+			isa = PBXGroup;
+			children = (
+				ADD734F62446CE0100B23B21 /* CwlCatchException */,
+				ADD734FA2446CE7800B23B21 /* CwlPreconditionTesting */,
+			);
+			name = "Carthage-Checkouts";
+			path = Carthage/Checkouts;
+			sourceTree = "<group>";
+		};
+		ADD734F62446CE0100B23B21 /* CwlCatchException */ = {
+			isa = PBXGroup;
+			children = (
+				ADD734F82446CE4E00B23B21 /* CwlCatchException */,
+				ADD734F72446CE3F00B23B21 /* CwlCatchExceptionSupport */,
+			);
+			name = CwlCatchException;
+			path = CwlCatchException/Sources;
+			sourceTree = "<group>";
+		};
+		ADD734F72446CE3F00B23B21 /* CwlCatchExceptionSupport */ = {
+			isa = PBXGroup;
+			children = (
+				ADD735012446CF4100B23B21 /* CwlCatchException.m */,
+				ADD734F92446CE5800B23B21 /* include */,
+			);
+			path = CwlCatchExceptionSupport;
+			sourceTree = "<group>";
+		};
+		ADD734F82446CE4E00B23B21 /* CwlCatchException */ = {
+			isa = PBXGroup;
+			children = (
+				ADD734FF2446CF1700B23B21 /* CwlCatchException.swift */,
+			);
+			path = CwlCatchException;
+			sourceTree = "<group>";
+		};
+		ADD734F92446CE5800B23B21 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ADD735032446CF4A00B23B21 /* CwlCatchException.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		ADD734FA2446CE7800B23B21 /* CwlPreconditionTesting */ = {
+			isa = PBXGroup;
+			children = (
+				ADD734FB2446CE8500B23B21 /* CwlMachBadInstructionHandler */,
+				ADD734FC2446CE8E00B23B21 /* CwlPreconditionTesting */,
+			);
+			name = CwlPreconditionTesting;
+			path = CwlPreconditionTesting/Sources;
+			sourceTree = "<group>";
+		};
+		ADD734FB2446CE8500B23B21 /* CwlMachBadInstructionHandler */ = {
+			isa = PBXGroup;
+			children = (
+				ADD735052446CF7400B23B21 /* CwlMachBadInstructionHandler.m */,
+				ADD734FE2446CEAD00B23B21 /* include */,
+				ADD735062446CF7400B23B21 /* mach_excServer.c */,
+				ADD735072446CF7400B23B21 /* mach_excServer.h */,
+			);
+			path = CwlMachBadInstructionHandler;
+			sourceTree = "<group>";
+		};
+		ADD734FC2446CE8E00B23B21 /* CwlPreconditionTesting */ = {
+			isa = PBXGroup;
+			children = (
+				ADD7350E2446CF9B00B23B21 /* CwlBadInstructionException.swift */,
+				ADD7350D2446CF9B00B23B21 /* CwlCatchBadInstruction.swift */,
+				ADD7350F2446CF9B00B23B21 /* CwlDarwinDefinitions.swift */,
+			);
+			path = CwlPreconditionTesting;
+			sourceTree = "<group>";
+		};
+		ADD734FE2446CEAD00B23B21 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ADD7350B2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -183,7 +288,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADD7350C2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h in Headers */,
+				ADD735042446CF4A00B23B21 /* CwlCatchException.h in Headers */,
 				AD22CEDB24440C5F0089C951 /* pact_mock_server.h in Headers */,
+				ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,11 +395,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */,
+				ADD735102446CF9B00B23B21 /* CwlCatchBadInstruction.swift in Sources */,
+				ADD735002446CF1700B23B21 /* CwlCatchException.swift in Sources */,
+				ADD735082446CF7400B23B21 /* CwlMachBadInstructionHandler.m in Sources */,
 				AD1035B424458909002C97CA /* VerificationError.swift in Sources */,
 				ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */,
 				AD1035B224458239002C97CA /* MockServerError.swift in Sources */,
+				ADD735092446CF7400B23B21 /* mach_excServer.c in Sources */,
 				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
+				ADD735022446CF4100B23B21 /* CwlCatchException.m in Sources */,
+				ADD735112446CF9B00B23B21 /* CwlBadInstructionException.swift in Sources */,
 				ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */,
+				ADD735122446CF9B00B23B21 /* CwlDarwinDefinitions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +447,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4924428DBF0078CCC7 /* Target-Services-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -339,6 +463,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ADAC3D4724428DBF0078CCC7 /* Target-Services-Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

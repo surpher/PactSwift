@@ -19,7 +19,6 @@
 //
 
 import Foundation
-import PactSwiftServices
 
 struct Pact: Encodable {
 

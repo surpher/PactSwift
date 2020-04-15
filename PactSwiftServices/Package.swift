@@ -16,12 +16,22 @@ import PackageDescription
 		)
 	],
 	dependencies: [
-		.package(path: "../PactMockServer")
+		.package(path: "../PactMockServer"),
+		.package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", .upToNextMajor(from: "2.0.0")),
 	],
 	targets: [
 		.target(
 			name: "PactSwiftServices",
-			dependencies: ["PactMockServer"],
+			dependencies: {
+                #if os(macOS)
+                return [
+					"PactMockServer",
+                    "CwlPreconditionTesting",
+                ]
+                #else
+                return ["PactMockServer"]
+                #endif
+            }(),
 			path: "./Sources"
 		),
 		.testTarget(
@@ -29,5 +39,6 @@ import PackageDescription
 			dependencies: ["PactSwiftServices"],
 			path: "./Tests"
 		),
-	]
+	],
+	swiftLanguageVersions: [.v5]
 )
