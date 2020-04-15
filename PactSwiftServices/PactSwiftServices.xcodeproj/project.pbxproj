@@ -27,6 +27,7 @@
 		ADD735112446CF9B00B23B21 /* CwlBadInstructionException.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7350E2446CF9B00B23B21 /* CwlBadInstructionException.swift */; };
 		ADD735122446CF9B00B23B21 /* CwlDarwinDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7350F2446CF9B00B23B21 /* CwlDarwinDefinitions.swift */; };
 		ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADD7351C2446E04500B23B21 /* Nimble-Extraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD7351B2446E04500B23B21 /* Nimble-Extraction.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		ADD7350D2446CF9B00B23B21 /* CwlCatchBadInstruction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlCatchBadInstruction.swift; sourceTree = "<group>"; };
 		ADD7350E2446CF9B00B23B21 /* CwlBadInstructionException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlBadInstructionException.swift; sourceTree = "<group>"; };
 		ADD7350F2446CF9B00B23B21 /* CwlDarwinDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CwlDarwinDefinitions.swift; sourceTree = "<group>"; };
+		ADD7351B2446E04500B23B21 /* Nimble-Extraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Nimble-Extraction.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 		ADAC3D30244283280078CCC7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				ADD7351A2446E03100B23B21 /* Dependencies */,
 				AD1035B524458BF8002C97CA /* Definitions */,
 				AD22CED924440C500089C951 /* Headers */,
 				ADAC3D332442857E0078CCC7 /* HTTP */,
@@ -279,6 +282,14 @@
 				ADD7350B2446CF7D00B23B21 /* CwlMachBadInstructionHandler.h */,
 			);
 			path = include;
+			sourceTree = "<group>";
+		};
+		ADD7351A2446E03100B23B21 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				ADD7351B2446E04500B23B21 /* Nimble-Extraction.swift */,
+			);
+			path = Dependencies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +415,7 @@
 				ADD735092446CF7400B23B21 /* mach_excServer.c in Sources */,
 				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
 				ADD735022446CF4100B23B21 /* CwlCatchException.m in Sources */,
+				ADD7351C2446E04500B23B21 /* Nimble-Extraction.swift in Sources */,
 				ADD735112446CF9B00B23B21 /* CwlBadInstructionException.swift in Sources */,
 				ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */,
 				ADD735122446CF9B00B23B21 /* CwlDarwinDefinitions.swift in Sources */,

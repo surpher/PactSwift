@@ -16,9 +16,11 @@ CODE_SIGN_STYLE = Automatic
 CLANG_ENABLE_MODULES = YES
 SUPPORTS_MACCATALYST = NO
 ENABLE_BITCODE = NO
+ENABLE_TESTING_SEARCH_PATHS = YES
 
 // Rust libpact_mock_server.a config
 HEADER_SEARCH_PATHS = $(PROJECT_DIR)/Sources/Headers
 LIBRARY_SEARCH_PATHS = $(PROJECT_DIR)/Resources
+FRAMEWORK_SEARCH_PATHS = $(PLATFORM_DIR)/Developer/Library/Frameworks
 
 SWIFT_OBJC_BRIDGING_HEADER = $(PROJECT_DIR)/Sources/Headers/pact_swift_services-bridging_header.h
