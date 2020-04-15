@@ -15,6 +15,7 @@ PRODUCT_NAME = PactSwiftServices
 CODE_SIGN_STYLE = Automatic
 CLANG_ENABLE_MODULES = YES
 SUPPORTS_MACCATALYST = NO
+ENABLE_BITCODE = NO
 
 // Rust libpact_mock_server.a config
 HEADER_SEARCH_PATHS = $(PROJECT_DIR)/Sources/Headers

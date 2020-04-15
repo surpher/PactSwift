@@ -1,4 +1,4 @@
-name: Test - Xcode 11.3.1
+name: Test - Xcode (11.3.1)
 on:
   push:
     branches:
@@ -27,3 +27,6 @@ jobs:
       - name: Test project - iOS framework
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+      - name: Test it builds for Carthage
+        run: |
+          carthage build --no-skip-current
