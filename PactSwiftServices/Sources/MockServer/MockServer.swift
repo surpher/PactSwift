@@ -20,7 +20,7 @@ public class MockServer {
 		unusedPort()
 	}()
 
-	var baseUrl: String {
+	public var baseUrl: String {
 		"http://localhost:\(port)"
 	}
 
@@ -36,28 +36,29 @@ public class MockServer {
 
 	// TODO: - This should probably be part of an init()
 	// asking for baseUrl before calling setup() might cause some unexpected behaviour
-	func setup(pact: Data) -> Result<Int, MockServerError> {
+	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
 		port = create_mock_server(
 			strdup(String(data: pact, encoding: .utf8)),
 			"0.0.0.0:\(port)"
 		)
 
 		return (port > 1200)
-			? Result.success(Int(port))
-			: Result.failure(MockServerError(code: Int(port)))
+			? completion(Result.success(Int(port)))
+			: completion(Result.failure(MockServerError(code: Int(port))))
 	}
 
 	/// Verify interactions
-	func verify() -> Result<String, VerificationError> {
+	public func verify(completion: (Result<String, VerificationError>) -> Void) {
 		guard requestsMatched else {
-			return Result.failure(.missmatch(mismatchDescription))
+			completion(Result.failure(.missmatch(mismatchDescription)))
+			return
 		}
 
-		switch writePactContractFile() {
-		case .success:
-			return Result.success("Pact verified: OK")
-		case .failure(let error):
-			return Result.failure(error)
+			writePactContractFile {
+				switch $0 {
+				case .success: return completion(Result.success("Pact verified: OK"))
+				case .failure(let error): return completion(Result.failure(error))
+			}
 		}
 	}
 
@@ -80,12 +81,13 @@ private extension MockServer {
 	}
 
 	/// Writes the PACT contract file to disk
-	func writePactContractFile() -> Result<Void, VerificationError> {
+	func writePactContractFile(completion: (Result<Void, VerificationError>) -> Void) {
 		let result = write_pact_file(port, pactDir)
 		guard result == 0 else {
-			return Result.failure(.writeError(Int(result)))
+			completion(Result.failure(.writeError(Int(result))))
+			return
 		}
-		return Result.success(())
+		completion(Result.success(()))
 	}
 
 	func shutdownMockServer() {

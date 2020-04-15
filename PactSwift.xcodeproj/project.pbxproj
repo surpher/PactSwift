@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		AD10361424468AB3002C97CA /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD10361324468AB3002C97CA /* MockService.swift */; };
 		AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
+		AD10361A24469D5B002C97CA /* ErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD10361924469D5B002C97CA /* ErrorReporter.swift */; };
 		AD2377BB244429C0003C4C4E /* PactMockServer in Resources */ = {isa = PBXBuildFile; fileRef = AD2377B8244429C0003C4C4E /* PactMockServer */; };
 		AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+Pact.swift */; };
 		AD641A352434345500785CE1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A342434345500785CE1 /* Metadata.swift */; };
@@ -90,6 +91,7 @@
 /* Begin PBXFileReference section */
 		AD10361324468AB3002C97CA /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		AD103617244693A6002C97CA /* MockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceTests.swift; sourceTree = "<group>"; };
+		AD10361924469D5B002C97CA /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		AD22CECF2443BF2F0089C951 /* PactSwiftServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PactSwiftServices.xcodeproj; path = PactSwiftServices/PactSwiftServices.xcodeproj; sourceTree = "<group>"; };
 		AD2377B8244429C0003C4C4E /* PactMockServer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PactMockServer; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				AD8DF42B243BF9430062CB1A /* AnyEncodable.swift */,
+				AD10361924469D5B002C97CA /* ErrorReporter.swift */,
 				AD641A412434588200785CE1 /* Interaction.swift */,
 				AD641A342434345500785CE1 /* Metadata.swift */,
 				ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */,
@@ -559,6 +562,7 @@
 				AD10361424468AB3002C97CA /* MockService.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
 				ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */,
+				AD10361A24469D5B002C97CA /* ErrorReporter.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */,
 				AD8DF437243EA4580062CB1A /* PactInteractionNode.swift in Sources */,

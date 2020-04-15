@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Interaction: Encodable {
+public class Interaction: Encodable {
 
 	var description: String?
 	var providerState: String?
@@ -45,22 +45,22 @@ extension Interaction {
 
 extension Interaction {
 
-	func uponReceiving(_ interactionDescription: String) -> Interaction {
+	public func uponReceiving(_ interactionDescription: String) -> Interaction {
 		self.description = interactionDescription
 		return self
 	}
 
-	func given(_ providerState: String) -> Interaction {
+	public func given(_ providerState: String) -> Interaction {
 		self.providerState = providerState
 		return self
 	}
 
-	func given(_ providerStates: [ProviderState]) -> Interaction {
+	public func given(_ providerStates: [ProviderState]) -> Interaction {
 		self.providerStates = providerStates
 		return self
 	}
 
-	func given(_ providerStates: ProviderState...) -> Interaction {
+	public func given(_ providerStates: ProviderState...) -> Interaction {
 		given(providerStates)
 	}
 

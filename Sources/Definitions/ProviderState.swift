@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ProviderState: Encodable {
+public struct ProviderState: Encodable {
 
 	let name: String
 	let params: [String: String]
@@ -17,7 +17,7 @@ struct ProviderState: Encodable {
 
 extension ProviderState: Equatable {
 
-	static func ==(lhs: ProviderState, rhs: ProviderState) -> Bool {
+	static public func ==(lhs: ProviderState, rhs: ProviderState) -> Bool {
 		lhs.name == rhs.name && lhs.params == rhs.params
 	}
 
