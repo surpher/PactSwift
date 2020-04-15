@@ -22,10 +22,10 @@
 #define pact_swift_services_bridging_header_h
 
 #import "pact_mock_server.h"
-
-//#import "NMBExceptionCapture.h"
+#import <XCTest/XCTest.h>
 
 #import <PactSwiftServices/CwlMachBadInstructionHandler.h>
+
 #if TARGET_OS_OSX || TARGET_OS_IOS
     #import <PactSwiftServices/CwlCatchException.h>
 #endif

@@ -18,6 +18,5 @@ $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Response.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Interaction.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Request.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/Pacticipant.swift
-$(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/ErrorReporter.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/Definitions/AnyEncodable.swift
 $(SRCROOT)//Users/marko/Developer/pact-swift/Sources/MockService.swift
