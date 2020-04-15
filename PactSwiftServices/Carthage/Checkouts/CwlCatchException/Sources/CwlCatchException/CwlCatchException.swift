@@ -1,9 +1,9 @@
 //
-//  pact_swift_services-bridging_header.h
-//  PactSwiftServices
+//  CwlCatchException.swift
+//  CwlAssertionTesting
 //
-//  Created by Marko Justinek on 13/4/20.
-//  Copyright © 2020 Pact Foundation. All rights reserved.
+//  Created by Matt Gallagher on 2016/01/10.
+//  Copyright © 2016 Matt Gallagher ( https://www.cocoawithlove.com ). All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -18,16 +18,18 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#ifndef pact_swift_services_bridging_header_h
-#define pact_swift_services_bridging_header_h
+import Foundation
 
-#import "pact_mock_server.h"
-
-//#import "NMBExceptionCapture.h"
-
-#import <PactSwiftServices/CwlMachBadInstructionHandler.h>
-#if TARGET_OS_OSX || TARGET_OS_IOS
-    #import <PactSwiftServices/CwlCatchException.h>
+#if SWIFT_PACKAGE
+import CwlCatchExceptionSupport
 #endif
 
-#endif /* pact_swift_services_bridging_header_h */
+private func catchReturnTypeConverter<T: NSException>(_ type: T.Type, block: @escaping () -> Void) -> T? {
+	return catchExceptionOfKind(type, block) as? T
+}
+
+extension NSException {
+	public static func catchException(in block: @escaping () -> Void) -> Self? {
+		return catchReturnTypeConverter(self, block: block)
+	}
+}

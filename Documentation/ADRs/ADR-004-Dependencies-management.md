@@ -12,6 +12,8 @@ Unfortunately SPM doesn't handle the binary dependencies well at the time of thi
 
 There will be a separation of responsibilities between PactSwift framework and PactSwiftServices in a separate (yet embedded) project which will provide extra functionality by reaching out to and/or interact with different services (interacting with Pact Mock Server, etc.).
 
+Matt's [CwlPreconditionTesting](https://github.com/mattgallagher/CwlPreconditionTesting) is a dependency this project can't really exist without. To support distributon of PactSwift using both Carthage and SPM, the dependency CwlPreconditionTesting is brougt into the PactSwiftServices project (files `./Carthage/Checkouts/CwlPreconditionTesting/*` added into the project itself). For SPM it is defined as a dependency in `./PactSwiftServices/Package.swift`.
+
 # Consequences
 
 Due to SPM not handling binary dependencies well. When linking and embedding a binary framework while building and running in Xcode everything works fine, `xcodebuild` command in command line builds the project and dependencies just fine.
