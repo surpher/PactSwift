@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD10361424468AB3002C97CA /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD10361324468AB3002C97CA /* MockService.swift */; };
+		AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
 		AD2377BB244429C0003C4C4E /* PactMockServer in Resources */ = {isa = PBXBuildFile; fileRef = AD2377B8244429C0003C4C4E /* PactMockServer */; };
 		AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+Pact.swift */; };
 		AD641A352434345500785CE1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A342434345500785CE1 /* Metadata.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD10361324468AB3002C97CA /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
+		AD103617244693A6002C97CA /* MockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceTests.swift; sourceTree = "<group>"; };
 		AD22CECF2443BF2F0089C951 /* PactSwiftServices.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PactSwiftServices.xcodeproj; path = PactSwiftServices/PactSwiftServices.xcodeproj; sourceTree = "<group>"; };
 		AD2377B8244429C0003C4C4E /* PactMockServer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = PactMockServer; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 				AD01C9392432A31F00B75C9D /* Matchers */,
 				AD641A3924344D9500785CE1 /* Pact.swift */,
 				AD8DF434243C53750062CB1A /* PactBuilder.swift */,
+				AD10361324468AB3002C97CA /* MockService.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 				AD8DF432243C437F0062CB1A /* AnyEncodableTests.swift */,
 				AD641A362434354C00785CE1 /* Definitions */,
 				AD7891B8244150FF0014BCC8 /* Matchers */,
+				AD103617244693A6002C97CA /* MockServiceTests.swift */,
 				AD7891B624414D500014BCC8 /* PactBuilderTests.swift */,
 				AD641A3F2434518500785CE1 /* PactTests.swift */,
 			);
@@ -550,6 +556,7 @@
 				AD7891C224415E3E0014BCC8 /* DecimalLike.swift in Sources */,
 				AD641A422434588200785CE1 /* Interaction.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,
+				AD10361424468AB3002C97CA /* MockService.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
 				ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
@@ -563,6 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */,
 				AD7891C024415C710014BCC8 /* IntegerLikeTests.swift in Sources */,
 				AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */,
 				ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */,

@@ -24,6 +24,8 @@ public class MockServer {
 		"http://localhost:\(port)"
 	}
 
+	public init() { }
+
 	deinit {
 		shutdownMockServer()
 	}

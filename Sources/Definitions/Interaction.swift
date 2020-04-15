@@ -8,30 +8,64 @@
 
 import Foundation
 
-struct Interaction: Encodable {
+class Interaction: Encodable {
 
-	let description: String
+	var description: String?
 	var providerState: String?
 	var providerStates: [ProviderState]?
-	let request: Request
-	let response: Response
+	var request: Request?
+	var response: Response?
 
 }
 
 extension Interaction {
 
-	init(description: String, providerState: String, request: Request, response: Response) {
+	convenience init(description: String) {
+		self.init()
+		self.description = description
+	}
+
+	convenience init(description: String, providerState: String, request: Request? = nil, response: Response? = nil) {
+		self.init()
 		self.description = description
 		self.providerState = providerState
 		self.request = request
 		self.response = response
 	}
 
-	init(description: String, providerStates: [ProviderState], request: Request, response: Response) {
+	convenience init(description: String, providerStates: [ProviderState], request: Request? = nil, response: Response? = nil) {
+		self.init()
 		self.description = description
 		self.providerStates = providerStates
 		self.request = request
 		self.response = response
 	}
+
+}
+
+extension Interaction {
+
+	func uponReceiving(_ interactionDescription: String) -> Interaction {
+		self.description = interactionDescription
+		return self
+	}
+
+	func given(_ providerState: String) -> Interaction {
+		self.providerState = providerState
+		return self
+	}
+
+	func given(_ providerStates: [ProviderState]) -> Interaction {
+		self.providerStates = providerStates
+		return self
+	}
+
+	func given(_ providerStates: ProviderState...) -> Interaction {
+		given(providerStates)
+	}
+
+	func withRequest() { }
+
+	func willRespondWith() { }
 
 }

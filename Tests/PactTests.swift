@@ -47,7 +47,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).request.method
+		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first?.request?.method)
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
@@ -57,7 +57,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).request.path
+		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first?.request?.path)
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
@@ -91,7 +91,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.headers)
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first?.request?.headers))
 		XCTAssertEqual(testResult["Content-Type"], expectedResult["Content-Type"])
 		XCTAssertEqual(testResult["X-Value"], expectedResult["X-Value"])
 	}
@@ -122,7 +122,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first)?.request.query)
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first?.request?.query))
 		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"]).contains("100")))
 		XCTAssertTrue(try (XCTUnwrap(testResult["state"]).contains("NSW")))
 		XCTAssertTrue(try (XCTUnwrap(testResult["term"]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
@@ -175,7 +175,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).response.statusCode
+		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first?.response?.statusCode)
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
