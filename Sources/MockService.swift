@@ -21,6 +21,8 @@
 import Foundation
 import PactSwiftServices
 
+let kTimeout: TimeInterval = 30
+
 open class MockService {
 
 	private let mockServer: MockServer
@@ -47,36 +49,42 @@ open class MockService {
 		return interaction
 	}
 
-	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval = 30, testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
-
-		// need to run this in waitUntil(completionBlock)
-		// Setup the MockServer with interactions
-		self.mockServer.setup(pact: pact.data!) {
-			switch $0 {
-			case .success:
-				testFunction {
-//					done() // -> trigger func of waitUntil ( () -> Void )
+	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval?, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
+			self.mockServer.setup(pact: pactData!) {
+				switch $0 {
+				case .success:
+					do {
+						try testFunction {
+							completion()
+						}
+					} catch {
+						self.failWith("Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
+					}
+				case .failure(let error):
+					self.failWith(error.localizedDescription)
+					completion()
 				}
-			case .failure(let error):
-				failWithError(error) // or location ?
-//				done() // -> trigger func of waitUntil ( () -> Void )
 			}
 		}
+	}
 
+	public func verify() {
 		// Verify the interactions by running consumer's code
 		self.mockServer.verify {
 			switch $0 {
 			case .success:
-				debugPrint("PACT interactiosn validated OK! 👍")
-				debugPrint("TODO: Write PACT file")
-				// mockServer.writeFile { Result<Int, Error> -> Void in
-				//	written OK
-				//	Failed to write FILE!
-				// }
+				self.mockServer.finalize {
+					switch $0 {
+					case .success:
+						debugPrint("TODO") // completion()
+					case .failure(let error):
+						self.failWith(error.localizedDescription)
+					}
+				}
 			case .failure(let error):
-				failWithError(error)
+				failWith(error.localizedDescription)
 				debugPrint("warning: Make sure the testComplete() fuction is called at the end of your test.")
-				// done() // -> trigger func of waitUntil ( () -> Void )
 			}
 		}
 	}
@@ -85,12 +93,20 @@ open class MockService {
 
 private extension MockService {
 
-	func failWithLocation() {
-
+	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
+		if let file = file, let line = line {
+			fail(message, file: file, line: line) // Quick/Nimble
+		} else {
+			fail(message) // Quick/Nimble
+		}
 	}
 
-	func failWithError(_ error: Error) {
-
+	func waitForPactUntil(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
+		if let file = file, let line = line {
+			return waitUntil(timeout: timeout, file: file, line: line, action: action) // Quick/Nimble
+		} else {
+			return waitUntil(timeout: timeout, action: action)  // Quick/Nimble
+		}
 	}
 
 }
