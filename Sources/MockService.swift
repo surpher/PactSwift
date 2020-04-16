@@ -26,7 +26,7 @@ let kTimeout: TimeInterval = 30
 open class MockService {
 
 	private let mockServer: MockServer
-	private let pact: Pact
+	private var pact: Pact
 
 	private var interactions: [Interaction] = []
 
@@ -49,7 +49,8 @@ open class MockService {
 		return interaction
 	}
 
-	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval?, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+		pact.interactions = interactions
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
 			self.mockServer.setup(pact: pactData!) {
 				switch $0 {

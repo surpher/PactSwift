@@ -43,7 +43,6 @@ struct Pact: Encodable {
 	var data: Data? {
 		do {
 			let encoder = JSONEncoder()
-			encoder.outputFormatting = .prettyPrinted
 			return try encoder.encode(self)
 		} catch {
 			debugPrint("\(error)")

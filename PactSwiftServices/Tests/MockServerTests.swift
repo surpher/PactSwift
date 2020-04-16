@@ -79,8 +79,6 @@ class MockServerTests: XCTestCase {
 			switch $0 {
 			case .success:
 				let task = session.dataTask(with: URL(string: "\(mockServer.baseUrl)/users")!) { data, response, error in
-					debugPrint("### DATA: -")
-					debugPrint(String(data: data ?? Data(), encoding: .utf8) ?? "nil")
 					if let data = data {
 						do {
 							let testUsers = try JSONDecoder().decode([MockServerTestUser].self, from: data)
@@ -90,13 +88,6 @@ class MockServerTests: XCTestCase {
 							XCTFail("DECODING ERROR: \(error.localizedDescription)")
 						}
 					}
-
-					debugPrint("### RESPONSE: - ")
-					debugPrint(response ?? "nil")
-
-					debugPrint("### ERROR: - ")
-					debugPrint(error ?? "nil")
-
 					dataTaskExpectation.fulfill()
 				}
 				task.resume()
@@ -104,7 +95,7 @@ class MockServerTests: XCTestCase {
 				XCTFail("MOCK SERVER ERROR STARTING: \(error.description)")
 			}
 		}
-		waitForExpectations(timeout: 5) { error in
+		waitForExpectations(timeout: 1) { error in
 			self.mockServer.verify {
 				switch $0 {
 				case .success(let result):
@@ -112,7 +103,7 @@ class MockServerTests: XCTestCase {
 						self.mockServer.finalize {
 							switch $0 {
 							case .success(let message):
-								debugPrint("FINALIZATION OK: \(message)")
+								debugPrint("PACT FINALIZATION OK: \(message)")
 							case .failure(let error):
 								XCTFail("FINALIZATION ERROR: \(error.localizedDescription)")
 							}
@@ -141,7 +132,7 @@ extension MockServerTests {
 	// JSON formatted using: https://jsonformatter.curiousconcept.com (settings: compact, RFC 8259)
 	var pactSpecV3: String {
 		"""
-		{"provider":{"name":"test_provider_array"},"consumer":{"name":"test_consumer_array"},"metadata":{"pactSpecification":{"version":"3.0.0"},"pact-swift":{"version":"0.0.1"}},"interactions":[{"description":"swift test interaction with a DSL array body","request":{"method":"GET","path":"/users"},"response":{"status":200,"headers":{"Content-Type":"application/json; charset=UTF-8"},"body":[{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"}],"matchingRules":{"body": {"$[2].name":{"matchers":[{"match":"type"}]},"$[0].id":{"matchers":[{"match":"type"}]},"$[1].id":{"matchers":[{"match":"type"}]},"$[2].id":{"matchers":[{"match":"type"}]},"$[1].name":{"matchers":[{"match":"type"}]},"$[0].name":{"matchers":[{"match":"type"}]},"$[0].dob":{"matchers":[{"date":"yyyy-MM-dd"}]}}}}}]}
+		{"provider":{"name":"sanity_test_provider"},"consumer":{"name":"sanity_test_consumer"},"metadata":{"pactSpecification":{"version":"3.0.0"},"pact-swift":{"version":"0.0.1"}},"interactions":[{"description":"swift test interaction with a DSL array body","request":{"method":"GET","path":"/users"},"response":{"status":200,"headers":{"Content-Type":"application/json; charset=UTF-8"},"body":[{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"}],"matchingRules":{"body": {"$[2].name":{"matchers":[{"match":"type"}]},"$[0].id":{"matchers":[{"match":"type"}]},"$[1].id":{"matchers":[{"match":"type"}]},"$[2].id":{"matchers":[{"match":"type"}]},"$[1].name":{"matchers":[{"match":"type"}]},"$[0].name":{"matchers":[{"match":"type"}]},"$[0].dob":{"matchers":[{"date":"yyyy-MM-dd"}]}}}}}]}
 		"""
 	}
 

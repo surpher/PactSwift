@@ -24,13 +24,75 @@ import XCTest
 
 class MockServiceTests: XCTestCase {
 
-	func testDud() {
+	func testMockService_SuccessfulGETRequest() {
 		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
 
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
+			.withRequest(method: .GET, path: "/users")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"foo": "bar"
+				]
+			)
 
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
+				if let data = data {
+					let testResult = self.decodeResponse(data: data)
+					XCTAssertEqual(testResult?.foo, "bar")
+				}
+				completion()
+			}
+			task.resume()
+		}
+	}
+
+	func testMockService_FailingGETRequest_invalidPath() {
+		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
+
+		_ = mockService
+			.uponReceiving("Request for alligators")
+			.given("alligators exist")
+			.withRequest(method: .GET, path: "/user")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"foo": "bar"
+				]
+			)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
+				// TODO: - WIP
+				// MockService should throw error - { error: unexpected-request : { Request: { method: GET, path: /users... }}
+				// And fail this test even if caller is not doing test assertions!
+				completion()
+			}
+			task.resume()
+		}
+	}
+
+}
+
+private extension MockServiceTests {
+
+	struct TestModel: Decodable {
+		let foo: String
+	}
+
+	func decodeResponse(data: Data) -> TestModel? {
+		do {
+			let result = try JSONDecoder().decode(TestModel.self, from: data)
+			return result
+		} catch {
+			debugPrint("ERROR")
+		}
+		return nil
 	}
 
 }
