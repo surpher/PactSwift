@@ -122,7 +122,7 @@ private extension MockServer {
 private extension MockServer {
 
 	var pactDir: String {
-		ProcessInfo.processInfo.environment["pact_dir"] ?? "/tmp/pacts"
+		Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String ?? "/tmp/pacts"
 	}
 
 	func checkForPath() -> Bool {
