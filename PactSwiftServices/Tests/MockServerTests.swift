@@ -53,7 +53,7 @@ class MockServerTests: XCTestCase {
 		mockServer.setup(pact: "{\"foo\":\"bar\"}".data(using: .utf8)!) {
 			switch $0 {
 			case .success(let port):
-				XCTAssertEqual(mockServer.baseUrl, "http://localhost:\(port)")
+				XCTAssertEqual(mockServer.baseUrl, "http://0.0.0.0:\(port)")
 			default:
 				XCTFail("Expected Pact Mock Server to start on a port greater than 1200")
 			}
@@ -71,16 +71,13 @@ class MockServerTests: XCTestCase {
 		}
 	}
 
-	func testMockServer_Endpoints() {
+	func testMockServer_SANITY_TEST() {
 		let session = URLSession.shared
-
 		let dataTaskExpectation = expectation(description: "dataTask")
 
 		mockServer.setup(pact: pactSpecV3.data(using: .utf8)!) {
 			switch $0 {
-			case .success(let port):
-				debugPrint("MOCK SERVER STARTED ON PORT: \(port)")
-				// Make a GET request to mockServer.baseUrl/users
+			case .success:
 				let task = session.dataTask(with: URL(string: "\(mockServer.baseUrl)/users")!) { data, response, error in
 					debugPrint("### DATA: -")
 					debugPrint(String(data: data ?? Data(), encoding: .utf8) ?? "nil")
@@ -88,6 +85,7 @@ class MockServerTests: XCTestCase {
 						do {
 							let testUsers = try JSONDecoder().decode([MockServerTestUser].self, from: data)
 							XCTAssertEqual(testUsers.count, 3)
+							XCTAssertTrue(testUsers.contains(where: { $0.name == "ZSAICmTmiwgFFInuEuiK" }))
 						} catch {
 							XCTFail("DECODING ERROR: \(error.localizedDescription)")
 						}
@@ -106,8 +104,27 @@ class MockServerTests: XCTestCase {
 				XCTFail("MOCK SERVER ERROR STARTING: \(error.description)")
 			}
 		}
-
-		waitForExpectations(timeout: 5)
+		waitForExpectations(timeout: 5) { error in
+			self.mockServer.verify {
+				switch $0 {
+				case .success(let result):
+					if result {
+						self.mockServer.finalize {
+							switch $0 {
+							case .success(let message):
+								debugPrint("FINALIZATION OK: \(message)")
+							case .failure(let error):
+								XCTFail("FINALIZATION ERROR: \(error.localizedDescription)")
+							}
+						}
+					} else {
+						XCTFail("VERIFICATION ERROR: - Unexpectedly received false when true was expected!")
+					}
+				case .failure(let error):
+					XCTFail("VERIFICATION ERROR: \(error)")
+				}
+			}
+		}
 	}
 
 }

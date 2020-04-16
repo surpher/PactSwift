@@ -62,26 +62,23 @@ public class MockServer {
 	}
 
 	/// Verify interactions
-	public func verify(completion: (Result<String, VerificationError>) -> Void) {
+	public func verify(completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
-			completion(Result.failure(.missmatch(mismatchDescription)))
+			completion(.failure(.missmatch(mismatchDescription)))
 			return
 		}
 
-		writePactContractFile {
-			switch $0 {
-			case .success: return completion(Result.success("Pact verified: OK"))
-			case .failure(let error): return completion(Result.failure(error))
-			}
-		}
+		completion(.success(true))
 	}
 
-	/// Finalise
+	/// Finalise by writing the contract file onto disk
 	public func finalize(completion: (Result<String, VerificationError>) -> Void) {
 		writePactContractFile {
 			switch $0 {
-			case .success: completion(.success("Pact file written to \(pactDir)."))
-			case .failure(let error): completion(.failure(error))
+			case .success:
+				completion(.success("Pact contract written to \(pactDir). 👍"))
+			case .failure(let error):
+				completion(.failure(error))
 			}
 		}
 	}
