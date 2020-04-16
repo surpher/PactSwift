@@ -33,8 +33,10 @@ public class MockServer {
 	}()
 
 	public var baseUrl: String {
-		"http://localhost:\(port)"
+		"http://\(socketAddress):\(port)"
 	}
+
+	private let socketAddress = "0.0.0.0"
 
 	public init() { }
 
@@ -51,7 +53,7 @@ public class MockServer {
 	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
 		port = create_mock_server(
 			strdup(String(data: pact, encoding: .utf8)),
-			"0.0.0.0:\(port)"
+			"\(socketAddress):\(port)"
 		)
 
 		return (port > 1200)
