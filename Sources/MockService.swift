@@ -60,7 +60,8 @@ open class MockService {
 							completion()
 						}
 					} catch {
-						self.failWith("Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
+						// Where does the build log get written using rust lib?
+						self.failWith("🛑 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
 					}
 				case .failure(let error):
 					self.failWith(error.localizedDescription)
@@ -85,7 +86,7 @@ open class MockService {
 				}
 			case .failure(let error):
 				failWith(error.localizedDescription)
-				debugPrint("warning: Make sure the testComplete() fuction is called at the end of your test.")
+				debugPrint("⚠️ warning: Make sure you call the completion fuction at the end of your test.")
 			}
 		}
 	}

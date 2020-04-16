@@ -14,8 +14,6 @@
 		AD2377BF24442DB6003C4C4E /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2377BE24442DB6003C4C4E /* libpact_mock_server.a */; };
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* MockServerTests.swift */; };
-		ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */; };
-		ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D37244286060078CCC7 /* HTTPService.swift */; };
 		ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* MockServer.swift */; };
 		ADD735002446CF1700B23B21 /* CwlCatchException.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD734FF2446CF1700B23B21 /* CwlCatchException.swift */; };
 		ADD735022446CF4100B23B21 /* CwlCatchException.m in Sources */ = {isa = PBXBuildFile; fileRef = ADD735012446CF4100B23B21 /* CwlCatchException.m */; };
@@ -52,8 +50,6 @@
 		ADAC3D15244282980078CCC7 /* PactSwiftServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PactSwiftServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADAC3D1A244282980078CCC7 /* MockServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServerTests.swift; sourceTree = "<group>"; };
 		ADAC3D322442854E0078CCC7 /* TestsInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TestsInfo.plist; sourceTree = "<group>"; };
-		ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPAPIService.swift; sourceTree = "<group>"; };
-		ADAC3D37244286060078CCC7 /* HTTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPService.swift; sourceTree = "<group>"; };
 		ADAC3D39244286D30078CCC7 /* MockServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServer.swift; sourceTree = "<group>"; };
 		ADAC3D4724428DBF0078CCC7 /* Target-Services-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Services-Release.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4824428DBF0078CCC7 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -176,19 +172,9 @@
 				ADD7351A2446E03100B23B21 /* Dependencies */,
 				AD1035B524458BF8002C97CA /* Definitions */,
 				AD22CED924440C500089C951 /* Headers */,
-				ADAC3D332442857E0078CCC7 /* HTTP */,
 				ADAC3D34244285860078CCC7 /* MockServer */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		ADAC3D332442857E0078CCC7 /* HTTP */ = {
-			isa = PBXGroup;
-			children = (
-				ADAC3D35244285E30078CCC7 /* HTTPAPIService.swift */,
-				ADAC3D37244286060078CCC7 /* HTTPService.swift */,
-			);
-			path = HTTP;
 			sourceTree = "<group>";
 		};
 		ADAC3D34244285860078CCC7 /* MockServer */ = {
@@ -405,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADAC3D36244285E30078CCC7 /* HTTPAPIService.swift in Sources */,
 				ADD735102446CF9B00B23B21 /* CwlCatchBadInstruction.swift in Sources */,
 				ADD735002446CF1700B23B21 /* CwlCatchException.swift in Sources */,
 				ADD735082446CF7400B23B21 /* CwlMachBadInstructionHandler.m in Sources */,
@@ -417,7 +402,6 @@
 				ADD735022446CF4100B23B21 /* CwlCatchException.m in Sources */,
 				ADD7351C2446E04500B23B21 /* Nimble-Extraction.swift in Sources */,
 				ADD735112446CF9B00B23B21 /* CwlBadInstructionException.swift in Sources */,
-				ADAC3D38244286060078CCC7 /* HTTPService.swift in Sources */,
 				ADD735122446CF9B00B23B21 /* CwlDarwinDefinitions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
