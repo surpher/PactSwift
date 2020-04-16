@@ -71,4 +71,55 @@ class MockServerTests: XCTestCase {
 		}
 	}
 
+	func testMockServer_Interactions() {
+		let session = URLSession.shared
+
+		let dataTaskExpectation = expectation(description: "dataTask")
+
+		mockServer.setup(pact: pactSpecV3.data(using: .utf8)!) {
+			switch $0 {
+			case .success(let port):
+				debugPrint("MOCK SERVER STARTED ON PORT: \(port)")
+				// Make a GET request to mockServer.baseURL/users
+				let task = session.dataTask(with: URL(string: "\(mockServer.baseUrl)/users")!) { data, response, error in
+					debugPrint("### DATA: -")
+					debugPrint(String(data: data ?? Data(), encoding: .utf8) ?? "nil")
+
+					debugPrint("### RESPONSE: - ")
+					debugPrint(response ?? "nil")
+
+					debugPrint("### ERROR: - ")
+					debugPrint(error ?? "nil")
+
+					dataTaskExpectation.fulfill()
+				}
+				task.resume()
+			case .failure(let error):
+				debugPrint("MOCK SERVER ERROR STARTING: \(error.description)")
+			}
+		}
+
+		waitForExpectations(timeout: 1) { error in
+			debugPrint("EXPECTATION ERROR: \(error.debugDescription)")
+		}
+	}
+
+}
+
+extension MockServerTests {
+
+	// Pact taken from: https://github.com/pact-foundation/pact-specification/tree/version-3
+	// JSON formatted using: https://jsonformatter.curiousconcept.com (settings: compact, RFC 8259)
+	var pactSpecV3: String {
+		"""
+		{"provider":{"name":"test_provider_array"},"consumer":{"name":"test_consumer_array"},"metadata":{"pactSpecification":{"version":"3.0.0"},"pact-swift":{"version":"0.0.1"}},"interactions":[{"description":"swift test interaction with a DSL array body","request":{"method":"GET","path":"/users"},"response":{"status":200,"headers":{"Content-Type":"application/json; charset=UTF-8"},"body":[{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"}],"matchingRules":{"body": {"$[2].name":{"matchers":[{"match":"type"}]},"$[0].id":{"matchers":[{"match":"type"}]},"$[1].id":{"matchers":[{"match":"type"}]},"$[2].id":{"matchers":[{"match":"type"}]},"$[1].name":{"matchers":[{"match":"type"}]},"$[0].name":{"matchers":[{"match":"type"}]},"$[0].dob":{"matchers":[{"date":"yyyy-MM-dd"}]}}}}}]}
+		"""
+	}
+
+	var foo: String {
+		"""
+		{"foo":"bar"}
+		"""
+	}
+
 }

@@ -66,10 +66,20 @@ public class MockServer {
 			return
 		}
 
-			writePactContractFile {
-				switch $0 {
-				case .success: return completion(Result.success("Pact verified: OK"))
-				case .failure(let error): return completion(Result.failure(error))
+		writePactContractFile {
+			switch $0 {
+			case .success: return completion(Result.success("Pact verified: OK"))
+			case .failure(let error): return completion(Result.failure(error))
+			}
+		}
+	}
+
+	/// Finalise
+	public func finalize(completion: (Result<String, VerificationError>) -> Void) {
+		writePactContractFile {
+			switch $0 {
+			case .success: completion(.success("Pact file written to \(pactDir)."))
+			case .failure(let error): completion(.failure(error))
 			}
 		}
 	}
