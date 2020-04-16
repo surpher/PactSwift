@@ -240,8 +240,6 @@ class PactTests: XCTestCase {
 		}
 	}
 
-	
-
 }
 
 private extension PactTests {
@@ -265,9 +263,7 @@ private extension PactTests {
 					let num: [Int]
 				}
 			}
-
 		}
-
 	}
 
 	// MARK: - Test Helper functions
