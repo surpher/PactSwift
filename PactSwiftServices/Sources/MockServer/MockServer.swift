@@ -52,7 +52,7 @@ public class MockServer {
 	// asking for baseUrl before calling setup() might cause some unexpected behaviour
 	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
 		port = create_mock_server(
-			strdup(String(data: pact, encoding: .utf8)),
+			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
 			"\(socketAddress):\(port)"
 		)
 
@@ -98,6 +98,7 @@ private extension MockServer {
 			return "Nothing received"
 		}
 
+		// TODO: - parse `mismatches` object into something more readable
 		return String(cString: mismatches)
 	}
 
