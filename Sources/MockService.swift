@@ -52,52 +52,65 @@ open class MockService {
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = interactions
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
+			debugPrint("1.")
 			self.mockServer.setup(pact: pactData!) {
 				switch $0 {
 				case .success:
 					do {
+						debugPrint("2.")
 						try testFunction {
-							self.mockServer.verify {
-								switch $0 {
-								case .success:
-									debugPrint("YAY! Pact test passes as the test's request matched the one MockService/Rust was expecting")
-									completion()
-								case .failure(let error):
-									// TODO: - This next line is the bugger!
-									self.failWith(error.localizedDescription, file: file, line: line) // WARNING: - This bugger crashes the mismatch in http request test
-									completion()
-								}
-							}
-
+							debugPrint("2.5")
+							completion()
 						}
 					} catch {
+						debugPrint("3.")
 						// Where does the build log get written using rust lib?
 						self.failWith("🛑 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
 					}
 				case .failure(let error):
+					debugPrint("4.")
 					self.failWith(error.localizedDescription)
 					completion()
 				}
 			}
 		}
+
+//		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
+//			debugPrint("5.")
+//			self.mockServer.verify {
+//				switch $0 {
+//				case .success:
+//					completion()
+//				case .failure(let error):
+//					self.failWith(error.localizedDescription, file: file, line: line)
+//					completion()
+//				}
+//			}
+//		}
 	}
 
-	public func verify() {
-		// Verify the interactions by running consumer's code
+	public func verify(completion: (Result<Void, VerificationError>) -> Void) {
 		self.mockServer.verify {
 			switch $0 {
 			case .success:
-				self.mockServer.finalize {
-					switch $0 {
-					case .success:
-						debugPrint("TODO") // completion()
-					case .failure(let error):
-						self.failWith(error.localizedDescription)
-					}
-				}
+				debugPrint("5")
+				return completion(.success(()))
 			case .failure(let error):
-				failWith(error.localizedDescription)
-				debugPrint("⚠️ warning: Make sure you call the completion fuction at the end of your test.")
+				debugPrint("6")
+				self.failWith(error.description)
+				return completion(.failure(error))
+			}
+		}
+	}
+
+	public func finalize(completion: (Result<Void, Error>) -> Void) {
+		self.mockServer.finalize {
+			switch $0 {
+			case .success:
+				return completion(.success(()))
+			case .failure(let error):
+				self.failWith(error.localizedDescription)
+				return completion(.failure(error))
 			}
 		}
 	}
