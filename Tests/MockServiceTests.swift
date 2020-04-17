@@ -57,6 +57,44 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
+	// ###################################################
+	//
+	// CRASHING TEST
+	// GIVEN MockService.run {  also calls .verify() within it }
+	//
+	// ###################################################
+
+//	func testMockService_FailingGETRequest_invalidPath() {
+//		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
+//
+//		// Prepare the API interactino expectations:
+//		_ = mockService
+//			.uponReceiving("Request for alligators")
+//			.given("alligators exist")
+//			.withRequest(method: .GET, path: "/user")
+//			.willRespondWith(
+//				status: 200,
+//				body: [
+//					"foo": "bar"
+//				]
+//			)
+//
+//		// Run my API client code and test:
+//		// - that this test fails but does not crash! because the request path doesn't match what I've defined it should be in `.withRequest`
+//		// -
+//		mockService.run { completion in
+//			let session = URLSession.shared
+//			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/invalidPath")!) { data, response, error in
+//				// TODO: - WIP
+//				// MockService should throw error - { error: unexpected-request : { Request: { method: GET, path: /users... }}
+//				// And fail this test even if caller is not doing test assertions!
+//				completion()
+//			}
+//			task.resume()
+//		}
+//	}
+
+	// NON-CRASHING TEST but using waitForExpectations and only then running verify :((((
 	func testMockService_FailingGETRequest_invalidPath() {
 		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
 
@@ -75,6 +113,8 @@ class MockServiceTests: XCTestCase {
 		// Run my API client code and test:
 		// - that this test fails but does not crash! because the request path doesn't match what I've defined it should be in `.withRequest`
 		// -
+		let exp = expectation(description: "nonCrashingFailingTest")
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/invalidPath")!) { data, response, error in
@@ -82,8 +122,13 @@ class MockServiceTests: XCTestCase {
 				// MockService should throw error - { error: unexpected-request : { Request: { method: GET, path: /users... }}
 				// And fail this test even if caller is not doing test assertions!
 				completion()
+				exp.fulfill()
 			}
 			task.resume()
+		}
+
+		waitForExpectations(timeout: 30) { _ in
+			mockService.verify { _ in }
 		}
 	}
 

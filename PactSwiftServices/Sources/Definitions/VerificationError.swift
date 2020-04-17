@@ -37,7 +37,7 @@ public enum VerificationError: Error {
 
 	// MARK: -
 
-	var description: String {
+	public var description: String {
 		switch self {
 		case .unknown(let message): return describing("\(message ?? "unknown")")
 		case .missmatch(let message): return describing("\(message)")
