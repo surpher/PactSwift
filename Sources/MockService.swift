@@ -57,7 +57,18 @@ open class MockService {
 				case .success:
 					do {
 						try testFunction {
-							completion()
+							self.mockServer.verify {
+								switch $0 {
+								case .success:
+									debugPrint("YAY! Pact test passes as the test's request matched the one MockService/Rust was expecting")
+									completion()
+								case .failure(let error):
+									// TODO: - This next line is the bugger!
+									self.failWith(error.localizedDescription, file: file, line: line) // WARNING: - This bugger crashes the mismatch in http request test
+									completion()
+								}
+							}
+
 						}
 					} catch {
 						// Where does the build log get written using rust lib?

@@ -95,6 +95,9 @@ class MockServerTests: XCTestCase {
 				XCTFail("MOCK SERVER ERROR STARTING: \(error.description)")
 			}
 		}
+
+		// This works here, because we wait for the dataTask execution to finish...
+		// But... we pass the `testCompleted: @escaping () -> Void` in the MockServiceTests and that's where the following verification happens, right? And it _should_ still be in the same test. Or where am I loosing the breadcrumbs?!?!
 		waitForExpectations(timeout: 1) { error in
 			self.mockServer.verify {
 				switch $0 {
