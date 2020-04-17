@@ -27,6 +27,7 @@ class MockServiceTests: XCTestCase {
 	func testMockService_SuccessfulGETRequest() {
 		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
 
+		// Prepare the API interaction expectations:
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -38,6 +39,11 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		// Run my API Client code and test:
+		// - that my request matches the above defined expectations in `withRequest`,
+		// - and test that my request code handles the response correctly
+		//   (mockService will respond with what I defined in the `.willRespondWith`, given the request matches)
+		//
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
@@ -54,6 +60,7 @@ class MockServiceTests: XCTestCase {
 	func testMockService_FailingGETRequest_invalidPath() {
 		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
 
+		// Prepare the API interactino expectations:
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -65,9 +72,12 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		// Run my API client code and test:
+		// - that this test fails but does not crash! because the request path doesn't match what I've defined it should be in `.withRequest`
+		// -
 		mockService.run { completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/invalidPath")!) { data, response, error in
 				// TODO: - WIP
 				// MockService should throw error - { error: unexpected-request : { Request: { method: GET, path: /users... }}
 				// And fail this test even if caller is not doing test assertions!
