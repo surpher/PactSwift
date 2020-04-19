@@ -35,6 +35,8 @@
 		AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */; };
 		AD8DF43B243EEF390062CB1A /* MatchingRuleExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */; };
 		AD8DF43F244055980062CB1A /* EachLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43E244055980062CB1A /* EachLike.swift */; };
+		ADB1FE60244BF440009BECF7 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB1FE5B244AB72F009BECF7 /* Nimble.framework */; };
+		ADB1FE61244BF440009BECF7 /* Nimble.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ADB1FE5B244AB72F009BECF7 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
@@ -81,6 +83,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				ADBC9ABC2442DC8E00B119CB /* PactSwiftServices.framework in Embed Frameworks */,
+				ADB1FE61244BF440009BECF7 /* Nimble.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +132,7 @@
 		AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLike.swift; sourceTree = "<group>"; };
 		AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingRuleExpressible.swift; sourceTree = "<group>"; };
 		AD8DF43E244055980062CB1A /* EachLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLike.swift; sourceTree = "<group>"; };
+		ADB1FE5B244AB72F009BECF7 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Pact.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADBC9ABB2442DC8E00B119CB /* PactSwiftServices.framework in Frameworks */,
+				ADB1FE60244BF440009BECF7 /* Nimble.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +247,7 @@
 		ADAC3D5F2442983B0078CCC7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ADB1FE5B244AB72F009BECF7 /* Nimble.framework */,
 				ADBC9ABA2442DC8E00B119CB /* PactSwiftServices.framework */,
 			);
 			name = Frameworks;
@@ -349,6 +355,7 @@
 				AD8817FB242C715A00BF510D /* Frameworks */,
 				AD8817FC242C715A00BF510D /* Resources */,
 				ADAC3D622442983B0078CCC7 /* Embed Frameworks */,
+				ADB1FE58244AB6EF009BECF7 /* Carthage - Copy frameworks */,
 			);
 			buildRules = (
 			);
@@ -460,6 +467,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		ADB1FE58244AB6EF009BECF7 /* Carthage - Copy frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+			);
+			name = "Carthage - Copy frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "carthage copy-frameworks\n\n";
+		};
 		ADC3C4CC242CCCEB00D3FDCE /* Lint Project */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
