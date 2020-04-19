@@ -26,10 +26,11 @@ let kTimeout: TimeInterval = 30
 
 open class MockService {
 
-	private let mockServer: MockServer
 	private var pact: Pact
-
 	private var interactions: [Interaction] = []
+
+	private let mockServer: MockServer
+	private let errorReporter: ErrorReportable
 
 	var baseUrl: String {
 		mockServer.baseUrl
@@ -37,9 +38,10 @@ open class MockService {
 
 	// MARK: - Initializers
 
-	public init(consumer: String, provider: String) {
+	public init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
+		self.errorReporter = errorReporter ?? ErrorReporter()
 	}
 
 	// MARK: - Interface
@@ -50,10 +52,10 @@ open class MockService {
 		return interaction
 	}
 
+	// Test the API interaction (API calls) between the client and a programmed mock service.
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = interactions
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
-			debugPrint("1.")
 			self.mockServer.setup(pact: pactData!) {
 				switch $0 {
 				case .success:
@@ -62,7 +64,7 @@ open class MockService {
 							completion()
 						}
 					} catch {
-						self.failWith("🛑 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
+						self.failWith("🚨 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
 					}
 				case .failure(let error):
 					self.failWith(error.localizedDescription)
@@ -84,26 +86,16 @@ open class MockService {
 		}
 	}
 
-	// TO-DO: - This function is not needed. Get rid of it.
-	public func verify(_ file: FileString? = #file, line: UInt? = #line, completion: (Result<Void, VerificationError>) -> Void) {
-		self.mockServer.verify {
-			switch $0 {
-			case .success:
-				return completion(.success(()))
-			case .failure(let error):
-				self.failWith(error.description, file: file, line: line)
-				return completion(.failure(error))
-			}
-		}
-	}
-
+	// Checks if any of the verifications in this object have failed:
+	// If no fails: write pact contract onto disk
+	// If failed at least ont: fail with error
 	public func finalize(completion: (Result<Void, Error>) -> Void) {
 		self.mockServer.finalize {
 			switch $0 {
 			case .success:
 				return completion(.success(()))
 			case .failure(let error):
-				self.failWith(error.localizedDescription)
+				self.failWith(error.description)
 				return completion(.failure(error))
 			}
 		}
@@ -113,19 +105,19 @@ open class MockService {
 
 private extension MockService {
 
-	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
+	func waitForPactUntil(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
 		if let file = file, let line = line {
-			fail(message, file: file, line: line)
+			return waitUntil(timeout: timeout, file: file, line: line, action: action)
 		} else {
-			fail(message)
+			return waitUntil(timeout: timeout, action: action)
 		}
 	}
 
-	func waitForPactUntil(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
+	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		if let file = file, let line = line {
-			return waitUntil(timeout: timeout, file: file, line: line, action: action) // Quick/Nimble
+			errorReporter.reportFailure(message, file: file, line: line)
 		} else {
-			return waitUntil(timeout: timeout, action: action)  // Quick/Nimble
+			errorReporter.reportFailure(message)
 		}
 	}
 

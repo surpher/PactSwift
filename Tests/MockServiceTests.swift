@@ -24,10 +24,28 @@ import XCTest
 
 class MockServiceTests: XCTestCase {
 
-	func testMockService_SuccessfulGETRequest() {
-		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
+	var mockService: MockService!
+	var errorCapture: ErrorCapture!
 
-		// Prepare the API interaction expectations:
+	// MARK: - Lifecycle
+
+	override func setUp() {
+		super.setUp()
+
+		errorCapture = ErrorCapture()
+		mockService = MockService(consumer: "pactswift-unit-tests", provider: "api-provider", errorReporter: errorCapture)
+	}
+
+	override func tearDown() {
+		mockService = nil
+		errorCapture = nil
+
+		super.tearDown()
+	}
+
+	// MARK: - Tests
+
+	func testMockService_SuccessfulGETRequest() {
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -39,14 +57,9 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
-		// Run my API Client code and test:
-		// - that my request matches the above defined expectations in `withRequest`,
-		// - and test that my request code handles the response correctly
-		//   (mockService will respond with what I defined in the `.willRespondWith`, given the request matches)
-		//
 		mockService.run { completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/users")!) { data, response, error in
 				if let data = data {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
@@ -57,11 +70,7 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	// Works just fine and as expected with full Quick/Nimble Carthage dependency.
-	func testMockService_FailingGETRequest_invalidPath() {
-		let mockService = MockService(consumer: "consumer-app", provider: "api-provider")
-
-		// Prepare the API interactino expectations:
+	func testMockService_Failing_WhenNoRequestReceived() {
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -73,15 +82,13 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
-		mockService.run { completion in
-			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(mockService.baseUrl)/invalidPath")!) { data, response, error in
-				// TODO: - WIP
-				// MockService should throw error - { error: unexpected-request : { Request: { method: GET, path: /users... }}
-				// And fail this test even if caller is not doing test assertions!
-				completion()
-			}
-			task.resume()
+		mockService.run { $0() }
+
+		do {
+			let testResult = try XCTUnwrap(errorCapture.error?.message)
+			XCTAssertTrue(testResult.contains("missing-request"))
+		} catch {
+			XCTFail("Expected errorCapture object to intercept the failing tests message")
 		}
 	}
 
