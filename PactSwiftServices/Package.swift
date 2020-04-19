@@ -5,8 +5,8 @@ import PackageDescription
  let package = Package(
 	name: "PactSwiftServices",
 	platforms: [
-		.macOS(.v10_12), 
-		.iOS(.v12), 
+		.macOS(.v10_12),
+		.iOS(.v12),
 		.tvOS(.v12)
 	],
 	products: [
@@ -17,26 +17,20 @@ import PackageDescription
 	],
 	dependencies: [
 		.package(path: "../PactMockServer"),
-		.package(url: "https://github.com/mattgallagher/CwlPreconditionTesting.git", .upToNextMajor(from: "2.0.0")),
+		.package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
 	],
 	targets: [
 		.target(
 			name: "PactSwiftServices",
-			dependencies: {
-                #if os(macOS)
-                return [
-					"PactMockServer",
-                    "CwlPreconditionTesting",
-                ]
-                #else
-                return ["PactMockServer"]
-                #endif
-            }(),
+			dependencies: [
+				"PactMockServer",
+				"Nimble"
+			],
 			path: "./Sources"
 		),
 		.testTarget(
 			name: "PactSwiftServicesTests",
-			dependencies: ["PactSwiftServices"],
+			dependencies: ["PactSwiftServices",],
 			path: "./Tests"
 		),
 	],

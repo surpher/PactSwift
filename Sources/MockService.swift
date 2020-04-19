@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import Nimble
 import PactSwiftServices
 
 let kTimeout: TimeInterval = 30
@@ -57,47 +58,40 @@ open class MockService {
 				switch $0 {
 				case .success:
 					do {
-						debugPrint("2.")
 						try testFunction {
-							debugPrint("2.5")
 							completion()
 						}
 					} catch {
-						debugPrint("3.")
-						// Where does the build log get written using rust lib?
 						self.failWith("🛑 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
 					}
 				case .failure(let error):
-					debugPrint("4.")
 					self.failWith(error.localizedDescription)
 					completion()
 				}
 			}
 		}
 
-//		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
-//			debugPrint("5.")
-//			self.mockServer.verify {
-//				switch $0 {
-//				case .success:
-//					completion()
-//				case .failure(let error):
-//					self.failWith(error.localizedDescription, file: file, line: line)
-//					completion()
-//				}
-//			}
-//		}
+		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
+			self.mockServer.verify {
+				switch $0 {
+				case .success:
+					completion()
+				case .failure(let error):
+					self.failWith(error.description, file: file, line: line)
+					completion()
+				}
+			}
+		}
 	}
 
-	public func verify(completion: (Result<Void, VerificationError>) -> Void) {
+	// TO-DO: - This function is not needed. Get rid of it.
+	public func verify(_ file: FileString? = #file, line: UInt? = #line, completion: (Result<Void, VerificationError>) -> Void) {
 		self.mockServer.verify {
 			switch $0 {
 			case .success:
-				debugPrint("5")
 				return completion(.success(()))
 			case .failure(let error):
-				debugPrint("6")
-				self.failWith(error.description)
+				self.failWith(error.description, file: file, line: line)
 				return completion(.failure(error))
 			}
 		}
@@ -121,9 +115,9 @@ private extension MockService {
 
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		if let file = file, let line = line {
-			fail(message, file: file, line: line) // Quick/Nimble
+			fail(message, file: file, line: line)
 		} else {
-			fail(message) // Quick/Nimble
+			fail(message)
 		}
 	}
 
