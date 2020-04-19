@@ -26,7 +26,7 @@ echo "--- 🤖 Linting $SRCROOT/Sources/*.swift"
 
 if which swiftlint >/dev/null; then
 		# Build a list of Swift files in the Sources directory
-		find $SRCROOT/Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > $DERIVED_FILE_DIR/$1.xcfilelist
+		find Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > $DERIVED_FILE_DIR/$1.xcfilelist
 
 		# Update the xcfilelist if the list of Swift files has changed
 		cmp --silent $SRCROOT/$1.xcfilelist $DERIVED_FILE_DIR/$1.xcfilelist || cp -f $DERIVED_FILE_DIR/$1.xcfilelist $SRCROOT/$1.xcfilelist
