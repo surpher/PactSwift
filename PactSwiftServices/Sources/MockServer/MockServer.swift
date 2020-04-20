@@ -62,9 +62,9 @@ public class MockServer {
 	}
 
 	/// Verify interactions
-	public func verify(completion: (Result<Bool, VerificationError>) -> Void) {
+	public func verify(expected: String, completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
-			completion(.failure(.missmatch(mismatchDescription)))
+			completion(.failure(.missmatch(mismatchDescription(expected: expected))))
 			return
 		}
 
@@ -93,13 +93,13 @@ private extension MockServer {
 	}
 
 	/// Descripton of mismatching requests
-	var mismatchDescription: String {
+	func mismatchDescription(expected: String) -> String {
 		guard let mismatches = mock_server_mismatches(port) else {
-			return "Nothing received"
+			return "Nothing received or there might be something fishy going on with the Pact Mock Server..."
 		}
 
-		// TODO: - parse `mismatches` object into something more readable
-		return String(cString: mismatches)
+		let errorDescription = MismatchHandler(mismatches: String(cString: mismatches), expectedRequest: expected).description
+		return errorDescription
 	}
 
 	/// Writes the PACT contract file to disk
@@ -113,7 +113,9 @@ private extension MockServer {
 	}
 
 	func shutdownMockServer() {
-		if port > 0 { cleanup_mock_server(port) }
+		if port > 0 {
+			cleanup_mock_server(port)
+		}
 	}
 
 }
@@ -130,23 +132,23 @@ private extension MockServer {
 			return true
 		}
 		debugPrint("notify: Path not found: \(pactDir)")
-		return couldCreatePath()
+		return canCreatePath()
 	}
 
-	func couldCreatePath() -> Bool {
-		var couldBeCreated = false
+	func canCreatePath() -> Bool {
+		var canCreate = false
 		do {
 			try FileManager.default.createDirectory(
 				atPath: self.pactDir,
 				withIntermediateDirectories: false,
 				attributes: nil
 			)
-			couldBeCreated = true
+			canCreate.toggle()
 		} catch let error as NSError {
 			debugPrint("notify: Files not written. Path couldn't be created: \(self.pactDir)")
 			debugPrint(error.localizedDescription)
 		}
-		return couldBeCreated
+		return canCreate
 	}
 
 }

@@ -21,7 +21,7 @@
 import Foundation
 import os.log
 
-internal extension MockServer {
+extension MockServer {
 
 	func unusedPort() -> Int32 {
 		var port = randomPort
