@@ -49,7 +49,7 @@ class MockServiceTests: XCTestCase {
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
-			.withRequest(method: .GET, path: "/users")
+			.withRequest(method: .GET, path: "/user")
 			.willRespondWith(
 				status: 200,
 				body: [
@@ -59,7 +59,7 @@ class MockServiceTests: XCTestCase {
 
 		mockService.run { completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/users")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
@@ -70,7 +70,36 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	func testMockService_Failing_WhenNoRequestReceived() {
+	func testMockService_Failing_WhenRequestMissing() {
+		_ = mockService
+			.uponReceiving("Request for alligators")
+			.given("alligators exist")
+			.withRequest(method: .GET, path: "/actors")
+			.willRespondWith(
+				status: 200
+			)
+
+		mockService.run { $0() }
+
+		do {
+			let testResult = try XCTUnwrap(errorCapture.error?.message)
+			XCTAssertTrue(testResult.contains("Missing request"))
+		} catch {
+			XCTFail("Expected errorCapture object to intercept the failing tests message")
+		}
+	}
+
+	func testMockService_Failing_WhenRequestUnexpected() {
+		let expectedValues = [
+			"Failed to verify Pact:",
+			"Pact verification error! Actual request does not match expected interactions...",
+			"Unexpected request",
+			"Expected",
+			"/user",
+			"Actual",
+			"/invalidPath"
+		]
+
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -82,11 +111,17 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
-		mockService.run { $0() }
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/invalidPath")!) { data, response, error in
+				completion()
+			}
+			task.resume()
+		}
 
 		do {
 			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(testResult.contains("missing-request"))
+			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 		} catch {
 			XCTFail("Expected errorCapture object to intercept the failing tests message")
 		}
@@ -101,13 +136,7 @@ private extension MockServiceTests {
 	}
 
 	func decodeResponse(data: Data) -> TestModel? {
-		do {
-			let result = try JSONDecoder().decode(TestModel.self, from: data)
-			return result
-		} catch {
-			debugPrint("ERROR")
-		}
-		return nil
+		try? JSONDecoder().decode(TestModel.self, from: data)
 	}
 
 }

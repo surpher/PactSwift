@@ -26,6 +26,15 @@ public struct Request {
 	let headers: [String: String]?
 	let body: Any?
 
+	var description: String {
+		let request = "\(method.rawValue.uppercased()) \(path)"
+		let queryString = query?.compactMap { "\($0)=\($1.joined(separator: ","))" }.joined(separator: "&")
+		let headersString = headers?.compactMap { "\"\($0)\": \"\($1)\"" }.joined(separator: "\n\t")
+
+		return
+			"\(request) \(queryString ?? "")\(headersString != nil ? "\n\n\tHeaders:\n\t" + headersString! : "")"
+	}
+
 	private let bodyEncoder: (Encoder) throws -> Void
 }
 

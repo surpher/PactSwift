@@ -22,12 +22,14 @@ import Foundation
 import Nimble
 import PactSwiftServices
 
-let kTimeout: TimeInterval = 30
+let kTimeout: TimeInterval = 10
 
 open class MockService {
 
 	private var pact: Pact
 	private var interactions: [Interaction] = []
+	private var currentInteraction: Interaction!
+	private var allValidated: Bool = true
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
@@ -47,14 +49,14 @@ open class MockService {
 	// MARK: - Interface
 
 	public func uponReceiving(_ description: String) -> Interaction {
-		let interaction = Interaction().uponReceiving(description)
-		interactions.append(interaction)
-		return interaction
+		currentInteraction = Interaction().uponReceiving(description)
+		interactions.append(currentInteraction)
+		return currentInteraction
 	}
 
 	// Test the API interaction (API calls) between the client and a programmed mock service.
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
-		pact.interactions = interactions
+		pact.interactions = [currentInteraction]
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
 			self.mockServer.setup(pact: pactData!) {
 				switch $0 {
@@ -74,7 +76,7 @@ open class MockService {
 		}
 
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
-			self.mockServer.verify {
+			self.mockServer.verify(expected: self.currentInteraction.request?.description ?? "N/A") {
 				switch $0 {
 				case .success:
 					completion()
@@ -90,6 +92,9 @@ open class MockService {
 	// If no fails: write pact contract onto disk
 	// If failed at least ont: fail with error
 	public func finalize(completion: (Result<Void, Error>) -> Void) {
+		// setup with [interaction]
+		// check if local state for allValidated == true
+		// then run finalize
 		self.mockServer.finalize {
 			switch $0 {
 			case .success:
@@ -99,6 +104,8 @@ open class MockService {
 				return completion(.failure(error))
 			}
 		}
+		// if allValidated == false
+		// failWith Validation
 	}
 
 }
@@ -114,6 +121,7 @@ private extension MockService {
 	}
 
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
+		allValidated = false
 		if let file = file, let line = line {
 			errorReporter.reportFailure(message, file: file, line: line)
 		} else {
