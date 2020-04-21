@@ -33,7 +33,7 @@ class MockServiceTests: XCTestCase {
 		super.setUp()
 
 		errorCapture = ErrorCapture()
-		mockService = MockService(consumer: "pactswift-unit-tests", provider: "api-provider", errorReporter: errorCapture)
+		mockService = MockService(consumer: "pactswift-unit-tests", provider: "unit-test-api-provider", errorReporter: errorCapture)
 	}
 
 	override func tearDown() {
@@ -47,8 +47,8 @@ class MockServiceTests: XCTestCase {
 
 	func testMockService_SuccessfulGETRequest() {
 		_ = mockService
-			.uponReceiving("Request for alligators")
-			.given("alligators exist")
+			.uponReceiving("Request for list of users")
+			.given("users exist")
 			.withRequest(method: .GET, path: "/user")
 			.willRespondWith(
 				status: 200,
@@ -70,7 +70,7 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	func testMockService_Failing_WhenRequestMissing() {
+	func testMockService_Fails_WhenRequestMissing() {
 		_ = mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
@@ -89,11 +89,11 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	func testMockService_Failing_WhenRequestUnexpected() {
+	func testMockService_Fails_WhenRequestUnexpected() {
 		let expectedValues = [
-			"Failed to verify Pact:",
-			"Pact verification error! Actual request does not match expected interactions...",
-			"Unexpected request",
+			"Failed to verify Pact!",
+			"Actual request does not match expected interactions...",
+			"Missing request",
 			"Expected",
 			"/user",
 			"Actual",
@@ -126,6 +126,79 @@ class MockServiceTests: XCTestCase {
 			XCTFail("Expected errorCapture object to intercept the failing tests message")
 		}
 	}
+
+	func testMockService_Fails_WhenUnexpectedQuery() {
+		let expectedValues = [
+			"Failed to verify Pact!",
+			"Actual request does not match expected interactions...",
+			"Request does not match",
+			"Expected",
+			"GET /user",
+			"state", "NSW",
+			"Actual",
+			"query param 'page'",
+			"query param 'state'"
+		]
+
+		_ = mockService
+			.uponReceiving("Request for list of users")
+			.given("users exist")
+			.withRequest(method: .GET, path: "/user", query: ["state": ["NSW"], "page": ["2"]])
+			.willRespondWith(
+				status: 200
+			)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user?state=VIC")!) { data, response, error in
+				completion()
+			}
+			task.resume()
+		}
+
+		do {
+			let testResult = try XCTUnwrap(errorCapture.error?.message)
+			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+		} catch {
+			XCTFail("Expected errorCapture object to intercept the failing tests message")
+		}
+	}
+
+	func testMockService_Fails_WhenMissingBody() {
+			let expectedValues = [
+				"Failed to verify Pact!",
+				"Actual request does not match expected interactions...",
+				"Request does not match",
+				"Expected",
+				"state=", "VIC",
+				"Actual",
+				"query param 'state'",
+				"address"
+			]
+
+			_ = mockService
+				.uponReceiving("Request for list of users")
+				.given("users exist")
+				.withRequest(method: .GET, path: "/user", query: ["state": ["NSW"], "address": ["101 Test Ave"]], body: ["foo": "bar"])
+				.willRespondWith(
+					status: 200
+				)
+
+			mockService.run { completion in
+				let session = URLSession.shared
+				let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user?state=VIC")!) { data, response, error in
+					completion()
+				}
+				task.resume()
+			}
+
+			do {
+				let testResult = try XCTUnwrap(errorCapture.error?.message)
+				XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+			} catch {
+				XCTFail("Expected errorCapture object to intercept the failing tests message")
+			}
+		}
 
 }
 

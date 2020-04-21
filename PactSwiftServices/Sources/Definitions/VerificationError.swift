@@ -54,7 +54,7 @@ public enum VerificationError: Error {
 	}
 
 	private func describing(_ message: String) -> String {
-		["Failed to verify Pact:", message].joined(separator: " ")
+		["Failed to verify Pact!", message].joined(separator: " ")
 	}
 
 }

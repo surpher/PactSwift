@@ -16,7 +16,7 @@
 		ADAC3D1B244282980078CCC7 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* MockServerTests.swift */; };
 		ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* MockServer.swift */; };
 		ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ADDE4709244D82FA00E4F7EE /* MismatchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4708244D82FA00E4F7EE /* MismatchHandler.swift */; };
+		ADDE4709244D82FA00E4F7EE /* ValidationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4708244D82FA00E4F7EE /* ValidationErrorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		ADB1FE54244AB531009BECF7 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		ADDE4708244D82FA00E4F7EE /* MismatchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MismatchHandler.swift; sourceTree = "<group>"; };
+		ADDE4708244D82FA00E4F7EE /* ValidationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +78,8 @@
 		AD1035B524458BF8002C97CA /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
-				ADDE4708244D82FA00E4F7EE /* MismatchHandler.swift */,
 				AD1035B124458239002C97CA /* MockServerError.swift */,
+				ADDE4708244D82FA00E4F7EE /* ValidationErrorHandler.swift */,
 				AD1035B324458909002C97CA /* VerificationError.swift */,
 			);
 			path = Definitions;
@@ -331,7 +331,7 @@
 				AD1035B424458909002C97CA /* VerificationError.swift in Sources */,
 				ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */,
 				AD1035B224458239002C97CA /* MockServerError.swift in Sources */,
-				ADDE4709244D82FA00E4F7EE /* MismatchHandler.swift in Sources */,
+				ADDE4709244D82FA00E4F7EE /* ValidationErrorHandler.swift in Sources */,
 				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
