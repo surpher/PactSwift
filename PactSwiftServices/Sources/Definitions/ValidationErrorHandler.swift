@@ -76,10 +76,10 @@ struct ValidationErrorHandler {
 		Reason:
 			\(errorReason)
 
-		Expected:
+		Request:
 			\(expectedRequest)
 		
-		Actual:
+		Error:
 			\(actualRequest)
 		"""
 	}

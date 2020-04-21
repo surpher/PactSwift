@@ -25,16 +25,20 @@ public enum MockServerError: Error {
 	case nullPointer
 	case invalidPactJSON
 	case failedToStart
+	case failedToWriteFile
 	case methodPanicked
 	case invalidSocketAddress
+	case portNotFound
 	case unknown
 
 	init(code: Int) {
 		switch code {
+		case 2: self = .failedToWriteFile
+		case 3: self = .portNotFound
 		case -1: self = .nullPointer
 		case -2: self = .invalidPactJSON
 		case -3: self = .failedToStart
-		case -4: self = .methodPanicked
+		case 1, -4: self = .methodPanicked
 		case -5: self = .invalidSocketAddress
 		default: self = .unknown
 		}
@@ -42,7 +46,7 @@ public enum MockServerError: Error {
 
 	// MARK: -
 
-	var description: String {
+	public var description: String {
 		switch self {
 		case .nullPointer:
 			return describing("Either Pact JSON or Socket Address passed as null pointer.")
@@ -54,6 +58,10 @@ public enum MockServerError: Error {
 			return describing("PactMockServer's method panicked.")
 		case .invalidSocketAddress:
 			return describing("Socket Address is invalid.")
+		case .failedToWriteFile:
+			return describing("Failed to write Pact contract to file.")
+		case .portNotFound:
+			return describing("Mock Server with specified port not running.")
 		case .unknown:
 			return describing("reason unknown!")
 		}
@@ -62,7 +70,7 @@ public enum MockServerError: Error {
 	// MARK: - Private
 
 	private func describing(_ message: String) -> String {
-		["Failed to start PactMockServer:", message].joined(separator: " ")
+		["Failed to use PactMockServer:", message].joined(separator: " ")
 	}
 
 }
