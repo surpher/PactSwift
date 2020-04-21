@@ -262,7 +262,7 @@ class PactBuilderTests: XCTestCase {
 
 private extension PactBuilderTests {
 
-	// This model is tightly coupled with the SomethingLike Matcher
+	// This test model is tightly coupled with the SomethingLike Matcher for the purpouse of these tests
 	struct GenericLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {
@@ -291,7 +291,7 @@ private extension PactBuilderTests {
 		}
 	}
 
-	// This model is tightly coupled for the EachLike Matcher
+	// This test model is tightly coupled with the EachLike Matcher for the purpouse of these tests
 	struct SetLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {

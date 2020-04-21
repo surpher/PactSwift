@@ -64,7 +64,7 @@ public class MockServer {
 	/// Verify interactions
 	public func verify(expected: String, completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
-			completion(.failure(.missmatch(mismatchDescription(expected: expected))))
+			completion(.failure(.missmatch(mismatchDescription)))
 			return
 		}
 
@@ -93,12 +93,12 @@ private extension MockServer {
 	}
 
 	/// Descripton of mismatching requests
-	func mismatchDescription(expected: String) -> String {
+	var mismatchDescription: String {
 		guard let mismatches = mock_server_mismatches(port) else {
 			return "Nothing received or there might be something fishy going on with the Pact Mock Server..."
 		}
 
-		let errorDescription = MismatchHandler(mismatches: String(cString: mismatches), expectedRequest: expected).description
+		let errorDescription = ValidationErrorHandler(mismatches: String(cString: mismatches)).description
 		return errorDescription
 	}
 
