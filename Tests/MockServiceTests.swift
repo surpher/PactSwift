@@ -89,14 +89,14 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	func testMockService_Fails_WhenRequestUnexpected() {
+	func testMockService_Fails_WhenRequestPathInvalid() {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Missing request",
-			"Expected",
+			"Request",
 			"/user",
-			"Actual",
+			"Error",
 			"/invalidPath"
 		]
 
@@ -132,10 +132,10 @@ class MockServiceTests: XCTestCase {
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Request does not match",
-			"Expected",
+			"Request",
 			"GET /user",
 			"state", "NSW",
-			"Actual",
+			"Error",
 			"query param 'page'",
 			"query param 'state'"
 		]
@@ -169,9 +169,9 @@ class MockServiceTests: XCTestCase {
 				"Failed to verify Pact!",
 				"Actual request does not match expected interactions...",
 				"Request does not match",
-				"Expected",
+				"Request",
 				"state=", "VIC",
-				"Actual",
+				"Error",
 				"query param 'state'",
 				"address"
 			]
@@ -199,6 +199,39 @@ class MockServiceTests: XCTestCase {
 				XCTFail("Expected errorCapture object to intercept the failing tests message")
 			}
 		}
+
+	func testMockService_Fails_WithHeaderMismatch() {
+		let expectedValues = [
+			"Failed to verify Pact!",
+			"Actual request does not match expected interactions...",
+			"Request does not match",
+			"header",
+			"'testKey'"
+		]
+
+		_ = mockService
+			.uponReceiving("Request for list of users")
+			.given("users exist")
+			.withRequest(method: .GET, path: "/user", headers: ["testKey": "test/value"])
+			.willRespondWith(
+				status: 200
+			)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+				completion()
+			}
+			task.resume()
+		}
+
+		do {
+			let testResult = try XCTUnwrap(errorCapture.error?.message)
+			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+		} catch {
+			XCTFail("Expected errorCapture object to intercept the failing tests message")
+		}
+	}
 
 }
 

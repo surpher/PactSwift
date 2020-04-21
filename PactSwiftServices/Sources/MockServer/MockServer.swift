@@ -28,15 +28,17 @@ public class MockServer {
 
 	// MARK: - Properties
 
-	lazy private var port: Int32 = {
-		unusedPort()
-	}()
-
 	public var baseUrl: String {
 		"http://\(socketAddress):\(port)"
 	}
 
+	lazy private var port: Int32 = {
+		unusedPort()
+	}()
+
 	private let socketAddress = "0.0.0.0"
+
+	// MARK: - Lifecycle
 
 	public init() { }
 
@@ -49,7 +51,7 @@ public class MockServer {
 	/// Prepare the Pact Mock Server with expected interactions
 
 	// TODO: - This should probably be part of an init()
-	// asking for baseUrl before calling setup() might cause some unexpected behaviour
+	// as asking for baseUrl before calling setup() might cause some unexpected behaviour
 	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
@@ -64,15 +66,14 @@ public class MockServer {
 	/// Verify interactions
 	public func verify(expected: String, completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
-			completion(.failure(.missmatch(mismatchDescription)))
+			completion(.failure(.reason(mismatchDescription)))
 			return
 		}
-
 		completion(.success(true))
 	}
 
 	/// Finalise by writing the contract file onto disk
-	public func finalize(completion: (Result<String, VerificationError>) -> Void) {
+	public func finalize(completion: (Result<String, MockServerError>) -> Void) {
 		writePactContractFile {
 			switch $0 {
 			case .success:
@@ -95,7 +96,7 @@ private extension MockServer {
 	/// Descripton of mismatching requests
 	var mismatchDescription: String {
 		guard let mismatches = mock_server_mismatches(port) else {
-			return "Nothing received or there might be something fishy going on with the Pact Mock Server..."
+			return "No response! There might be something fishy going on with your Mock Server..."
 		}
 
 		let errorDescription = ValidationErrorHandler(mismatches: String(cString: mismatches)).description
@@ -103,15 +104,21 @@ private extension MockServer {
 	}
 
 	/// Writes the PACT contract file to disk
-	func writePactContractFile(completion: (Result<Void, VerificationError>) -> Void) {
-		let result = write_pact_file(port, pactDir)
-		guard result == 0 else {
-			completion(Result.failure(.writeError(Int(result))))
+	func writePactContractFile(completion: (Result<Void, MockServerError>) -> Void) {
+		guard checkForPath() else {
+			completion(.failure(.failedToWriteFile))
+			return
+		}
+
+		let writeResult = write_pact_file(port, pactDir)
+		guard writeResult == 0 else {
+			completion(Result.failure(.failedToWriteFile))
 			return
 		}
 		completion(Result.success(()))
 	}
 
+	/// Shuts down the Mock Server and releases the socket address
 	func shutdownMockServer() {
 		if port > 0 {
 			cleanup_mock_server(port)
