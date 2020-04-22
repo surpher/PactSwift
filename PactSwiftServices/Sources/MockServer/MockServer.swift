@@ -136,7 +136,8 @@ private extension MockServer {
 private extension MockServer {
 
 	var pactDir: String {
-		Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String ?? "/tmp/pacts"
+		debugPrint("PACT_CONTRACT_DIR: \(String(describing: Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String))")
+		return Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String ?? "/tmp/pacts"
 	}
 
 	func checkForPath() -> Bool {
