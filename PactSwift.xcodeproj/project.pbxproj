@@ -217,8 +217,8 @@
 				AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */,
 				AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */,
 				AD7891BF24415C710014BCC8 /* IntegerLikeTests.swift */,
-				AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */,
 				ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */,
+				AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
