@@ -26,6 +26,14 @@ let kTimeout: TimeInterval = 10
 
 open class MockService {
 
+	// MARK: - Properties
+
+	public var baseUrl: String {
+		mockServer.baseUrl
+	}
+
+	// MARK: - Private properties
+
 	private var pact: Pact
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
@@ -33,10 +41,6 @@ open class MockService {
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
-
-	var baseUrl: String {
-		mockServer.baseUrl
-	}
 
 	// MARK: - Initializers
 
