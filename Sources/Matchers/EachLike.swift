@@ -35,25 +35,25 @@ public struct EachLike: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 
-	init(_ value: Any) {
+	public init(_ value: Any) {
 		self.value = [value]
 		self.min = 1
 		self.max = nil
 	}
 
-	init(_ value: Any, min: Int) {
+	public init(_ value: Any, min: Int) {
 		self.value = [value]
 		self.min = min
 		self.max = nil
 	}
 
-	init(_ value: Any, max: Int) {
+	public init(_ value: Any, max: Int) {
 		self.value = [value]
 		self.min = nil
 		self.max = max
 	}
 
-	init(_ value: Any, min: Int, max: Int) {
+	public init(_ value: Any, min: Int, max: Int) {
 		self.value = [value]
 		self.min = min
 		self.max = max
