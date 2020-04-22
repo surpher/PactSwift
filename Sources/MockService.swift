@@ -70,10 +70,10 @@ open class MockService {
 							completion()
 						}
 					} catch {
-						self.failWith("🚨 Error thrown in test function (check build log): \(error.localizedDescription)", file: file, line: line) //swiftlint:disable:this line_length
+						self.failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
 					}
 				case .failure(let error):
-					self.failWith(error.localizedDescription)
+					self.failWith(error.description)
 					completion()
 				}
 			}
@@ -93,8 +93,6 @@ open class MockService {
 	}
 
 	// Checks if any of the verifications in this object have failed:
-	// If no fails: write pact contract onto disk
-	// If failed at least ont: fail with error
 	public func finalize(completion: (Result<Void, MockServerError>) -> Void) {
 		guard let pactData = pact.data, allValidated else {
 			completion(.failure( .validationFaliure))
