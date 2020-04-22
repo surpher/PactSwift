@@ -104,5 +104,3 @@ Packages
 # Carthage/Checkouts
 
 Carthage/
-Cartfile
-Cartfile.private
