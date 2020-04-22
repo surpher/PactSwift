@@ -27,7 +27,7 @@ public struct IntegerLike: MatchingRuleExpressible {
 
 	// MARK: - Initializer
 
-	init(_ value: Int) {
+	public init(_ value: Int) {
 		self.value = value
 	}
 

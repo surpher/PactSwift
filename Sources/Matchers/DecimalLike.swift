@@ -27,7 +27,7 @@ public struct DecimalLike: MatchingRuleExpressible {
 
 	// MARK: - Initializer
 
-	init(_ value: Decimal) {
+	public init(_ value: Decimal) {
 		self.value = value
 	}
 }

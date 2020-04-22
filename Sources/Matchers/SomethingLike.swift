@@ -27,7 +27,7 @@ public struct SomethingLike: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 	
-	init(_ value: Any) {
+	public init(_ value: Any) {
 		self.value = value
 	}
 

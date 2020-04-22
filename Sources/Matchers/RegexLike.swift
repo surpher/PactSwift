@@ -36,7 +36,7 @@ public struct RegexLike: MatchingRuleExpressible {
 
 	// MARK: - Iitializer
 
-	init(_ value: String, term: String) {
+	public init(_ value: String, term: String) {
 		self.value = value
 		self.term = term
 	}
