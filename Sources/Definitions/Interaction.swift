@@ -76,12 +76,12 @@ extension Interaction {
 		given(providerStates)
 	}
 
-	func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
+	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
 	}
 
-	func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
+	public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
 		return self
 	}
