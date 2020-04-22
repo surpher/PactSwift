@@ -136,15 +136,14 @@ private extension MockServer {
 private extension MockServer {
 
 	var pactDir: String {
-		debugPrint("PACT_CONTRACT_DIR: \(String(describing: Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String))")
-		return Bundle(for: Self.self).infoDictionary?["PACT_CONTRACT_DIR"] as? String ?? "/tmp/pacts"
+		ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
 	}
 
 	func checkForPath() -> Bool {
 		guard !FileManager.default.fileExists(atPath: pactDir) else {
 			return true
 		}
-		debugPrint("notify: Path not found: \(pactDir)")
+		debugPrint("Path not found: \(pactDir)")
 		return canCreatePath()
 	}
 
@@ -153,12 +152,12 @@ private extension MockServer {
 		do {
 			try FileManager.default.createDirectory(
 				atPath: self.pactDir,
-				withIntermediateDirectories: false,
+				withIntermediateDirectories: true,
 				attributes: nil
 			)
 			canCreate.toggle()
 		} catch let error as NSError {
-			debugPrint("notify: Files not written. Path couldn't be created: \(self.pactDir)")
+			debugPrint("Files not written. Path could not be created: \(self.pactDir)")
 			debugPrint(error.localizedDescription)
 		}
 		return canCreate
