@@ -62,7 +62,7 @@ struct ValidationErrorHandler {
 				}
 				.joined(separator: "\n\t") //swiftlint:disable:this line_length
 
-				expectedRequest += "\(error.method) \(error.path)\(expectedQuery != nil ? "?" + expectedQuery! : "")"
+				expectedRequest += "\(error.method) \(error.path)\(expectedQuery != "" ? "?" + expectedQuery! : "")"
 				actualRequest += "\(error.method) \(error.path)\(mismatches != nil ? "\n\t" + mismatches! : "")"
 			default:
 				expectedRequest += ""
