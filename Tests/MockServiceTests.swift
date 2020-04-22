@@ -299,6 +299,35 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
+	// MARK: - Write pact contract
+
+	func testMockService_Writes_PactContract() {
+		_ = mockService
+			.uponReceiving("Request for list of users")
+			.given("users exist")
+			.withRequest(method: .GET, path: "/user")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"foo": SomethingLike("bar"),
+					"baz": EachLike(123, min: 1, max: 5)
+				]
+			)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+				if let data = data {
+					let testResult = self.decodeResponse(data: data)
+					XCTAssertEqual(testResult?.foo, "bar")
+					XCTAssertEqual(testResult?.baz?.first, 123)
+				}
+				completion()
+			}
+			task.resume()
+		}
+	}
+
 }
 
 private extension MockServiceTests {

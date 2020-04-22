@@ -22,13 +22,14 @@ import Foundation
 
 public enum MockServerError: Error {
 	
-	case nullPointer
 	case invalidPactJSON
+	case invalidSocketAddress
 	case failedToStart
 	case failedToWriteFile
 	case methodPanicked
-	case invalidSocketAddress
+	case nullPointer
 	case portNotFound
+	case validationFaliure
 	case unknown
 
 	init(code: Int) {
@@ -40,6 +41,7 @@ public enum MockServerError: Error {
 		case -3: self = .failedToStart
 		case 1, -4: self = .methodPanicked
 		case -5: self = .invalidSocketAddress
+		case 999: self = .validationFaliure
 		default: self = .unknown
 		}
 	}
@@ -48,20 +50,22 @@ public enum MockServerError: Error {
 
 	public var description: String {
 		switch self {
-		case .nullPointer:
-			return describing("Either Pact JSON or Socket Address passed as null pointer.")
 		case .invalidPactJSON:
 			return describing("Pact JSON could not be parsed.")
-		case .failedToStart:
-			return describing("Could not start.")
-		case .methodPanicked:
-			return describing("PactMockServer's method panicked.")
 		case .invalidSocketAddress:
 			return describing("Socket Address is invalid.")
+		case .failedToStart:
+			return describing("Could not start.")
 		case .failedToWriteFile:
 			return describing("Failed to write Pact contract to file.")
+		case .methodPanicked:
+			return describing("PactMockServer's method panicked.")
+		case .nullPointer:
+			return describing("Either Pact JSON or Socket Address passed as null pointer.")
 		case .portNotFound:
 			return describing("Mock Server with specified port not running.")
+		case .validationFaliure:
+			return describing("Interactions failed to verify successfully. Check your tests.")
 		case .unknown:
 			return describing("reason unknown!")
 		}
@@ -70,7 +74,7 @@ public enum MockServerError: Error {
 	// MARK: - Private
 
 	private func describing(_ message: String) -> String {
-		["Failed to use PactMockServer:", message].joined(separator: " ")
+		["Mock Server Error:", message].joined(separator: " ")
 	}
 
 }
