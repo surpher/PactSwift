@@ -73,7 +73,12 @@ public class MockServer {
 	}
 
 	/// Finalise by writing the contract file onto disk
-	public func finalize(completion: (Result<String, MockServerError>) -> Void) {
+	public func finalize(pact: Data, completion: (Result<String, MockServerError>) -> Void) {
+		shutdownMockServer()
+		create_mock_server(
+			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
+			"\(socketAddress):\(port)"
+		)
 		writePactContractFile {
 			switch $0 {
 			case .success:

@@ -92,20 +92,20 @@ open class MockService {
 	// If no fails: write pact contract onto disk
 	// If failed at least ont: fail with error
 	public func finalize(completion: (Result<Void, MockServerError>) -> Void) {
-		// setup with [interaction]
-		// check if local state for allValidated == true
-		// then run finalize
-		self.mockServer.finalize {
-			switch $0 {
-			case .success:
-				return completion(.success(()))
-			case .failure(let error):
-				self.failWith(error.description)
-				return completion(.failure(error))
-			}
+		guard let pactData = pact.data, allValidated else {
+			completion(.failure( .validationFaliure))
+			return
 		}
 
-		allValidated ? debugPrint("All requests verified") : debugPrint("🚨 Failed to verify all requests!")
+		self.mockServer.finalize(pact: pactData) {
+			switch $0 {
+			case .success:
+				completion(.success(()))
+			case .failure(let error):
+				self.failWith(error.description)
+				completion(.failure(error))
+			}
+		}
 	}
 
 }
@@ -122,7 +122,7 @@ private extension MockService {
 
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		allValidated = false
-		
+
 		if let file = file, let line = line {
 			errorReporter.reportFailure(message, file: file, line: line)
 		} else {
