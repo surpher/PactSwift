@@ -48,7 +48,7 @@ open class MockService {
 		self.init(consumer: consumer, provider: provider, errorReporter: ErrorReporter())
 	}
 
-	init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
@@ -84,7 +84,7 @@ open class MockService {
 		}
 
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
-			self.mockServer.verify(expected: self.currentInteraction.request?.description ?? "N/A") {
+			self.mockServer.verify {
 				switch $0 {
 				case .success:
 					completion()

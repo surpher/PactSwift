@@ -64,7 +64,7 @@ public class MockServer {
 	}
 
 	/// Verify interactions
-	public func verify(expected: String, completion: (Result<Bool, VerificationError>) -> Void) {
+	public func verify(completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
 			completion(.failure(.reason(mismatchDescription)))
 			return
