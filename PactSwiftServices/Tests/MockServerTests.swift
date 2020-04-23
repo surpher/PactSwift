@@ -71,7 +71,7 @@ class MockServerTests: XCTestCase {
 		}
 	}
 
-	func testMockServer_SANITY_TEST() {
+	func test_MOCK_SERVER_SANITY_TEST() {
 		let session = URLSession.shared
 		let dataTaskExpectation = expectation(description: "dataTask")
 
@@ -96,26 +96,12 @@ class MockServerTests: XCTestCase {
 			}
 		}
 
-		// This works here, because we wait for the dataTask execution to finish...
-		// But... we pass the `testCompleted: @escaping () -> Void` in the MockServiceTests and that's where the following verification happens, right? And it _should_ still be in the same test. Or where am I loosing the breadcrumbs?!?!
-		waitForExpectations(timeout: 1) { error in
-			self.mockServer.verify {
+		// This waitForExpectations here is due to direct interaction with mockServer (mockService should wrap this in a package)
+		waitForExpectations(timeout: 1) { _ in
+			self.mockServer.finalize(pact: self.pactSpecV3.data(using: .utf8)!) {
 				switch $0 {
-				case .success(let result):
-					if result {
-						self.mockServer.finalize {
-							switch $0 {
-							case .success(let message):
-								debugPrint("PACT FINALIZATION OK: \(message)")
-							case .failure(let error):
-								XCTFail("FINALIZATION ERROR: \(error.localizedDescription)")
-							}
-						}
-					} else {
-						XCTFail("VERIFICATION ERROR: - Unexpectedly received false when true was expected!")
-					}
-				case .failure(let error):
-					XCTFail("VERIFICATION ERROR: \(error)")
+				case .success(let message): debugPrint(message)
+				case .failure(let error): XCTFail(error.description)
 				}
 			}
 		}
