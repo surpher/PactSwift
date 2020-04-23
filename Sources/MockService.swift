@@ -44,7 +44,11 @@ open class MockService {
 
 	// MARK: - Initializers
 
-	public init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
+	public convenience init(consumer: String, provider: String) {
+		self.init(consumer: consumer, provider: provider, errorReporter: ErrorReporter())
+	}
+
+	init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
