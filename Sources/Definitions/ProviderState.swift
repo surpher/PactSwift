@@ -25,6 +25,22 @@ public struct ProviderState: Encodable {
 	let name: String
 	let params: [String: String]
 
+	/// {
+	///		"providerStates": [
+	///			{
+	///				"name": "an alligator with the given name exists",
+	///				"params": {"name" : "Mary"}
+	///			}, {
+	///				"name": "the user is logged in",
+	///				"params" : { "username" : "Fred"}
+	///			}
+	///		]
+	///	}
+	public init(name: String, params: [String: String]) {
+		self.name = name
+		self.params = params
+	}
+
 }
 
 extension ProviderState: Equatable {
