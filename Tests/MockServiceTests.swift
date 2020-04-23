@@ -37,6 +37,8 @@ class MockServiceTests: XCTestCase {
 	}
 
 	override func tearDown() {
+		mockService.finalize()
+		
 		mockService = nil
 		errorCapture = nil
 

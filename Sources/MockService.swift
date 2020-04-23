@@ -97,19 +97,19 @@ open class MockService {
 	}
 
 	// Checks if any of the verifications in this object have failed:
-	public func finalize(completion: (Result<Void, MockServerError>) -> Void) {
+	public func finalize(completion: ((Result<Void, MockServerError>) -> Void)? = nil) {
 		guard let pactData = pact.data, allValidated else {
-			completion(.failure( .validationFaliure))
+			completion?(.failure( .validationFaliure))
 			return
 		}
 
 		self.mockServer.finalize(pact: pactData) {
 			switch $0 {
 			case .success:
-				completion(.success(()))
+				completion?(.success(()))
 			case .failure(let error):
 				self.failWith(error.description)
-				completion(.failure(error))
+				completion?(.failure(error))
 			}
 		}
 	}
