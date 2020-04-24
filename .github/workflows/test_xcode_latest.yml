@@ -20,7 +20,7 @@ jobs:
         run: |
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
-          carthage bootstrap --platform ios --no-use-binaries
+          carthage update --platform ios --no-use-binaries
       - name: Compile for SPM
         run: |
           swift build -c debug
