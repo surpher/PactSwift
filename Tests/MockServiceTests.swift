@@ -204,6 +204,46 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
+	func testMockService_Fails_WhenBodyIsEmptyObject() {
+
+		let expectedValues = [
+			"Failed to verify Pact!",
+			"Actual request does not match expected interactions...",
+			"Request does not match",
+			"Body in request does not match the expected body definition"
+		]
+
+		_ = mockService
+			.uponReceiving("Request for list of users")
+			.given("users exist")
+			.withRequest(method: .POST, path: "/user", body: ["foo": "bar"])
+			.willRespondWith(
+				status: 201
+			)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
+			let session = URLSession.shared
+			var request = URLRequest(url: requestURL)
+
+			request.httpMethod = "POST"
+			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+			request.httpBody = "{\n\n}".data(using: .utf8)!
+
+			let task = session.dataTask(with: request) { data, response, error in
+				completion()
+			}
+			task.resume()
+		}
+
+		do {
+			let testResult = try XCTUnwrap(errorCapture.error?.message)
+			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+		} catch {
+			XCTFail("Expected errorCapture object to intercept the failing tests message")
+		}
+	}
+
 	func testMockService_Fails_WhenRequestBodyMissing() {
 		let expectedValues = [
 			"Failed to verify Pact!",

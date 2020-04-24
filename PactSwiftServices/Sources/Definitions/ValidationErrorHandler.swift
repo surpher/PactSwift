@@ -28,9 +28,10 @@ struct ValidationErrorHandler {
 		let mismatchData = mismatches.data(using: .utf8)
 
 		do {
+			// BUG in RustMockServer - actual and expected keys are either String or Array<Int> :( (See if Either<String, Array<Int>> could work with Decodable)
 			self.errors = try JSONDecoder().decode([PactError].self, from: mismatchData ?? "[{\"type\":\"Unsupported Pact Error Message\"}]".data(using: .utf8)!)
 		} catch {
-			self.errors = [PactError(type: error.localizedDescription, method: "-", path: "-", request: [:], mismatches: nil)]
+			self.errors = [PactError(type: "mock-server-parsing-fail", method: "", path: "", request: [:], mismatches: nil)]
 		}
 	}
 
@@ -52,16 +53,18 @@ struct ValidationErrorHandler {
 			case .mismatch:
 				let expectedQuery = error.mismatches?.compactMap {
 					if MismatchErrorType(rawValue: $0.type) == .query {
-						return "\($0.parameter ?? "unknown_parameter")=" + "\($0.expected)"
+						return "\($0.parameter ?? "unknown_parameter")=" + "\($0.expected.expectedString)"
 					}
 					return nil
 				}
 				.joined(separator: "&")
+
 				let mismatches = error.mismatches?.compactMap {
-					"\($0.parameter != nil ? "query param '" + $0.parameter! + "': " : "")" + "\($0.mismatch != nil ? $0.mismatch! : "")"
+						"\($0.parameter != nil ? "query param '" + $0.parameter! + "': " : "")"
+					+ "\($0.mismatch != nil ? $0.mismatch! : "")"
 					+ "\( MismatchErrorType(rawValue: $0.type)  == .body ? "Body in request does not match the expected body definition" : "")"
 				}
-				.joined(separator: "\n\t") //swiftlint:disable:this line_length
+				.joined(separator: "\n\t")
 
 				expectedRequest += "\(error.method) \(error.path)\(expectedQuery != "" ? "?" + expectedQuery! : "")"
 				actualRequest += "\(error.method) \(error.path)\(mismatches != nil ? "\n\t" + mismatches! : "")"
@@ -92,7 +95,7 @@ struct PactError {
 	let type: String
 	let method: String
 	let path: String
-	let request: [String: String]
+	let request: [String: String]?
 	let mismatches: [MismatchError]?
 
 }
@@ -120,11 +123,49 @@ extension PactError: Decodable {
 
 struct MismatchError: Decodable {
 	let type: String
-	let expected: String
-	let actual: String
+	let expected: Expected
+	let actual: Actual
 	let parameter: String?
 	let mismatch: String?
 }
+
+// MARK: -
+// This is only used to handle Mock Server's bug where it returns a String or an Array<Int> depending on the request. :|
+struct Expected: Codable {
+	let expectedString: String
+	let expectedIntArray: [Int]
+
+	init(from decoder: Decoder) throws {
+		let container = try decoder.singleValueContainer()
+
+		do {
+			expectedString = try container.decode(String.self)
+			expectedIntArray = []
+		} catch {
+			expectedIntArray = try container.decode([Int].self)
+			expectedString = expectedIntArray.map { "\($0)" }.joined(separator: ",")
+		}
+	}
+}
+
+struct Actual: Codable {
+	let actualString: String
+	let actualIntArray: [Int]
+
+	init(from decoder: Decoder) throws {
+		let container = try decoder.singleValueContainer()
+
+		do {
+			actualString = try container.decode(String.self)
+			actualIntArray = []
+		} catch {
+			actualIntArray = try container.decode([Int].self)
+			actualString = actualIntArray.map { "\($0)" }.joined(separator: ",")
+		}
+	}
+}
+
+// MARK: -
 
 enum MismatchErrorType: String {
 	case query
@@ -136,6 +177,7 @@ enum MismatchErrorType: String {
 		switch rawValue  {
 		case "QueryMismatch": self = .query
 		case "BodyTypeMismatch": self = .body
+		case "BodyMismatch": self = .body
 		default: self = .unknown
 		}
 	}
@@ -145,7 +187,8 @@ enum VerificationErrorType: String {
 	case missing = "Missing request"
 	case notFound = "Unexpected request"
 	case mismatch = "Request does not match"
-	case unknown = "Unknown"
+	case mockServerParsingFailed = "Failed to parse Mock Server error response! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework."
+	case unknown = "Not entirely sure what happened! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework."
 
 	init(_ type: String) {
 		switch type {
@@ -155,6 +198,8 @@ enum VerificationErrorType: String {
 			self = .notFound
 		case "request-mismatch":
 			self = .mismatch
+		case "mock-server-parsing-fail":
+			self = .mockServerParsingFailed
 		default:
 			self = .unknown
 		}

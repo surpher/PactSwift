@@ -23,8 +23,8 @@ import Foundation
 public struct IncludesLike: MatchingRuleExpressible {
 
 	public enum IncludeCombine: String {
-		case and = "AND"
-		case or = "OR"
+		case AND
+		case OR
 	}
 
 	internal let value: Any
@@ -42,7 +42,7 @@ public struct IncludesLike: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 
-	public init(_ values: String..., combine: IncludeCombine = .and) {
+	public init(_ values: String..., combine: IncludeCombine = .AND) {
 		self.value = values
 		self.includeStringValues = values
 		self.combine = combine

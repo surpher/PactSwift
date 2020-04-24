@@ -206,9 +206,11 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(for: testBody)
 
 		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.match, "regex")
-			XCTAssertEqual(testResult.regex, "\\d{4}-\\d{2}-\\d{2}")
+			let matchers = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+
+			XCTAssertEqual(matchers.matchers.first?.match, "regex")
+			XCTAssertEqual(matchers.matchers.first?.regex,  "\\d{4}-\\d{2}-\\d{2}")
+			XCTAssertNil(matchers.combine)
 		} catch {
 			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
 		}
@@ -239,7 +241,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
-			"data":  IncludesLike("2020-12-31", "2019-12-31", combine: .or)
+			"data":  IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
 		]
 
 		let testPact = prepareTestPact(for: testBody)

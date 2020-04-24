@@ -81,8 +81,8 @@ public class MockServer {
 		)
 		writePactContractFile {
 			switch $0 {
-			case .success:
-				completion?(.success("Pact contract written to \(pactDir). 👍"))
+			case .success(let message):
+				completion?(.success(message))
 			case .failure(let error):
 				completion?(.failure(error))
 			}
@@ -109,7 +109,7 @@ private extension MockServer {
 	}
 
 	/// Writes the PACT contract file to disk
-	func writePactContractFile(completion: (Result<Void, MockServerError>) -> Void) {
+	func writePactContractFile(completion: (Result<String, MockServerError>) -> Void) {
 		guard checkForPath() else {
 			completion(.failure(.failedToWriteFile))
 			return
@@ -117,10 +117,10 @@ private extension MockServer {
 
 		let writeResult = write_pact_file(port, pactDir)
 		guard writeResult == 0 else {
-			completion(Result.failure(.failedToWriteFile))
+			completion(Result.failure(MockServerError(code: Int(writeResult))))
 			return
 		}
-		completion(Result.success(()))
+		completion(Result.success("Pact interaction written to \(pactDir)"))
 	}
 
 	/// Shuts down the Mock Server and releases the socket address
