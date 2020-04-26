@@ -1,3 +1,0 @@
-#include "Configurations/Target-Framework-Shared.xcconfig"
-
-SWIFT_OPTIMIZATION_LEVEL = -Onone
