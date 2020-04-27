@@ -80,11 +80,11 @@ class PactTests: XCTestCase {
 			description: "test_request_headers",
 			providerStates: [
 				ProviderState(
-					name: "an alligator with the given name exists",
+					description: "an alligator with the given name exists",
 					params: ["name": "Mary"]
 				),
 				ProviderState(
-					name: "the user is logged in",
+					description: "the user is logged in",
 					params: ["user": "Fred"]
 				)
 			],
@@ -157,15 +157,15 @@ class PactTests: XCTestCase {
 	}
 
 	func testPact_SetsProviderStates() throws {
-		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
-		let secondProviderState = ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
+		let secondProviderState = ProviderState(description: "the user is logged in", params: ["username": "Fred"])
 		let expectedResult = [firstProviderState, secondProviderState]
 
 		let interaction = Interaction(
 			description: "test provider states",
 			providerStates: [
-				ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"]),
-				ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+				ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"]),
+				ProviderState(description: "the user is logged in", params: ["username": "Fred"])
 			],
 			request: Request(method: .GET, path: "/"),
 			response: Response(statusCode: 200)
@@ -194,8 +194,8 @@ class PactTests: XCTestCase {
 	// MARK: Encodable
 
 	func testPact_SetsRequestBody() {
-		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
-		let secondProviderState = ProviderState(name: "the user is logged in", params: ["username": "Fred"])
+		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
+		let secondProviderState = ProviderState(description: "the user is logged in", params: ["username": "Fred"])
 
 		let testBody: Any = [
 			"foo": "Bar",

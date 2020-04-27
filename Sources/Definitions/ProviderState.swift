@@ -20,13 +20,22 @@
 
 import Foundation
 
+///
+/// Object describing expected provider state for an interaction.
+///
 public struct ProviderState: Encodable {
 
 	let name: String
 	let params: [String: String]
 
-	public init(name: String, params: [String: String]) {
-		self.name = name
+	///
+	/// Object describing expected provider state for an interaction.
+	///
+	/// - parameter description: The description of the state
+	/// - parameter params: The `Key` `Value` pair of the expected state (eg: `"user_id": "1"`)
+	///
+	public init(description: String, params: [String: String]) {
+		self.name = description
 		self.params = params
 	}
 
