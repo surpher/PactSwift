@@ -18,6 +18,9 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+///
+/// An object representing an API request for a Pact test.
+///
 public struct Request {
 
 	let method: PactHTTPMethod
@@ -51,6 +54,7 @@ extension Request: Encodable {
 
 	///
 	/// Creates an object representing a network `Request`.
+	/// 
 	/// - Parameters:
 	///		- method: The http method of the http request
 	///		- path: A url path of the http reuquest (without the base url)

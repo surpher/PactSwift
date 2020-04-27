@@ -31,6 +31,7 @@ struct MismatchError: Decodable {
 }
 
 // MARK: -
+
 // This is only used to handle Mock Server's bug where it returns a String or an Array<Int> depending on the request. :|
 struct Expected: Codable {
 

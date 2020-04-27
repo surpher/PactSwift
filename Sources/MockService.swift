@@ -28,6 +28,8 @@ open class MockService {
 
 	// MARK: - Properties
 
+	///
+	/// The url of `MockService`
 	public var baseUrl: String {
 		mockServer.baseUrl
 	}
@@ -56,13 +58,32 @@ open class MockService {
 
 	// MARK: - Interface
 
+	///
+	/// Describes the `Interaction` between the consumer and provider.
+	///
+	/// Returns: `Interaction` object
+	///
+	/// - parameter description: A description of the API interaction.
+	///
+	/// NOTE: It is important that the `description` and provider state
+	/// combination is unique per consumer-provider contract.
+	///
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)
 		return currentInteraction
 	}
 
-	// Test the API interaction (API calls) between the client and a programmed mock service.
+	///
+	/// Runs the Pact test against the code that makes the API request with 10 second timeout.
+	///
+	/// - parameter file: The file to report the failing test in
+	/// - parameter line: The line on which to report the failing test
+	/// - parameter timeout: The amount of time to wait for the test to run. Default is 10 seconds
+	/// - parameter testFunction: Code that makes the API request
+///
+	/// - parameter testCompleted: Callback that notifies `MockService` unit test has completed
+	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
@@ -96,7 +117,14 @@ open class MockService {
 		}
 	}
 
-	// Checks if any of the verifications in this object have failed:
+	///
+	/// Verifies all interactions have passed their Pact test and writes a Pact contract file in JSON format.
+	///
+	/// - parameter completion: Result of the writing the Pact contract to JSON
+	///
+	/// By default Pact contracts are written to `/tmp/pacts` folder.
+	/// Set `PACT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
+	///
 	public func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		pact.interactions = interactions
 		guard let pactData = pact.data, allValidated else {
@@ -116,6 +144,8 @@ open class MockService {
 	}
 
 }
+
+// MARK: - Private -
 
 private extension MockService {
 

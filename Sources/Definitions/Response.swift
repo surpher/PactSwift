@@ -18,6 +18,9 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+///
+/// An object representing an API response for a Pact test.
+///
 public struct Response {
 
 	var statusCode: Int
