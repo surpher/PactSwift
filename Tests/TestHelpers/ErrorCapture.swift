@@ -25,8 +25,8 @@ import Foundation
 struct ErrorReceived {
 
 	var message: String
-  var file: String?
-  var line: UInt?
+	var file: String?
+	var line: UInt?
 
 }
 
