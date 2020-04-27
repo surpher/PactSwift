@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Check for dependencies
+if ! [ -x "$(command -v xcbeautify)" ]; then
+  echo 'Error: xcbeautify is not installed.' >&2
+  exit 1
+fi
+
+# Compile for SPM
+swift build -c debug | xcbeautify
+swift build -c release | xcbeautify
+
+# Run tests
+swift test --parallel | xcbeautify
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwiftServices -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
