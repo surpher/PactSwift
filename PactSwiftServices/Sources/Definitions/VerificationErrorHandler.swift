@@ -28,7 +28,6 @@ struct VerificationErrorHandler {
 		let mismatchData = mismatches.data(using: .utf8)
 
 		do {
-			// BUG in RustMockServer - actual and expected keys are either String or Array<Int> :( (See if Either<String, Array<Int>> could work with Decodable)
 			self.errors = try JSONDecoder().decode([PactError].self, from: mismatchData ?? "[{\"type\":\"Unsupported Pact Error Message\"}]".data(using: .utf8)!)
 		} catch {
 			self.errors = [PactError(type: "mock-server-parsing-fail", method: "", path: "", request: [:], mismatches: nil)]

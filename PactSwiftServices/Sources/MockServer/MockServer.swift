@@ -28,6 +28,7 @@ public class MockServer {
 
 	// MARK: - Properties
 
+	/// The url on which Mock Server is running.
 	public var baseUrl: String {
 		"http://\(socketAddress):\(port)"
 	}
@@ -48,10 +49,7 @@ public class MockServer {
 
 	// MARK: - Interface
 
-	/// Prepare the Pact Mock Server with expected interactions
-
-	// TODO: - This should probably be part of an init()
-	// as asking for baseUrl before calling setup() might cause some unexpected behaviour
+	/// Spin up a Mock Server with expected interactions as defined in Pact.
 	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
