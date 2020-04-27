@@ -20,6 +20,19 @@
 
 import Foundation
 
+///
+/// Defines a Pact matcher that expects the provided value.
+///
+/// Use this matcher where you expect the exact type and value
+/// in the interaction between consumer and provider.
+///
+/// ```
+/// // DSL
+///	[
+///   "foo": EqualTo("bar"),
+///   "bar": EqualTo(847)
+/// ]
+///
 public struct EqualTo: MatchingRuleExpressible {
 
 	internal let value: Any
@@ -27,6 +40,11 @@ public struct EqualTo: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 
+	///
+	/// Defines a Pact matcher that explicitly expects the provided value.
+	///
+	/// - parameter value: The value to be returned by MockService
+	///
 	public init(_ value: Any) {
 		self.value = value
 	}
