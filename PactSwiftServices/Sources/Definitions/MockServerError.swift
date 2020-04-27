@@ -67,7 +67,7 @@ public enum MockServerError: Error {
 		case .validationFaliure:
 			return describing("Interactions failed to verify successfully. Check your tests.")
 		case .unknown:
-			return describing("reason unknown!")
+			return describing("Reason unknown!")
 		}
 	}
 
