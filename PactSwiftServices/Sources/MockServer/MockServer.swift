@@ -104,7 +104,7 @@ private extension MockServer {
 			return "No response! There might be something fishy going on with your Mock Server..."
 		}
 
-		let errorDescription = ValidationErrorHandler(mismatches: String(cString: mismatches)).description
+		let errorDescription = VerificationErrorHandler(mismatches: String(cString: mismatches)).description
 		return errorDescription
 	}
 

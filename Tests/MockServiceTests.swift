@@ -96,10 +96,10 @@ class MockServiceTests: XCTestCase {
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Missing request",
-			"Request",
-			"/user",
-			"Error",
-			"/invalidPath"
+			"Expected",
+			"GET /user",
+			"Actual",
+			"GET /invalidPath"
 		]
 
 		_ = mockService
@@ -137,7 +137,7 @@ class MockServiceTests: XCTestCase {
 			"Request",
 			"GET /user",
 			"state", "NSW",
-			"Error",
+			"Actual",
 			"query param 'page'",
 			"query param 'state'"
 		]
