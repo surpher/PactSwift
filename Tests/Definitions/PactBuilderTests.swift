@@ -322,7 +322,7 @@ private extension PactBuilderTests {
 	}
 
 	func prepareTestPact(for body: Any) -> Pact {
-		let firstProviderState = ProviderState(name: "an alligator with the given name exists", params: ["name": "Mary"])
+		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
 
 		let interaction = Interaction(
 			description: "test Encodable Pact",
