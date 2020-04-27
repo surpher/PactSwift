@@ -20,6 +20,13 @@
 
 import Foundation
 
+///
+/// Defines a Pact matcher that expects an `Int`.
+///
+/// Use this matcher where you expect an `Int` to be passed in
+/// the interaction between consumer and provider, but the
+/// value is not important.
+///
 public struct IntegerLike: MatchingRuleExpressible {
 
 	internal let value: Any

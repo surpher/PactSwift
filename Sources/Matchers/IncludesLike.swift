@@ -20,6 +20,19 @@
 
 import Foundation
 
+///
+/// Defines a Pact matcher that expects a set of values.
+///
+/// Use this matcher where you expect either all or
+/// at least one of the provided `String` values are present
+/// in the interaction between consumer and provider.
+///
+/// ```
+/// [
+///   "foo": IncludesLike("1", "Jane", "John", combine: .OR),
+///   "bar": IncludesLike(["1", "Jane", "John"], combine: .AND)
+/// ]
+///
 public struct IncludesLike: MatchingRuleExpressible {
 
 	public enum IncludeCombine: String {
@@ -42,7 +55,24 @@ public struct IncludesLike: MatchingRuleExpressible {
 
 	// MARK: - Initializers
 
+	/// Defines a Pact matcher that expects a `Set` of `String` values to be present.
+	///
+	/// - Parameter values: Set of `String` values expected to be present
+	/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
+	///
+	///
 	public init(_ values: String..., combine: IncludeCombine = .AND) {
+		self.value = values
+		self.includeStringValues = values
+		self.combine = combine
+	}
+
+	/// Defines a Pact matcher that expects a set of values.
+	///
+	/// - Parameter values: Set of `String` values expected to be present
+	/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
+	///
+	public init(_ values: [String], combine: IncludeCombine = .AND) {
 		self.value = values
 		self.includeStringValues = values
 		self.combine = combine

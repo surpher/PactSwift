@@ -20,13 +20,32 @@
 
 import Foundation
 
+///
+/// Defines a Pact matcher that expects a specific `Type`.
+///
+/// Use this matcher where you expect a specific `Type` in
+/// the interaction between consumer and provider, but the
+/// value is not important.
+///
+/// ```
+/// [
+///   "foo": SomethingLike("bar"),
+///   "bar": SomethingLike(1)
+/// ]
+/// ```
+///
 public struct SomethingLike: MatchingRuleExpressible {
 
 	internal let value: Any
 	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("type")]]
 
 	// MARK: - Initializers
-	
+
+	///
+	/// Defines a Pact matcher that expects a specific `Type`.
+	///
+	/// - parameter value: The value MockService should expect or respond with
+	///
 	public init(_ value: Any) {
 		self.value = value
 	}
