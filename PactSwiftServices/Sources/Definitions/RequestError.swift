@@ -1,8 +1,8 @@
 //
-//  PactError.swift
+//  RequestError.swift
 //  PactSwiftServices
 //
-//  Created by Marko Justinek on 27/4/20.
+//  Created by Marko Justinek on 28/4/20.
 //  Copyright © 2020 Pact Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -20,33 +20,10 @@
 
 import Foundation
 
-struct PactError {
+struct RequestError: Decodable {
 
-	let type: String
 	let method: String
 	let path: String
-	let request: RequestError?
-	let mismatches: [MismatchError]?
-
-}
-
-extension PactError: Decodable {
-
-	enum CodingKeys: String, CodingKey {
-		case type
-		case method
-		case path
-		case request
-		case mismatches
-	}
-
-	init(from decoder: Decoder) throws {
-		let container = try decoder.container(keyedBy: CodingKeys.self)
-		type = try container.decode(String.self, forKey: .type)
-		method = try container.decode(String.self, forKey: .method)
-		path = try container.decode(String.self, forKey: .path)
-		request = try? container.decode(RequestError.self, forKey: .request)
-		mismatches = try? container.decodeIfPresent([MismatchError].self, forKey: .mismatches)
-	}
+	let headers: [String: String]?
 
 }

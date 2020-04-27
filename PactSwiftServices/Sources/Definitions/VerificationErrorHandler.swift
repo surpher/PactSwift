@@ -30,7 +30,7 @@ struct VerificationErrorHandler {
 		do {
 			self.errors = try JSONDecoder().decode([PactError].self, from: mismatchData ?? "[{\"type\":\"Unsupported Pact Error Message\"}]".data(using: .utf8)!)
 		} catch {
-			self.errors = [PactError(type: "mock-server-parsing-fail", method: "", path: "", request: [:], mismatches: nil)]
+			self.errors = [PactError(type: "mock-server-parsing-fail", method: "", path: "", request: nil, mismatches: nil)]
 		}
 	}
 
