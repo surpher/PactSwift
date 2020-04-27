@@ -20,14 +20,6 @@
 
 import Foundation
 
-struct ErrorReceived {
-
-	var message: String
-	var file: String?
-	var line: UInt?
-
-}
-
 #if SWIFT_PACKAGE
 public typealias FileString = StaticString
 #else
