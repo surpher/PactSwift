@@ -20,6 +20,7 @@
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* MockServerTests.swift */; };
 		ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* MockServer.swift */; };
+		ADC124A32458EEB900D1FF98 /* MSFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC124A22458EEB900D1FF98 /* MSFileManager.swift */; };
 		ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADDE4709244D82FA00E4F7EE /* VerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4708244D82FA00E4F7EE /* VerificationErrorHandler.swift */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		ADB1FE54244AB531009BECF7 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		ADC124A22458EEB900D1FF98 /* MSFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSFileManager.swift; sourceTree = "<group>"; };
 		ADDE4708244D82FA00E4F7EE /* VerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				AD1035B524458BF8002C97CA /* Definitions */,
+				ADC124A12458EE9B00D1FF98 /* FileManager */,
 				AD22CED924440C500089C951 /* Headers */,
 				ADAC3D34244285860078CCC7 /* MockServer */,
 			);
@@ -189,6 +192,14 @@
 				ADB1FE54244AB531009BECF7 /* Nimble.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ADC124A12458EE9B00D1FF98 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				ADC124A22458EEB900D1FF98 /* MSFileManager.swift */,
+			);
+			path = FileManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,6 +362,7 @@
 				AD204AE6245658C300ABE1EB /* MismatchErrorType.swift in Sources */,
 				AD4AF32124579B86004A7253 /* RequestError.swift in Sources */,
 				ADDE4709244D82FA00E4F7EE /* VerificationErrorHandler.swift in Sources */,
+				ADC124A32458EEB900D1FF98 /* MSFileManager.swift in Sources */,
 				AD204AE42456587C00ABE1EB /* MismatchError.swift in Sources */,
 				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
 			);
