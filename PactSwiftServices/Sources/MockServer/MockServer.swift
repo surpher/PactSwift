@@ -39,6 +39,10 @@ public class MockServer {
 
 	private let socketAddress = "0.0.0.0"
 
+	lazy private var pactDir: String = {
+		MSFileManager.pactDir
+	}()
+
 	// MARK: - Lifecycle
 
 	public init() { }
@@ -108,7 +112,7 @@ private extension MockServer {
 
 	/// Writes the PACT contract file to disk
 	func writePactContractFile(completion: (Result<String, MockServerError>) -> Void) {
-		guard checkForPath() else {
+		guard MSFileManager.checkForPath() else {
 			completion(.failure(.failedToWriteFile))
 			return
 		}
@@ -126,39 +130,6 @@ private extension MockServer {
 		if port > 0 {
 			cleanup_mock_server(port)
 		}
-	}
-
-}
-
-// TODO: - This is horrible. Need to put it away somewhere as a reusable component
-private extension MockServer {
-
-	var pactDir: String {
-		ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
-	}
-
-	func checkForPath() -> Bool {
-		guard !FileManager.default.fileExists(atPath: pactDir) else {
-			return true
-		}
-		debugPrint("Path not found: \(pactDir)")
-		return canCreatePath()
-	}
-
-	func canCreatePath() -> Bool {
-		var canCreate = false
-		do {
-			try FileManager.default.createDirectory(
-				atPath: self.pactDir,
-				withIntermediateDirectories: true,
-				attributes: nil
-			)
-			canCreate.toggle()
-		} catch let error as NSError {
-			debugPrint("Files not written. Path could not be created: \(self.pactDir)")
-			debugPrint(error.localizedDescription)
-		}
-		return canCreate
 	}
 
 }
