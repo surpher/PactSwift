@@ -20,17 +20,17 @@
 
 import Foundation
 
-class MSFileManager {
+class PactFileManager {
 
 	static var pactDir: String {
 		ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
 	}
 
 	static func checkForPath() -> Bool {
-		guard !FileManager.default.fileExists(atPath: MSFileManager.pactDir) else {
+		guard !FileManager.default.fileExists(atPath: PactFileManager.pactDir) else {
 			return true
 		}
-		debugPrint("Path not found: \(MSFileManager.pactDir)")
+		debugPrint("Path not found: \(PactFileManager.pactDir)")
 		return canCreatePath()
 	}
 
@@ -38,13 +38,13 @@ class MSFileManager {
 		var canCreate = false
 		do {
 			try FileManager.default.createDirectory(
-				atPath: MSFileManager.pactDir,
+				atPath: PactFileManager.pactDir,
 				withIntermediateDirectories: true,
 				attributes: nil
 			)
 			canCreate.toggle()
 		} catch let error as NSError {
-			debugPrint("Files not written. Path could not be created: \(MSFileManager.pactDir)")
+			debugPrint("Files not written. Path could not be created: \(PactFileManager.pactDir)")
 			debugPrint(error.localizedDescription)
 		}
 		return canCreate

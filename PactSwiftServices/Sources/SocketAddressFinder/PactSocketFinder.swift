@@ -1,8 +1,8 @@
 //
-//  MockServer+Extension.swift
+//  PactSocketFinder.swift
 //  PactSwiftServices
 //
-//  Created by Marko Justinek on 14/4/20.
+//  Created by Marko Justinek on 29/4/20.
 //  Copyright © 2020 Pact Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -19,11 +19,10 @@
 //
 
 import Foundation
-import os.log
 
-extension MockServer {
+class PactSocketFinder {
 
-	func unusedPort() -> Int32 {
+	static func unusedPort() -> Int32 {
 		var port = randomPort
 		var (available, _) = tcpPortAvailable(port: port)
 		while !available {
@@ -35,20 +34,16 @@ extension MockServer {
 
 }
 
-private extension MockServer {
+private extension PactSocketFinder {
 
-	var randomPort: in_port_t {
+	static var randomPort: in_port_t {
 		return in_port_t(arc4random_uniform(2000) + 4000)
-	}
-
-	func log(_ message: String, file: String = #file, function: String = #function) {
-		os_log("%@ (%@): %@", log: .default, type: .debug, file, function, message)
 	}
 
 	//
 	// The following code block referenced from: https://stackoverflow.com/a/49728137
 	//
-	func tcpPortAvailable(port: in_port_t) -> (Bool, descr: String) {
+	static func tcpPortAvailable(port: in_port_t) -> (Bool, descr: String) {
 		let socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0)
 		guard socketFileDescriptor != -1 else {
 			return (false, "SocketCreationFailed: \(descriptionOfLastError())")
@@ -80,12 +75,12 @@ private extension MockServer {
 		return (true, "\(port) is free for use")
 	}
 
-	func release(socket: Int32) {
+	static func release(socket: Int32) {
 		Darwin.shutdown(socket, SHUT_RDWR)
 		close(socket)
 	}
 
-	func descriptionOfLastError() -> String {
+	static func descriptionOfLastError() -> String {
 		return String.init(cString: (UnsafePointer(strerror(errno))))
 	}
 

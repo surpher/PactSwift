@@ -34,13 +34,13 @@ public class MockServer {
 	}
 
 	lazy private var port: Int32 = {
-		unusedPort()
+		PactSocketFinder.unusedPort()
 	}()
 
 	private let socketAddress = "0.0.0.0"
 
 	lazy private var pactDir: String = {
-		MSFileManager.pactDir
+		PactFileManager.pactDir
 	}()
 
 	// MARK: - Lifecycle
@@ -112,7 +112,7 @@ private extension MockServer {
 
 	/// Writes the PACT contract file to disk
 	func writePactContractFile(completion: (Result<String, MockServerError>) -> Void) {
-		guard MSFileManager.checkForPath() else {
+		guard PactFileManager.checkForPath() else {
 			completion(.failure(.failedToWriteFile))
 			return
 		}
