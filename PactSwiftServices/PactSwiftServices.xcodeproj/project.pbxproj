@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035AF2445710B002C97CA /* MockServer+Extension.swift */; };
+		AD1035B02445710B002C97CA /* PactSocketFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035AF2445710B002C97CA /* PactSocketFinder.swift */; };
 		AD1035B224458239002C97CA /* MockServerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B124458239002C97CA /* MockServerError.swift */; };
 		AD1035B424458909002C97CA /* VerificationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1035B324458909002C97CA /* VerificationError.swift */; };
 		AD204AE22456585C00ABE1EB /* PactError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD204AE12456585C00ABE1EB /* PactError.swift */; };
@@ -20,7 +20,7 @@
 		ADAC3D16244282980078CCC7 /* PactSwiftServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADAC3D0C244282980078CCC7 /* PactSwiftServices.framework */; };
 		ADAC3D1B244282980078CCC7 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D1A244282980078CCC7 /* MockServerTests.swift */; };
 		ADAC3D3A244286D30078CCC7 /* MockServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAC3D39244286D30078CCC7 /* MockServer.swift */; };
-		ADC124A32458EEB900D1FF98 /* MSFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC124A22458EEB900D1FF98 /* MSFileManager.swift */; };
+		ADC124A32458EEB900D1FF98 /* PactFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC124A22458EEB900D1FF98 /* PactFileManager.swift */; };
 		ADD735192446D90A00B23B21 /* pact_swift_services-bridging_header.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2377B724441808003C4C4E /* pact_swift_services-bridging_header.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADDE4709244D82FA00E4F7EE /* VerificationErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4708244D82FA00E4F7EE /* VerificationErrorHandler.swift */; };
 /* End PBXBuildFile section */
@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AD1035AF2445710B002C97CA /* MockServer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServer+Extension.swift"; sourceTree = "<group>"; };
+		AD1035AF2445710B002C97CA /* PactSocketFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactSocketFinder.swift; sourceTree = "<group>"; };
 		AD1035B124458239002C97CA /* MockServerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServerError.swift; sourceTree = "<group>"; };
 		AD1035B324458909002C97CA /* VerificationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationError.swift; sourceTree = "<group>"; };
 		AD204AE12456585C00ABE1EB /* PactError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactError.swift; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		ADAC3D4E244290470078CCC7 /* Target-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		ADAC3D4F244290500078CCC7 /* Target-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		ADB1FE54244AB531009BECF7 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
-		ADC124A22458EEB900D1FF98 /* MSFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MSFileManager.swift; sourceTree = "<group>"; };
+		ADC124A22458EEB900D1FF98 /* PactFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactFileManager.swift; sourceTree = "<group>"; };
 		ADDE4708244D82FA00E4F7EE /* VerificationErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationErrorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +173,7 @@
 				ADC124A12458EE9B00D1FF98 /* FileManager */,
 				AD22CED924440C500089C951 /* Headers */,
 				ADAC3D34244285860078CCC7 /* MockServer */,
+				ADC124A42458F12700D1FF98 /* SocketAddressFinder */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -181,7 +182,6 @@
 			isa = PBXGroup;
 			children = (
 				ADAC3D39244286D30078CCC7 /* MockServer.swift */,
-				AD1035AF2445710B002C97CA /* MockServer+Extension.swift */,
 			);
 			path = MockServer;
 			sourceTree = "<group>";
@@ -197,9 +197,17 @@
 		ADC124A12458EE9B00D1FF98 /* FileManager */ = {
 			isa = PBXGroup;
 			children = (
-				ADC124A22458EEB900D1FF98 /* MSFileManager.swift */,
+				ADC124A22458EEB900D1FF98 /* PactFileManager.swift */,
 			);
 			path = FileManager;
+			sourceTree = "<group>";
+		};
+		ADC124A42458F12700D1FF98 /* SocketAddressFinder */ = {
+			isa = PBXGroup;
+			children = (
+				AD1035AF2445710B002C97CA /* PactSocketFinder.swift */,
+			);
+			path = SocketAddressFinder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,9 +370,9 @@
 				AD204AE6245658C300ABE1EB /* MismatchErrorType.swift in Sources */,
 				AD4AF32124579B86004A7253 /* RequestError.swift in Sources */,
 				ADDE4709244D82FA00E4F7EE /* VerificationErrorHandler.swift in Sources */,
-				ADC124A32458EEB900D1FF98 /* MSFileManager.swift in Sources */,
+				ADC124A32458EEB900D1FF98 /* PactFileManager.swift in Sources */,
 				AD204AE42456587C00ABE1EB /* MismatchError.swift in Sources */,
-				AD1035B02445710B002C97CA /* MockServer+Extension.swift in Sources */,
+				AD1035B02445710B002C97CA /* PactSocketFinder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
