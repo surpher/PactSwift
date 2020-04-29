@@ -40,20 +40,22 @@ open class MockService {
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
 	private var allValidated: Bool = true
+	private var transferProtocol: MockServer.TransferProtocol = .standard
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
 
 	// MARK: - Initializers
 
-	public convenience init(consumer: String, provider: String) {
-		self.init(consumer: consumer, provider: provider, errorReporter: ErrorReporter())
+	public convenience init(consumer: String, provider: String, protocol: MockServer.TransferProtocol = .standard) {
+		self.init(consumer: consumer, provider: provider, protocol: `protocol`, errorReporter: ErrorReporter())
 	}
 
-	internal init(consumer: String, provider: String, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, protocol: MockServer.TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
+		self.transferProtocol = `protocol`
 	}
 
 	// MARK: - Interface
@@ -87,7 +89,7 @@ open class MockService {
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
-			self.mockServer.setup(pact: pactData!) {
+			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocol) {
 				switch $0 {
 				case .success:
 					do {
