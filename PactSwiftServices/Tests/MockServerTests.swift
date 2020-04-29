@@ -25,6 +25,7 @@ import XCTest
 class MockServerTests: XCTestCase {
 
 	var mockServer: MockServer!
+	var secureProtocol: Bool = false
 
 	override func setUp() {
 		super.setUp()
@@ -60,6 +61,18 @@ class MockServerTests: XCTestCase {
 		}
 	}
 
+	func testMockServer_SetsBaseSSLURL_WithPort() {
+		secureProtocol = true
+		mockServer.setup(pact: "{\"foo\":\"bar\"}".data(using: .utf8)!, protocol: .secure) {
+			switch $0 {
+			case .success(let port):
+				XCTAssertEqual(mockServer.baseUrl, "https://0.0.0.0:\(port)")
+			default:
+				XCTFail("Expected Pact Mock Server to start on a port greater than 1200")
+			}
+		}
+	}
+
 	func testMockServer_Fails_WithInvalidPactJSON() {
 		mockServer.setup(pact: "{\"foo\":bar\"}".data(using: .utf8)!) {
 			switch $0 {
@@ -72,10 +85,11 @@ class MockServerTests: XCTestCase {
 	}
 
 	func test_MOCK_SERVER_SANITY_TEST() {
-		let session = URLSession.shared
+		let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
 		let dataTaskExpectation = expectation(description: "dataTask")
+		secureProtocol = true
 
-		mockServer.setup(pact: pactSpecV3.data(using: .utf8)!) {
+		mockServer.setup(pact: pactSpecV3.data(using: .utf8)!, protocol: .standard) {
 			switch $0 {
 			case .success:
 				let task = session.dataTask(with: URL(string: "\(mockServer.baseUrl)/users")!) { data, response, error in
@@ -87,6 +101,9 @@ class MockServerTests: XCTestCase {
 						} catch {
 							XCTFail("DECODING ERROR: \(error.localizedDescription)")
 						}
+					}
+					if let error = error {
+						XCTFail(error.localizedDescription)
 					}
 					dataTaskExpectation.fulfill()
 				}
@@ -123,6 +140,25 @@ extension MockServerTests {
 		"""
 		{"provider":{"name":"sanity_test_provider"},"consumer":{"name":"sanity_test_consumer"},"metadata":{"pactSpecification":{"version":"3.0.0"},"pact-swift":{"version":"0.0.1"}},"interactions":[{"description":"swift test interaction with a DSL array body","request":{"method":"GET","path":"/users"},"response":{"status":200,"headers":{"Content-Type":"application/json; charset=UTF-8"},"body":[{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"},{"dob":"2016-07-19","id":1943791933,"name":"ZSAICmTmiwgFFInuEuiK"}],"matchingRules":{"body": {"$[2].name":{"matchers":[{"match":"type"}]},"$[0].id":{"matchers":[{"match":"type"}]},"$[1].id":{"matchers":[{"match":"type"}]},"$[2].id":{"matchers":[{"match":"type"}]},"$[1].name":{"matchers":[{"match":"type"}]},"$[0].name":{"matchers":[{"match":"type"}]},"$[0].dob":{"matchers":[{"date":"yyyy-MM-dd"}]}}}}}]}
 		"""
+	}
+
+}
+
+extension MockServerTests: URLSessionDelegate {
+
+	func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+		guard
+			secureProtocol,
+			challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+			(challenge.protectionSpace.host.contains("0.0.0.0") || challenge.protectionSpace.host.contains("localhost")),
+			let serverTrust = challenge.protectionSpace.serverTrust
+		else {
+			completionHandler(.performDefaultHandling, nil)
+			return
+		}
+
+		let credential = URLCredential(trust: serverTrust)
+		completionHandler(.useCredential, credential)
 	}
 
 }

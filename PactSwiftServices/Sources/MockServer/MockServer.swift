@@ -26,11 +26,16 @@ import PactMockServer
 
 public class MockServer {
 
+	public enum TransferProtocol: String {
+		case standard = "http"
+		case secure = "https"
+	}
+
 	// MARK: - Properties
 
 	/// The url on which Mock Server is running.
 	public var baseUrl: String {
-		"http://\(socketAddress):\(port)"
+		"\(transferProtocol.rawValue)://\(socketAddress):\(port)"
 	}
 
 	lazy private var port: Int32 = {
@@ -38,10 +43,12 @@ public class MockServer {
 	}()
 
 	private let socketAddress = "0.0.0.0"
+	private var transferProtocol: TransferProtocol = .standard
 
 	lazy private var pactDir: String = {
 		PactFileManager.pactDir
 	}()
+
 
 	// MARK: - Lifecycle
 
@@ -54,7 +61,8 @@ public class MockServer {
 	// MARK: - Interface
 
 	/// Spin up a Mock Server with expected interactions as defined in Pact.
-	public func setup(pact: Data, completion: (Result<Int, MockServerError>) -> Void) {
+	public func setup(pact: Data, protocol: TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
+		transferProtocol = `protocol`
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
 			"\(socketAddress):\(port)"

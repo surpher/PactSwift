@@ -72,6 +72,43 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
+	// TODO: - Re-enable when Mock Server supports HTTPS
+	func testMockService_SuccessfulGETRequest_OverSSL() {
+		mockService = MockService(
+			consumer: "pactswift-unit-tests",
+			provider: "unit-test-api-provider",
+			protocol: .secure,
+			errorReporter: errorCapture
+		)
+
+		_ = mockService
+			.uponReceiving("Request for list of users over SSL connection")
+			.given("users exist")
+			.withRequest(method: .GET, path: "/user")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"foo": "bar"
+				]
+			)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			XCTAssertTrue(self.mockService.baseUrl.contains("https://"))
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+				if let data = data {
+					let testResult = self.decodeResponse(data: data)
+					XCTAssertEqual(testResult?.foo, "bar")
+				}
+				if let error = error {
+					XCTFail(error.localizedDescription)
+				}
+				completion()
+			}
+			task.resume()
+		}
+	}
+
 	func testMockService_Fails_WhenRequestMissing() {
 		_ = mockService
 			.uponReceiving("Request for alligators")
