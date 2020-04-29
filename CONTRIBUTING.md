@@ -1,13 +1,13 @@
 # Contributing to PactSwift project
 
+Read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) first!
+
 ## Continuous Integration - GitHub Actions
 
 ...
 
-## Test Swift Package Manager configuration
+## Run tests
 
 ```shell
-swift build -c debug
-swift build -c release
-swift test
+./Scripts/run_tests
 ```
