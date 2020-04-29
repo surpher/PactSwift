@@ -1,10 +1,11 @@
-#  PactSwift (beta)
+# PactSwift (beta)
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
 [![Test - Xcode (latest)](https://github.com/surpher/pact-swift/workflows/Test%20-%20latest/badge.svg?branch=feature%2Fintentional_swiftlint_warning)](https://github.com/surpher/pact-swift/actions)
+![Test - Xcode (11.3.1)](https://github.com/surpher/pact-swift/workflows/Test%20-%20Xcode%20(11.3.1)/badge.svg)
 
-This framework provides a Swift DSL for generating [Pact](https://docs.pact.io/index.html) contracts.
+This framework provides a Swift DSL for generating [Pact](https://docs.pact.io) contracts.
 
 Implements [Pact Specification v3](https://github.com/pact-foundation/pact-specification/tree/version-3).
 
@@ -16,19 +17,19 @@ The one major advantage of this framework over `pact-consumer-swift` is that it 
 
 ### Carthage
 
-```
+```sh
 // Cartfile
 github "surpher/pact-swift" "v0.1"
 ```
 
-```
+```sh
 carthage update --platform ios --no-use-binaries
 ```
 
 ### Swift Package Manager
 
-```
-WIP
+```sh
+⚠️  _Work in progress_ ⚠️
 ```
 
 ## Xcode setup - Carthage
@@ -180,14 +181,14 @@ See the [Demo projects][demo-projects] for examples.
 
 ## Example Generators
 
-⚠️  _Work in progress_ ⚠️ 
+⚠️  _Work in progress_ ⚠️
 
 ## Verifying your client against the service you are integrating with
 
 If you set the `PACT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
 `$(PROJECT_DIR)/tmp/pacts/_consumer_name-provider_name.json`.
 
-Publish your generated Pact file(s) to your [Pact Broker](https://docs.pact.io/pact_broker) or a hosted service, so that your _API provider_ team can always retrieve them from one location, even when pacts change.
+Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change.
 
 See how you can use simple [Pact Broker Client](https://github.com/pact-foundation/pact_broker-client) in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy](https://docs.pact.io/pact_broker/can_i_deploy) a new version of your app.
 
@@ -208,3 +209,4 @@ This project takes guidance from ideas and implementation examples in [pact-cons
 [contributing]: CONTRIBUTING.md
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
+[pact-broker]: https://docs.pact.io/pact_broker
