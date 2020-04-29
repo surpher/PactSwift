@@ -86,7 +86,7 @@ public struct EachLike: MatchingRuleExpressible {
 	///
 	/// Defines a Pact matcher that defines a `Set` but does not care about the actual values.
 	///
-	/// Defines a `Set` where its capacity can be of `0` to `max` of provided `Value`.
+	/// Defines a `Set` where its capacity can be of `1` to `max` of provided `Value`.
 	///
 	/// - parameter value: The value to be returned by MockService.
 	/// - parameter max: Defines maximum capacity of the `Set`

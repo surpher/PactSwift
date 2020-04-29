@@ -32,6 +32,7 @@ import Foundation
 ///   "foo": IncludesLike("1", "Jane", "John", combine: .OR),
 ///   "bar": IncludesLike(["1", "Jane", "John"], combine: .AND)
 /// ]
+///```
 ///
 public struct IncludesLike: MatchingRuleExpressible {
 
