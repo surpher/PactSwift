@@ -44,6 +44,9 @@ public class MockServer {
 
 	private let socketAddress = "0.0.0.0"
 	private var transferProtocol: TransferProtocol = .standard
+	private var tls: Bool {
+		transferProtocol == .secure ? true : false
+	}
 
 	lazy private var pactDir: String = {
 		PactFileManager.pactDir
@@ -65,7 +68,8 @@ public class MockServer {
 		transferProtocol = `protocol`
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
-			"\(socketAddress):\(port)"
+			"\(socketAddress):\(port)",
+			tls
 		)
 
 		return (port > 1200)
@@ -87,7 +91,8 @@ public class MockServer {
 		shutdownMockServer()
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
-			"\(socketAddress):\(port)"
+			"\(socketAddress):\(port)",
+			tls
 		)
 		writePactContractFile {
 			switch $0 {

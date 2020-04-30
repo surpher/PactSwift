@@ -23,4 +23,4 @@ HEADER_SEARCH_PATHS = $(PROJECT_DIR)/Sources/Headers
 LIBRARY_SEARCH_PATHS = $(PROJECT_DIR)/Resources
 FRAMEWORK_SEARCH_PATHS = $(PLATFORM_DIR)/Developer/Library/Frameworks
 
-SWIFT_OBJC_BRIDGING_HEADER = $(PROJECT_DIR)/Sources/Headers/pact_swift_services-bridging_header.h
+SWIFT_OBJC_BRIDGING_HEADER = $(PROJECT_DIR)/Sources/Headers/pact_swift_services.h

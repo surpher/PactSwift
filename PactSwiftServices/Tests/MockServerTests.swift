@@ -84,7 +84,47 @@ class MockServerTests: XCTestCase {
 		}
 	}
 
-	func test_MOCK_SERVER_SANITY_TEST() {
+	func test_MOCK_SERVER_SANITY_TEST_TLS() {
+		let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
+		let dataTaskExpectation = expectation(description: "dataTask")
+		secureProtocol = true
+
+		mockServer.setup(pact: pactSpecV3.data(using: .utf8)!, protocol: .secure) {
+			switch $0 {
+			case .success:
+				let task = session.dataTask(with: URL(string: "\(mockServer.baseUrl)/users")!) { data, response, error in
+					if let data = data {
+						do {
+							let testUsers = try JSONDecoder().decode([MockServerTestUser].self, from: data)
+							XCTAssertEqual(testUsers.count, 3)
+							XCTAssertTrue(testUsers.contains(where: { $0.name == "ZSAICmTmiwgFFInuEuiK" }))
+						} catch {
+							XCTFail("DECODING ERROR: \(error.localizedDescription)")
+						}
+					}
+					if let error = error {
+						XCTFail(error.localizedDescription)
+					}
+					dataTaskExpectation.fulfill()
+				}
+				task.resume()
+			case .failure(let error):
+				XCTFail("MOCK SERVER ERROR STARTING: \(error.description)")
+			}
+		}
+
+		// This waitForExpectations here is due to direct interaction with mockServer (mockService should wrap this in a package)
+		waitForExpectations(timeout: 1) { _ in
+			self.mockServer.finalize(pact: self.pactSpecV3.data(using: .utf8)!) {
+				switch $0 {
+				case .success(let message): debugPrint(message)
+				case .failure(let error): XCTFail(error.description)
+				}
+			}
+		}
+	}
+
+	func test_MOCK_SERVER_SANITY_TEST_STANDARD_HTTP() {
 		let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
 		let dataTaskExpectation = expectation(description: "dataTask")
 		secureProtocol = true
