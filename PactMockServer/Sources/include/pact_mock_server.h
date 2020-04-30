@@ -4,6 +4,113 @@
 #include <stdlib.h>
 
 /**
+ * Request or Response enum
+ */
+typedef enum {
+  /**
+   * Request part
+   */
+  Request,
+  /**
+   * Response part
+   */
+  Response,
+} InteractionPart;
+
+/**
+ * Wraps a Pact model struct
+ */
+typedef struct {
+  /**
+   * Pact reference
+   */
+  uintptr_t pact;
+} PactHandle;
+
+/**
+ * Result of generating a datetime value from a format string
+ */
+typedef enum Result_Tag_ {
+  /**
+   * Was generated OK
+   */
+  Ok,
+  /**
+   * There was an error generating the string
+   */
+  Failed,
+} Result_Tag;
+
+typedef struct {
+  char *_0;
+} Ok_Body;
+
+typedef struct {
+  char *_0;
+} Failed_Body;
+
+typedef struct {
+  Result_Tag tag;
+  union {
+    Ok_Body ok;
+    Failed_Body failed;
+  };
+} DateTimeResult;
+
+/**
+ * Result of generating a value from a regex
+ */
+//typedef enum Result_Tag_ {
+//  /**
+//   * Was generated OK
+//   */
+//  Ok,
+//  /**
+//   * There was an error generating the string
+//   */
+//  Failed,
+//} Result_Tag;
+
+//typedef struct {
+//  char *_0;
+//} Ok_Body;
+
+//typedef struct {
+//  char *_0;
+//} Failed_Body;
+
+typedef struct {
+  Result_Tag tag;
+  union {
+    Ok_Body ok;
+    Failed_Body failed;
+  };
+} RegexResult;
+
+/**
+ * Wraps a Pact model struct
+ */
+typedef struct {
+  /**
+   * Pact reference
+   */
+  uintptr_t pact;
+  /**
+   * Interaction reference
+   */
+  uintptr_t interaction;
+} InteractionHandle;
+
+/**
+ * Checks that the example string matches the given regex
+ *
+ * # Safety
+ *
+ * Exported functions are inherently unsafe.
+ */
+bool check_regex(const char *regex, const char *example);
+
+/**
  * External interface to cleanup a mock server. This function will try terminate the mock server
  * with the given port number and cleanup any memory allocated for it. Returns true, unless a
  * mock server with the given port number does not exist, or the function panics.
@@ -19,6 +126,10 @@ bool cleanup_mock_server(int32_t mock_server_port);
  * as well as the port for the mock server to run on. A value of 0 for the port will result in a
  * port being allocated by the operating system. The port of the mock server is returned.
  *
+ * * `pact_str` - Pact JSON
+ * * `addr_str` - Address to bind to in the form name:port (i.e. 127.0.0.1:0)
+ * * `tls` - boolean flag to indicate of the mock server should use TLS (using a self-signed certificate)
+ *
  * # Errors
  *
  * Errors are returned as negative values.
@@ -30,10 +141,84 @@ bool cleanup_mock_server(int32_t mock_server_port);
  * | -3 | The mock server could not be started |
  * | -4 | The method panicked |
  * | -5 | The address is not valid |
+ * | -6 | Could not create the TLS configuration with the self-signed certificate |
  *
  */
 int32_t create_mock_server(const char *pact_str,
-                           const char *addr_str);
+                           const char *addr_str,
+                           bool tls);
+
+/**
+ * External interface to create a mock server. A Pact handle is passed in,
+ * as well as the port for the mock server to run on. A value of 0 for the port will result in a
+ * port being allocated by the operating system. The port of the mock server is returned.
+ *
+ * * `pact` - Handle to a Pact model
+ * * `addr_str` - Address to bind to in the form name:port (i.e. 127.0.0.1:0)
+ * * `tls` - boolean flag to indicate of the mock server should use TLS (using a self-signed certificate)
+ *
+ * # Errors
+ *
+ * Errors are returned as negative values.
+ *
+ * | Error | Description |
+ * |-------|-------------|
+ * | -1 | An invalid handle was received |
+ * | -3 | The mock server could not be started |
+ * | -4 | The method panicked |
+ * | -5 | The address is not valid |
+ * | -6 | Could not create the TLS configuration with the self-signed certificate |
+ *
+ */
+int32_t create_mock_server_for_pact(PactHandle pact,
+                                    const char *addr_str,
+                                    bool tls);
+
+/**
+ * Frees the memory allocated to a string by another function
+ *
+ * # Safety
+ *
+ * Exported functions are inherently unsafe.
+ */
+void free_string(char *s);
+
+/**
+ * Generates a datetime value from the provided format string, using the current system date and time
+ * NOTE: The memory for the returned string needs to be freed with the free_string function
+ *
+ * # Safety
+ *
+ * Exported functions are inherently unsafe.
+ */
+DateTimeResult generate_datetime_string(const char *format);
+
+/**
+ * Generates an example string based on the provided regex.
+ * NOTE: The memory for the returned string needs to be freed with the free_string function
+ *
+ * # Safety
+ *
+ * Exported functions are inherently unsafe.
+ */
+RegexResult generate_regex_value(const char *regex);
+
+/**
+ * Adds a provider state to the Interaction.
+ *
+ * * `description` - The provider state description. It needs to be unique.
+ */
+void given(InteractionHandle interaction, const char *description);
+
+/**
+ * Initialise the mock server library, can provide an environment variable name to use to
+ * set the log levels.
+ *
+ * # Safety
+ *
+ * Exported functions are inherently unsafe.
+ */
+void init(const char *log_env_var);
 
 /**
  * External interface to check if a mock server has matched all its requests. The port number is
@@ -59,6 +244,85 @@ bool mock_server_matched(int32_t mock_server_port);
  *
  */
 char *mock_server_mismatches(int32_t mock_server_port);
+
+/**
+ * Creates a new Interaction and returns a handle to it.
+ *
+ * * `description` - The interaction description. It needs to be unique for each interaction.
+ *
+ * Returns a new `InteractionHandle`.
+ */
+InteractionHandle new_interaction(PactHandle pact, const char *description);
+
+/**
+ * Creates a new Pact model and returns a handle to it.
+ *
+ * * `consumer_name` - The name of the consumer for the pact.
+ * * `provider_name` - The name of the provider for the pact.
+ *
+ * Returns a new `PactHandle`.
+ */
+PactHandle new_pact(const char *consumer_name, const char *provider_name);
+
+/**
+ * Configures the response for the Interaction.
+ *
+ * * `status` - the response status. Defaults to 200.
+ */
+void response_status(InteractionHandle interaction, unsigned short status);
+
+/**
+ * Sets the description for the Interaction.
+ *
+ * * `description` - The interaction description. It needs to be unique for each interaction.
+ */
+void upon_receiving(InteractionHandle interaction, const char *description);
+
+/**
+ * Adds the body for the interaction.
+ *
+ * * `part` - The part of the interaction to add the body to (Request or Response).
+ * * `content_type` - The content type of the body. Defaults to `text/plain`.
+ * * `body` - The body contents. For JSON payloads, matching rules can be embedded in the body.
+ */
+void with_body(InteractionHandle interaction,
+               InteractionPart part,
+               const char *content_type,
+               const char *body);
+
+/**
+ * Configures a header for the Interaction.
+ *
+ * * `part` - The part of the interaction to add the header to (Request or Response).
+ * * `name` - the header name.
+ * * `value` - the header value.
+ * * `index` - the index of the value (starts at 0). You can use this to create a header with multiple values
+ */
+void with_header(InteractionHandle interaction,
+                 InteractionPart part,
+                 const char *name,
+                 size_t index,
+                 const char *value);
+
+/**
+ * Configures a query parameter for the Interaction.
+ *
+ * * `name` - the query parameter name.
+ * * `value` - the query parameter value.
+ * * `index` - the index of the value (starts at 0). You can use this to create a query parameter with multiple values
+ */
+void with_query_parameter(InteractionHandle interaction,
+                          const char *name,
+                          size_t index,
+                          const char *value);
+
+/**
+ * Configures the request for the Interaction.
+ *
+ * * `method` - The request method. Defaults to GET.
+ * * `path` - The request path. Defaults to `/`.
+ */
+void with_request(InteractionHandle interaction, const char *method, const char *path);
 
 /**
  * External interface to trigger a mock server to write out its pact file. This function should

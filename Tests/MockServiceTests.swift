@@ -27,6 +27,8 @@ class MockServiceTests: XCTestCase {
 	var mockService: MockService!
 	var errorCapture: ErrorCapture!
 
+	private var secureProtocol: Bool = false
+
 	// MARK: - Lifecycle
 
 	override func setUp() {
@@ -72,12 +74,11 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	// TODO: - Re-enable when Mock Server supports HTTPS
 	func testMockService_SuccessfulGETRequest_OverSSL() {
 		mockService = MockService(
 			consumer: "pactswift-unit-tests",
 			provider: "unit-test-api-provider",
-			protocol: .secure,
+			scheme: .secure,
 			errorReporter: errorCapture
 		)
 
@@ -93,7 +94,8 @@ class MockServiceTests: XCTestCase {
 			)
 
 		mockService.run { completion in
-			let session = URLSession.shared
+			self.secureProtocol = true
+			let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
 			XCTAssertTrue(self.mockService.baseUrl.contains("https://"))
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
@@ -418,6 +420,25 @@ private extension MockServiceTests {
 
 	func decodeResponse(data: Data) -> TestModel? {
 		try? JSONDecoder().decode(TestModel.self, from: data)
+	}
+
+}
+
+extension MockServiceTests: URLSessionDelegate {
+
+	func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+		guard
+			secureProtocol,
+			challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
+			(challenge.protectionSpace.host.contains("0.0.0.0") || challenge.protectionSpace.host.contains("localhost")),
+			let serverTrust = challenge.protectionSpace.serverTrust
+		else {
+			completionHandler(.performDefaultHandling, nil)
+			return
+		}
+
+		let credential = URLCredential(trust: serverTrust)
+		completionHandler(.useCredential, credential)
 	}
 
 }

@@ -24,6 +24,12 @@ import PactSwiftServices
 
 let kTimeout: TimeInterval = 10
 
+///
+/// Initializes a `MockService` object that handles Pact interaction testing.
+///
+/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
+/// is a self-signed certificate!
+///
 open class MockService {
 
 	// MARK: - Properties
@@ -40,22 +46,43 @@ open class MockService {
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
 	private var allValidated: Bool = true
-	private var transferProtocol: MockServer.TransferProtocol = .standard
+	private var transferProtocolScheme: MockServer.TransferProtocol = .standard
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
 
 	// MARK: - Initializers
 
-	public convenience init(consumer: String, provider: String, protocol: MockServer.TransferProtocol = .standard) {
-		self.init(consumer: consumer, provider: provider, protocol: `protocol`, errorReporter: ErrorReporter())
+	///
+	/// Initializes a `MockService` object that handles Pact interaction testing.
+	///
+	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
+	/// - parameter provider: Name of the API provider (eg: "atuh-service")
+	/// - parameter scheme: HTTP scheme
+	///
+	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
+	/// is a self-signed certificate!
+	///
+	public convenience init(consumer: String, provider: String, scheme: MockServer.TransferProtocol = .standard) {
+		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
 
-	internal init(consumer: String, provider: String, protocol: MockServer.TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
+	///
+	/// Initializes a `MockService` object that handles Pact interaction testing.
+	///
+	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
+	/// - parameter provider: Name of the API provider (eg: "atuh-service")
+	/// - parameter scheme: HTTP scheme
+	/// - parameter errorReporter: Injectable object to intercept errors.
+	///
+	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
+	/// is a self-signed certificate!
+	///
+	internal init(consumer: String, provider: String, scheme: MockServer.TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
-		self.transferProtocol = `protocol`
+		self.transferProtocolScheme = scheme
 	}
 
 	// MARK: - Interface
@@ -89,7 +116,7 @@ open class MockService {
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
-			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocol) {
+			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
 				switch $0 {
 				case .success:
 					do {
