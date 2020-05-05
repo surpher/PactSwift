@@ -21,7 +21,6 @@
 import XCTest
 
 @testable import PactSwift
-import PactSwiftServices
 
 class PactBuilderTests: XCTestCase {
 

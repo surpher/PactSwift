@@ -16,18 +16,25 @@ let package = Package(
 		)
 	],
 	dependencies: [
-		.package(path: "PactSwiftServices")
+		.package(path: "./PactMockServer"),
+		.package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
 	],
 	targets: [
 		.target(
 			name: "PactSwift",
-			dependencies: [ "PactSwiftServices" ],
+			dependencies: [
+				"PactMockServer",
+				"Nimble"
+			],
 			path: "./Sources"
 		),
 		.testTarget(
 			name: "PactSwiftTests",
-			dependencies: ["PactSwift"],
+			dependencies: [
+				"PactSwift"
+			],
 			path: "./Tests"
 		),
-	]
+	],
+	swiftLanguageVersions: [.v5]
 )

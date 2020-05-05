@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD8817FD242C715A00BF510D"
-               BuildableName = "PactSwift.framework"
-               BlueprintName = "PactSwift"
+               BuildableName = "PactSwift_iOS.framework"
+               BlueprintName = "PactSwift_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,8 +34,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD881806242C715B00BF510D"
-               BuildableName = "PactSwiftTests.xctest"
-               BlueprintName = "PactSwiftTests"
+               BuildableName = "PactSwiftTests_iOS.xctest"
+               BlueprintName = "PactSwiftTests_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -51,6 +51,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "AD8817FD242C715A00BF510D"
+            BuildableName = "PactSwift_iOS.framework"
+            BlueprintName = "PactSwift_iOS"
+            ReferencedContainer = "container:PactSwift.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PACT_DIR"
@@ -69,8 +78,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD8817FD242C715A00BF510D"
-            BuildableName = "PactSwift.framework"
-            BlueprintName = "PactSwift"
+            BuildableName = "PactSwift_iOS.framework"
+            BlueprintName = "PactSwift_iOS"
             ReferencedContainer = "container:PactSwift.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
