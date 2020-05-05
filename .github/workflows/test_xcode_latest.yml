@@ -18,14 +18,16 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_11.4_beta.app
       - name: Prepare Tools
         run: |
+          git lfs install --skip-smudge
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
           carthage update --platform ios --no-use-binaries
-      - name: Compile for SPM
+      - name: Compile and Test - SPM
         run: |
           swift build -c debug
           swift build -c release
-      - name: Test project - iOS framework
+          swift test -Xlinker -LResources/lib | xcbeautify
+      - name: Test project - iOS (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
       - name: Test it builds for Carthage

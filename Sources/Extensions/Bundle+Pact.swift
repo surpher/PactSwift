@@ -22,8 +22,8 @@ import Foundation
 
 extension Bundle {
 
-	static var pact: Bundle {
-		Bundle(identifier: "au.com.pact-foundation.PactSwift")!
+	static var pact: Bundle? {
+		Bundle(identifier: "au.com.pact-foundation.PactSwift")
 	}
 
 	var shortVersion: String? {
