@@ -9,6 +9,15 @@
           "revision": "7fd118ec8795888bcbbebc1a41f6984454c4cd6f",
           "version": "8.0.7"
         }
+      },
+      {
+        "package": "PactMockServer",
+        "repositoryURL": "https://github.com/surpher/PactMockServer.git",
+        "state": {
+          "branch": null,
+          "revision": "c0efd88237cd79ee26481d866abe18e629fd2911",
+          "version": "0.0.1-beta"
+        }
       }
     ]
   },
