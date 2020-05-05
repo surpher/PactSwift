@@ -28,7 +28,7 @@ enum MismatchErrorType: String {
 	case unknown
 
 	init(rawValue: String) {
-		switch rawValue  {
+		switch rawValue {
 		case "QueryMismatch": self = .query
 		case "BodyTypeMismatch": self = .body
 		case "BodyMismatch": self = .body

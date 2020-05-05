@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD8817FD242C715A00BF510D"
-               BuildableName = "PactSwift_iOS.framework"
+               BuildableName = "PactSwift.framework"
                BlueprintName = "PactSwift_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD8817FD242C715A00BF510D"
-            BuildableName = "PactSwift_iOS.framework"
+            BuildableName = "PactSwift.framework"
             BlueprintName = "PactSwift_iOS"
             ReferencedContainer = "container:PactSwift.xcodeproj">
          </BuildableReference>
@@ -78,7 +78,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AD8817FD242C715A00BF510D"
-            BuildableName = "PactSwift_iOS.framework"
+            BuildableName = "PactSwift.framework"
             BlueprintName = "PactSwift_iOS"
             ReferencedContainer = "container:PactSwift.xcodeproj">
          </BuildableReference>

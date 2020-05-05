@@ -52,7 +52,6 @@ public class MockServer {
 		PactFileManager.pactDir
 	}()
 
-
 	// MARK: - Lifecycle
 
 	public init() { }
@@ -72,7 +71,7 @@ public class MockServer {
 			tls
 		)
 
-		return (port > 1200)
+		return (port > 1_200)
 			? completion(Result.success(Int(port)))
 			: completion(Result.failure(MockServerError(code: Int(port))))
 	}

@@ -28,7 +28,10 @@ struct VerificationErrorHandler {
 		let mismatchData = mismatches.data(using: .utf8)
 
 		do {
-			self.errors = try JSONDecoder().decode([PactError].self, from: mismatchData ?? "[{\"type\":\"Unsupported Pact Error Message\"}]".data(using: .utf8)!)
+			self.errors = try JSONDecoder().decode(
+				[PactError].self,
+				from: mismatchData ?? "[{\"type\":\"Unsupported Pact Error Message\"}]".data(using: .utf8)!
+			)
 		} catch {
 			self.errors = [PactError(type: "mock-server-parsing-fail", method: "", path: "", request: nil, mismatches: nil)]
 		}
@@ -39,7 +42,7 @@ struct VerificationErrorHandler {
 		var actualRequest: String = ""
 		var errorReason: String = ""
 
-		errors.forEach { error in
+		errors.forEach { error in //swiftlint:disable:this closure_body_length
 			errorReason = VerificationErrorType(error.type).rawValue
 
 			switch VerificationErrorType(error.type) {
@@ -61,11 +64,11 @@ struct VerificationErrorHandler {
 				let mismatches = error.mismatches?.compactMap {
 						"\($0.parameter != nil ? "query param '" + $0.parameter! + "': " : "")"
 					+ "\($0.mismatch != nil ? $0.mismatch! : "")"
-					+ "\( MismatchErrorType(rawValue: $0.type)  == .body ? "Body in request does not match the expected body definition" : "")"
+					+ "\( MismatchErrorType(rawValue: $0.type)  == .body ? "Body in request does not match the expected body definition" : "")" //swiftlint:disable:this line_length
 				}
 				.joined(separator: "\n\t")
 
-				expectedRequest += "\(error.method) \(error.path)\(expectedQuery != "" ? "?" + expectedQuery! : "")"
+				expectedRequest += "\(error.method) \(error.path)\(!(expectedQuery ?? "").isEmpty ? "?" + expectedQuery! : "")" //swiftlint:disable:this line_length
 				actualRequest += "\(error.method) \(error.path)\(mismatches != nil ? "\n\t" + mismatches! : "")"
 			default:
 				expectedRequest += ""
@@ -77,8 +80,8 @@ struct VerificationErrorHandler {
 		Actual request does not match expected interactions...
 
 		Reason:\n\t\(errorReason)
-		\(expectedRequest != "" ? "\nExpected:\n\t" + expectedRequest : "")
-		\(actualRequest != "" ? "\nActual:\n\t" + actualRequest : "")
+		\(!expectedRequest.isEmpty ? "\nExpected:\n\t" + expectedRequest : "") //swiftlint:disable:this empty_string
+		\(!actualRequest.isEmpty ? "\nActual:\n\t" + actualRequest : "") //swiftlint:disable:this empty_string
 		"""
 	}
 
