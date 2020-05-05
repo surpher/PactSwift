@@ -20,14 +20,13 @@
 
 import Foundation
 
-
 enum VerificationErrorType: String {
 
 	case missing = "Missing request"
 	case notFound = "Unexpected request"
 	case mismatch = "Request does not match"
-	case mockServerParsingFailed = "Failed to parse Mock Server error response! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework."
-	case unknown = "Not entirely sure what happened! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework."
+	case mockServerParsingFailed = "Failed to parse Mock Server error response! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework." //swiftlint:disable:this line_length
+	case unknown = "Not entirely sure what happened! Please report this as an issue at https://github.com/surpher/pact-swift/issues/new. Provide this test as an example to help us debug and improve this framework." //swiftlint:disable:this line_length
 
 	init(_ type: String) {
 		switch type {

@@ -57,28 +57,6 @@ typedef struct {
   };
 } DateTimeResult;
 
-/**
- * Result of generating a value from a regex
- */
-//typedef enum Result_Tag_ {
-//  /**
-//   * Was generated OK
-//   */
-//  Ok,
-//  /**
-//   * There was an error generating the string
-//   */
-//  Failed,
-//} Result_Tag;
-
-//typedef struct {
-//  char *_0;
-//} Ok_Body;
-
-//typedef struct {
-//  char *_0;
-//} Failed_Body;
-
 typedef struct {
   Result_Tag tag;
   union {

@@ -20,7 +20,7 @@
 
 import XCTest
 
-@testable import PactSwiftServices
+@testable import PactSwift
 
 class MockServerTests: XCTestCase {
 

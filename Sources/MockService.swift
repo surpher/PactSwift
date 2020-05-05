@@ -20,7 +20,6 @@
 
 import Foundation
 import Nimble
-import PactSwiftServices
 
 let kTimeout: TimeInterval = 10
 

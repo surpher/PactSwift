@@ -25,7 +25,7 @@ import Foundation
 struct ErrorReceived {
 
 	var message: String
-	var file: String?
+	var file: FileString?
 	var line: UInt?
 
 }
@@ -38,7 +38,7 @@ class ErrorCapture: ErrorReportable {
 		self.error = ErrorReceived(message: message, file: nil, line: nil)
 	}
 	
-	func reportFailure(_ message: String, file: String, line: UInt) {
+	func reportFailure(_ message: String, file: FileString, line: UInt) {
 		self.error = ErrorReceived(message: message, file: file, line: line)
 	}
 
