@@ -18,19 +18,36 @@ The one major advantage of this framework over `pact-consumer-swift` is that it 
 ### Carthage
 
 ```sh
-// Cartfile
-github "surpher/pact-swift" "v0.1"
+github "surpher/pact-swift" "master"
 ```
 
 ```sh
 carthage update --platform ios --no-use-binaries
 ```
 
-### Swift Package Manager
+### Swift Package Manager (beta)
 
-```sh
-⚠️  _Work in progress_ ⚠️
-```
+1. Add `PactSwift` as a dependency to your test target in `Package.swift`:
+
+	```sh
+	...
+	dependencies: [
+		.package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
+	],
+	...
+	```
+
+2. Download `libpact_mock_server.a` from [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib) and add it to your project (eg: `Project/ProjectTests/lib/`).
+3. Write tests in `Project/ProjectTests/test_case.swift`
+4. Run tests in terminal by providing path to binary lib as a linker flag: `swift test -Xlinker -LProjectTests/lib`
+
+⚠️ **Note:** ⚠️
+
+Using `PactSwift` through SPM requires you to download `libpact_mock_server.a` for the appropriate architecture.
+
+You can download one build for `x86_64` and `aarch64` at [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib). You can use it to build for `darwin` but it will throw `ld:warning`. A _fat_ framework that would include all three architectures is being prepared.
+
+You can compile a custom one from [pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
 
 ## Xcode setup - Carthage
 
