@@ -20,7 +20,7 @@
 
 import Foundation
 
-class PactSocketFinder {
+enum PactSocketFinder {
 
 	static func unusedPort() -> Int32 {
 		var port = randomPort
@@ -37,7 +37,7 @@ class PactSocketFinder {
 private extension PactSocketFinder {
 
 	static var randomPort: in_port_t {
-		return in_port_t(arc4random_uniform(2000) + 4000)
+		in_port_t(arc4random_uniform(2_000) + 4_000) //swiftlint:disable:this legacy_random
 	}
 
 	//
@@ -81,7 +81,7 @@ private extension PactSocketFinder {
 	}
 
 	static func descriptionOfLastError() -> String {
-		return String.init(cString: (UnsafePointer(strerror(errno))))
+		String(cString: (UnsafePointer(strerror(errno))))
 	}
 
 }

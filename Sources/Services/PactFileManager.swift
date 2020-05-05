@@ -20,7 +20,7 @@
 
 import Foundation
 
-class PactFileManager {
+enum PactFileManager {
 
 	static var pactDir: String {
 		ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
