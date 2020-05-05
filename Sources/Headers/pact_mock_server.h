@@ -28,9 +28,9 @@ typedef struct {
 } PactHandle;
 
 /**
- * Result of generating a datetime value from a format string
+ * Result of wrapping a string value
  */
-typedef enum Result_Tag_ {
+typedef enum {
   /**
    * Was generated OK
    */
@@ -39,7 +39,7 @@ typedef enum Result_Tag_ {
    * There was an error generating the string
    */
   Failed,
-} Result_Tag;
+} StringResult_Tag;
 
 typedef struct {
   char *_0;
@@ -50,20 +50,12 @@ typedef struct {
 } Failed_Body;
 
 typedef struct {
-  Result_Tag tag;
+  StringResult_Tag tag;
   union {
     Ok_Body ok;
     Failed_Body failed;
   };
-} DateTimeResult;
-
-typedef struct {
-  Result_Tag tag;
-  union {
-    Ok_Body ok;
-    Failed_Body failed;
-  };
-} RegexResult;
+} StringResult;
 
 /**
  * Wraps a Pact model struct
@@ -169,7 +161,7 @@ void free_string(char *s);
  *
  * Exported functions are inherently unsafe.
  */
-DateTimeResult generate_datetime_string(const char *format);
+StringResult generate_datetime_string(const char *format);
 
 /**
  * Generates an example string based on the provided regex.
@@ -179,7 +171,7 @@ DateTimeResult generate_datetime_string(const char *format);
  *
  * Exported functions are inherently unsafe.
  */
-RegexResult generate_regex_value(const char *regex);
+StringResult generate_regex_value(const char *regex);
 
 /**
  * Adds a provider state to the Interaction.
