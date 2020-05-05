@@ -18,7 +18,7 @@ The one major advantage of this framework over `pact-consumer-swift` is that it 
 ### Carthage
 
 ```sh
-github "surpher/pact-swift" "master"
+github "surpher/PactSwift" "master"
 ```
 
 ```sh

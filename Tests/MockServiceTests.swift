@@ -210,7 +210,7 @@ class MockServiceTests: XCTestCase {
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Request does not match",
-			"Body in request does not match the expected body definition"
+			"Body does not match the expected body definition"
 		]
 
 		_ = mockService
@@ -249,7 +249,7 @@ class MockServiceTests: XCTestCase {
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Request does not match",
-			"Body in request does not match the expected body definition"
+			"Body does not match the expected body definition"
 		]
 
 		_ = mockService
@@ -288,7 +288,7 @@ class MockServiceTests: XCTestCase {
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
 			"Request does not match",
-			"Body in request does not match the expected body definition"
+			"Body does not match the expected body definition"
 		]
 
 		_ = mockService

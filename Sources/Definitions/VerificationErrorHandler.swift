@@ -64,11 +64,11 @@ struct VerificationErrorHandler {
 				let mismatches = error.mismatches?.compactMap {
 						"\($0.parameter != nil ? "query param '" + $0.parameter! + "': " : "")"
 					+ "\($0.mismatch != nil ? $0.mismatch! : "")"
-					+ "\( MismatchErrorType(rawValue: $0.type)  == .body ? "Body in request does not match the expected body definition" : "")" //swiftlint:disable:this line_length
+					+ "\( MismatchErrorType(rawValue: $0.type)  == .body ? " - Body does not match the expected body definition" : "")"
 				}
 				.joined(separator: "\n\t")
 
-				expectedRequest += "\(error.method) \(error.path)\(!(expectedQuery ?? "").isEmpty ? "?" + expectedQuery! : "")" //swiftlint:disable:this line_length
+				expectedRequest += "\(error.method) \(error.path)\(!(expectedQuery ?? "").isEmpty ? "?" + expectedQuery! : "")"
 				actualRequest += "\(error.method) \(error.path)\(mismatches != nil ? "\n\t" + mismatches! : "")"
 			default:
 				expectedRequest += ""
@@ -80,8 +80,8 @@ struct VerificationErrorHandler {
 		Actual request does not match expected interactions...
 
 		Reason:\n\t\(errorReason)
-		\(!expectedRequest.isEmpty ? "\nExpected:\n\t" + expectedRequest : "") //swiftlint:disable:this empty_string
-		\(!actualRequest.isEmpty ? "\nActual:\n\t" + actualRequest : "") //swiftlint:disable:this empty_string
+		\(!expectedRequest.isEmpty ? "\nExpected:\n\t" + expectedRequest : "")
+		\(!actualRequest.isEmpty ? "\nActual:\n\t" + actualRequest : "")
 		"""
 	}
 
