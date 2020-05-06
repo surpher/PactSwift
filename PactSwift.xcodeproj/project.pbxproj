@@ -378,11 +378,11 @@
 		ADCB2561242C83710048BD18 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				AD646FC72460F7ED00979AFC /* Services */,
 				AD8DF432243C437F0062CB1A /* AnyEncodableTests.swift */,
 				AD641A362434354C00785CE1 /* Definitions */,
 				AD7891B8244150FF0014BCC8 /* Matchers */,
 				AD103617244693A6002C97CA /* MockServiceTests.swift */,
+				AD646FC72460F7ED00979AFC /* Services */,
 				ADDE46FD244D0FBA00E4F7EE /* TestHelpers */,
 			);
 			path = Tests;

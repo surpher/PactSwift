@@ -45,7 +45,7 @@ open class MockService {
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
 	private var allValidated: Bool = true
-	private var transferProtocolScheme: MockServer.TransferProtocol = .standard
+	private var transferProtocolScheme: MockServer.TransferProtocol
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
