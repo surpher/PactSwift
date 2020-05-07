@@ -109,8 +109,11 @@ open class MockService {
 	/// - parameter line: The line on which to report the failing test
 	/// - parameter timeout: The amount of time to wait for the test to run. Default is 10 seconds
 	/// - parameter testFunction: Code that makes the API request
-///
-	/// - parameter testCompleted: Callback that notifies `MockService` unit test has completed
+	/// - parameter testCompleted: Completion block notifying `MockService` the test is done.
+	///
+	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test! If you don't,
+	/// your `mockService.run{ }` test will fail with `Waited more than 10.0 seconds` error where time depends on
+	/// your `timeout: TimeInterval?`
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]

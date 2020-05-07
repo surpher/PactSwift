@@ -49,4 +49,5 @@ public struct DecimalLike: MatchingRuleExpressible {
 	public init(_ value: Decimal) {
 		self.value = value
 	}
+	
 }
