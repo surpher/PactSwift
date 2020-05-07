@@ -2,7 +2,7 @@ SDKROOT = iphoneos
 PRODUCT_NAME = $(TARGET_NAME)
 TARGETED_DEVICE_FAMILY = 1,2
 
-INFOPLIST_FILE = Configurations/TestsInfo.plist
+INFOPLIST_FILE = Configurations/Info-iOS-Tests.plist
 PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.PactSwiftTests
 CODE_SIGN_IDENTITY[sdk=macosx*] = -
 
