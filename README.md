@@ -2,17 +2,17 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
-![Release: BETA](https://img.shields.io/badge/Release-BETA-orange)
+![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)
 [![Test - Xcode (latest)](https://github.com/surpher/pact-swift/workflows/Test%20-%20latest/badge.svg?branch=feature%2Fintentional_swiftlint_warning)](https://github.com/surpher/pact-swift/actions)
 ![Test - Xcode (11.3.1)](https://github.com/surpher/pact-swift/workflows/Test%20-%20Xcode%20(11.3.1)/badge.svg)
+
+⚠️ **Note:** _pact-swift_ is under heavy development and not all features are complete. Not everything is documented properly.
 
 This framework provides a Swift DSL for generating [Pact](https://docs.pact.io) contracts.
 
 Implements [Pact Specification v3](https://github.com/pact-foundation/pact-specification/tree/version-3).
 
 The one major advantage of this framework over `pact-consumer-swift` is that it does not depend on Ruby Mock Service to be running on your machine (or on CI/CD agent). Also, it does not require you to fiddle with test pre-actions and post-actions.
-
-⚠️ **Note:** _pact-swift_ is under heavy development and not all features are complete.
 
 ## Installation
 
@@ -38,7 +38,7 @@ carthage update --platform ios --no-use-binaries
 	...
 	```
 
-2. Download `libpact_mock_server.a` from [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib) and add it to your project (eg: `Project/ProjectTests/lib/`).
+2. Download `libpact_mock_server.a` from [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib) and add it to your project (eg: `Project/ProjectTests/lib/`). You can compile your own from [pact_mock_server_ffi](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
 3. Write tests in `Project/ProjectTests/test_case.swift`
 4. Run tests in terminal by providing path to binary lib as a linker flag: `swift test -Xlinker -LProjectTests/lib`
 
@@ -49,6 +49,8 @@ Using `PactSwift` through SPM requires you to download `libpact_mock_server.a` f
 You can download one build for `x86_64` and `aarch64` at [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib). You can use it to build for `darwin` but it will throw `ld:warning`. A _fat_ framework that would include all three architectures is being prepared.
 
 You can compile a custom one from [pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
+
+We're actively looking for an alternative approach to using static libs with SPM!
 
 ## Xcode setup - Carthage
 
