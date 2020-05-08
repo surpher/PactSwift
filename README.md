@@ -206,7 +206,7 @@ See the [Demo projects][demo-projects] for examples.
 ## Verifying your client against the service you are integrating with
 
 If you set the `PACT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
-`$(PROJECT_DIR)/tmp/pacts/_consumer_name-provider_name.json`.
+`$(PACT_DIR)/_consumer_name_-_provider_name_.json`.
 
 Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change.
 

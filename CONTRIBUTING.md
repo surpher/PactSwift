@@ -79,7 +79,7 @@ All contributions to this project are also under this license as per [GitHub's T
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [core-contributor]: CORE_CONTRIBUTOR.md
-[license]: LICENSE
+[license]: LICENSE.md
 [repo]: https://github.com/surpher/PactSwift
 [commit-messages]: https://chris.beams.io/posts/git-commit/
 [semantic-commit-messages]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
