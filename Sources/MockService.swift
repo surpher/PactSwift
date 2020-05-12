@@ -107,15 +107,15 @@ open class MockService {
 	///
 	/// - parameter file: The file to report the failing test in
 	/// - parameter line: The line on which to report the failing test
-	/// - parameter timeout: The amount of time to wait for the test to run. Default is 10 seconds
-	/// - parameter testFunction: Code that makes the API request
+	/// - parameter waitFor: Give the test function `waitFor` seconds to test your interaction. Default is 10 seconds
+	/// - parameter testFunction: Your code that makes the API request
 	/// - parameter testCompleted: Completion block notifying `MockService` the test is done.
 	///
 	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test! If you don't,
 	/// your `mockService.run{ }` test will fail with `Waited more than 10.0 seconds` error where time depends on
 	/// your `timeout: TimeInterval?`
 	///
-	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
 			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {

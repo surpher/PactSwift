@@ -61,7 +61,7 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
-		mockService.run { completion in
+		mockService.run(waitFor: 1) { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
