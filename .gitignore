@@ -104,3 +104,4 @@ Packages
 # Carthage/Checkouts
 
 Carthage/
+.swiftpm*
