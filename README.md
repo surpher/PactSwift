@@ -83,15 +83,16 @@ Edit your scheme and add `PACT_DIR` environment variable (`Run` step) with path 
 
 ![destination_dir](./Documentation/images/04_destination_dir.png)
 
-## Writing Pact tests
+## Example Pact test
 
-1. Describe the interaction (between your API consumer and API provider),
-2. Define the specific state of the provider for the interaction,
+1. Define the contract per API interaction (between your API consumer and API provider),
+2. Define the state of the provider for the interaction,
 3. Define the expected `request` for the interaction,
 4. Define the expected `response` for the interaction,
-5. Run your code that makes the API request and test its handling of the API response,
-6. Finalize the Pact tests and generate a Pact contract,
-7. Share the generated Pact contract with provider (eg: upload to a Pact Broker).
+5. Run the test by making the API request using your API client,
+6. Finalize the Pact tests to generate a Pact contract file,
+7. Share the generated Pact contract file with provider (eg: upload to a Pact Broker).
+8. Run `can-i-deploy` on your CI/CD to deploy with confidence or avoid deploying a new version of your app, if contract has not yet been validated by the provider - or it's broken. That means you avoid breaking the production. Win.
 
 ```swift
 import XCTest
@@ -116,26 +117,27 @@ class PassingTestsExample: XCTestCase {
 
   // MARK: - Tests
 
-  func testGetsUsers() {
-    // Setup the test and expectations
-    // #1
+  func testGetUsers() {
+    // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API,
+    //      will behave for this specific API request we are testing here
     _ = mockService
+      // #2 - Define the interaction description and provider state for this specific API request that we are testing
       .uponReceiving("A request for a list of users")
-      // #2
       .given(ProviderState(description: "users exist", params: ["total_pages": "493"])
-      // #3
+      // #3 - Define the request we promise our API consumer will make
       .withRequest(
         method: .GET,
         path: "/api/users",
-        headers: nil,
-        body: nil
+        headers: nil, // `nil` means we (and the API Provider) should not care about headers. If there are values there, fine, we're just not _demanding_ anything.
+        body: nil // same as with headers
       )
-      // #4
+      // #4 - Define what we expect `mockService`, and consequently the "real" API,
+      //      to respond with for this particular API request we are testing
       .willRespondWith(
         status: 200,
-        headers: nil,
+        headers: nil, // `nil` means we don't care what the headers returned from the API are. If there are values in the header, fine, we're just not _demanding_ anything.
         body: [
-          "page": SomethingLike(1),
+          "page": SomethingLike(1), // We will use matchers here, as we normally care about types and structure, not necessarily the actual value.
           "per_page": SomethingLike(25),
           "total": SomethingLike(1234),
           "total_pages": SomethingLike(493),
@@ -150,18 +152,17 @@ class PassingTestsExample: XCTestCase {
         ]
       )
 
-    // Define the system under test (optional - depends on your implementation of your API client)
+    // #5 - Fire up our API client
     let apiClient = RestManager()
 
-    // Execute Pact test
-    // #5
-    mockService.run { [unowned self] completed in
+    // Run a Pact test and assert our API client makes the request exactly as we promised above
+    mockService.run(waitFor: 1) { [unowned self] completed in
       // _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
       guard let url = URL(string: "\(self.mockService.baseUrl)/api/users") else {
         XCTFail("Failed to prepare url!")
         return
       }
-
+      // #6 - Make the API request.
       apiClient.makeRequest(toURL: url, withHttpMethod: .get) { results in
         if let data = results.data {
           let decoder = JSONDecoder()
@@ -172,17 +173,22 @@ class PassingTestsExample: XCTestCase {
             return
           }
 
-          // test your API client based on expected response
+          // #7 - Test that our API client handles the response.
           XCTAssertEqual(userData.page, 1)
           XCTAssertEqual(userData.data?.first?.firstName, "John")
           XCTAssertEqual(userData.data?.first?.lastName, "Tester")
         }
+
         completed() // Notify MockService we're done with our test
       }
     }
   }
 
-  // more tests...
+  // More tests for other interactions and/or provider states...
+  func testGetUsers_Unauthorised() {
+    // ... code
+  }
+  // etc.
 }
 ```
 
