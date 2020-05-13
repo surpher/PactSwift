@@ -23,7 +23,7 @@ import Foundation
 enum PactFileManager {
 
 	static var pactDir: String {
-		ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
+		ProcessInfo.processInfo.environment["PACT_DIR"] ?? NSTemporaryDirectory() +  "pacts"
 	}
 
 	static func checkForPath() -> Bool {
