@@ -24,17 +24,12 @@ import Foundation
 import PactMockServer
 #endif
 
-public class MockServer {
-
-	public enum TransferProtocol: String {
-		case standard = "http"
-		case secure = "https"
-	}
+class MockServer {
 
 	// MARK: - Properties
 
 	/// The url on which Mock Server is running.
-	public var baseUrl: String {
+	var baseUrl: String {
 		"\(transferProtocol.rawValue)://\(socketAddress):\(port)"
 	}
 
@@ -43,14 +38,12 @@ public class MockServer {
 	}()
 
 	private let socketAddress = "0.0.0.0"
-	private var transferProtocol: TransferProtocol = .standard
+	private var transferProtocol: MockService.TransferProtocol = .standard
 	private var tls: Bool {
 		transferProtocol == .secure ? true : false
 	}
 
 	// MARK: - Lifecycle
-
-	public init() { }
 
 	deinit {
 		shutdownMockServer()
@@ -59,7 +52,7 @@ public class MockServer {
 	// MARK: - Interface
 
 	/// Spin up a Mock Server with expected interactions as defined in Pact.
-	public func setup(pact: Data, protocol: TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
+	func setup(pact: Data, protocol: MockService.TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
 		transferProtocol = `protocol`
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
@@ -73,7 +66,7 @@ public class MockServer {
 	}
 
 	/// Verify interactions
-	public func verify(completion: (Result<Bool, VerificationError>) -> Void) {
+	func verify(completion: (Result<Bool, VerificationError>) -> Void) {
 		guard requestsMatched else {
 			completion(.failure(.reason(mismatchDescription)))
 			return
@@ -82,7 +75,7 @@ public class MockServer {
 	}
 
 	/// Finalise by writing the contract file onto disk
-	public func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
+	func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
 		shutdownMockServer()
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
