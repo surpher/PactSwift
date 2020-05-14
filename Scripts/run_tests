@@ -6,11 +6,10 @@ if ! [ -x "$(command -v xcbeautify)" ]; then
   exit 1
 fi
 
-# Compile for SPM
-swift build -c debug | xcbeautify
-swift build -c release | xcbeautify
+# Build and test for SPM
+swift build -c debug
+swift test -Xlinker -LResources/macOS
 
 # Run tests
-swift test --parallel | xcbeautify
-set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwiftServices -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
-set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify
