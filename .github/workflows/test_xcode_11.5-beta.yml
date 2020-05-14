@@ -1,0 +1,56 @@
+name: Test - Xcode (11.5-beta)
+on:
+  push:
+    branches:
+      - master
+      - feature/**
+      - fix/**
+  pull_request:
+    branches:
+      - master
+jobs:
+  test_ios:
+    name: Test iOS framework
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Force Xcode 11.5beta
+        run: sudo xcode-select -switch /Applications/Xcode_11.5_beta.app
+      - name: Prepare Tools
+        run: |
+          git lfs install --skip-smudge
+          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+          brew install swiftlint xcbeautify
+          carthage update --platform ios --no-use-binaries
+      - name: Test project - iOS (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+      - name: Test it builds for Carthage
+        run: |
+          carthage build --no-skip-current
+  test_macos:
+    name: Test macOS framework
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Force Xcode 11.5beta
+        run: sudo xcode-select -switch /Applications/Xcode_11.5_beta.app
+      - name: Prepare Tools
+        run: |
+          git lfs install --skip-smudge
+          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+          brew install swiftlint xcbeautify
+          carthage update --platform macos --no-use-binaries
+      - name: Compile and Test - SPM
+        run: |
+          set -o pipefail && swift build -c debug
+          set -o pipefail && swift build -c release
+          set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify
+      - name: Test project - macOS (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify
+      - name: Test it builds for Carthage
+        run: |
+          carthage build --no-skip-current
