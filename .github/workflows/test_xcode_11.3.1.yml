@@ -10,7 +10,7 @@ on:
       - master
 jobs:
   test_ios:
-    name: Test iOS framework
+    name: Test framework
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
@@ -22,32 +22,10 @@ jobs:
           git lfs install --skip-smudge
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
-          carthage update --platform ios --no-use-binaries --configuration Debug
+          carthage update --platform ios,macos --no-use-binaries --configuration Debug
       - name: Test project - iOS (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
-      - name: Test it builds for Carthage
-        run: |
-          carthage build --no-skip-current
-  test_macos:
-    name: Test macOS framework
-    runs-on: macOS-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@master
-      - name: Force Xcode 11.3.1
-        run: sudo xcode-select -switch /Applications/Xcode_11.3.1.app
-      - name: Prepare Tools
-        run: |
-          git lfs install --skip-smudge
-          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
-          brew install swiftlint xcbeautify
-          carthage update --platform macos --no-use-binaries --configuration Debug
-      - name: Compile and Test - SPM
-        run: |
-          set -o pipefail && swift build -c debug
-          set -o pipefail && swift build -c release
-          echo "⚠️ skipping: \"swift test -Xlinker -LResources/macOS | xcbeautify\" due to SPM bug. Resolved in Xcode 11.4 (https://developer.apple.com/documentation/xcode_release_notes/xcode_11_4_release_notes)"
       - name: Test project - macOS (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify
