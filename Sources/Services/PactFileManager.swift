@@ -44,7 +44,6 @@ enum PactFileManager {
 		#if os(macOS) || os(OSX)
 		let defaultPath = NSHomeDirectory() + "/Documents"
 		if isSandboxed {
-			debugPrint("App is sandboxed. Using NSHomeDirectory() as the directory for Pact contracts.")
 			return defaultPath
 		}
 		return ProcessInfo.processInfo.environment["PACT_DIR"] ?? defaultPath
