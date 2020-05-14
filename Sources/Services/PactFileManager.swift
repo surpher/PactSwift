@@ -22,32 +22,59 @@ import Foundation
 
 enum PactFileManager {
 
-	static var pactDir: String {
-		ProcessInfo.processInfo.environment["PACT_DIR"] ?? NSTemporaryDirectory() +  "pacts"
+	/// Where Pact contracts are written to.
+	///
+	/// ## macOS
+	/// Running macOS it defaults to app's Documents folder:
+	///
+	/// (eg: `~/Library/Containers/au.com.pact-foundation.Pact-macOS-Example/Data/Documents`)
+	///
+	/// If testing a sandboxed macOS app, this is the default location and it can not be overwritten.
+	/// If testing a macOS app that is not sandboxed, define a `PACT_DIR` Environment Variable (in the scheme)
+	/// with the path to where you want Pact contracts to be written to.
+	///
+	/// ## iOS/tvOS or non-Xcode project
+	///
+	/// Default location where Pact contracts are written is `/tmp/pacts`.
+	///
+	/// For iOS/tvOS you can override
+	/// that by defining a `PACT_DIR` Environment Variable.
+	///
+	static var pactDirectoryPath: String {
+		#if os(macOS) || os(OSX)
+		let defaultPath = NSHomeDirectory() + "/Documents"
+		if isSandboxed {
+			debugPrint("App is sandboxed. Using NSHomeDirectory() as the directory for Pact contracts.")
+			return defaultPath
+		}
+		return ProcessInfo.processInfo.environment["PACT_DIR"] ?? defaultPath
+		#else
+		return ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
+		#endif
 	}
 
-	static func checkForPath() -> Bool {
-		guard !FileManager.default.fileExists(atPath: PactFileManager.pactDir) else {
-			return true
-		}
-		debugPrint("Path not found: \(PactFileManager.pactDir)")
-		return canCreatePath()
+	static private var pactDirectoryURL: URL {
+		URL(fileURLWithPath: pactDirectoryPath, isDirectory: true)
 	}
 
-	static private func canCreatePath() -> Bool {
-		var canCreate = false
-		do {
-			try FileManager.default.createDirectory(
-				atPath: PactFileManager.pactDir,
-				withIntermediateDirectories: true,
-				attributes: nil
-			)
-			canCreate.toggle()
-		} catch let error as NSError {
-			debugPrint("Files not written. Path could not be created: \(PactFileManager.pactDir)")
-			debugPrint(error.localizedDescription)
+	/// Returns true if the directory where Pact contracts are set to be written to exists.
+	/// If it does not exists, it attempts to create it and if successful, returns true.
+	static func isPactDirectoryAvailable() -> Bool {
+		if !FileManager.default.fileExists(atPath: pactDirectoryPath) {
+			do {
+				try FileManager.default.createDirectory(at: pactDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+			} catch let error as NSError {
+				debugPrint("Directory \(pactDirectoryURL) could not be created! \(error.localizedDescription)")
+				return false
+			}
 		}
-		return canCreate
+		return true
+	}
+
+	/// Returns true if app is sandboxed
+	static private var isSandboxed: Bool {
+		let environment = ProcessInfo.processInfo.environment
+		return environment["APP_SANDBOX_CONTAINER_ID"] != nil
 	}
 
 }

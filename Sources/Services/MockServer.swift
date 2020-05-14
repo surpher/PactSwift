@@ -48,10 +48,6 @@ public class MockServer {
 		transferProtocol == .secure ? true : false
 	}
 
-	lazy private var pactDir: String = {
-		PactFileManager.pactDir
-	}()
-
 	// MARK: - Lifecycle
 
 	public init() { }
@@ -124,11 +120,12 @@ private extension MockServer {
 
 	/// Writes the PACT contract file to disk
 	func writePactContractFile(completion: (Result<String, MockServerError>) -> Void) {
-		guard PactFileManager.checkForPath() else {
+		guard PactFileManager.isPactDirectoryAvailable() else {
 			completion(.failure(.failedToWriteFile))
 			return
 		}
 
+		let pactDir = PactFileManager.pactDirectoryPath
 		let writeResult = write_pact_file(port, pactDir)
 		guard writeResult == 0 else {
 			completion(Result.failure(MockServerError(code: Int(writeResult))))
