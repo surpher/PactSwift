@@ -31,6 +31,11 @@ let kTimeout: TimeInterval = 10
 ///
 open class MockService {
 
+	public enum TransferProtocol: String {
+		case standard = "http"
+		case secure = "https"
+	}
+
 	// MARK: - Properties
 
 	///
@@ -45,7 +50,7 @@ open class MockService {
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
 	private var allValidated: Bool = true
-	private var transferProtocolScheme: MockServer.TransferProtocol
+	private var transferProtocolScheme: TransferProtocol
 
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
@@ -62,7 +67,7 @@ open class MockService {
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate!
 	///
-	public convenience init(consumer: String, provider: String, scheme: MockServer.TransferProtocol = .standard) {
+	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
 
@@ -77,7 +82,7 @@ open class MockService {
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate!
 	///
-	internal init(consumer: String, provider: String, scheme: MockServer.TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
