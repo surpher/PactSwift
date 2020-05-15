@@ -21,6 +21,10 @@ jobs:
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
           carthage update --platform ios,macos --no-use-binaries
+      - name: Build and Test SPM
+        run: |
+          set -o pipefail && swift build -c debug
+          echo "SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
       - name: Test iOS target
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
@@ -32,4 +36,4 @@ jobs:
           carthage build --no-skip-current
       - name: Trigger tests on examples repos
         run: |
-          curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/surpher/PactSwiftExamples/dispatches --data '{"event_type": "build_application"}'
+          curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/surpher/pact-swift-examples/dispatches --data '{"event_type": "build_application"}'
