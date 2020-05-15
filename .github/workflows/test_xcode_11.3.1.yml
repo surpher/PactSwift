@@ -23,10 +23,14 @@ jobs:
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
           carthage update --platform ios,macos --no-use-binaries --configuration Debug
-      - name: Test project - iOS (Xcode)
+      - name: Build and Test SPM
+        run: |
+          set -o pipefail && swift build -c debug
+          echo "SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
+      - name: Test iOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
-      - name: Test project - macOS (Xcode)
+      - name: Test macOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify
       - name: Test it builds for Carthage
