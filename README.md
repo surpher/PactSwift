@@ -2,9 +2,10 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
-![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)
-[![Test - Xcode (latest)](https://github.com/surpher/pact-swift/workflows/Test%20-%20latest/badge.svg?branch=feature%2Fintentional_swiftlint_warning)](https://github.com/surpher/pact-swift/actions)
-![Test - Xcode (11.3.1)](https://github.com/surpher/pact-swift/workflows/Test%20-%20Xcode%20(11.3.1)/badge.svg)
+[![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][issues]
+[![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
+[![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
+[![Test - Xcode (11.3.1)](https://github.com/surpher/pact-swift/workflows/Test%20-%20Xcode%20(11.3.1)/badge.svg)][action-xcode11.3.1]
 
 ⚠️ **Note:** _pact-swift_ is under heavy development and not all features are complete. Not everything is documented properly.
 
@@ -28,29 +29,27 @@ carthage update --platform ios --no-use-binaries
 
 ### Swift Package Manager (beta)
 
-1. Add `PactSwift` as a dependency to your test target in `Package.swift`:
+Add `PactSwift` as a dependency to your test target in `Package.swift`:
 
-	```sh
-	...
-	dependencies: [
-		.package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
-	],
-	...
-	```
+```sh
+...
+dependencies: [
+	.package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
+],
+...
+```
 
-2. Download `libpact_mock_server.a` from [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib) and add it to your project (eg: `Project/ProjectTests/lib/`). You can compile your own from [pact_mock_server_ffi](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
-3. Write tests in `Project/ProjectTests/test_case.swift`
-4. Run tests in terminal by providing path to binary lib as a linker flag: `swift test -Xlinker -LProjectTests/lib`
+Run tests in terminal by providing path to static lib as a linker flag:
+
+    swift test -Xlinker -LRelativePathTo/libFolder
 
 ⚠️ **Note:** ⚠️
 
-Using `PactSwift` through SPM requires you to download `libpact_mock_server.a` for the appropriate architecture.
+Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
 
-You can download one build for `x86_64` and `aarch64` at [PactMockServer](https://github.com/surpher/PactMockServer/tree/master/Sources/lib). You can use it to build for `darwin` but it will throw `ld:warning`. A _fat_ framework that would include all three architectures is being prepared.
+You can compile a custom lib from [pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi) codebase.
 
-You can compile a custom one from [pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
-
-We're actively looking for an alternative approach to using static libs with SPM!
+⚠️ We're actively looking for an alternative approach to using static libs with SPM!
 
 ## Xcode setup - Carthage
 
@@ -81,6 +80,8 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 Edit your scheme and add `PACT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
 
+⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_DIR`.
+
 ![destination_dir](./Documentation/images/04_destination_dir.png)
 
 ## Example Pact test
@@ -105,25 +106,26 @@ class PassingTestsExample: XCTestCase {
   var mockService = MockService(consumer: "Example-iOS-app", provider: "users-service")
 
   override func tearDown() {
-    super.tearDown()
-    // #6
+    // #10 - Finalise the test and write the interaction contract into the Pact contract file
     mockService.finalize { result in
       switch result {
         case .success(let result): debugPrint(result)
         case .failure(let error): debugPrint(error.description)
       }
     }
+    super.tearDown()
   }
 
   // MARK: - Tests
 
   func testGetUsers() {
-    // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API,
-    //      will behave for this specific API request we are testing here
+    // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API, will behave for this specific API request we are testing here
     _ = mockService
+
       // #2 - Define the interaction description and provider state for this specific API request that we are testing
       .uponReceiving("A request for a list of users")
       .given(ProviderState(description: "users exist", params: ["total_pages": "493"])
+
       // #3 - Define the request we promise our API consumer will make
       .withRequest(
         method: .GET,
@@ -131,13 +133,13 @@ class PassingTestsExample: XCTestCase {
         headers: nil, // `nil` means we (and the API Provider) should not care about headers. If there are values there, fine, we're just not _demanding_ anything.
         body: nil // same as with headers
       )
-      // #4 - Define what we expect `mockService`, and consequently the "real" API,
-      //      to respond with for this particular API request we are testing
+
+      // #4 - Define what we expect `mockService`, and consequently the "real" API, to respond with for this particular API request we are testing
       .willRespondWith(
         status: 200,
-        headers: nil, // `nil` means we don't care what the headers returned from the API are. If there are values in the header, fine, we're just not _demanding_ anything.
+        headers: nil, // `nil` means we don't care what the headers returned from the API are. If there are values in the header, fine, we're just not _demanding_ anything in the header.
         body: [
-          "page": SomethingLike(1), // We will use matchers here, as we normally care about types and structure, not necessarily the actual value.
+          "page": SomethingLike(1), // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
           "per_page": SomethingLike(25),
           "total": SomethingLike(1234),
           "total_pages": SomethingLike(493),
@@ -157,29 +159,21 @@ class PassingTestsExample: XCTestCase {
 
     // Run a Pact test and assert our API client makes the request exactly as we promised above
     mockService.run(waitFor: 1) { [unowned self] completed in
-      // _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
-      guard let url = URL(string: "\(self.mockService.baseUrl)/api/users") else {
-        XCTFail("Failed to prepare url!")
-        return
-      }
-      // #6 - Make the API request.
-      apiClient.makeRequest(toURL: url, withHttpMethod: .get) { results in
-        if let data = results.data {
-          let decoder = JSONDecoder()
-          decoder.keyDecodingStrategy = .convertFromSnakeCase
-          guard let userData = try? decoder.decode(UserData.self, from: data) else {
-            XCTFail("Failed to decode UserData")
-            completed() // Notify MockService we're done with our test
-            return
-          }
 
-          // #7 - Test that our API client handles the response.
-          XCTAssertEqual(userData.page, 1)
-          XCTAssertEqual(userData.data?.first?.firstName, "John")
-          XCTAssertEqual(userData.data?.first?.lastName, "Tester")
+      // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
+      apiClient.baseUrl = self.mockService.baseUrl
+
+      // #7 - Make the API request.
+      apiClient.getUsers() { users in
+
+          // #8 - Test that the API client handles the response as expected. (eg: getUsers() returns [User])
+          XCTAssertEqual(users.count, 20)
+          XCTAssertEqual(users.first?.firstName, "John")
+          XCTAssertEqual(users.first?.lastName, "Tester")
         }
 
-        completed() // Notify MockService we're done with our test
+        // #9 - Notify MockService we're done with our test
+        completed()
       }
     }
   }
@@ -232,7 +226,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 This project takes guidance from ideas and implementation examples in [pact-consumer-swift](https://github.com/DiUS/pact-consumer-swift) and pull request [Feature/native wrapper PR](https://github.com/DiUS/pact-consumer-swift/pull/50).
 
 [license]: LICENSE
+[issues]: https://github.com/surpher/PactSwift/issues
 [contributing]: CONTRIBUTING.md
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [pact-broker]: https://docs.pact.io/pact_broker
+[action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
+[action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
+[action-xcode11.3.1]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.3.1%29%22
