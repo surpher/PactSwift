@@ -122,6 +122,7 @@ open class MockService {
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
+
 		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
 			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
 				switch $0 {
@@ -144,7 +145,15 @@ open class MockService {
 			self.mockServer.verify {
 				switch $0 {
 				case .success:
-					completion()
+					self.finalize {
+						switch $0 {
+						case .success(let message):
+							completion()
+							debugPrint(message)
+						case .failure(let error):
+							self.failWith(error.description, file: file, line: line)
+						}
+					}
 				case .failure(let error):
 					self.failWith(error.description, file: file, line: line)
 					completion()
@@ -154,14 +163,14 @@ open class MockService {
 	}
 
 	///
-	/// Verifies all interactions have passed their Pact test and writes a Pact contract file in JSON format.
+	/// Writes a Pact contract file in JSON format.
 	///
 	/// - parameter completion: Result of the writing the Pact contract to JSON
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
 	/// Set `PACT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
 	///
-	public func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
+	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		pact.interactions = interactions
 		guard let pactData = pact.data, allValidated else {
 			completion?(.failure( .validationFaliure))
