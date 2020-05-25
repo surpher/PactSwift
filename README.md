@@ -106,15 +106,6 @@ class PassingTestsExample: XCTestCase {
   var mockService = MockService(consumer: "Example-iOS-app", provider: "users-service")
 
   override func tearDown() {
-    // #10 - Finalise the test and write the interaction contract into the Pact contract file
-    mockService.finalize { result in
-      switch result {
-        case .success(let result): debugPrint(result)
-        case .failure(let error): debugPrint(error.description)
-      }
-    }
-    super.tearDown()
-  }
 
   // MARK: - Tests
 
