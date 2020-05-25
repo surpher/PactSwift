@@ -169,6 +169,12 @@ open class MockService {
 		}
 	}
 
+}
+
+// MARK: - Internal
+
+extension MockService {
+	
 	///
 	/// Writes a Pact contract file in JSON format.
 	///
@@ -201,6 +207,9 @@ open class MockService {
 
 private extension MockService {
 
+	///
+	/// Waits for test to be completed and fails if timed out.
+	///
 	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
 		let expectation = XCTestExpectation(description: "waitForPactTest")
 		action {
@@ -218,6 +227,9 @@ private extension MockService {
 		}
 	}
 
+	///
+	/// Fail the test and raise the failure in `file` at `line`
+	///
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		allValidated = false
 
