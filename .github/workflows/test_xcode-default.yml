@@ -26,13 +26,16 @@ jobs:
           echo "⚠️ SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
       - name: Test iOS target
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" -enableCodeCoverage YES | xcbeautify
       - name: Test macOS target
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" -enableCodeCoverage YES | xcbeautify
       - name: Test it builds for Carthage
         run: |
           carthage build --no-skip-current
       - name: Trigger tests on examples repo
         run: |
           curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept: application/vnd.github.everest-preview+json"  -H "Content-Type: application/json" https://api.github.com/repos/surpher/pact-swift-examples/dispatches --data '{"event_type": "build_application"}'
+      - name: Upload test coverage to codecov.io
+        run: |
+          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'

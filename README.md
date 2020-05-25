@@ -3,7 +3,9 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)][carthage]
-[![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases]
+[![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases]  
+
+[![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
 [![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
 [![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
 
@@ -216,6 +218,7 @@ This project takes ideas from [pact-consumer-swift](https://github.com/DiUS/pact
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
 [carthage]: https://github.com/Carthage/Carthage
 [code-of-conduct]: CODE_OF_CONDUCT.md
+[codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [issues]: https://github.com/surpher/PactSwift/issues
