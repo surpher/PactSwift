@@ -121,10 +121,10 @@ private extension MockServer {
 		let pactDir = PactFileManager.pactDirectoryPath
 		let writeResult = write_pact_file(port, pactDir)
 		guard writeResult == 0 else {
-			completion(Result.failure(MockServerError(code: Int(writeResult))))
+			completion(.failure(MockServerError(code: Int(writeResult))))
 			return
 		}
-		completion(Result.success("Pact interaction written to \(pactDir)"))
+		completion(.success("Pact interaction written to \(pactDir)"))
 	}
 
 	/// Shuts down the Mock Server and releases the socket address
