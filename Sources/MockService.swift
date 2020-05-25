@@ -19,6 +19,7 @@
 //
 
 import Foundation
+import os.log
 import XCTest
 
 let kTimeout: TimeInterval = 10
@@ -120,6 +121,8 @@ open class MockService {
 	/// your `mockService.run{ }` test will fail with `Waited more than 10.0 seconds` error where time depends on
 	/// your `timeout: TimeInterval?`
 	///
+	///
+	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
@@ -148,8 +151,12 @@ open class MockService {
 					self.finalize {
 						switch $0 {
 						case .success(let message):
+							if #available(iOS 10, OSX 10.14, *) {
+								os_log(.debug, "%@", message)
+							} else {
+								debugPrint(message)
+							}
 							completion()
-							debugPrint(message)
 						case .failure(let error):
 							self.failWith(error.description, file: file, line: line)
 						}
@@ -202,7 +209,7 @@ private extension MockService {
 
 		let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
 		if result != .completed {
-			let message = "Test did not complete within \(timeout) second timeout!"
+			let message = "Test did not complete within \(timeout) second timeout! Did you run testCompleted() block?"
 			if let file = file, let line = line {
 				errorReporter.reportFailure(message, file: file, line: line)
 			} else {
