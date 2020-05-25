@@ -16,14 +16,12 @@ let package = Package(
 		)
 	],
 	dependencies: [
-		.package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
 		.package(url: "https://github.com/surpher/PactMockServer.git", from: "0.0.1-beta")
 	],
 	targets: [
 		.target(
 			name: "PactSwift",
 			dependencies: [
-				"Nimble",
 				"PactMockServer"
 			],
 			path: "./Sources"

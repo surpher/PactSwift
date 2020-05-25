@@ -20,11 +20,7 @@
 
 import Foundation
 
-#if SWIFT_PACKAGE
 public typealias FileString = StaticString
-#else
-public typealias FileString = String
-#endif
 
 public protocol ErrorReportable {
 

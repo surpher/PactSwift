@@ -19,7 +19,7 @@
 //
 
 import Foundation
-import Nimble
+import XCTest
 
 let kTimeout: TimeInterval = 10
 
@@ -122,7 +122,7 @@ open class MockService {
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
-		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
+		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
 			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
 				switch $0 {
 				case .success:
@@ -140,7 +140,7 @@ open class MockService {
 			}
 		}
 
-		waitForPactUntil(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
+		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
 			self.mockServer.verify {
 				switch $0 {
 				case .success:
@@ -185,11 +185,20 @@ open class MockService {
 
 private extension MockService {
 
-	func waitForPactUntil(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
-		if let file = file, let line = line {
-			return waitUntil(timeout: timeout, file: file, line: line, action: action)
-		} else {
-			return waitUntil(timeout: timeout, action: action)
+	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
+		let expectation = XCTestExpectation(description: "waitForPactTest")
+		action {
+			expectation.fulfill()
+		}
+
+		let result = XCTWaiter().wait(for: [expectation], timeout: timeout)
+		if result != .completed {
+			let message = "Test did not complete within \(timeout) second timeout!"
+			if let file = file, let line = line {
+				errorReporter.reportFailure(message, file: file, line: line)
+			} else {
+				errorReporter.reportFailure(message)
+			}
 		}
 	}
 
