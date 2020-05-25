@@ -22,11 +22,10 @@ jobs:
           git lfs install --skip-smudge
           brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
           brew install swiftlint xcbeautify
-          carthage update --platform ios,macos --no-use-binaries
-      - name: Build and Test SPM
+      - name: Build and Test SPM support
         run: |
           set -o pipefail && swift build -c debug
-          echo "SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
+          echo "⚠️ SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
       - name: Test iOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify

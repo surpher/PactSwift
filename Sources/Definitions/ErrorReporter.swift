@@ -19,16 +19,16 @@
 //
 
 import Foundation
-import Nimble
+import XCTest
 
 class ErrorReporter: ErrorReportable {
 
 	func reportFailure(_ message: String) {
-		fail(message)
+		XCTFail(message, file: #file, line: #line)
 	}
 
 	func reportFailure(_ message: String, file: FileString, line: UInt) {
-		fail(message, file: file, line: line)
+		XCTFail(message, file: file, line: line)
 	}
 
 }
