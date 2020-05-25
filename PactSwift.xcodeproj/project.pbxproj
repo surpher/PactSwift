@@ -257,7 +257,6 @@
 				ADD3C27324416CDF002E73B9 /* EqualTo.swift */,
 				ADD3C27524416DAE002E73B9 /* IncludesLike.swift */,
 				AD7891BD24415C100014BCC8 /* IntegerLike.swift */,
-				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				ADD3C26F24416891002E73B9 /* RegexLike.swift */,
 				AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */,
 			);
@@ -292,6 +291,7 @@
 				ADDE4703244D101700E4F7EE /* ErrorReportable.swift */,
 				ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */,
 				AD641A412434588200785CE1 /* Interaction.swift */,
+				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				AD641A342434345500785CE1 /* Metadata.swift */,
 				AD641A3924344D9500785CE1 /* Pact.swift */,
 				AD8DF434243C53750062CB1A /* PactBuilder.swift */,
