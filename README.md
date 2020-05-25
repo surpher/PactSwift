@@ -157,7 +157,7 @@ class PassingTestsExample: XCTestCase {
       // #7 - Make the API request.
       apiClient.getUsers() { users in
 
-          // #8 - Test that the API client handles the response as expected. (eg: getUsers() returns [User])
+          // #8 - Test that the API client handles the response as expected. (eg: `getUsers() -> [User]`)
           XCTAssertEqual(users.count, 20)
           XCTAssertEqual(users.first?.firstName, "John")
           XCTAssertEqual(users.first?.lastName, "Tester")
