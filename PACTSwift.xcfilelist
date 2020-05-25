@@ -7,7 +7,6 @@ $(SRCROOT)/Sources/Matchers/IntegerLike.swift
 $(SRCROOT)/Sources/Matchers/RegexLike.swift
 $(SRCROOT)/Sources/Matchers/IncludesLike.swift
 $(SRCROOT)/Sources/Matchers/DecimalLike.swift
-$(SRCROOT)/Sources/Matchers/MatchingRuleExpressible.swift
 $(SRCROOT)/Sources/Definitions/Metadata.swift
 $(SRCROOT)/Sources/Definitions/PactInteractionNode.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorHandler.swift
@@ -24,6 +23,7 @@ $(SRCROOT)/Sources/Definitions/ErrorReportable.swift
 $(SRCROOT)/Sources/Definitions/PactBuilder.swift
 $(SRCROOT)/Sources/Definitions/MismatchError.swift
 $(SRCROOT)/Sources/Definitions/Pacticipant.swift
+$(SRCROOT)/Sources/Definitions/MatchingRuleExpressible.swift
 $(SRCROOT)/Sources/Definitions/ErrorReporter.swift
 $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
