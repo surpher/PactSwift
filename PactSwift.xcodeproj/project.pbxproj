@@ -105,6 +105,8 @@
 		ADB7C16B2433283400A16CDE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C16A2433283400A16CDE /* Response.swift */; };
 		ADC3AA37247C8C4B0034446E /* InteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA36247C8C4B0034446E /* InteractionTests.swift */; };
 		ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA36247C8C4B0034446E /* InteractionTests.swift */; };
+		ADC3AA3A247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA39247CB90B0034446E /* VerificationErrorTypeTests.swift */; };
+		ADC3AA3B247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA39247CB90B0034446E /* VerificationErrorTypeTests.swift */; };
 		ADC4466D247BC840004D2267 /* MockServerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */; };
 		ADC4466E247BC840004D2267 /* MockServerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */; };
 		ADD3C27024416891002E73B9 /* RegexLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C26F24416891002E73B9 /* RegexLike.swift */; };
@@ -206,6 +208,7 @@
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
 		ADB7C16A2433283400A16CDE /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		ADC3AA36247C8C4B0034446E /* InteractionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionTests.swift; sourceTree = "<group>"; };
+		ADC3AA39247CB90B0034446E /* VerificationErrorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationErrorTypeTests.swift; sourceTree = "<group>"; };
 		ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServerErrorTests.swift; sourceTree = "<group>"; };
 		ADC6FAE024302BA800026714 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		ADD3C26F24416891002E73B9 /* RegexLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLike.swift; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 				AD7891B624414D500014BCC8 /* PactBuilderTests.swift */,
 				AD641A3D24344FA100785CE1 /* PacticipantTests.swift */,
 				AD641A3F2434518500785CE1 /* PactTests.swift */,
+				ADC3AA39247CB90B0034446E /* VerificationErrorTypeTests.swift */,
 			);
 			path = Definitions;
 			sourceTree = "<group>";
@@ -320,10 +324,10 @@
 				AD646FAE2460F77D00979AFC /* MismatchErrorType.swift */,
 				AD646FB22460F77D00979AFC /* MockServerError.swift */,
 				AD646FB52460F77D00979AFC /* PactError.swift */,
+				AD646FAF2460F77D00979AFC /* RequestError.swift */,
 				AD646FB02460F77D00979AFC /* VerificationError.swift */,
 				AD646FB12460F77D00979AFC /* VerificationErrorHandler.swift */,
 				AD646FB32460F77D00979AFC /* VerificationErrorType.swift */,
-				AD646FAF2460F77D00979AFC /* RequestError.swift */,
 			);
 			name = MockServer;
 			sourceTree = "<group>";
@@ -891,6 +895,7 @@
 				AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */,
 				ADDE4702244D0FDE00E4F7EE /* ErrorCapture.swift in Sources */,
 				AD646FD02460F94100979AFC /* MockServerTests.swift in Sources */,
+				ADC3AA3A247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */,
 				ADC4466D247BC840004D2267 /* MockServerErrorTests.swift in Sources */,
 				AD641A402434518500785CE1 /* PactTests.swift in Sources */,
 				AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */,
@@ -955,6 +960,7 @@
 				AD8FC8022463BBD000361854 /* PactTests.swift in Sources */,
 				AD8FC8082463BBD100361854 /* MockServiceTests.swift in Sources */,
 				AD8FC8092463BBD100361854 /* MockServerTests.swift in Sources */,
+				ADC3AA3B247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */,
 				ADC4466E247BC840004D2267 /* MockServerErrorTests.swift in Sources */,
 				AD8FC8072463BBD000361854 /* SomethingLikeTests.swift in Sources */,
 				AD8FC8002463BBD000361854 /* PactBuilderTests.swift in Sources */,
