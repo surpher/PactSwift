@@ -9,7 +9,9 @@
 [![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
 [![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
 
-⚠️ **Note:** _pact-swift_ is under heavy development and not all features are complete. Not everything is documented properly.
+> ⚠️ **NOTE** ⚠️  
+> _pact-swift_ is under heavy development and not all features are complete.
+> Not everything is documented properly.
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
@@ -45,13 +47,11 @@ Run tests in terminal by providing path to static lib as a linker flag:
 
     swift test -Xlinker -LRelativePathTo/libFolder
 
-⚠️ **Note:** ⚠️
-
-Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
+⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
 
 You can compile a custom lib from [pact-reference/rust][pact-reference-rust] codebase.
 
-⚠️ We're actively looking for an alternative approach to using static libs with SPM!
+We're actively looking for an alternative approach to using static libs with SPM!
 
 ## Xcode setup - Carthage
 
@@ -86,16 +86,17 @@ Edit your scheme and add `PACT_DIR` environment variable (`Run` step) with path 
 
 ![destination_dir](./Documentation/images/04_destination_dir.png)
 
-## Example Pact test
+## Writing Pact tests
 
-1. Define the contract per API interaction (between your API consumer and API provider),
-2. Define the state of the provider for the interaction,
-3. Define the expected `request` for the interaction,
-4. Define the expected `response` for the interaction,
-5. Run the test by making the API request using your API client,
-6. Finalize the Pact tests to generate a Pact contract file,
-7. Share the generated Pact contract file with provider (eg: upload to a [Pact Broker][pact-broker]).
-8. Run [`can-i-deploy`][can-i-deploy] (on your CI/CD) to deploy with confidence or avoid deploying a new version of your app, if contract has not yet been validated by the provider - or it's broken. That means you avoid breaking the production. Win.
+- Instantiate a `MockService` object by defining _pacticipants_,
+- Define the state of the provider for an interaction (one Pact test),
+- Define the expected `request` for the interaction,
+- Define the expected `response` for the interaction,
+- Run the test by making the API request using your API client and assert what you need asserted,
+- Share the generated Pact contract file with your provider (eg: upload to a [Pact Broker][pact-broker]),
+- Run [`can-i-deploy`][can-i-deploy] (eg: on your CI/CD) to deploy with confidence.
+
+### Example Test
 
 ```swift
 import XCTest
@@ -106,8 +107,6 @@ import PactSwift
 class PassingTestsExample: XCTestCase {
 
   var mockService = MockService(consumer: "Example-iOS-app", provider: "users-service")
-
-  override func tearDown() {
 
   // MARK: - Tests
 
