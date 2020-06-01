@@ -1,9 +1,9 @@
-# PactSwift (beta)
+# PactSwift [![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases] [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 
-[![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)][carthage]
-[![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases]  
+[![slack](http://slack.pact.io/badge.svg)][pact-slack]
+[![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]  
 
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
 [![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
@@ -56,13 +56,6 @@ We're actively looking for an alternative approach to using static libs with SPM
 ## Xcode setup - Carthage
 
 **NOTE:** This framework is intended to be used in your test target. Do not embed it into your app bundle!
-
-### Setup test target Build Phase
-
-`Test Target` > `Build Settings` > `Link Binary With Libraries` > `Add Other` > `Add Files...`
-Find your Carthage folder, `$(PROJECT_DIR)/Carthage/Build/iOS/` and select `PactSwift.framework` to link it to your test target that will run Pact tests:
-
-![link_binary_with_libraries](./Documentation/images/01_link_binary_with_libraries.png)
 
 ### Setup Framework Build Settings
 
@@ -205,8 +198,8 @@ See [pact-swift-examples][demo-projects] repo.
 
 ## Contributing
 
-See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)  
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CODE_OF_CONDUCT.md][code-of-conduct]  
+See [CONTRIBUTING.md][contributing]
 
 ## Acknowledgements
 
@@ -216,18 +209,20 @@ This project takes ideas from [pact-consumer-swift](https://github.com/DiUS/pact
 [action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
 [carthage]: https://github.com/Carthage/Carthage
-[code-of-conduct]: CODE_OF_CONDUCT.md
+[code-of-conduct]: ./Documentation/CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
-[contributing]: CONTRIBUTING.md
+[contributing]: ./Documentation/CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [issues]: https://github.com/surpher/PactSwift/issues
-[license]: LICENSE
+[license]: LICENSE.md
 [matchers]: https://github.com/surpher/pact-swift/wiki/Matchers
 [pact-broker]: https://docs.pact.io/pact_broker
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
 [pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
 [pact-docs]: https://docs.pact.io
 [pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi
+[pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
 [pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/master/Sources/Matchers
+[pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
