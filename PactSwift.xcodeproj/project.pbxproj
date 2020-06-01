@@ -800,7 +800,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\"${PROJECT_DIR}\"/Scripts/BuildPhases/lint-target\n";
+			shellScript = "\"${PROJECT_DIR}\"/Scripts/BuildPhases/lint-target\n";
 		};
 		ADC3C4CE242CCD0100D3FDCE /* Lint Target */ = {
 			isa = PBXShellScriptBuildPhase;
