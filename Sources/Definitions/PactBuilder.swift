@@ -28,6 +28,7 @@ struct PactBuilder {
 		self.typeDefinition = value
 	}
 
+	///
 	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`)
 	/// and its corresponding matching rules.
 	/// It erases node object's type and casts the node and leaf values into an `Encodable` safe type.
@@ -61,7 +62,6 @@ extension PactBuilder {
 		case unknown
 
 		var localizedDescription: String {
-
 			switch self {
 			case .notEncodable(let element):
 				return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
