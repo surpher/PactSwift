@@ -1,4 +1,4 @@
-name: Test - Xcode (11.5-beta)
+name: Test - Xcode (11.5)
 on:
   push:
     branches:
@@ -15,13 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@master
-      - name: Force Xcode 11.5beta
-        run: sudo xcode-select -switch /Applications/Xcode_11.5_beta.app
+      - name: Use Xcode 11.5
+        run: sudo xcode-select -switch /Applications/Xcode_11.5.app
       - name: Prepare Tools
         run: |
-          git lfs install --skip-smudge
-          brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
-          brew install swiftlint xcbeautify
+          Scripts/prepare_build_tools
       - name: Build and Test SPM support
         run: |
           set -o pipefail && swift build -c debug

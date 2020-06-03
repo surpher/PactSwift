@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+git lfs install --skip-smudge
+brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+brew install swiftlint xcbeautify
