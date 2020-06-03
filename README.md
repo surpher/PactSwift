@@ -205,7 +205,7 @@ See [CONTRIBUTING.md][contributing]
 
 ## Acknowledgements
 
-This project takes ideas from [pact-consumer-swift](https://github.com/DiUS/pact-consumer-swift) and pull request [Feature/native wrapper PR](https://github.com/DiUS/pact-consumer-swift/pull/50).
+This project takes inspiration from [pact-consumer-swift](https://github.com/DiUS/pact-consumer-swift) and pull request [Feature/native wrapper PR](https://github.com/DiUS/pact-consumer-swift/pull/50).
 
 Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 
