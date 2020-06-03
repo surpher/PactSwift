@@ -1,3 +1,5 @@
+![pact-swift](./Documentation/images/pact-swift.png)
+
 # PactSwift [![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases] [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
@@ -204,6 +206,8 @@ See [CONTRIBUTING.md][contributing]
 ## Acknowledgements
 
 This project takes ideas from [pact-consumer-swift](https://github.com/DiUS/pact-consumer-swift) and pull request [Feature/native wrapper PR](https://github.com/DiUS/pact-consumer-swift/pull/50).
+
+Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 
 [action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
 [action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
