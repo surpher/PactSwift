@@ -9,7 +9,7 @@
 [![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
 [![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
 
-![pact-swift](./Documentation/images/pact-swift.png)
+<img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 
 > ⚠️ **NOTE** ⚠️  
 > _pact-swift_ is under heavy development and not all features are complete.
@@ -101,7 +101,7 @@ import PactSwift
 
 class PassingTestsExample: XCTestCase {
 
-  var mockService = MockService(consumer: "Example-iOS-app", provider: "users-service")
+  var mockService = MockService(consumer: "Example-iOS-app", provider: "some-service")
 
   // MARK: - Tests
 
