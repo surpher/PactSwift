@@ -1,5 +1,3 @@
-![pact-swift](./Documentation/images/pact-swift.png)
-
 # PactSwift [![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases] [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
@@ -10,6 +8,8 @@
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
 [![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
 [![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
+
+![pact-swift](./Documentation/images/pact-swift.png)
 
 > ⚠️ **NOTE** ⚠️  
 > _pact-swift_ is under heavy development and not all features are complete.
