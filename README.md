@@ -6,8 +6,8 @@
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]  
 
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
-[![Test - Xcode (default)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(default)/badge.svg)][action-default]
-[![Test - Xcode (11.5-beta)](https://github.com/surpher/PactSwift/workflows/Test%20-%20Xcode%20(11.5-beta)/badge.svg)][action-xcode11.5-beta]
+![CI (11.4)](https://github.com/surpher/PactSwift/workflows/CI%20(11.4)/badge.svg)
+![CI (11.5)](https://github.com/surpher/PactSwift/workflows/CI%20(11.5)/badge.svg)
 
 <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 
