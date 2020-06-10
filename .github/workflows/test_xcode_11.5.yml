@@ -1,4 +1,4 @@
-name: Test - Xcode (11.5)
+name: CI (11.5)
 on:
   push:
     branches:
