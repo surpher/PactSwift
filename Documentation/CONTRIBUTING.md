@@ -28,7 +28,9 @@ If you want to work on something else, such as a new feature or fixing a bug, it
 - Clone your fork:
   - `git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
   - See the [GitHub documentation][fork-docs] about managing your fork.
-- This repo uses [LFS](https://help.github.com/en/github/managing-large-files/configuring-git-large-file-storage). Make sure you fetch the files `git lfs fetch --all` into your fork.
+- This repo uses [LFS](https://help.github.com/en/github/managing-large-files/configuring-git-large-file-storage). 
+	- Make sure you fetch the files `git lfs fetch --all` into your fork.
+	- `git lfs pull` to pull the binaries needed when running Xcode builds/tests
 
 #### Recommended
 
