@@ -14,22 +14,34 @@ jobs:
     runs-on: macOS-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      - name: Fetch LFS objects
+        run: |
+          git lfs fetch --all
+
       - name: Use Xcode 11.5
         run: sudo xcode-select -switch /Applications/Xcode_11.5.app
+
       - name: Prepare Tools
         run: |
           Scripts/prepare_build_tools
+
       - name: Build and Test SPM support
         run: |
           set -o pipefail && swift build -c debug
           echo "⚠️ SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
+
       - name: Test iOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+
       - name: Test macOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" | xcbeautify
+
       - name: Test it builds for Carthage
         run: |
           carthage build --no-skip-current
