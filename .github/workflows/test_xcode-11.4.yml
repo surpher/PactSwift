@@ -1,4 +1,8 @@
-name: CI (11.4)
+name: Run tests (11.4)
+
+env:
+    SIMULATOR_NAME: "iPhone 8"
+
 on:
   push:
     branches:
@@ -8,10 +12,12 @@ on:
   pull_request:
     branches:
       - master
+
 jobs:
   test_ios:
     name: Test framework
     runs-on: macOS-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

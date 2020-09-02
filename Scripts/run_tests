@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+set -xeu
+set -o pipefail
+
+# Overridable Environment
+SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 11 Pro'}
+
 # Check for dependencies
 if ! [ -x "$(command -v xcbeautify)" ]; then
   echo 'Error: xcbeautify is not installed.' >&2
@@ -11,5 +17,5 @@ swift build -c debug
 swift test -Xlinker -LResources/macOS
 
 # Run tests
-set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=${SIMULATOR_NAME}" | xcbeautify
 set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify

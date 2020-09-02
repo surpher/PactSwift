@@ -1,4 +1,4 @@
-name: Run tests (11.5)
+name: Run tests (12beta)
 
 env:
     SIMULATOR_NAME: "iPhone 11 Pro"
@@ -28,8 +28,8 @@ jobs:
         run: |
           git lfs fetch --all
 
-      - name: Use Xcode 11.5
-        run: sudo xcode-select -switch /Applications/Xcode_11.5.app
+      - name: Use Xcode 12
+        run: sudo xcode-select -switch /Applications/Xcode_12_beta.app
 
       - name: Prepare Tools
         run: |
