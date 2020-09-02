@@ -1,3 +1,1 @@
 *.a filter=lfs diff=lfs merge=lfs -text
-Resources/macOS/libpact_mock_server.a filter=lfs diff=lfs merge=lfs -text
-Resources/iOS/libpact_mock_server.a filter=lfs diff=lfs merge=lfs -text
