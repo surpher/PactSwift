@@ -174,11 +174,35 @@ StringResult generate_datetime_string(const char *format);
 StringResult generate_regex_value(const char *regex);
 
 /**
+ * Fetch the CA Certificate used to generate the self-signed certificate for the TLS mock server.
+ *
+ * **NOTE:** The string for the result is allocated on the heap, and will have to be freed
+ * by the caller using free_string
+ *
+ * # Errors
+ *
+ * An empty string indicates an error reading the pem file
+ */
+char *get_tls_ca_certificate(void);
+
+/**
  * Adds a provider state to the Interaction.
  *
  * * `description` - The provider state description. It needs to be unique.
  */
 void given(InteractionHandle interaction, const char *description);
+
+/**
+ * Adds a provider state to the Interaction with a parameter key and value.
+ *
+ * * `description` - The provider state description. It needs to be unique.
+ * * `name` - Parameter name.
+ * * `value` - Parameter value.
+ */
+void given_with_param(InteractionHandle interaction,
+                      const char *description,
+                      const char *name,
+                      const char *value);
 
 /**
  * Initialise the mock server library, can provide an environment variable name to use to
@@ -249,10 +273,26 @@ void response_status(InteractionHandle interaction, unsigned short status);
 void upon_receiving(InteractionHandle interaction, const char *description);
 
 /**
+ * Adds a binary file as the body with the expected content type and example contents. Will use
+ * a mime type matcher to match the body.
+ *
+ * * `interaction` - Interaction handle to set the body for.
+ * * `part` - Request or response part.
+ * * `content_type` - Expected content type.
+ * * `body` - example body contents in bytes
+ */
+void with_binary_file(InteractionHandle interaction,
+                      InteractionPart part,
+                      const char *content_type,
+                      const char *body,
+                      size_t size);
+
+/**
  * Adds the body for the interaction.
  *
  * * `part` - The part of the interaction to add the body to (Request or Response).
- * * `content_type` - The content type of the body. Defaults to `text/plain`.
+ * * `content_type` - The content type of the body. Defaults to `text/plain`. Will be ignored if a content type
+ *   header is already set.
  * * `body` - The body contents. For JSON payloads, matching rules can be embedded in the body.
  */
 void with_body(InteractionHandle interaction,
@@ -273,6 +313,22 @@ void with_header(InteractionHandle interaction,
                  const char *name,
                  size_t index,
                  const char *value);
+
+/**
+ * Adds a binary file as the body as a MIME multipart with the expected content type and example contents. Will use
+ * a mime type matcher to match the body.
+ *
+ * * `interaction` - Interaction handle to set the body for.
+ * * `part` - Request or response part.
+ * * `content_type` - Expected content type of the file.
+ * * `file` - path to the example file
+ * * `part_name` - name for the mime part
+ */
+StringResult with_multipart_file(InteractionHandle interaction,
+                                 InteractionPart part,
+                                 const char *content_type,
+                                 const char *file,
+                                 const char *part_name);
 
 /**
  * Configures a query parameter for the Interaction.
