@@ -7,7 +7,6 @@
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
-[![CI (11.4)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.4)/badge.svg)][github-action-xcode11.4]
 [![CI (11.5)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.5)/badge.svg)][github-action-xcode11.5]
 [![CI (12beta)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12beta)/badge.svg)][github-action-xcode12beta]
 

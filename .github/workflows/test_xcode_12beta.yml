@@ -24,10 +24,6 @@ jobs:
         with:
           lfs: true
 
-      - name: Fetch LFS objects
-        run: |
-          git lfs fetch --all
-
       - name: Use Xcode 12
         run: sudo xcode-select -switch /Applications/Xcode_12_beta.app
 
