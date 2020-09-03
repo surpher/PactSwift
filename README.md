@@ -7,7 +7,7 @@
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
-[![CI (11.5)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.5)/badge.svg)][github-action-xcode11.5]
+[![CI (11.6)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.6)/badge.svg)][github-action-xcode11.6]
 [![CI (12beta)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12beta)/badge.svg)][github-action-xcode12beta]
 
 <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
@@ -218,8 +218,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./Documentation/CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
-[github-action-xcode11.4]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.4%29%22
-[github-action-xcode11.5]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.5%29%22
+[github-action-xcode11.6]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.6%29%22
 [github-action-xcode12beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2812beta%29%22
 [issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md

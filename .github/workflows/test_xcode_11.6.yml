@@ -1,4 +1,4 @@
-name: Run tests (11.5)
+name: Run tests (11.6)
 
 env:
     SIMULATOR_NAME: "iPhone 11 Pro"
@@ -24,8 +24,8 @@ jobs:
         with:
           lfs: true
 
-      - name: Use Xcode 11.5
-        run: sudo xcode-select -switch /Applications/Xcode_11.5.app
+      - name: Use Xcode 11.6
+        run: sudo xcode-select -switch /Applications/Xcode_11.6.app
 
       - name: Prepare Tools
         run: |
