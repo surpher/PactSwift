@@ -28,7 +28,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_EqualTo() throws {
 		let testBody: Any = [
-			"data":  Matcher.EqualTo("2016-07-19")
+			"data": Matcher.EqualTo("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -41,7 +41,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_SomethingLike() throws {
 		let testBody: Any = [
-			"data":  Matcher.SomethingLike("2016-07-19")
+			"data": Matcher.SomethingLike("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -154,7 +154,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_DecimalLike() throws {
 		let testBody: Any = [
-			"data":  Matcher.DecimalLike(1234)
+			"data": Matcher.DecimalLike(1234)
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -184,7 +184,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMatcher_IncludesLike_DefaultsToAND() throws {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
-			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31")
+			"data": Matcher.IncludesLike("2020-12-31", "2019-12-31")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -201,7 +201,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() throws {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
-			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
+			"data": Matcher.IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
 		]
 
 		let testPact = prepareTestPact(for: testBody)
