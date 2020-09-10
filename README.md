@@ -127,16 +127,16 @@ class PassingTestsExample: XCTestCase {
         status: 200,
         headers: nil, // `nil` means we don't care what the headers returned from the API are. If there are values in the header, fine, we're just not _demanding_ anything in the header.
         body: [
-          "page": SomethingLike(1), // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
-          "per_page": SomethingLike(20),
-          "total": SomethingLike(58),
-          "total_pages": SomethingLike(3),
-          "data": EachLike(
+          "page": Matcher.SomethingLike(1), // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
+          "per_page": Matcher.SomethingLike(20),
+          "total": Matcher.SomethingLike(58),
+          "total_pages": Matcher.SomethingLike(3),
+          "data": Matcher.EachLike(
             [
-              "id": IntegerLike(1),
-              "first_name": SomethingLike("John"),
-              "last_name": SomethingLike("Tester"),
-              "salary": DecimalLike(125000.00)
+              "id": Matcher.IntegerLike(1),
+              "first_name": Matcher.SomethingLike("John"),
+              "last_name": Matcher.SomethingLike("Tester"),
+              "salary": Matcher.DecimalLike(125000.00)
             ]
           )
         ]
