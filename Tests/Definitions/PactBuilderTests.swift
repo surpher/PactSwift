@@ -175,7 +175,7 @@ class PactBuilderTests: XCTestCase {
 		let matchers = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
 
 		XCTAssertEqual(matchers.matchers.first?.match, "regex")
-		XCTAssertEqual(matchers.matchers.first?.regex,  "\\d{4}-\\d{2}-\\d{2}")
+		XCTAssertEqual(matchers.matchers.first?.regex, "\\d{4}-\\d{2}-\\d{2}")
 		XCTAssertNil(matchers.combine)
 	}
 
