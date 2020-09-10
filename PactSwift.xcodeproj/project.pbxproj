@@ -121,6 +121,8 @@
 		ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE2937E2435DB14008AFBC9 /* ProviderState.swift */; };
 		ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 		ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
+		ADE9B3CA250A435B00274672 /* EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C9250A435B00274672 /* EqualToTests.swift */; };
+		ADE9B3CB250A435B00274672 /* EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C9250A435B00274672 /* EqualToTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +228,7 @@
 		ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		ADE2937E2435DB14008AFBC9 /* ProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderState.swift; sourceTree = "<group>"; };
 		ADE9B3C6250A3C4700274672 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
+		ADE9B3C9250A435B00274672 /* EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +388,7 @@
 			children = (
 				AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */,
 				AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */,
+				ADE9B3C9250A435B00274672 /* EqualToTests.swift */,
 				ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */,
 				AD7891BF24415C710014BCC8 /* IntegerLikeTests.swift */,
 				ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */,
@@ -911,6 +915,7 @@
 				AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */,
 				AD7891C424415E9F0014BCC8 /* DecimalLikeTests.swift in Sources */,
 				AD8DF433243C437F0062CB1A /* AnyEncodableTests.swift in Sources */,
+				ADE9B3CA250A435B00274672 /* EqualToTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -978,6 +983,7 @@
 				AD8FC8002463BBD000361854 /* PactBuilderTests.swift in Sources */,
 				AD8FC8012463BBD000361854 /* PacticipantTests.swift in Sources */,
 				AD8FC8042463BBD000361854 /* EachLikeTests.swift in Sources */,
+				ADE9B3CB250A435B00274672 /* EqualToTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
