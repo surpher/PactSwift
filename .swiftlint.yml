@@ -59,3 +59,5 @@ line_length:
   ignores_comments: false
 modifier_order:
   preferred_modifier_order: [acl, override]
+nesting:
+  type_level: 2
