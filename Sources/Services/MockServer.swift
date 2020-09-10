@@ -96,7 +96,7 @@ class MockServer {
 
 private extension MockServer {
 
-	/// true when all expected requests have successfully matched
+	/// `true` when all expected requests have successfully matched
 	var requestsMatched: Bool {
 		mock_server_matched(port)
 	}

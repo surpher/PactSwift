@@ -18,9 +18,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-///
 /// Merges two `Dictionary` objects and returns a `Dictionary`
-///
 func merge<Key, Value>(_ lhs: [Key: Value], with rhs: [Key: Value]) -> [Key: Value] {
 	var result = lhs
 	rhs.forEach { result[$0] = $1 }

@@ -39,7 +39,6 @@ enum PactFileManager {
 	///
 	/// For iOS/tvOS you can override
 	/// that by defining a `PACT_DIR` Environment Variable.
-	///
 	static var pactDirectoryPath: String {
 		#if os(macOS) || os(OSX)
 		let defaultPath = NSHomeDirectory() + "/Documents"

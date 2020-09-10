@@ -24,12 +24,10 @@ import XCTest
 
 let kTimeout: TimeInterval = 10
 
-///
 /// Initializes a `MockService` object that handles Pact interaction testing.
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate!
-///
 open class MockService {
 
 	public enum TransferProtocol: String {
@@ -39,7 +37,6 @@ open class MockService {
 
 	// MARK: - Properties
 
-	///
 	/// The url of `MockService`
 	public var baseUrl: String {
 		mockServer.baseUrl
@@ -58,7 +55,6 @@ open class MockService {
 
 	// MARK: - Initializers
 
-	///
 	/// Initializes a `MockService` object that handles Pact interaction testing.
 	///
 	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
@@ -67,12 +63,10 @@ open class MockService {
 	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate!
-	///
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
 
-	///
 	/// Initializes a `MockService` object that handles Pact interaction testing.
 	///
 	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
@@ -82,7 +76,6 @@ open class MockService {
 	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate!
-	///
 	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
@@ -92,7 +85,6 @@ open class MockService {
 
 	// MARK: - Interface
 
-	///
 	/// Describes the `Interaction` between the consumer and provider.
 	///
 	/// Returns: `Interaction` object
@@ -101,14 +93,12 @@ open class MockService {
 	///
 	/// NOTE: It is important that the `description` and provider state
 	/// combination is unique per consumer-provider contract.
-	///
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)
 		return currentInteraction
 	}
 
-	///
 	/// Runs the Pact test against the code that makes the API request with 10 second timeout.
 	///
 	/// - parameter file: The file to report the failing test in
@@ -120,13 +110,10 @@ open class MockService {
 	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test! If you don't,
 	/// your `mockService.run{ }` test will fail with `Waited more than 10.0 seconds` error where time depends on
 	/// your `timeout: TimeInterval?`
-	///
-	///
-	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
-		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in //swiftlint:disable:this line_length
+		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
 			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
 				switch $0 {
 				case .success:
@@ -174,15 +161,13 @@ open class MockService {
 // MARK: - Internal
 
 extension MockService {
-	
-	///
+
 	/// Writes a Pact contract file in JSON format.
 	///
 	/// - parameter completion: Result of the writing the Pact contract to JSON
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
 	/// Set `PACT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
-	///
 	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		pact.interactions = interactions
 		guard let pactData = pact.data, allValidated else {
@@ -207,9 +192,7 @@ extension MockService {
 
 private extension MockService {
 
-	///
 	/// Waits for test to be completed and fails if timed out.
-	///
 	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
 		let expectation = XCTestExpectation(description: "waitForPactTest")
 		action {
@@ -227,9 +210,7 @@ private extension MockService {
 		}
 	}
 
-	///
 	/// Fail the test and raise the failure in `file` at `line`
-	///
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		allValidated = false
 

@@ -28,7 +28,6 @@ struct PactBuilder {
 		self.typeDefinition = value
 	}
 
-	///
 	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`)
 	/// and its corresponding matching rules.
 	/// It erases node object's type and casts the node and leaf values into an `Encodable` safe type.
@@ -40,7 +39,6 @@ struct PactBuilder {
 	/// - `Double`
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
-	///
 	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: "$")

@@ -20,9 +20,7 @@
 
 import Foundation
 
-///
 /// The HTTP method expected in the interaction.
-///
 public enum PactHTTPMethod: String {
 
 	case GET = "get"

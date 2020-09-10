@@ -18,9 +18,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-///
 /// An object representing an API request for a Pact test.
-///
 public struct Request {
 
 	let method: PactHTTPMethod
@@ -52,7 +50,6 @@ extension Request: Encodable {
 		case matchingRules
 	}
 
-	///
 	/// Creates an object representing a network `Request`.
 	/// 
 	/// - Parameters:
@@ -61,7 +58,6 @@ extension Request: Encodable {
 	///		- query: A url query
 	///		- headers: Headers of the http reqeust
 	///		- body: Optional body of the http request
-	///
 	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) {
 		self.method = method
 		self.path = path

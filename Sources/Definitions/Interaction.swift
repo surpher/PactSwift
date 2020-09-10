@@ -60,7 +60,6 @@ extension Interaction {
 
 extension Interaction {
 
-	///
 	/// Defines the description of the interaction.
 	///
 	/// - parameter interactionDescription: A `String` describing the interaction
@@ -74,13 +73,11 @@ extension Interaction {
 	/// ```
 	/// .uponReceiving("A request for a list of users")
 	/// ```
-	///
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
 		self.description = interactionDescription
 		return self
 	}
 
-	///
 	/// Defines the provider state for the given interaction.
 	///
 	/// - parameter providerState: Description of the state.
@@ -90,13 +87,11 @@ extension Interaction {
 	///
 	/// Example:
 	/// ```users exist```
-	///
 	public func given(_ providerState: String) -> Interaction {
 		self.providerState = providerState
 		return self
 	}
 
-	///
 	/// Defines the provider state for the given interaction.
 	///
 	/// - parameter providerStates: A list of provider states
@@ -113,13 +108,11 @@ extension Interaction {
 	///   )
 	/// ])
 	/// ```
-	///
 	public func given(_ providerStates: [ProviderState]) -> Interaction {
 		self.providerStates = providerStates
 		return self
 	}
 
-	///
 	/// Defines the provider state for the given interaction.
 	///
 	/// - parameter providerStates: A list of provider states
@@ -136,12 +129,10 @@ extension Interaction {
 	///   )
 	/// ])
 	/// ```
-	///
 	public func given(_ providerStates: ProviderState...) -> Interaction {
 		given(providerStates)
 	}
 
-	///
 	/// Defines the expected request for the interaction.
 	///
 	/// - parameter method: The HTTP method of the request
@@ -154,13 +145,11 @@ extension Interaction {
 	/// By not providing a value for `query`, `headers` or `body` it is
 	/// understood that the presence of those values in the request
 	/// is _not required_ but they can be present.
-	///
 	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
 	}
 
-	///
 	/// Defines the expected response for the interaction. It defines the
 	/// values `MockService` will respond with when it receives the expected
 	/// request as defined in this interaction.
@@ -173,7 +162,6 @@ extension Interaction {
 	/// By not providing a value for `headers` or `body` it is understood
 	/// that the presence of those values in the response is _not required_
 	/// but the can be present.
-	///
 	public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
 		return self
