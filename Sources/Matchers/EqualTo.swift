@@ -20,33 +20,33 @@
 
 import Foundation
 
-///
-/// Defines a Pact matcher that expects the provided value.
-///
-/// Use this matcher where you expect the exact type and value
-/// in the interaction between consumer and provider.
-///
-/// ```
-/// // DSL
-///	[
-///   "foo": EqualTo("bar"),
-///   "bar": EqualTo(847)
-/// ]
-///
-public struct EqualTo: MatchingRuleExpressible {
+public extension Matcher {
 
-	internal let value: Any
-	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("equality")]]
+	/// Defines a Pact matcher that expects the provided value.
+	///
+	/// Use this matcher where you expect the exact type and value
+	/// in the interaction between consumer and provider.
+	///
+	/// ```
+	/// // DSL
+	///	[
+	///   "foo": Matcher.EqualTo("bar"),
+	///   "bar": Matcher.EqualTo(847)
+	/// ]
+	/// ```
+	struct EqualTo: MatchingRuleExpressible {
 
-	// MARK: - Initializers
+		internal let value: Any
+		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("equality")]]
 
-	///
-	/// Defines a Pact matcher that explicitly expects the provided value.
-	///
-	/// - parameter value: The value to be returned by MockService
-	///
-	public init(_ value: Any) {
-		self.value = value
+		// MARK: - Initializers
+
+		/// Defines a Pact matcher that explicitly expects the provided value.
+		///
+		/// - parameter value: The value to be returned by MockService
+		public init(_ value: Any) {
+			self.value = value
+		}
 	}
 
 }

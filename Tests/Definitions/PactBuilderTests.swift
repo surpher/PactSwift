@@ -28,7 +28,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_EqualTo() {
 		let testBody: Any = [
-			"data":  EqualTo("2016-07-19")
+			"data":  Matcher.EqualTo("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
