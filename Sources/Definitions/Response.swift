@@ -18,9 +18,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-///
 /// An object representing an API response for a Pact test.
-///
 public struct Response {
 
 	var statusCode: Int
@@ -40,13 +38,11 @@ extension Response: Encodable {
 		case matchingRules
 	}
 
-	///
 	/// Creates an object representing a network `Response`.
 	/// - Parameters:
 	///		- statusCode: The status code of the API response
 	///		- headers: Headers of the API response
 	///		- body: Optional body in the API response
-	///
 	init(statusCode: Int, headers: [String: String]? = nil, body: Any? = nil) {
 		self.statusCode = statusCode
 		self.headers = headers

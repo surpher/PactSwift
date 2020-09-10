@@ -40,9 +40,7 @@ private extension PactSocketFinder {
 		in_port_t(arc4random_uniform(2_000) + 4_000) //swiftlint:disable:this legacy_random
 	}
 
-	//
 	// The following code block referenced from: https://stackoverflow.com/a/49728137
-	//
 	static func tcpPortAvailable(port: in_port_t) -> (Bool, descr: String) {
 		let socketFileDescriptor = socket(AF_INET, SOCK_STREAM, 0)
 		guard socketFileDescriptor != -1 else {
