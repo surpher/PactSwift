@@ -25,12 +25,12 @@ import XCTest
 class IncludesLikeTests: XCTestCase {
 
 	func testInitsWith_ArrayArgument() {
-		let testResult = IncludesLike(["Foo", "Bar"], combine: .AND)
+		let testResult = Matcher.IncludesLike(["Foo", "Bar"], combine: .AND)
 		XCTAssertEqual(testResult.rules.count, 2)
 	}
 
 	func testInitsWith_VariadicArgument() {
-		let testResult = IncludesLike("Foo", "Bar", "Baz", combine: .OR)
+		let testResult = Matcher.IncludesLike("Foo", "Bar", "Baz", combine: .OR)
 		XCTAssertEqual(testResult.rules.count, 3)
 		XCTAssertEqual(testResult.combine, .OR)
 	}

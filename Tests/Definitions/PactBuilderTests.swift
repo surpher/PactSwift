@@ -220,7 +220,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMatcher_IncludesLike_DefaultsToAND() {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
-			"data":  IncludesLike("2020-12-31", "2019-12-31")
+			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -240,7 +240,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
-			"data":  IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
+			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
 		]
 
 		let testPact = prepareTestPact(for: testBody)
