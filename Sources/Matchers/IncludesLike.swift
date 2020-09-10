@@ -30,7 +30,7 @@ public extension Matcher {
 	///
 	/// ```
 	/// [
-	///   "foo": Matcher.IncludesLike("1", "Jane", "John", combine: .OR),
+	///   "foo": Matcher.IncludesLike("1", "Jane", "John", combine: .OR, generate: "Jane has 1 pony, John has none"),
 	///   "bar": Matcher.IncludesLike(["1", "Jane", "John"], combine: .AND)
 	/// ]
 	/// ```
@@ -59,8 +59,8 @@ public extension Matcher {
 		///
 		/// - Parameter values: Set of `String` values expected to be present
 		/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
-		public init(_ values: String..., combine: IncludeCombine = .AND) {
-			self.value = values
+		public init(_ values: String..., combine: IncludeCombine = .AND, generate: String? = nil) {
+			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values
 			self.combine = combine
 		}
@@ -69,8 +69,8 @@ public extension Matcher {
 		///
 		/// - Parameter values: Set of `String` values expected to be present
 		/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
-		public init(_ values: [String], combine: IncludeCombine = .AND) {
-			self.value = values
+		public init(_ values: [String], combine: IncludeCombine = .AND, generate: String? = nil) {
+			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values
 			self.combine = combine
 		}
