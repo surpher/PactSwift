@@ -130,7 +130,7 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
-	func testMockService_Fails_WhenRequestPathInvalid() {
+	func testMockService_Fails_WhenRequestPathInvalid() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -160,15 +160,11 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
-	func testMockService_Fails_WhenUnexpectedQuery() {
+	func testMockService_Fails_WhenUnexpectedQuery() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -197,15 +193,11 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
-	func testMockService_Fails_WhenBodyMismatch() {
+	func testMockService_Fails_WhenBodyMismatch() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -235,16 +227,11 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
-	func testMockService_Fails_WhenBodyIsEmptyObject() {
-
+	func testMockService_Fails_WhenBodyIsEmptyObject() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -275,15 +262,11 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
-	func testMockService_Fails_WhenRequestBodyMissing() {
+	func testMockService_Fails_WhenRequestBodyMissing() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -310,15 +293,11 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
-	func testMockService_Fails_WithHeaderMismatch() {
+	func testMockService_Fails_WithHeaderMismatch() throws {
 		let expectedValues = [
 			"Failed to verify Pact!",
 			"Actual request does not match expected interactions...",
@@ -343,12 +322,8 @@ class MockServiceTests: XCTestCase {
 			task.resume()
 		}
 
-		do {
-			let testResult = try XCTUnwrap(errorCapture.error?.message)
-			XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
-		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
-		}
+		let testResult = try XCTUnwrap(errorCapture.error?.message)
+		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
 	}
 
 	// MARK: - Using matchers

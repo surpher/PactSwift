@@ -26,41 +26,33 @@ class PactBuilderTests: XCTestCase {
 
 	// MARK: - EqualTo()
 
-	func testPact_SetsMatcher_EqualTo() {
+	func testPact_SetsMatcher_EqualTo() throws {
 		let testBody: Any = [
 			"data":  Matcher.EqualTo("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.match, "equality")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.match, "equality")
 	}
 
 	// MARK: - SomethingLike()
 
-	func testPact_SetsMatcher_SomethingLike() {
+	func testPact_SetsMatcher_SomethingLike() throws {
 		let testBody: Any = [
 			"data":  Matcher.SomethingLike("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.match, "type")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.match, "type")
 	}
 
 	// MARK: - EachLike()
 
-	func testPact_SetsDefaultMin_ForEachLikeMatcher() {
+	func testPact_SetsDefaultMin_ForEachLikeMatcher() throws {
 		let testBody: Any = [
 			"data": [
 				"array1": Matcher.EachLike(
@@ -75,16 +67,12 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.min, 1)
-			XCTAssertEqual(testResult.match, "type")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.min, 1)
+		XCTAssertEqual(testResult.match, "type")
 	}
 
-	func testPact_SetsProvidedMin_ForEachLikeMatcher() {
+	func testPact_SetsProvidedMin_ForEachLikeMatcher() throws {
 		let testBody: Any = [
 			"data": [
 				"array1": Matcher.EachLike(
@@ -100,16 +88,12 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.min, 3)
-			XCTAssertEqual(testResult.match, "type")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.min, 3)
+		XCTAssertEqual(testResult.match, "type")
 	}
 
-	func testPact_SetsProvidedMax_ForEachLikeMatcher() {
+	func testPact_SetsProvidedMax_ForEachLikeMatcher() throws {
 		let testBody: Any = [
 			"data": [
 				"array1": Matcher.EachLike(
@@ -125,16 +109,12 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.max, 5)
-			XCTAssertEqual(testResult.match, "type")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.max, 5)
+		XCTAssertEqual(testResult.match, "type")
 	}
 
-	func testPact_SetsMinMax_ForEachLikeMatcher() {
+	func testPact_SetsMinMax_ForEachLikeMatcher() throws {
 		let testBody: Any = [
 			"data": [
 				"array1": Matcher.EachLike(
@@ -151,73 +131,57 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.min, 1)
-			XCTAssertEqual(testResult.max, 5)
-			XCTAssertEqual(testResult.match, "type")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.min, 1)
+		XCTAssertEqual(testResult.max, 5)
+		XCTAssertEqual(testResult.match, "type")
 	}
 
 	// MARK: - IntegerLike()
 
-	func testPact_SetsMatcher_IntegerLike() {
+	func testPact_SetsMatcher_IntegerLike() throws {
 		let testBody: Any = [
 			"data": Matcher.IntegerLike(1234)
 		]
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.match, "integer")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.match, "integer")
 	}
 
 	// MARK: - DecimalLike()
 
-	func testPact_SetsMatcher_DecimalLike() {
+	func testPact_SetsMatcher_DecimalLike() throws {
 		let testBody: Any = [
 			"data":  Matcher.DecimalLike(1234)
 		]
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
-			XCTAssertEqual(testResult.match, "decimal")
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node.matchers.first)
+		XCTAssertEqual(testResult.match, "decimal")
 	}
 
 	// MARK: - RegexLike()
 
-	func testPact_SetsMatcher_RegexLike() {
+	func testPact_SetsMatcher_RegexLike() throws {
 		let testBody: Any = [
 			"data": Matcher.RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let matchers = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+		let matchers = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
 
-			XCTAssertEqual(matchers.matchers.first?.match, "regex")
-			XCTAssertEqual(matchers.matchers.first?.regex,  "\\d{4}-\\d{2}-\\d{2}")
-			XCTAssertNil(matchers.combine)
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		XCTAssertEqual(matchers.matchers.first?.match, "regex")
+		XCTAssertEqual(matchers.matchers.first?.regex,  "\\d{4}-\\d{2}-\\d{2}")
+		XCTAssertNil(matchers.combine)
 	}
 
 	// MARK: - IncludesLike()
 
-	func testPact_SetsMatcher_IncludesLike_DefaultsToAND() {
+	func testPact_SetsMatcher_IncludesLike_DefaultsToAND() throws {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
 			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31")
@@ -225,19 +189,16 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
 
-			XCTAssertEqual(testResult.combine, "AND")
-			XCTAssertEqual(testResult.matchers.count, 2)
-			XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
-			XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+
+		XCTAssertEqual(testResult.combine, "AND")
+		XCTAssertEqual(testResult.matchers.count, 2)
+		XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
+		XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
 	}
 
-	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() {
+	func testPact_SetsMatcher_IncludesLike_CombineMatchersWithOR() throws {
 		let expectedValues = ["2020-12-31", "2019-12-31"]
 		let testBody: Any = [
 			"data":  Matcher.IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
@@ -245,16 +206,12 @@ class PactBuilderTests: XCTestCase {
 
 		let testPact = prepareTestPact(for: testBody)
 
-		do {
-			let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
+		let testResult = try XCTUnwrap(try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first).request.matchingRules.body.node)
 
-			XCTAssertEqual(testResult.combine, "OR")
-			XCTAssertEqual(testResult.matchers.count, 2)
-			XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
-			XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		XCTAssertEqual(testResult.combine, "OR")
+		XCTAssertEqual(testResult.matchers.count, 2)
+		XCTAssertTrue(testResult.matchers.allSatisfy { expectedValues.contains($0.value ?? "FAIL!") })
+		XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
 	}
 
 }

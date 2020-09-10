@@ -193,7 +193,7 @@ class PactTests: XCTestCase {
 
 	// MARK: Encodable
 
-	func testPact_SetsRequestBody() {
+	func testPact_SetsRequestBody() throws {
 		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
 		let secondProviderState = ProviderState(description: "the user is logged in", params: ["username": "Fred"])
 
@@ -228,16 +228,12 @@ class PactTests: XCTestCase {
 			interactions: [interaction]
 		)
 
-		do {
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(TestPactModel.self, from: testPact.data!).interactions.first).request.body
-			XCTAssertEqual(testResult.foo, "Bar")
-			XCTAssertEqual(testResult.baz, 200.0)
-			XCTAssertTrue(testResult.fuu.allSatisfy { ((testBody as! [String: Any])["fuu"] as! Array).contains($0) })
-			XCTAssertTrue(testResult.num.allSatisfy { ((testBody as! [String: Any])["num"] as! Array).contains($0) })
-			XCTAssertEqual(testResult.bar, ["goo": 123.45])
-		} catch {
-			XCTFail("Failed to decode `testModel.self` from `TestPact.data!`")
-		}
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(TestPactModel.self, from: testPact.data!).interactions.first).request.body
+		XCTAssertEqual(testResult.foo, "Bar")
+		XCTAssertEqual(testResult.baz, 200.0)
+		XCTAssertTrue(testResult.fuu.allSatisfy { ((testBody as! [String: Any])["fuu"] as! Array).contains($0) })
+		XCTAssertTrue(testResult.num.allSatisfy { ((testBody as! [String: Any])["num"] as! Array).contains($0) })
+		XCTAssertEqual(testResult.bar, ["goo": 123.45])
 	}
 
 }

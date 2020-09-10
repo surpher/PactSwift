@@ -24,67 +24,47 @@ import XCTest
 
 class EachLikeTests: XCTestCase {
 
-	func testMatcher_EachLike_InitsWithValue() {
-		do {
-			// Array of Strings
-			let testStringResult = try XCTUnwrap(Matcher.EachLike("foo").value as? [String])
-			XCTAssertEqual(testStringResult, ["foo"])
+	func testMatcher_EachLike_InitsWithValue() throws {
+		// Array of Strings
+		let testStringResult = try XCTUnwrap(Matcher.EachLike("foo").value as? [String])
+		XCTAssertEqual(testStringResult, ["foo"])
 
-			// Array of Ints
-			let testIntResult = try XCTUnwrap(Matcher.EachLike(12345).value as? [Int])
-			XCTAssertEqual(testIntResult, [12345])
+		// Array of Ints
+		let testIntResult = try XCTUnwrap(Matcher.EachLike(12345).value as? [Int])
+		XCTAssertEqual(testIntResult, [12345])
 
-			// Array of Dictionaries
-			let testDictResult = try XCTUnwrap((Matcher.EachLike(["foo": 123.45]).value as? [[String: Double]])?.first)
-			XCTAssertEqual(testDictResult["foo"], 123.45)
-		} catch {
-			XCTFail("Failed to unwrap a EachLike matcher's value")
-		}
+		// Array of Dictionaries
+		let testDictResult = try XCTUnwrap((Matcher.EachLike(["foo": 123.45]).value as? [[String: Double]])?.first)
+		XCTAssertEqual(testDictResult["foo"], 123.45)
 	}
 
-	func testMatcher_EachLike_InitsWithDefault_MinValue() {
-		do {
-			// Array of Strings
-			let testResult = try XCTUnwrap(Matcher.EachLike("foo").min)
-			XCTAssertEqual(testResult, 1)
-		} catch {
-			XCTFail("Failed to unwrap a EachLike matcher's value")
-		}
+	func testMatcher_EachLike_InitsWithDefault_MinValue() throws {
+		// Array of Strings
+		let testResult = try XCTUnwrap(Matcher.EachLike("foo").min)
+		XCTAssertEqual(testResult, 1)
 	}
 
-	func testMatcher_EachLike_InitsWithProvided_MinValue() {
-		do {
-			// Array of Strings
-			let testResult = try XCTUnwrap(Matcher.EachLike("foo", min: 99).min)
-			XCTAssertEqual(testResult, 99)
-		} catch {
-			XCTFail("Failed to unwrap a EachLike matcher's value")
-		}
+	func testMatcher_EachLike_InitsWithProvided_MinValue() throws {
+		// Array of Strings
+		let testResult = try XCTUnwrap(Matcher.EachLike("foo", min: 99).min)
+		XCTAssertEqual(testResult, 99)
 	}
 
 	func testMatcher_EachLike_InitsWithout_MaxValue() {
 		XCTAssertNil(Matcher.EachLike("foo").max)
 	}
 
-	func testMatcher_EachLike_InitsWithProvided_MaxValue() {
-		do {
-			// Array of Strings
-			let testResult = try XCTUnwrap(Matcher.EachLike("foo", max: 5).max)
-			XCTAssertEqual(testResult, 5)
-		} catch {
-			XCTFail("Failed to unwrap a EachLike matcher's value")
-		}
+	func testMatcher_EachLike_InitsWithProvided_MaxValue() throws {
+		// Array of Strings
+		let testResult = try XCTUnwrap(Matcher.EachLike("foo", max: 5).max)
+		XCTAssertEqual(testResult, 5)
 	}
 
-	func testMatcher_EachLike_InitsWithMinAndMaxValue() {
-		do {
-			// Array of Strings
-			let testResult = try XCTUnwrap(Matcher.EachLike("foo", min: 1, max: 5))
-			XCTAssertEqual(testResult.min, 1)
-			XCTAssertEqual(testResult.max, 5)
-		} catch {
-			XCTFail("Failed to unwrap a EachLike matcher's value")
-		}
+	func testMatcher_EachLike_InitsWithMinAndMaxValue() throws {
+		// Array of Strings
+		let testResult = try XCTUnwrap(Matcher.EachLike("foo", min: 1, max: 5))
+		XCTAssertEqual(testResult.min, 1)
+		XCTAssertEqual(testResult.max, 5)
 	}
 
 }

@@ -40,20 +40,16 @@ class InteractionTests: XCTestCase {
 		XCTAssertEqual(sutWithInteraction.providerStates?.count, 1)
 	}
 
-	func testGivenState_WithVariadicParameter() {
+	func testGivenState_WithVariadicParameter() throws {
 		sut = Interaction(description: "A test request with states as variadic param")
 		let oneProviderState = ProviderState(description: "array exists", params: ["foo": "bar"])
 		let twoProviderState = ProviderState(description: "variadic exists", params: ["bar": "baz"])
 		let sutWithInteraction = sut.given(oneProviderState, twoProviderState)
 
-		do {
-			let providerStates = try XCTUnwrap(sutWithInteraction.providerStates)
-			XCTAssertEqual(providerStates.count, 2)
-			XCTAssertTrue(providerStates.contains(oneProviderState))
-			XCTAssertTrue(providerStates.contains(twoProviderState))
-		} catch {
-			XCTFail("Expected providerStates.")
-		}
+		let providerStates = try XCTUnwrap(sutWithInteraction.providerStates)
+		XCTAssertEqual(providerStates.count, 2)
+		XCTAssertTrue(providerStates.contains(oneProviderState))
+		XCTAssertTrue(providerStates.contains(twoProviderState))
 	}
 
 }
