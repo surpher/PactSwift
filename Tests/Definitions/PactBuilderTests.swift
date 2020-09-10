@@ -165,7 +165,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_IntegerLike() {
 		let testBody: Any = [
-			"data":  IntegerLike(1234)
+			"data": Matcher.IntegerLike(1234)
 		]
 
 		let testPact = prepareTestPact(for: testBody)

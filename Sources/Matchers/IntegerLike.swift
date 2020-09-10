@@ -20,22 +20,23 @@
 
 import Foundation
 
-///
-/// Defines a Pact matcher that expects an `Int`.
-///
-/// Use this matcher where you expect an `Int` to be passed in
-/// the interaction between consumer and provider, but the
-/// value is not important.
-///
-public struct IntegerLike: MatchingRuleExpressible {
+public extension Matcher {
 
-	internal let value: Any
-	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("integer")]]
+	/// Defines a Pact matcher that expects an `Int`.
+	///
+	/// Use this matcher where you expect an `Int` to be passed in
+	/// the interaction between consumer and provider, but the
+	/// value is not important.
+	struct IntegerLike: MatchingRuleExpressible {
 
-	// MARK: - Initializer
+		internal let value: Any
+		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("integer")]]
 
-	public init(_ value: Int) {
-		self.value = value
+		// MARK: - Initializer
+
+		public init(_ value: Int) {
+			self.value = value
+		}
 	}
 
 }
