@@ -63,7 +63,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsDefaultMin_ForEachLikeMatcher() {
 		let testBody: Any = [
 			"data": [
-				"array1": EachLike(
+				"array1": Matcher.EachLike(
 					[
 						"dob": Matcher.SomethingLike("2016-07-19"),
 						"id": Matcher.SomethingLike("1600309982"),
@@ -87,7 +87,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsProvidedMin_ForEachLikeMatcher() {
 		let testBody: Any = [
 			"data": [
-				"array1": EachLike(
+				"array1": Matcher.EachLike(
 					[
 						"dob": Matcher.SomethingLike("2016-07-19"),
 						"id": Matcher.SomethingLike("1600309982"),
@@ -112,7 +112,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsProvidedMax_ForEachLikeMatcher() {
 		let testBody: Any = [
 			"data": [
-				"array1": EachLike(
+				"array1": Matcher.EachLike(
 					[
 						"dob": Matcher.SomethingLike("2016-07-19"),
 						"id": Matcher.SomethingLike("1600309982"),
@@ -137,7 +137,7 @@ class PactBuilderTests: XCTestCase {
 	func testPact_SetsMinMax_ForEachLikeMatcher() {
 		let testBody: Any = [
 			"data": [
-				"array1": EachLike(
+				"array1": Matcher.EachLike(
 					[
 						"dob": Matcher.SomethingLike("2016-07-19"),
 						"id": Matcher.SomethingLike("1600309982"),

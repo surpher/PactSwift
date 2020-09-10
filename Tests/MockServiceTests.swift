@@ -362,7 +362,7 @@ class MockServiceTests: XCTestCase {
 				status: 200,
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
-					"baz": EachLike(123, min: 1, max: 5)
+					"baz": Matcher.EachLike(123, min: 1, max: 5)
 				]
 			)
 
@@ -391,7 +391,7 @@ class MockServiceTests: XCTestCase {
 				status: 200,
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
-					"baz": EachLike(123, min: 1, max: 5)
+					"baz": Matcher.EachLike(123, min: 1, max: 5)
 				]
 			)
 
