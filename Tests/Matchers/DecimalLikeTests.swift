@@ -26,10 +26,10 @@ class DecimalLikeTests: XCTestCase {
 
 	func testMatcher_DecimalLike_InitsWithValue() {
 		do {
-			let testResult = try XCTUnwrap((DecimalLike(1234).value as Any) as? Decimal)
+			let testResult = try XCTUnwrap((Matcher.DecimalLike(1234).value as Any) as? Decimal)
 			XCTAssertEqual(testResult, 1234)
 
-			let testDecimalResult = try XCTUnwrap((DecimalLike(1234.56).value as Any) as? Decimal)
+			let testDecimalResult = try XCTUnwrap((Matcher.DecimalLike(1234.56).value as Any) as? Decimal)
 			XCTAssertEqual(testDecimalResult, 1234.56)
 		} catch {
 			XCTFail("Failed to unwrap a DecimalLike matcher's value")
