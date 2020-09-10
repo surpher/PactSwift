@@ -55,6 +55,7 @@ opt_in_rules:
 attributes:
   always_on_same_line: ["@IBAction", "@objc"]
 line_length:
+  warning: 180
   ignores_function_declarations: true
   ignores_comments: false
 modifier_order:
