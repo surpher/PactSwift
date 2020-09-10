@@ -119,6 +119,8 @@
 		ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4703244D101700E4F7EE /* ErrorReportable.swift */; };
 		ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */; };
 		ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE2937E2435DB14008AFBC9 /* ProviderState.swift */; };
+		ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
+		ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +225,7 @@
 		ADDE4703244D101700E4F7EE /* ErrorReportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportable.swift; sourceTree = "<group>"; };
 		ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		ADE2937E2435DB14008AFBC9 /* ProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderState.swift; sourceTree = "<group>"; };
+		ADE9B3C6250A3C4700274672 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -269,6 +272,7 @@
 				ADD3C27324416CDF002E73B9 /* EqualTo.swift */,
 				ADD3C27524416DAE002E73B9 /* IncludesLike.swift */,
 				AD7891BD24415C100014BCC8 /* IntegerLike.swift */,
+				ADE9B3C6250A3C4700274672 /* Matcher.swift */,
 				ADD3C26F24416891002E73B9 /* RegexLike.swift */,
 				AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */,
 			);
@@ -863,6 +867,7 @@
 				AD8DF43F244055980062CB1A /* EachLike.swift in Sources */,
 				ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */,
 				AD646FB82460F77D00979AFC /* VerificationError.swift in Sources */,
+				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
 				AD646FBB2460F77D00979AFC /* VerificationErrorType.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				AD7891C224415E3E0014BCC8 /* DecimalLike.swift in Sources */,
@@ -929,6 +934,7 @@
 				AD8FC7EF2463BBA400361854 /* Dictionary+Pact.swift in Sources */,
 				AD8FC7EA2463BB9F00361854 /* PactInteractionNode.swift in Sources */,
 				AD8FC7DF2463BB9A00361854 /* VerificationErrorType.swift in Sources */,
+				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
 				AD8FC7E52463BB9F00361854 /* Metadata.swift in Sources */,

@@ -361,7 +361,7 @@ class MockServiceTests: XCTestCase {
 			.willRespondWith(
 				status: 200,
 				body: [
-					"foo": SomethingLike("bar"),
+					"foo": Matcher.SomethingLike("bar"),
 					"baz": EachLike(123, min: 1, max: 5)
 				]
 			)
@@ -390,7 +390,7 @@ class MockServiceTests: XCTestCase {
 			.willRespondWith(
 				status: 200,
 				body: [
-					"foo": SomethingLike("bar"),
+					"foo": Matcher.SomethingLike("bar"),
 					"baz": EachLike(123, min: 1, max: 5)
 				]
 			)
