@@ -33,9 +33,8 @@ public extension Matcher {
 	///   "foo": Matcher.IncludesLike("1", "Jane", "John", combine: .OR),
 	///   "bar": Matcher.IncludesLike(["1", "Jane", "John"], combine: .AND)
 	/// ]
-	///```
+	/// ```
 	struct IncludesLike: MatchingRuleExpressible {
-
 		public enum IncludeCombine: String {
 			case AND
 			case OR
