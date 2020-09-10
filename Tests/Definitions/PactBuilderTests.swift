@@ -182,7 +182,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_DecimalLike() {
 		let testBody: Any = [
-			"data":  DecimalLike(1234)
+			"data":  Matcher.DecimalLike(1234)
 		]
 
 		let testPact = prepareTestPact(for: testBody)

@@ -20,34 +20,32 @@
 
 import Foundation
 
-///
-/// Defines a Pact matcher that expects a `Decimal` value.
-///
-/// - parameter value: The value MockService should expect or respond with
-///
-/// Use this matcher when you care about the type being a `Decimal`
-/// but the value itself does not matter.
-///
-/// ```
-/// [
-///   "foo": DecimalLike(1234)
-/// ]
-/// ```
-///
-public struct DecimalLike: MatchingRuleExpressible {
+public extension Matcher {
 
-	internal let value: Any
-	internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("decimal")]]
-
-	// MARK: - Initializer
-
-	///
 	/// Defines a Pact matcher that expects a `Decimal` value.
 	///
 	/// - parameter value: The value MockService should expect or respond with
 	///
-	public init(_ value: Decimal) {
-		self.value = value
+	/// Use this matcher when you care about the type being a `Decimal`
+	/// but the value itself does not matter.
+	///
+	/// ```
+	/// [
+	///   "foo": Matcher.DecimalLike(1234)
+	/// ]
+	/// ```
+	struct DecimalLike: MatchingRuleExpressible {
+		internal let value: Any
+		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("decimal")]]
+
+		// MARK: - Initializer
+
+		/// Defines a Pact matcher that expects a `Decimal` value.
+		///
+		/// - parameter value: The value MockService should expect or respond with
+		public init(_ value: Decimal) {
+			self.value = value
+		}
 	}
-	
+
 }
