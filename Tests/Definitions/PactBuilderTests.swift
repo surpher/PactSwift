@@ -45,7 +45,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_SomethingLike() {
 		let testBody: Any = [
-			"data":  SomethingLike("2016-07-19")
+			"data":  Matcher.SomethingLike("2016-07-19")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
@@ -65,9 +65,9 @@ class PactBuilderTests: XCTestCase {
 			"data": [
 				"array1": EachLike(
 					[
-						"dob": SomethingLike("2016-07-19"),
-						"id": SomethingLike("1600309982"),
-						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+						"dob": Matcher.SomethingLike("2016-07-19"),
+						"id": Matcher.SomethingLike("1600309982"),
+						"name": Matcher.SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					]
 				)
 			]
@@ -89,9 +89,9 @@ class PactBuilderTests: XCTestCase {
 			"data": [
 				"array1": EachLike(
 					[
-						"dob": SomethingLike("2016-07-19"),
-						"id": SomethingLike("1600309982"),
-						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+						"dob": Matcher.SomethingLike("2016-07-19"),
+						"id": Matcher.SomethingLike("1600309982"),
+						"name": Matcher.SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					]
 					, min: 3
 				)
@@ -114,9 +114,9 @@ class PactBuilderTests: XCTestCase {
 			"data": [
 				"array1": EachLike(
 					[
-						"dob": SomethingLike("2016-07-19"),
-						"id": SomethingLike("1600309982"),
-						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+						"dob": Matcher.SomethingLike("2016-07-19"),
+						"id": Matcher.SomethingLike("1600309982"),
+						"name": Matcher.SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					]
 					, max: 5
 				)
@@ -139,9 +139,9 @@ class PactBuilderTests: XCTestCase {
 			"data": [
 				"array1": EachLike(
 					[
-						"dob": SomethingLike("2016-07-19"),
-						"id": SomethingLike("1600309982"),
-						"name": SomethingLike("FVsWAGZTFGPLhWjLuBOd")
+						"dob": Matcher.SomethingLike("2016-07-19"),
+						"id": Matcher.SomethingLike("1600309982"),
+						"name": Matcher.SomethingLike("FVsWAGZTFGPLhWjLuBOd")
 					],
 					min: 1,
 					max: 5
