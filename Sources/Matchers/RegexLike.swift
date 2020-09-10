@@ -20,45 +20,43 @@
 
 import Foundation
 
-///
-/// Defines a Pact matcher that expects a value
-/// conforming to a `Regex` term.
-///
-/// Use this matcher where you expect a term defined
-/// by a regular expression term.
-///
-/// ```
-/// [
-///   "foo": RegexLike("2020-04-27", term: "\d{4}-\d{2}-\d{2}")
-/// ]
-/// ```
-///
-public struct RegexLike: MatchingRuleExpressible {
+public extension Matcher {
 
-	internal let value: Any
-	internal let term: String
-
-	internal var rules: [[String: AnyEncodable]] {
-		[
-			[
-				"match": AnyEncodable("regex"),
-				"regex": AnyEncodable(term)
-			]
-		]
-	}
-
-	// MARK: - Iitializer
-
-	///
-	/// Defines a Pact matcher that expectes a value
+	/// Defines a Pact matcher that expects a value
 	/// conforming to a `Regex` term.
 	///
-	/// - parameter value: The value MockService should expect or respond with
-	/// - parameter term: The regex term that the `value` conforms to
+	/// Use this matcher where you expect a term defined
+	/// by a regular expression term.
 	///
-	public init(_ value: String, term: String) {
-		self.value = value
-		self.term = term
+	/// ```
+	/// [
+	///   "foo": Matcher.RegexLike("2020-04-27", term: "\d{4}-\d{2}-\d{2}")
+	/// ]
+	/// ```
+	struct RegexLike: MatchingRuleExpressible {
+		internal let value: Any
+		internal let term: String
+
+		internal var rules: [[String: AnyEncodable]] {
+			[
+				[
+					"match": AnyEncodable("regex"),
+					"regex": AnyEncodable(term)
+				]
+			]
+		}
+
+		// MARK: - Iitializer
+
+		/// Defines a Pact matcher that expectes a value
+		/// conforming to a `Regex` term.
+		///
+		/// - parameter value: The value MockService should expect or respond with
+		/// - parameter term: The regex term that the `value` conforms to
+		public init(_ value: String, term: String) {
+			self.value = value
+			self.term = term
+		}
 	}
 
 }

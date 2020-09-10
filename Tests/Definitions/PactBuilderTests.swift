@@ -199,7 +199,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_RegexLike() {
 		let testBody: Any = [
-			"data":  RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
+			"data": Matcher.RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
 		]
 
 		let testPact = prepareTestPact(for: testBody)
