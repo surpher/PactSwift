@@ -10,7 +10,9 @@
 [![CI (11.6)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.6)/badge.svg)][github-action-xcode11.6]
 [![CI (12beta)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12beta)/badge.svg)][github-action-xcode12beta]
 
-<img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
+<p align="center">
+  <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
+</p>
 
 > ⚠️ **NOTE** ⚠️  
 > _pact-swift_ is under heavy development and not all features are complete.
