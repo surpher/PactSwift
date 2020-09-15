@@ -29,7 +29,7 @@ public extension Matcher {
 	///
 	/// ```
 	/// // DSL
-	///	[
+	/// [
 	///   "foo": Matcher.EqualTo("bar"),
 	///   "bar": Matcher.EqualTo(847)
 	/// ]
