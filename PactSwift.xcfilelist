@@ -32,6 +32,7 @@ $(SRCROOT)/Sources/Definitions/VerificationError.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
+$(SRCROOT)/Sources/ExampleGenerators/Boolean.swift
 $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift

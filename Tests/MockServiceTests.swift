@@ -355,6 +355,35 @@ class MockServiceTests: XCTestCase {
 		}
 	}
 
+	// MARK: - Using Example Generators
+
+	func testMockService_Succeeds_WithGenerators() {
+			_ = mockService
+				.uponReceiving("Request for list of pets")
+				.given("animals exist")
+				.withRequest(method: .GET, path: "/pet")
+				.willRespondWith(
+					status: 200,
+					body: [
+						"foo": Matcher.SomethingLike("bar"),
+						"bar": ExampleGenerator.Boolean()
+					]
+				)
+
+			mockService.run { completion in
+				let session = URLSession.shared
+				let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
+					if let data = data {
+						let testResult = self.decodeGeneratorsResponse(data: data)
+
+						XCTAssertTrue(((testResult?.bar) as Any) is Bool)
+					}
+					completion()
+				}
+				task.resume()
+			}
+		}
+
 	// MARK: - Write pact contract
 
 	func testMockService_Writes_PactContract() {
@@ -395,6 +424,18 @@ private extension MockServiceTests {
 
 	func decodeResponse(data: Data) -> TestModel? {
 		try? JSONDecoder().decode(TestModel.self, from: data)
+	}
+
+	struct GeneratorsTestModel: Decodable {
+		let foo: String
+		let bar: Bool
+		let baz: Int?
+		let qux: Double?
+		let quux: Decimal?
+	}
+
+	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {
+		try? JSONDecoder().decode(GeneratorsTestModel.self, from: data)
 	}
 
 }
