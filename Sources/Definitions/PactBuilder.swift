@@ -29,22 +29,25 @@ struct PactBuilder {
 	}
 
 	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`)
-	/// and its corresponding matching rules.
-	/// It erases node object's type and casts the node and leaf values into an `Encodable` safe type.
+	/// and its corresponding matching rules and example generators.
+	/// It erases node object's type and casts the node and leaf values into an `Encodable`-safe type.
 	///
-	/// Transforms the following suppoerted types into `AnyEncodable`:
+	/// Transforms the following supported types into `AnyEncodable`:
 	///
 	/// - `String`
 	/// - `Int`
 	/// - `Double`
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
-	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?) {
+	///
+	/// - parameter interactionNode: The top level node in PACT contract file
+	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: "$")
 			return (
 				node: processedType.node,
-				rules: AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.rules))])
+				rules: AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.rules))]),
+				generators: AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.generators))])
 			)
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
@@ -73,43 +76,62 @@ extension PactBuilder {
 
 private extension PactBuilder {
 
-	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable]) {
-		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable])
+	//swiftlint:disable:next function_body_length cyclomatic_complexity
+	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
 		switch element {
 		case let array as [Any]:
 			let processedArray = try process(array, at: node)
-			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules)
+			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
+
 		case let dict as [String: Any]:
 			let processedDict = try process(dict, at: node)
-			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules)
+			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules, generators: processedDict.generators)
+
 		case let string as String:
-			processedElement = (node: AnyEncodable(string), rules: [:])
+			processedElement = (node: AnyEncodable(string), rules: [:], generators: [:])
+
 		case let integer as Int:
-			processedElement = (node: AnyEncodable(integer), rules: [:])
+			processedElement = (node: AnyEncodable(integer), rules: [:], generators: [:])
+
 		case let double as Double:
-			processedElement = (node: AnyEncodable(double), rules: [:])
+			processedElement = (node: AnyEncodable(double), rules: [:], generators: [:])
+
 		case let decimal as Decimal:
-			processedElement = (node: AnyEncodable(decimal), rules: [:])
+			processedElement = (node: AnyEncodable(decimal), rules: [:], generators: [:])
+
 		case let bool as Bool:
-			processedElement = (node: AnyEncodable(bool), rules: [:])
+			processedElement = (node: AnyEncodable(bool), rules: [:], generators: [:])
+
 		case let matcher as Matcher.IncludesLike:
 			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (
 				node: processedMatcherValue.node,
-				rules: [
-					node: AnyEncodable([
-						"matchers": AnyEncodable(matcher.rules),
-						"combine": AnyEncodable(matcher.combine.rawValue)]
-					)
-				]
+				rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules), "combine": AnyEncodable(matcher.combine.rawValue)])],
+				generators: processedMatcherValue.generators
 			)
+
 		case let matcher as MatchingRuleExpressible:
 			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (
 				node: processedMatcherValue.node,
-				rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])]
+				rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])],
+				generators: processedMatcherValue.generators
 			)
+
+		case let exampleGenerator as ExampleGeneratorExpressible:
+			let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
+
+			var generatorAttributes: [String: AnyEncodable] = exampleGenerator.attributes ?? [:]
+			generatorAttributes["type"] = AnyEncodable(exampleGenerator.generator.rawValue)
+
+			processedElement = (
+				node: processedGeneratorValue.node,
+				rules: processedGeneratorValue.rules,
+				generators: [node: AnyEncodable(generatorAttributes)]
+			)
+
 		default:
 			throw EncodingError.notEncodable(element)
 		}
@@ -117,9 +139,11 @@ private extension PactBuilder {
 		return processedElement
 	}
 
-	func process(_ array: [Any], at node: String) throws -> (node: [AnyEncodable], rules: [String: AnyEncodable]) {
+	func process(_ array: [Any], at node: String) throws -> (node: [AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableArray = [AnyEncodable]()
 		var matchingRules: [String: AnyEncodable] = [:]
+		var generators: [String: AnyEncodable] = [:]
+
 		do {
 			try array
 				.enumerated()
@@ -127,25 +151,29 @@ private extension PactBuilder {
 					let childElement = try process(element: $0.element, at: "\(node)[\($0.offset)]")
 					encodableArray.append(childElement.node)
 					matchingRules = merge(matchingRules, with: childElement.rules)
+					generators = merge(generators, with: childElement.generators)
 				}
-			return (node: encodableArray, rules: matchingRules)
+			return (node: encodableArray, rules: matchingRules, generators: generators)
 		} catch {
 			throw EncodingError.notEncodable(array)
 		}
 	}
 
-	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable]) {
+	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]
+		var generators: [String: AnyEncodable] = [:]
+
 		do {
 			try dictionary
 				.enumerated()
-				.forEach { dict in
-					let childElement = try process(element: dict.element.value, at: "\(node).\(dict.element.key)")
-					encodableDictionary[dict.element.key] = childElement.node
+				.forEach {
+					let childElement = try process(element: $0.element.value, at: "\(node).\($0.element.key)")
+					encodableDictionary[$0.element.key] = childElement.node
 					matchingRules = merge(matchingRules, with: childElement.rules)
+					generators = merge(generators, with: childElement.generators)
 				}
-			return (node: encodableDictionary, rules: matchingRules)
+			return (node: encodableDictionary, rules: matchingRules, generators: generators)
 		} catch {
 			throw EncodingError.notEncodable(dictionary)
 		}

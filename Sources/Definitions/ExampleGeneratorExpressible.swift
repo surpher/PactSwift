@@ -1,9 +1,9 @@
 //
-//  PactInteractionNode.swift
+//  ExampleGeneratorExpressible.swift
 //  PactSwift
 //
-//  Created by Marko Justinek on 9/4/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Created by Marko Justinek on 11/9/20.
+//  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -20,11 +20,10 @@
 
 import Foundation
 
-enum PactInteractionNode: String {
+protocol ExampleGeneratorExpressible {
 
-	case body
-	case headers
-	case matchingRules
-	case generators
+	var value: Any { get }
+	var generator: ExampleGenerator.Generator { get }
+	var attributes: [String: AnyEncodable]? { get }
 
 }

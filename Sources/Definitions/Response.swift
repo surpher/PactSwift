@@ -36,23 +36,24 @@ extension Response: Encodable {
 		case headers
 		case body
 		case matchingRules
+		case generators
 	}
 
 	/// Creates an object representing a network `Response`.
 	/// - Parameters:
-	///		- statusCode: The status code of the API response
-	///		- headers: Headers of the API response
-	///		- body: Optional body in the API response
+	///   - statusCode: The status code of the API response
+	///   - headers: Headers of the API response
+	///   - body: Optional body in the API response
 	init(statusCode: Int, headers: [String: String]? = nil, body: Any? = nil) {
 		self.statusCode = statusCode
 		self.headers = headers
 
-		var pact: (body: AnyEncodable?, matchingRules: AnyEncodable?)
+		var pact: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
 
 		if let body = body {
 			do {
 				let parsedPact = try PactBuilder(with: body).encoded(for: .body)
-				pact = (body: parsedPact.node, matchingRules: parsedPact.rules)
+				pact = (body: parsedPact.node, matchingRules: parsedPact.rules, generators: parsedPact.generators)
 			} catch {
 				fatalError("Can not instatiate a `Response` with non-encodable `body`.")
 			}
@@ -64,8 +65,8 @@ extension Response: Encodable {
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = pact.body { try container.encode(encodableBody, forKey: .body) }
 			if let matchingRules = pact.matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
+			if let generators = pact.generators { try container.encode(generators, forKey: .generators) }
 		}
-
 	}
 
 	public func encode(to encoder: Encoder) throws {

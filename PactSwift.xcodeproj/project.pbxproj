@@ -111,6 +111,10 @@
 		ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */; };
 		ADC4466D247BC840004D2267 /* MockServerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */; };
 		ADC4466E247BC840004D2267 /* MockServerErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */; };
+		ADD0315F2512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
+		ADD031602512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
+		ADD03164251219B700C6099B /* ExampleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03163251219B700C6099B /* ExampleGenerator.swift */; };
+		ADD03165251219B700C6099B /* ExampleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03163251219B700C6099B /* ExampleGenerator.swift */; };
 		ADD3C27024416891002E73B9 /* RegexLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C26F24416891002E73B9 /* RegexLike.swift */; };
 		ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */; };
 		ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27324416CDF002E73B9 /* EqualTo.swift */; };
@@ -218,6 +222,8 @@
 		ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludesLikeTests.swift; sourceTree = "<group>"; };
 		ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServerErrorTests.swift; sourceTree = "<group>"; };
 		ADC6FAE024302BA800026714 /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
+		ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleGeneratorExpressible.swift; sourceTree = "<group>"; };
+		ADD03163251219B700C6099B /* ExampleGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleGenerator.swift; sourceTree = "<group>"; };
 		ADD3C26F24416891002E73B9 /* RegexLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLike.swift; sourceTree = "<group>"; };
 		ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLikeTests.swift; sourceTree = "<group>"; };
 		ADD3C27324416CDF002E73B9 /* EqualTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualTo.swift; sourceTree = "<group>"; };
@@ -309,9 +315,7 @@
 		AD646FAB2460F75B00979AFC /* Pact */ = {
 			isa = PBXGroup;
 			children = (
-				AD8DF42B243BF9430062CB1A /* AnyEncodable.swift */,
-				ADDE4703244D101700E4F7EE /* ErrorReportable.swift */,
-				ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */,
+				ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */,
 				AD641A412434588200785CE1 /* Interaction.swift */,
 				AD8DF43A243EEF390062CB1A /* MatchingRuleExpressible.swift */,
 				AD641A342434345500785CE1 /* Metadata.swift */,
@@ -460,6 +464,9 @@
 		ADB7C167243327E300A16CDE /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
+				AD8DF42B243BF9430062CB1A /* AnyEncodable.swift */,
+				ADDE4703244D101700E4F7EE /* ErrorReportable.swift */,
+				ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */,
 				AD646FAD2460F76F00979AFC /* MockServer */,
 				AD646FAB2460F75B00979AFC /* Pact */,
 			);
@@ -470,6 +477,7 @@
 			isa = PBXGroup;
 			children = (
 				ADB7C167243327E300A16CDE /* Definitions */,
+				ADD031622512199500C6099B /* ExampleGenerators */,
 				ADB7C11B2432D41100A16CDE /* Extensions */,
 				ADCB2563242C844B0048BD18 /* Headers */,
 				AD01C9392432A31F00B75C9D /* Matchers */,
@@ -525,6 +533,14 @@
 				AD646FCA2460F80B00979AFC /* pact_mock_server.h */,
 			);
 			path = Headers;
+			sourceTree = "<group>";
+		};
+		ADD031622512199500C6099B /* ExampleGenerators */ = {
+			isa = PBXGroup;
+			children = (
+				ADD03163251219B700C6099B /* ExampleGenerator.swift */,
+			);
+			path = ExampleGenerators;
 			sourceTree = "<group>";
 		};
 		ADDE46FD244D0FBA00E4F7EE /* TestHelpers */ = {
@@ -865,6 +881,7 @@
 				ADD3C27024416891002E73B9 /* RegexLike.swift in Sources */,
 				AD646FB62460F77D00979AFC /* MismatchErrorType.swift in Sources */,
 				AD7891BE24415C100014BCC8 /* IntegerLike.swift in Sources */,
+				ADD03164251219B700C6099B /* ExampleGenerator.swift in Sources */,
 				ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */,
 				AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */,
 				ADB7C1612433269B00A16CDE /* Request.swift in Sources */,
@@ -880,6 +897,7 @@
 				AD646FC32460F7CC00979AFC /* MockServer.swift in Sources */,
 				AD10361424468AB3002C97CA /* MockService.swift in Sources */,
 				AD646FBA2460F77D00979AFC /* MockServerError.swift in Sources */,
+				ADD0315F2512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
 				ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */,
 				AD646FC02460F7BF00979AFC /* PactFileManager.swift in Sources */,
@@ -933,6 +951,7 @@
 				AD8FC7E22463BB9F00361854 /* ErrorReportable.swift in Sources */,
 				AD8FC7FA2463BBB800361854 /* MockService.swift in Sources */,
 				AD8FC7F62463BBB800361854 /* IntegerLike.swift in Sources */,
+				ADD03165251219B700C6099B /* ExampleGenerator.swift in Sources */,
 				AD8FC7E62463BB9F00361854 /* Pact.swift in Sources */,
 				AD8FC7F42463BBB800361854 /* EqualTo.swift in Sources */,
 				AD8FC7DC2463BB9A00361854 /* PactError.swift in Sources */,
@@ -948,6 +967,7 @@
 				AD8FC7F82463BBB800361854 /* RegexLike.swift in Sources */,
 				AD8FC7F32463BBB800361854 /* EachLike.swift in Sources */,
 				AD8FC7FD2463BBC200361854 /* PactFileManager.swift in Sources */,
+				ADD031602512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */,
 				AD8FC7ED2463BB9F00361854 /* Response.swift in Sources */,
 				AD8FC7DA2463BB9A00361854 /* MismatchErrorType.swift in Sources */,
 				AD8FC7F22463BBB800361854 /* DecimalLike.swift in Sources */,

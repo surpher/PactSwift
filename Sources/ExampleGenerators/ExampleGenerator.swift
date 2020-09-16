@@ -1,9 +1,9 @@
 //
-//  PactInteractionNode.swift
+//  ExampleGenerator.swift
 //  PactSwift
 //
-//  Created by Marko Justinek on 9/4/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Created by Marko Justinek on 11/9/20.
+//  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -20,11 +20,24 @@
 
 import Foundation
 
-enum PactInteractionNode: String {
+public struct ExampleGenerator {
+	// This is a namespace placeholder
+	// Implement any Example Generators as `Struct`s in an extension.
+}
 
-	case body
-	case headers
-	case matchingRules
-	case generators
+extension ExampleGenerator {
+
+	enum Generator: String {
+		case int = "RandomInt"
+		case decimal = "RandomDecimal"
+		case hexadecimal = "RandomHexadecimal"
+		case string = "RandomString"
+		case regex = "Regex"
+		case uuid = "Uuid"
+		case date = "Date"
+		case time = "Time"
+		case dateTime = "DateTime"
+		case bool = "RandomBoolean"
+	}
 
 }

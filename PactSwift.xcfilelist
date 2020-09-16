@@ -20,6 +20,7 @@ $(SRCROOT)/Sources/Definitions/Response.swift
 $(SRCROOT)/Sources/Definitions/PactError.swift
 $(SRCROOT)/Sources/Definitions/Interaction.swift
 $(SRCROOT)/Sources/Definitions/Request.swift
+$(SRCROOT)/Sources/Definitions/ExampleGeneratorExpressible.swift
 $(SRCROOT)/Sources/Definitions/ErrorReportable.swift
 $(SRCROOT)/Sources/Definitions/PactBuilder.swift
 $(SRCROOT)/Sources/Definitions/MismatchError.swift
@@ -30,6 +31,7 @@ $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
+$(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift

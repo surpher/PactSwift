@@ -48,16 +48,17 @@ extension Request: Encodable {
 		case headers
 		case body
 		case matchingRules
+		case generators
 	}
 
 	/// Creates an object representing a network `Request`.
-	/// 
+	///
 	/// - Parameters:
-	///		- method: The http method of the http request
-	///		- path: A url path of the http reuquest (without the base url)
-	///		- query: A url query
-	///		- headers: Headers of the http reqeust
-	///		- body: Optional body of the http request
+	///   - method: The http method of the http request
+	///   - path: A url path of the http reuquest (without the base url)
+	///   - query: A url query
+	///   - headers: Headers of the http reqeust
+	///   - body: Optional body of the http request
 	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) {
 		self.method = method
 		self.path = path
@@ -67,11 +68,14 @@ extension Request: Encodable {
 
 		var encodableBody: AnyEncodable?
 		var matchingRules: AnyEncodable?
+		var generators: AnyEncodable?
+
 		if let body = body {
 			do {
 				let pactBody = try PactBuilder(with: body).encoded(for: .body)
 				encodableBody = pactBody.node
 				matchingRules = pactBody.rules
+				generators = pactBody.generators
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}
@@ -85,6 +89,7 @@ extension Request: Encodable {
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = encodableBody { try container.encode(encodableBody, forKey: .body) }
 			if let matchingRules = matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
+			if let generators = generators { try container.encode(generators, forKey: .generators) }
 		}
 	}
 
