@@ -20,9 +20,7 @@
 
 import Foundation
 
-///
 /// Defines the interaction between consumer and provider.
-///
 public class Interaction: Encodable {
 
 	var description: String?
@@ -62,8 +60,6 @@ extension Interaction {
 
 	/// Defines the description of the interaction.
 	///
-	/// - parameter interactionDescription: A `String` describing the interaction
-	///
 	/// It is important to provide a meaningful description so that
 	/// developers on the provider side can understand what the
 	/// intent of the interaction is. This description is also listed in
@@ -73,6 +69,9 @@ extension Interaction {
 	/// ```
 	/// .uponReceiving("A request for a list of users")
 	/// ```
+	///
+	/// - Parameters:
+	///   - interactionDescription: A `String` describing the interaction
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
 		self.description = interactionDescription
 		return self
@@ -80,13 +79,14 @@ extension Interaction {
 
 	/// Defines the provider state for the given interaction.
 	///
-	/// - parameter providerState: Description of the state.
-	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider Pact tests.
 	///
 	/// Example:
 	/// ```users exist```
+	///
+	/// - Parameters:
+	///   - providerState: Description of the state.
 	public func given(_ providerState: String) -> Interaction {
 		self.providerState = providerState
 		return self
@@ -94,8 +94,6 @@ extension Interaction {
 
 	/// Defines the provider state for the given interaction.
 	///
-	/// - parameter providerStates: A list of provider states
-	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider side Pact tests.
 	///
@@ -108,6 +106,9 @@ extension Interaction {
 	///   )
 	/// ])
 	/// ```
+	///
+	/// - Parameters:
+	///   - providerStates: A list of provider states
 	public func given(_ providerStates: [ProviderState]) -> Interaction {
 		self.providerStates = providerStates
 		return self
@@ -115,8 +116,6 @@ extension Interaction {
 
 	/// Defines the provider state for the given interaction.
 	///
-	/// - parameter providerStates: A list of provider states
-	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider side Pact tests.
 	///
@@ -129,22 +128,26 @@ extension Interaction {
 	///   )
 	/// ])
 	/// ```
+	///
+	/// - Parameters:
+	///   - providerStates: A list of provider states
 	public func given(_ providerStates: ProviderState...) -> Interaction {
 		given(providerStates)
 	}
 
 	/// Defines the expected request for the interaction.
 	///
-	/// - parameter method: The HTTP method of the request
-	/// - parameter path: The URL path of the request
-	/// - parameter query: The query parameters of the request
-	/// - parameter headers: The header parameters of the request
-	/// - parameter body: The body of the request
-	///
-	/// At a minimum the `method` and `path` required to test an API request.
+	///At a minimum the `method` and `path` required to test an API request.
 	/// By not providing a value for `query`, `headers` or `body` it is
 	/// understood that the presence of those values in the request
 	/// is _not required_ but they can be present.
+	///
+	/// - Parameters:
+	///   - method: The HTTP method of the request
+	///   - path: The URL path of the request
+	///   - query: The query parameters of the request
+	///   - headers: The header parameters of the request
+	///   - body: The body of the request
 	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
@@ -154,14 +157,15 @@ extension Interaction {
 	/// values `MockService` will respond with when it receives the expected
 	/// request as defined in this interaction.
 	///
-	/// - parameter status: The response status code
-	/// - parameter headers: The response headers
-	/// - parameter body: The response body
-	///
 	/// At a minimum the `status` is required to test an API response.
 	/// By not providing a value for `headers` or `body` it is understood
 	/// that the presence of those values in the response is _not required_
 	/// but the can be present.
+	///
+	/// - Parameters:
+	///   - status: The response status code
+	///   - headers: The response headers
+	///   - body: The response body
 	public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
 		return self
