@@ -22,12 +22,12 @@ import Foundation
 
 public extension ExampleGenerator {
 
+	/// Generates a random boolean value
 	struct Boolean: ExampleGeneratorExpressible {
 		internal let value: Any = Bool.random()
 		internal let generator: ExampleGenerator.Generator = .bool
 		internal let attributes: [String: AnyEncodable]? = nil
 
-		/// Generates a random boolean value
 		public init() { }
 	}
 
