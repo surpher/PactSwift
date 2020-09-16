@@ -367,7 +367,8 @@ class MockServiceTests: XCTestCase {
 					body: [
 						"foo": Matcher.SomethingLike("bar"),
 						"bar": ExampleGenerator.Boolean(),
-						"uuid": ExampleGenerator.Uuid()
+						"uuid": ExampleGenerator.Uuid(),
+						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242)
 					]
 				)
 
@@ -376,17 +377,21 @@ class MockServiceTests: XCTestCase {
 				let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
 					if let data = data {
 						let testResult = self.decodeGeneratorsResponse(data: data)
-						
+
+						// Verify Bool example generator
 						XCTAssertTrue(((testResult?.bar) as Any) is Bool)
 						do {
+							// Verify UUID example generator
 							let uuidResult = try XCTUnwrap(testResult?.uuid)
-							debugPrint(uuidResult)
-
 							if uuidResult.contains("-") {
 								XCTAssertNotNil(UUID(uuidString: uuidResult))
 							} else {
 								XCTAssertNotNil(uuidResult.uuid)
 							}
+
+							// Verify RandomInt example generator
+							let intResult = try XCTUnwrap(testResult?.baz)
+							XCTAssertTrue((-42...4242).contains(intResult))
 						} catch {
 							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 						}

@@ -125,6 +125,10 @@
 		ADD0317325122EA400C6099B /* UuidTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0317125122EA400C6099B /* UuidTests.swift */; };
 		ADD03175251235A800C6099B /* UUID+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03174251235A800C6099B /* UUID+Pact.swift */; };
 		ADD03176251235A800C6099B /* UUID+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03174251235A800C6099B /* UUID+Pact.swift */; };
+		ADD031782512425800C6099B /* RandomInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD031772512425800C6099B /* RandomInt.swift */; };
+		ADD031792512425800C6099B /* RandomInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD031772512425800C6099B /* RandomInt.swift */; };
+		ADD0317B2512439500C6099B /* RandomIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0317A2512439500C6099B /* RandomIntTests.swift */; };
+		ADD0317C2512439500C6099B /* RandomIntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0317A2512439500C6099B /* RandomIntTests.swift */; };
 		ADD3C27024416891002E73B9 /* RegexLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C26F24416891002E73B9 /* RegexLike.swift */; };
 		ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */; };
 		ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27324416CDF002E73B9 /* EqualTo.swift */; };
@@ -239,6 +243,8 @@
 		ADD0316E25122E4B00C6099B /* Uuid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Uuid.swift; sourceTree = "<group>"; };
 		ADD0317125122EA400C6099B /* UuidTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UuidTests.swift; sourceTree = "<group>"; };
 		ADD03174251235A800C6099B /* UUID+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UUID+Pact.swift"; sourceTree = "<group>"; };
+		ADD031772512425800C6099B /* RandomInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomInt.swift; sourceTree = "<group>"; };
+		ADD0317A2512439500C6099B /* RandomIntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomIntTests.swift; sourceTree = "<group>"; };
 		ADD3C26F24416891002E73B9 /* RegexLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLike.swift; sourceTree = "<group>"; };
 		ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegexLikeTests.swift; sourceTree = "<group>"; };
 		ADD3C27324416CDF002E73B9 /* EqualTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualTo.swift; sourceTree = "<group>"; };
@@ -557,6 +563,7 @@
 			children = (
 				ADD03166251220FD00C6099B /* Boolean.swift */,
 				ADD03163251219B700C6099B /* ExampleGenerator.swift */,
+				ADD031772512425800C6099B /* RandomInt.swift */,
 				ADD0316E25122E4B00C6099B /* Uuid.swift */,
 			);
 			path = ExampleGenerators;
@@ -567,6 +574,7 @@
 			children = (
 				ADD0316B251221A300C6099B /* BooleanTests.swift */,
 				ADD0317125122EA400C6099B /* UuidTests.swift */,
+				ADD0317A2512439500C6099B /* RandomIntTests.swift */,
 			);
 			path = ExampleGenerators;
 			sourceTree = "<group>";
@@ -917,6 +925,7 @@
 				ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */,
 				AD646FB82460F77D00979AFC /* VerificationError.swift in Sources */,
 				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
+				ADD031782512425800C6099B /* RandomInt.swift in Sources */,
 				AD646FBB2460F77D00979AFC /* VerificationErrorType.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				ADD0316F25122E4B00C6099B /* Uuid.swift in Sources */,
@@ -952,6 +961,7 @@
 				AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */,
 				ADC3AA37247C8C4B0034446E /* InteractionTests.swift in Sources */,
 				ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */,
+				ADD0317B2512439500C6099B /* RandomIntTests.swift in Sources */,
 				AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */,
 				ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */,
@@ -992,6 +1002,7 @@
 				AD8FC7EA2463BB9F00361854 /* PactInteractionNode.swift in Sources */,
 				AD8FC7DF2463BB9A00361854 /* VerificationErrorType.swift in Sources */,
 				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
+				ADD031792512425800C6099B /* RandomInt.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
 				ADD0317025122E4B00C6099B /* Uuid.swift in Sources */,
@@ -1027,6 +1038,7 @@
 				AD8FC8062463BBD000361854 /* RegexLikeTests.swift in Sources */,
 				ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */,
 				AD8FC8052463BBD000361854 /* IntegerLikeTests.swift in Sources */,
+				ADD0317C2512439500C6099B /* RandomIntTests.swift in Sources */,
 				AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */,
 				ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				AD8FC7FF2463BBD000361854 /* MetadataTests.swift in Sources */,
