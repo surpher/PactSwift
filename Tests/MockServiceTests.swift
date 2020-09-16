@@ -366,7 +366,8 @@ class MockServiceTests: XCTestCase {
 					status: 200,
 					body: [
 						"foo": Matcher.SomethingLike("bar"),
-						"bar": ExampleGenerator.Boolean()
+						"bar": ExampleGenerator.Boolean(),
+						"uuid": ExampleGenerator.Uuid()
 					]
 				)
 
@@ -375,8 +376,20 @@ class MockServiceTests: XCTestCase {
 				let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
 					if let data = data {
 						let testResult = self.decodeGeneratorsResponse(data: data)
-
+						
 						XCTAssertTrue(((testResult?.bar) as Any) is Bool)
+						do {
+							let uuidResult = try XCTUnwrap(testResult?.uuid)
+							debugPrint(uuidResult)
+
+							if uuidResult.contains("-") {
+								XCTAssertNotNil(UUID(uuidString: uuidResult))
+							} else {
+								XCTAssertNotNil(uuidResult.uuid)
+							}
+						} catch {
+							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
+						}
 					}
 					completion()
 				}
@@ -432,6 +445,7 @@ private extension MockServiceTests {
 		let baz: Int?
 		let qux: Double?
 		let quux: Decimal?
+		let uuid: String
 	}
 
 	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {
