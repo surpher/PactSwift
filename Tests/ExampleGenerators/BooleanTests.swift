@@ -24,7 +24,7 @@ import XCTest
 
 class BooleanTests: XCTestCase {
 
-	func testBooleanExampleGeneratorType() {
+	func testBooleanExampleGenerator() {
 		let sut = ExampleGenerator.Boolean()
 		XCTAssertTrue(sut.value is Bool)
 		XCTAssertEqual(sut.generator, .bool)
