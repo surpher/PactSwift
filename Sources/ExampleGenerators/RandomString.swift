@@ -32,7 +32,7 @@ public extension ExampleGenerator {
 		public init(size: Int = 20) {
 			self.value = String((0..<size).map { _ in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
 			self.attributes = [
-				"size": AnyEncodable(size)
+				"size": AnyEncodable(size),
 			]
 		}
 	}

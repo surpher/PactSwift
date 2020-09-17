@@ -46,7 +46,7 @@ public extension Matcher {
 			includeStringValues.map {
 				[
 					"match": AnyEncodable("include"),
-					"value": AnyEncodable($0)
+					"value": AnyEncodable($0),
 				]
 			}
 		}

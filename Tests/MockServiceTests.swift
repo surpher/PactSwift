@@ -372,6 +372,8 @@ class MockServiceTests: XCTestCase {
 						"quux": ExampleGenerator.Decimal(digits: 4),
 						"hex": ExampleGenerator.Hexadecimal(digits: 14),
 						"randoStr": ExampleGenerator.RandomString(size: 38)
+//						,
+//						"regex": ExampleGenerator.Regex("^\\d{1,2}\\/\\d{1,2}$")
 					]
 				)
 
@@ -408,8 +410,16 @@ class MockServiceTests: XCTestCase {
 							XCTAssertEqual(hexValue.count, 14)
 
 							// Verify Random String value
-							let randomString = try XCTUnwrap(testResult?.randoStr)
-							XCTAssertEqual(randomString.count, 38)
+							let stringValue = try XCTUnwrap(testResult?.randoStr)
+							XCTAssertEqual(stringValue.count, 38)
+
+							// Verify Regex value
+//							let regexValue = try XCTUnwrap(testResult?.regex)
+
+							// let regexString = try XCTUnwrap(regexValue as? String)
+//							let regex = try! NSRegularExpression(pattern: "^\\d{1,2}\\/\\d{1,2}$")
+//							let range = NSRange(location: 0, length: regexValue.utf16.count)
+//							XCTAssertNotNil(regex.firstMatch(in: regexValue, options: [], range: range))
 						} catch {
 							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 						}
@@ -471,6 +481,7 @@ private extension MockServiceTests {
 		let quux: Decimal
 		let uuid: String
 		let randoStr: String
+		let regex: String?
 	}
 
 	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {

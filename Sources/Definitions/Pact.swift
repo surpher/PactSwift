@@ -36,7 +36,7 @@ struct Pact: Encodable {
 			"consumer": consumer.name,
 			"provider": provider.name,
 			"interactions": interactions,
-			"metadata": metadata
+			"metadata": metadata,
 		]
 	}
 

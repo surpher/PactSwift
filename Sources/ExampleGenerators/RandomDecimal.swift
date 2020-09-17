@@ -33,7 +33,7 @@ public extension ExampleGenerator {
 			let digits = digits < 9 ? digits : 9
 			self.value = NumberHelper.randomDecimal(digits: digits)
 			self.attributes = [
-				"digits": AnyEncodable(digits < 9 ? digits : 9)
+				"digits": AnyEncodable(digits < 9 ? digits : 9),
 			]
 		}
 	}

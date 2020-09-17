@@ -34,7 +34,7 @@ public extension ExampleGenerator {
 			// MockServer overrides this value and returns a new string so accuracy and correctness here is irrelevant
 			self.value = String((0..<digits).map { _ in "0123456789ABCDEF".randomElement()! })
 			self.attributes = [
-				"digits": AnyEncodable(digits)
+				"digits": AnyEncodable(digits),
 			]
 		}
 	}

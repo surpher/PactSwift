@@ -41,8 +41,8 @@ public extension Matcher {
 			[
 				[
 					"match": AnyEncodable("regex"),
-					"regex": AnyEncodable(term)
-				]
+					"regex": AnyEncodable(term),
+				],
 			]
 		}
 

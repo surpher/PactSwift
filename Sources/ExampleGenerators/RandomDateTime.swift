@@ -34,7 +34,7 @@ public extension ExampleGenerator {
 
 			if let format = format {
 				self.attributes = [
-					"format": AnyEncodable(format)
+					"format": AnyEncodable(format),
 				]
 			}
 		}

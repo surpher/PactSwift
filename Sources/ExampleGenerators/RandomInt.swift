@@ -34,7 +34,7 @@ public extension ExampleGenerator {
 			self.value = Int.random(in: min...max)
 			self.attributes = [
 				"min": AnyEncodable(min),
-				"max": AnyEncodable(max)
+				"max": AnyEncodable(max),
 			]
 		}
 	}

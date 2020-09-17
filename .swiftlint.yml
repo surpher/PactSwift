@@ -69,3 +69,6 @@ nesting:
 excluded:
   - Carthage
   - Tests
+
+trailing_comma:
+  mandatory_comma: true
