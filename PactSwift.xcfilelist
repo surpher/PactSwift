@@ -35,6 +35,7 @@ $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomInt.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomUuid.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift

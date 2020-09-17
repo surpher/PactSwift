@@ -17,35 +17,27 @@
 
 import Foundation
 
-extension Date {
+public extension ExampleGenerator {
 
-	enum ISOFormat {
-		case date
-		case dateTime
-		case time
+	/// Generates a Time value from the current time either in ISO format or using the provided format string
+	struct Time: ExampleGeneratorExpressible {
+		let value: Any
+		let generator: ExampleGenerator.Generator = .time
+		var attributes: [String: AnyEncodable]?
 
-		var formatOptions: ISO8601DateFormatter.Options {
-			switch self {
-			case .date:
-				return [.withFullDate, .withDashSeparatorInDate]
-			case .dateTime:
-				return [.withFullDate, .withFullTime]
-			case .time:
-				return [.withFullTime]
+		/// Generates a Time value from the current time either in ISO format or using the provided format string
+		///
+		/// - Parameters:
+		///   - format: The format of generated time
+		public init(format: String? = nil) {
+			self.value = Date.formattedDate(format: format, isoFormat: .time)
+
+			if let format = format {
+				self.attributes = [
+					"format": AnyEncodable(format)
+				]
 			}
 		}
-	}
-
-	static func formattedDate(format: String?, isoFormat: ISOFormat) -> String {
-		guard format != nil else {
-			let formatter = ISO8601DateFormatter()
-			formatter.formatOptions = isoFormat.formatOptions
-			return formatter.string(from: Date())
-		}
-
-		let formatter = DateFormatter()
-		formatter.dateFormat = format
-		return formatter.string(from: Date())
 	}
 
 }

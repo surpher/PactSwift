@@ -109,6 +109,10 @@
 		ADA17E42251377A4004F1A82 /* Date+PactSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E40251377A4004F1A82 /* Date+PactSwift.swift */; };
 		ADA17E492513808B004F1A82 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E482513808B004F1A82 /* DateHelper.swift */; };
 		ADA17E4A2513808B004F1A82 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E482513808B004F1A82 /* DateHelper.swift */; };
+		ADA17E4C251383EB004F1A82 /* RandomTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E4B251383EB004F1A82 /* RandomTime.swift */; };
+		ADA17E4D251383EB004F1A82 /* RandomTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E4B251383EB004F1A82 /* RandomTime.swift */; };
+		ADA17E4F2513848A004F1A82 /* RandomTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */; };
+		ADA17E502513848A004F1A82 /* RandomTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
@@ -245,6 +249,8 @@
 		ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTimeTests.swift; sourceTree = "<group>"; };
 		ADA17E40251377A4004F1A82 /* Date+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+PactSwift.swift"; sourceTree = "<group>"; };
 		ADA17E482513808B004F1A82 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		ADA17E4B251383EB004F1A82 /* RandomTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTime.swift; sourceTree = "<group>"; };
+		ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTimeTests.swift; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Pact.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
@@ -585,6 +591,7 @@
 				AD8546F025135F4200211E28 /* RandomDate.swift */,
 				ADA17E3A25137716004F1A82 /* RandomDateTime.swift */,
 				ADD031772512425800C6099B /* RandomInt.swift */,
+				ADA17E4B251383EB004F1A82 /* RandomTime.swift */,
 				ADD0316E25122E4B00C6099B /* RandomUuid.swift */,
 			);
 			path = ExampleGenerators;
@@ -597,6 +604,7 @@
 				AD8546F32513601800211E28 /* RandomDateTests.swift */,
 				ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */,
 				ADD0317A2512439500C6099B /* RandomIntTests.swift */,
+				ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */,
 				ADD0317125122EA400C6099B /* RandomUuidTests.swift */,
 			);
 			path = ExampleGenerators;
@@ -976,6 +984,7 @@
 				ADBC60DC2513639700BBE666 /* RandomDate.swift in Sources */,
 				AD8DF435243C53750062CB1A /* PactBuilder.swift in Sources */,
 				ADD03175251235A800C6099B /* UUID+Pact.swift in Sources */,
+				ADA17E4C251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +999,7 @@
 				ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */,
 				ADD0317B2512439500C6099B /* RandomIntTests.swift in Sources */,
 				AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */,
+				ADA17E4F2513848A004F1A82 /* RandomTimeTests.swift in Sources */,
 				ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */,
 				ADA17E492513808B004F1A82 /* DateHelper.swift in Sources */,
@@ -1059,6 +1069,7 @@
 				ADBC60DD2513639800BBE666 /* RandomDate.swift in Sources */,
 				AD8FC7DD2463BB9A00361854 /* VerificationError.swift in Sources */,
 				ADD03176251235A800C6099B /* UUID+Pact.swift in Sources */,
+				ADA17E4D251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1073,6 +1084,7 @@
 				AD8FC8052463BBD000361854 /* IntegerLikeTests.swift in Sources */,
 				ADD0317C2512439500C6099B /* RandomIntTests.swift in Sources */,
 				AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */,
+				ADA17E502513848A004F1A82 /* RandomTimeTests.swift in Sources */,
 				ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				AD8FC7FF2463BBD000361854 /* MetadataTests.swift in Sources */,
 				ADA17E4A2513808B004F1A82 /* DateHelper.swift in Sources */,
