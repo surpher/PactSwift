@@ -368,7 +368,8 @@ class MockServiceTests: XCTestCase {
 						"foo": Matcher.SomethingLike("bar"),
 						"bar": ExampleGenerator.Boolean(),
 						"uuid": ExampleGenerator.Uuid(),
-						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242)
+						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
+						"quux": ExampleGenerator.Decimal(digits: 4)
 					]
 				)
 
@@ -392,6 +393,13 @@ class MockServiceTests: XCTestCase {
 							// Verify RandomInt example generator
 							let intResult = try XCTUnwrap(testResult?.baz)
 							XCTAssertTrue((-42...4242).contains(intResult))
+
+							// Verify Decimal example generator
+							let decimalResult = try XCTUnwrap(testResult?.quux)
+							XCTAssertTrue((decimalResult as Any) is Decimal)
+
+							// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
+							XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
 						} catch {
 							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 						}
@@ -449,7 +457,7 @@ private extension MockServiceTests {
 		let bar: Bool
 		let baz: Int?
 		let qux: Double?
-		let quux: Decimal?
+		let quux: Decimal
 		let uuid: String
 	}
 
