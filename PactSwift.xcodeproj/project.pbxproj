@@ -611,9 +611,9 @@
 				ADA17E5125138908004F1A82 /* RandomDecimal.swift */,
 				AD4B97092513A04800C37560 /* RandomHexadecimal.swift */,
 				ADD031772512425800C6099B /* RandomInt.swift */,
+				AD4B970F2513A3DB00C37560 /* RandomString.swift */,
 				ADA17E4B251383EB004F1A82 /* RandomTime.swift */,
 				ADD0316E25122E4B00C6099B /* RandomUuid.swift */,
-				AD4B970F2513A3DB00C37560 /* RandomString.swift */,
 			);
 			path = ExampleGenerators;
 			sourceTree = "<group>";
@@ -627,9 +627,9 @@
 				AD4B970425138F7600C37560 /* RandomDecimalTests.swift */,
 				AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */,
 				ADD0317A2512439500C6099B /* RandomIntTests.swift */,
+				AD4B97122513A64700C37560 /* RandomStringTests.swift */,
 				ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */,
 				ADD0317125122EA400C6099B /* RandomUuidTests.swift */,
-				AD4B97122513A64700C37560 /* RandomStringTests.swift */,
 			);
 			path = ExampleGenerators;
 			sourceTree = "<group>";
