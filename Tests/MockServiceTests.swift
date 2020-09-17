@@ -369,7 +369,8 @@ class MockServiceTests: XCTestCase {
 						"bar": ExampleGenerator.Boolean(),
 						"uuid": ExampleGenerator.Uuid(),
 						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
-						"quux": ExampleGenerator.Decimal(digits: 4)
+						"quux": ExampleGenerator.Decimal(digits: 4),
+						"hex": ExampleGenerator.Hexadecimal(digits: 14)
 					]
 				)
 
@@ -400,6 +401,10 @@ class MockServiceTests: XCTestCase {
 
 							// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
 							XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
+
+							// Verify Hexadecimal value
+							let hexValue = try XCTUnwrap(testResult?.hex)
+							XCTAssertEqual(hexValue.count, 14)
 						} catch {
 							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 						}
@@ -455,7 +460,8 @@ private extension MockServiceTests {
 	struct GeneratorsTestModel: Decodable {
 		let foo: String
 		let bar: Bool
-		let baz: Int?
+		let baz: Int
+		let hex: String
 		let qux: Double?
 		let quux: Decimal
 		let uuid: String

@@ -11,6 +11,10 @@
 		AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
 		AD4B970725138FCE00C37560 /* RandomDecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B970425138F7600C37560 /* RandomDecimalTests.swift */; };
 		AD4B970825138FCF00C37560 /* RandomDecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B970425138F7600C37560 /* RandomDecimalTests.swift */; };
+		AD4B970A2513A04800C37560 /* RandomHexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B97092513A04800C37560 /* RandomHexadecimal.swift */; };
+		AD4B970B2513A04800C37560 /* RandomHexadecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B97092513A04800C37560 /* RandomHexadecimal.swift */; };
+		AD4B970D2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */; };
+		AD4B970E2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */; };
 		AD641A332434331300785CE1 /* Bundle+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+Pact.swift */; };
 		AD641A352434345500785CE1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A342434345500785CE1 /* Metadata.swift */; };
 		AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A372434355C00785CE1 /* MetadataTests.swift */; };
@@ -190,6 +194,8 @@
 		AD2CB266242CC11700D991F0 /* Target-iOS-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB267242CC12300D991F0 /* Target-iOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		AD4B970425138F7600C37560 /* RandomDecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimalTests.swift; sourceTree = "<group>"; };
+		AD4B97092513A04800C37560 /* RandomHexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomHexadecimal.swift; sourceTree = "<group>"; };
+		AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomHexadecimalTests.swift; sourceTree = "<group>"; };
 		AD4FC5DD242CC2B20039342D /* Project-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD4FC5DE242CC2C30039342D /* Target-iOS-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD4FC5DF242CC2CB0039342D /* Target-iOS-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
@@ -597,6 +603,7 @@
 				AD8546F025135F4200211E28 /* RandomDate.swift */,
 				ADA17E3A25137716004F1A82 /* RandomDateTime.swift */,
 				ADA17E5125138908004F1A82 /* RandomDecimal.swift */,
+				AD4B97092513A04800C37560 /* RandomHexadecimal.swift */,
 				ADD031772512425800C6099B /* RandomInt.swift */,
 				ADA17E4B251383EB004F1A82 /* RandomTime.swift */,
 				ADD0316E25122E4B00C6099B /* RandomUuid.swift */,
@@ -610,10 +617,11 @@
 				ADD0316B251221A300C6099B /* RandomBooleanTests.swift */,
 				AD8546F32513601800211E28 /* RandomDateTests.swift */,
 				ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */,
+				AD4B970425138F7600C37560 /* RandomDecimalTests.swift */,
+				AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */,
 				ADD0317A2512439500C6099B /* RandomIntTests.swift */,
 				ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */,
 				ADD0317125122EA400C6099B /* RandomUuidTests.swift */,
-				AD4B970425138F7600C37560 /* RandomDecimalTests.swift */,
 			);
 			path = ExampleGenerators;
 			sourceTree = "<group>";
@@ -971,6 +979,7 @@
 				AD646FBB2460F77D00979AFC /* VerificationErrorType.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				ADD0316F25122E4B00C6099B /* RandomUuid.swift in Sources */,
+				AD4B970A2513A04800C37560 /* RandomHexadecimal.swift in Sources */,
 				AD7891C224415E3E0014BCC8 /* DecimalLike.swift in Sources */,
 				AD641A422434588200785CE1 /* Interaction.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,
@@ -1017,6 +1026,7 @@
 				AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */,
 				ADDE4702244D0FDE00E4F7EE /* ErrorCapture.swift in Sources */,
 				AD646FD02460F94100979AFC /* MockServerTests.swift in Sources */,
+				AD4B970D2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */,
 				ADC3AA3A247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */,
 				ADD0316C251221A300C6099B /* RandomBooleanTests.swift in Sources */,
 				ADC4466D247BC840004D2267 /* MockServerErrorTests.swift in Sources */,
@@ -1058,6 +1068,7 @@
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
 				ADD0317025122E4B00C6099B /* RandomUuid.swift in Sources */,
+				AD4B970B2513A04800C37560 /* RandomHexadecimal.swift in Sources */,
 				AD8FC7E52463BB9F00361854 /* Metadata.swift in Sources */,
 				AD8FC7DB2463BB9A00361854 /* MockServerError.swift in Sources */,
 				AD8FC7FC2463BBC200361854 /* MockServer.swift in Sources */,
@@ -1104,6 +1115,7 @@
 				AD8FC8022463BBD000361854 /* PactTests.swift in Sources */,
 				AD8FC8082463BBD100361854 /* MockServiceTests.swift in Sources */,
 				AD8FC8092463BBD100361854 /* MockServerTests.swift in Sources */,
+				AD4B970E2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */,
 				ADC3AA3B247CB90B0034446E /* VerificationErrorTypeTests.swift in Sources */,
 				ADD0316D251221A300C6099B /* RandomBooleanTests.swift in Sources */,
 				ADC4466E247BC840004D2267 /* MockServerErrorTests.swift in Sources */,
