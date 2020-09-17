@@ -21,9 +21,9 @@ public extension ExampleGenerator {
 
 	/// Generates a Date value from the current date either in ISO format or using the provided format string
 	struct RandomDate: ExampleGeneratorExpressible {
-		let value: Any
-		let generator: ExampleGenerator.Generator = .date
-		var attributes: [String: AnyEncodable]?
+		internal let value: Any
+		internal let generator: ExampleGenerator.Generator = .date
+		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a Date value from the current date either in ISO format or using the provided format string
 		/// - Parameters:

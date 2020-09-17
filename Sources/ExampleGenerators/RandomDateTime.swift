@@ -21,9 +21,9 @@ public extension ExampleGenerator {
 
 	/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
 	struct DateTime: ExampleGeneratorExpressible {
-		let value: Any
-		let generator: ExampleGenerator.Generator = .dateTime
-		var attributes: [String: AnyEncodable]?
+		internal let value: Any
+		internal let generator: ExampleGenerator.Generator = .dateTime
+		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
 		///

@@ -21,9 +21,9 @@ public extension ExampleGenerator {
 
 	/// Generates a random hexadecimal value (String) with the provided number of digits
 	struct Hexadecimal: ExampleGeneratorExpressible {
-		let value: Any
-		let generator: ExampleGenerator.Generator = .hexadecimal
-		var attributes: [String: AnyEncodable]?
+		internal let value: Any
+		internal let generator: ExampleGenerator.Generator = .hexadecimal
+		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a random hexadecimal value (String) with the provided number of digits
 		///

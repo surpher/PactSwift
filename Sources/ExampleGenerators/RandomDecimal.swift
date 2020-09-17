@@ -21,9 +21,9 @@ public extension ExampleGenerator {
 
 	/// Generates a random decimal value (BigDecimal) with the provided number of digits
 	struct Decimal: ExampleGeneratorExpressible {
-		let value: Any
-		let generator: ExampleGenerator.Generator = .decimal
-		var attributes: [String: AnyEncodable]?
+		internal let value: Any
+		internal let generator: ExampleGenerator.Generator = .decimal
+		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a random decimal value (BigDecimal) with the provided number of digits
 		///

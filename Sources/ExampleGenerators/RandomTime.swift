@@ -21,9 +21,9 @@ public extension ExampleGenerator {
 
 	/// Generates a Time value from the current time either in ISO format or using the provided format string
 	struct Time: ExampleGeneratorExpressible {
-		let value: Any
-		let generator: ExampleGenerator.Generator = .time
-		var attributes: [String: AnyEncodable]?
+		internal let value: Any
+		internal let generator: ExampleGenerator.Generator = .time
+		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a Time value from the current time either in ISO format or using the provided format string
 		///
