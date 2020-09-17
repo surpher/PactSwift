@@ -1,8 +1,5 @@
 //
-//  UuidTests.swift
-//  PactSwift
-//
-//  Created by Marko Justinek on 16/9/20.
+//  Created by Marko Justinek on 17/9/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -18,24 +15,20 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
+import Foundation
 
-@testable import PactSwift
+enum DateHelper {
 
-class UuidTests: XCTestCase {
-
-	func testUUIDExampleGenerator() throws {
-		let sut = ExampleGenerator.Uuid()
-
-		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
-		XCTAssertEqual(sut.generator, .uuid)
-		XCTAssertNil(sut.attributes)
+	static func dateFrom(isoString: String, isoFormat: ISO8601DateFormatter.Options) -> Date? {
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = isoFormat
+		return formatter.date(from: isoString)
 	}
 
-	func testSimpleUUID() {
-		let sut = UUID()
-		XCTAssertEqual(sut.uuidString.count, 36)
-		XCTAssertEqual(sut.uuidStringSimple.count, 32)
+	static func dateFrom(string: String, format: String) -> Date? {
+		let formatter = DateFormatter()
+		formatter.dateFormat = format
+		return formatter.date(from: string)
 	}
 
 }

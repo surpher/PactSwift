@@ -1,8 +1,5 @@
 //
-//  UuidTests.swift
-//  PactSwift
-//
-//  Created by Marko Justinek on 16/9/20.
+//  Created by Marko Justinek on 17/9/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -18,24 +15,37 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
+import Foundation
 
-@testable import PactSwift
+extension Date {
 
-class UuidTests: XCTestCase {
+	enum ISOFormat {
+		case date
+		case dateTime
+		case time
 
-	func testUUIDExampleGenerator() throws {
-		let sut = ExampleGenerator.Uuid()
-
-		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
-		XCTAssertEqual(sut.generator, .uuid)
-		XCTAssertNil(sut.attributes)
+		var formatOptions: ISO8601DateFormatter.Options {
+			switch self {
+			case .date:
+				return [.withFullDate]
+			case .dateTime:
+				return [.withFullDate, .withFullTime]
+			case .time:
+				return [.withTime]
+			}
+		}
 	}
 
-	func testSimpleUUID() {
-		let sut = UUID()
-		XCTAssertEqual(sut.uuidString.count, 36)
-		XCTAssertEqual(sut.uuidStringSimple.count, 32)
+	static func formattedDate(format: String?, isoFormat: ISOFormat) -> String {
+		guard format != nil else {
+			let formatter = ISO8601DateFormatter()
+			formatter.formatOptions = isoFormat.formatOptions
+			return formatter.string(from: Date())
+		}
+
+		let formatter = DateFormatter()
+		formatter.dateFormat = format
+		return formatter.string(from: Date())
 	}
 
 }

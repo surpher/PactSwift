@@ -1,4 +1,5 @@
 $(SRCROOT)/Sources/Extensions/Dictionary+Pact.swift
+$(SRCROOT)/Sources/Extensions/Date+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Bundle+Pact.swift
 $(SRCROOT)/Sources/Extensions/UUID+Pact.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
@@ -32,6 +33,7 @@ $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomInt.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomUuid.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift

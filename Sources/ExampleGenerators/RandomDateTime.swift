@@ -1,6 +1,6 @@
 //
 //  Created by Marko Justinek on 17/9/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -19,17 +19,18 @@ import Foundation
 
 public extension ExampleGenerator {
 
-	/// Generates a Date value from the current date either in ISO format or using the provided format string
-	struct RandomDate: ExampleGeneratorExpressible {
+	/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
+	struct DateTime: ExampleGeneratorExpressible {
 		let value: Any
-		let generator: ExampleGenerator.Generator = .date
+		let generator: ExampleGenerator.Generator = .dateTime
 		var attributes: [String: AnyEncodable]?
 
-		/// Generates a Date value from the current date either in ISO format or using the provided format string
+		/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
+		///
 		/// - Parameters:
-		///   - format: The format of generated date
+		///   - format: The format of generated timestamp
 		public init(format: String? = nil) {
-			self.value = Date.formattedDate(format: format, isoFormat: .date)
+			self.value = Date.formattedDate(format: format, isoFormat: .dateTime)
 
 			if let format = format {
 				self.attributes = [

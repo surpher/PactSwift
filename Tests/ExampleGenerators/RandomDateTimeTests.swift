@@ -1,6 +1,6 @@
 //
 //  Created by Marko Justinek on 17/9/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -19,25 +19,25 @@ import XCTest
 
 @testable import PactSwift
 
-class RandomDateTests: XCTestCase {
+class RandomDateTimeTests: XCTestCase {
 
-	func testRandomDate() {
-		let sut = ExampleGenerator.RandomDate()
+	func testRandomDateTime() {
+		let sut = ExampleGenerator.DateTime()
 
-		XCTAssertEqual(sut.generator, .date)
+		XCTAssertEqual(sut.generator, .dateTime)
 		XCTAssertNil(sut.attributes)
-		XCTAssertNotNil(DateHelper.dateFrom(isoString: try XCTUnwrap(sut.value as? String), isoFormat: [.withFullDate]))
+		XCTAssertNotNil(DateHelper.dateFrom(isoString: try XCTUnwrap(sut.value as? String), isoFormat: [.withFullDate, .withFullTime]))
 	}
 
-	func testRandomDate_WithFormat() throws {
-		let testFormat = "dd-MM-yyyy"
-		let sut = ExampleGenerator.RandomDate(format: testFormat)
+	func testRandomDateTime_WithFormat() throws {
+		let testFormat = "yyyy/MM/dd - HH:mm:ss.S"
+		let sut = ExampleGenerator.DateTime(format: testFormat)
 
 		let attributes = try XCTUnwrap(sut.attributes)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "format"
 		})
-		XCTAssertEqual(sut.generator, .date)
+		XCTAssertEqual(sut.generator, .dateTime)
 		XCTAssertNotNil(DateHelper.dateFrom(string: try XCTUnwrap(sut.value as? String), format: testFormat))
 	}
 
