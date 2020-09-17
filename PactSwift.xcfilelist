@@ -32,9 +32,11 @@ $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
-$(SRCROOT)/Sources/ExampleGenerators/Uuid.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomInt.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomUuid.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
-$(SRCROOT)/Sources/ExampleGenerators/Boolean.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomBoolean.swift
 $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift
