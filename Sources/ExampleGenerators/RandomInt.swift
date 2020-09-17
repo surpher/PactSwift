@@ -20,15 +20,16 @@ import Foundation
 public extension ExampleGenerator {
 
 	/// Generates a random integer value between provided `min` and `max` values
-	///
-	/// - Parameters:
-	///   - min: Minimum possible value
-	///   - max: Maximum possible value
 	struct RandomInt: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .int
 		internal var attributes: [String: AnyEncodable]?
 
+		/// Generates a random integer value between provided `min` and `max` values
+		///
+		/// - Parameters:
+		///   - min: Minimum possible value
+		///   - max: Maximum possible value
 		public init(min: Int = 0, max: Int = 2_147_483_647) {
 			self.value = Int.random(in: min...max)
 			self.attributes = [

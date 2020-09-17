@@ -25,6 +25,7 @@ public extension ExampleGenerator {
 		internal let generator: ExampleGenerator.Generator = .uuid
 		internal let attributes: [String: AnyEncodable]? = nil
 
+		/// Generates a random UUID value
 		public init() { }
 	}
 

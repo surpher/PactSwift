@@ -25,6 +25,7 @@ public extension ExampleGenerator {
 		internal let generator: ExampleGenerator.Generator = .bool
 		internal let attributes: [String: AnyEncodable]? = nil
 
+		/// Generates a random boolean value
 		public init() { }
 	}
 
