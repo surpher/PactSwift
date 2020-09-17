@@ -370,7 +370,8 @@ class MockServiceTests: XCTestCase {
 						"uuid": ExampleGenerator.Uuid(),
 						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
 						"quux": ExampleGenerator.Decimal(digits: 4),
-						"hex": ExampleGenerator.Hexadecimal(digits: 14)
+						"hex": ExampleGenerator.Hexadecimal(digits: 14),
+						"randoStr": ExampleGenerator.RandomString(size: 38)
 					]
 				)
 
@@ -405,6 +406,10 @@ class MockServiceTests: XCTestCase {
 							// Verify Hexadecimal value
 							let hexValue = try XCTUnwrap(testResult?.hex)
 							XCTAssertEqual(hexValue.count, 14)
+
+							// Verify Random String value
+							let randomString = try XCTUnwrap(testResult?.randoStr)
+							XCTAssertEqual(randomString.count, 38)
 						} catch {
 							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 						}
@@ -465,6 +470,7 @@ private extension MockServiceTests {
 		let qux: Double?
 		let quux: Decimal
 		let uuid: String
+		let randoStr: String
 	}
 
 	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {
