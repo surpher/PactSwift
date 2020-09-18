@@ -61,6 +61,8 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run(waitFor: 1) { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
@@ -69,9 +71,12 @@ class MockServiceTests: XCTestCase {
 					XCTAssertEqual(testResult?.foo, "bar")
 				}
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_SuccessfulGETRequest_OverSSL() {
@@ -93,6 +98,8 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			self.secureProtocol = true
 			let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
@@ -106,9 +113,12 @@ class MockServiceTests: XCTestCase {
 					XCTFail(error.localizedDescription)
 				}
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WhenRequestMissing() {
@@ -152,16 +162,21 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/invalidPath")!) { data, response, error in
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WhenUnexpectedQuery() throws {
@@ -185,16 +200,21 @@ class MockServiceTests: XCTestCase {
 				status: 200
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user?state=VIC")!) { data, response, error in
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WhenBodyMismatch() throws {
@@ -213,6 +233,8 @@ class MockServiceTests: XCTestCase {
 				status: 201
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
 			let session = URLSession.shared
@@ -223,12 +245,15 @@ class MockServiceTests: XCTestCase {
 
 			let task = session.dataTask(with: request) { data, response, error in
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WhenBodyIsEmptyObject() throws {
@@ -247,6 +272,8 @@ class MockServiceTests: XCTestCase {
 				status: 201
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
 			let session = URLSession.shared
@@ -258,12 +285,15 @@ class MockServiceTests: XCTestCase {
 
 			let task = session.dataTask(with: request) { data, response, error in
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WhenRequestBodyMissing() throws {
@@ -282,6 +312,8 @@ class MockServiceTests: XCTestCase {
 				status: 201
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
 			let session = URLSession.shared
@@ -289,12 +321,15 @@ class MockServiceTests: XCTestCase {
 			request.httpMethod = "POST"
 			let task = session.dataTask(with: request) { data, response, error in
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+
+		waitForExpectations(timeout: 1)
 	}
 
 	func testMockService_Fails_WithHeaderMismatch() throws {
@@ -314,9 +349,12 @@ class MockServiceTests: XCTestCase {
 				status: 200
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+				testExpectation.fulfill()
 				completion()
 			}
 			task.resume()
@@ -324,6 +362,7 @@ class MockServiceTests: XCTestCase {
 
 		let testResult = try XCTUnwrap(errorCapture.error?.message)
 		XCTAssertTrue(expectedValues.allSatisfy { testResult.contains($0) })
+		waitForExpectations(timeout: 1)
 	}
 
 	// MARK: - Using matchers
@@ -341,6 +380,8 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
@@ -349,86 +390,94 @@ class MockServiceTests: XCTestCase {
 					XCTAssertEqual(testResult?.foo, "bar")
 					XCTAssertEqual(testResult?.baz?.first, 123)
 				}
+				testExpectation.fulfill()
 				completion()
 			}
 			task.resume()
 		}
+
+		waitForExpectations(timeout: 1)
 	}
 
 	// MARK: - Using Example Generators
 
 	func testMockService_Succeeds_WithGenerators() {
-			_ = mockService
-				.uponReceiving("Request for list of pets")
-				.given("animals exist")
-				.withRequest(method: .GET, path: "/pet")
-				.willRespondWith(
-					status: 200,
-					body: [
-						"foo": Matcher.SomethingLike("bar"),
-						"bar": ExampleGenerator.Boolean(),
-						"uuid": ExampleGenerator.Uuid(),
-						"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
-						"quux": ExampleGenerator.Decimal(digits: 4),
-						"hex": ExampleGenerator.Hexadecimal(digits: 14),
-						"randoStr": ExampleGenerator.RandomString(size: 38)
-//						,
-//						"regex": ExampleGenerator.Regex("^\\d{1,2}\\/\\d{1,2}$")
-					]
-				)
+		let testRegex = #"\d{3}/\d{4,8}"#
 
-			mockService.run { completion in
-				let session = URLSession.shared
-				let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
-					if let data = data {
-						let testResult = self.decodeGeneratorsResponse(data: data)
+		_ = mockService
+			.uponReceiving("Request for list of pets")
+			.given("animals exist")
+			.withRequest(method: .GET, path: "/pet")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"foo": Matcher.SomethingLike("bar"),
+					"bar": ExampleGenerator.Boolean(),
+					"uuid": ExampleGenerator.Uuid(),
+					"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
+					"quux": ExampleGenerator.Decimal(digits: 4),
+					"hex": ExampleGenerator.Hexadecimal(digits: 14),
+					"randoStr": ExampleGenerator.RandomString(size: 38),
+					"regex": ExampleGenerator.Regex(testRegex),
+				]
+			)
 
-						// Verify Bool example generator
-						XCTAssertTrue(((testResult?.bar) as Any) is Bool)
-						do {
-							// Verify UUID example generator
-							let uuidResult = try XCTUnwrap(testResult?.uuid)
-							if uuidResult.contains("-") {
-								XCTAssertNotNil(UUID(uuidString: uuidResult))
-							} else {
-								XCTAssertNotNil(uuidResult.uuid)
-							}
+		let testExpectation = expectation(description: #function)
 
-							// Verify RandomInt example generator
-							let intResult = try XCTUnwrap(testResult?.baz)
-							XCTAssertTrue((-42...4242).contains(intResult))
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
+				if let data = data {
+					let testResult = self.decodeGeneratorsResponse(data: data)
 
-							// Verify Decimal example generator
-							let decimalResult = try XCTUnwrap(testResult?.quux)
-							XCTAssertTrue((decimalResult as Any) is Decimal)
-
-							// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
-							XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
-
-							// Verify Hexadecimal value
-							let hexValue = try XCTUnwrap(testResult?.hex)
-							XCTAssertEqual(hexValue.count, 14)
-
-							// Verify Random String value
-							let stringValue = try XCTUnwrap(testResult?.randoStr)
-							XCTAssertEqual(stringValue.count, 38)
-
-							// Verify Regex value
-//							let regexValue = try XCTUnwrap(testResult?.regex)
-
-							// let regexString = try XCTUnwrap(regexValue as? String)
-//							let regex = try! NSRegularExpression(pattern: "^\\d{1,2}\\/\\d{1,2}$")
-//							let range = NSRange(location: 0, length: regexValue.utf16.count)
-//							XCTAssertNotNil(regex.firstMatch(in: regexValue, options: [], range: range))
-						} catch {
-							XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
+					// Verify Bool example generator
+					XCTAssertTrue(((testResult?.bar) as Any) is Bool)
+					do {
+						// Verify UUID example generator
+						let uuidResult = try XCTUnwrap(testResult?.uuid)
+						if uuidResult.contains("-") {
+							XCTAssertNotNil(UUID(uuidString: uuidResult))
+						} else {
+							XCTAssertNotNil(uuidResult.uuid)
 						}
+
+						// Verify RandomInt example generator
+						let intResult = try XCTUnwrap(testResult?.baz)
+						XCTAssertTrue((-42...4242).contains(intResult))
+
+						// Verify Decimal example generator
+						let decimalResult = try XCTUnwrap(testResult?.quux)
+						XCTAssertTrue((decimalResult as Any) is Decimal)
+
+						// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
+						XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
+
+						// Verify Hexadecimal value
+						let hexValue = try XCTUnwrap(testResult?.hex)
+						XCTAssertEqual(hexValue.count, 14)
+
+						// Verify Random String value
+						let stringValue = try XCTUnwrap(testResult?.randoStr)
+						XCTAssertEqual(stringValue.count, 38)
+
+						// Verify Regex value
+						let regexValue = try XCTUnwrap(testResult?.regex)
+
+						let regex = try! NSRegularExpression(pattern: testRegex)
+						let range = NSRange(location: 0, length: regexValue.utf16.count)
+						XCTAssertNotNil(regex.firstMatch(in: regexValue, options: [], range: range))
+					} catch {
+						XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 					}
-					completion()
 				}
-				task.resume()
+				testExpectation.fulfill()
+				completion()
 			}
+			task.resume()
 		}
+
+		waitForExpectations(timeout: 1)
+	}
 
 	// MARK: - Write pact contract
 
@@ -445,6 +494,8 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 
+		let testExpectation = expectation(description: #function)
+
 		mockService.run { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
@@ -454,9 +505,12 @@ class MockServiceTests: XCTestCase {
 					XCTAssertEqual(testResult?.baz?.first, 123)
 				}
 				completion()
+				testExpectation.fulfill()
 			}
 			task.resume()
 		}
+
+		waitForExpectations(timeout: 1)
 	}
 
 }
@@ -481,7 +535,7 @@ private extension MockServiceTests {
 		let quux: Decimal
 		let uuid: String
 		let randoStr: String
-		let regex: String?
+		let regex: String
 	}
 
 	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {

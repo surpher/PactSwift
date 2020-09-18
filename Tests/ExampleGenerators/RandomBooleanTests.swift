@@ -22,7 +22,7 @@ import XCTest
 
 @testable import PactSwift
 
-class BooleanTests: XCTestCase {
+class RandomBooleanTests: XCTestCase {
 
 	func testBooleanExampleGenerator() {
 		let sut = ExampleGenerator.Boolean()

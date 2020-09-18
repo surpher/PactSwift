@@ -1,8 +1,5 @@
 //
-//  UuidTests.swift
-//  PactSwift
-//
-//  Created by Marko Justinek on 16/9/20.
+//  Created by Marko Justinek on 18/9/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -22,20 +19,17 @@ import XCTest
 
 @testable import PactSwift
 
-class RandomUUIDTests: XCTestCase {
+class RandomRegexTests: XCTestCase {
 
-	func testUUIDExampleGenerator() throws {
-		let sut = ExampleGenerator.Uuid()
+	func testRandomRegex() throws {
+		let sut = ExampleGenerator.Regex("^\\d{1,2}\\/\\d{1,2}$")
 
-		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
-		XCTAssertEqual(sut.generator, .uuid)
-		XCTAssertNil(sut.attributes)
-	}
+		let attributes = try XCTUnwrap(sut.attributes)
+		XCTAssertTrue(attributes.contains { key, _ in
+			key == "regex"
+		})
 
-	func testSimpleUUID() {
-		let sut = UUID()
-		XCTAssertEqual(sut.uuidString.count, 36)
-		XCTAssertEqual(sut.uuidStringSimple.count, 32)
+		XCTAssertEqual(sut.generator, .regex)
 	}
 
 }

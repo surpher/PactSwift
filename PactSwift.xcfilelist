@@ -33,6 +33,7 @@ $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
+$(SRCROOT)/Sources/ExampleGenerators/RandomRegex.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomString.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDecimal.swift

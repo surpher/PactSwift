@@ -55,7 +55,7 @@ class MockServer {
 	func setup(pact: Data, protocol: MockService.TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
 		transferProtocol = `protocol`
 		port = create_mock_server(
-			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""), // interactions is nil
+			String(data: pact, encoding: .utf8),
 			"\(socketAddress):\(port)",
 			tls
 		)
