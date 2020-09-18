@@ -27,7 +27,7 @@ enum PactFileManager {
 	/// (eg: `~/Library/Containers/au.com.pact-foundation.Pact-macOS-Example/Data/Documents`)
 	///
 	/// If testing a sandboxed macOS app, this is the default location and it can not be overwritten.
-	/// If testing a macOS app that is not sandboxed, define a `PACT_DIR` Environment Variable (in the scheme)
+	/// If testing a macOS app that is not sandboxed, define a `PACT_OUTPUT_DIR` Environment Variable (in the scheme)
 	/// with the path to where you want Pact contracts to be written to.
 	///
 	/// ## iOS/tvOS or non-Xcode project
@@ -35,16 +35,16 @@ enum PactFileManager {
 	/// Default location where Pact contracts are written is `/tmp/pacts`.
 	///
 	/// For iOS/tvOS you can override
-	/// that by defining a `PACT_DIR` Environment Variable.
+	/// that by defining a `PACT_OUTPUT_DIR` Environment Variable.
 	static var pactDirectoryPath: String {
 		#if os(macOS) || os(OSX)
 		let defaultPath = NSHomeDirectory() + "/Documents"
 		if isSandboxed {
 			return defaultPath
 		}
-		return ProcessInfo.processInfo.environment["PACT_DIR"] ?? defaultPath
+		return ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"] ?? defaultPath
 		#else
-		return ProcessInfo.processInfo.environment["PACT_DIR"] ?? "/tmp/pacts"
+		return ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"] ?? "/tmp/pacts"
 		#endif
 	}
 
