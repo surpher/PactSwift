@@ -20,7 +20,7 @@ import Foundation
 public extension ExampleGenerator {
 
 	/// Generates a random hexadecimal value (String) with the provided number of digits
-	struct Hexadecimal: ExampleGeneratorExpressible {
+	struct RandomHexadecimal: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .hexadecimal
 		internal var attributes: [String: AnyEncodable]?

@@ -22,7 +22,7 @@ import XCTest
 class RandomUUIDTests: XCTestCase {
 
 	func testUUIDExampleGenerator() throws {
-		let sut = ExampleGenerator.Uuid()
+		let sut = ExampleGenerator.RandomUUID()
 
 		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
 		XCTAssertEqual(sut.generator, .uuid)

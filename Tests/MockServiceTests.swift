@@ -408,14 +408,16 @@ class MockServiceTests: XCTestCase {
 			.willRespondWith(
 				status: 200,
 				body: [
-					"foo": Matcher.SomethingLike("bar"),
-					"bar": ExampleGenerator.Boolean(),
-					"uuid": ExampleGenerator.Uuid(),
-					"baz": ExampleGenerator.RandomInt(min: -42, max: 4242),
-					"quux": ExampleGenerator.Decimal(digits: 4),
-					"hex": ExampleGenerator.Hexadecimal(digits: 14),
-					"randoStr": ExampleGenerator.RandomString(size: 38),
-					"regex": ExampleGenerator.Regex(testRegex),
+					"randomBool": ExampleGenerator.RandomBool(),
+					"randomUUID": ExampleGenerator.RandomUUID(),
+					"randomInt": ExampleGenerator.RandomInt(min: -42, max: 4242),
+					"randomDecimal": ExampleGenerator.RandomDecimal(digits: 4),
+					"randomHex": ExampleGenerator.RandomHexadecimal(digits: 14),
+					"randomString": ExampleGenerator.RandomString(size: 38),
+					"randomRegex": ExampleGenerator.RandomString(regex: testRegex),
+					"randomDate": ExampleGenerator.RandomDate(format: "yyyy/MM"),
+					"randomTime": ExampleGenerator.RandomTime(format: "HH:mm - ss"),
+					"randomDateTime": ExampleGenerator.DateTime(format: "HH:mm - dd.MM.yy"),
 				]
 			)
 
@@ -428,10 +430,10 @@ class MockServiceTests: XCTestCase {
 					let testResult = self.decodeGeneratorsResponse(data: data)
 
 					// Verify Bool example generator
-					XCTAssertTrue(((testResult?.bar) as Any) is Bool)
+					XCTAssertTrue(((testResult?.randomBool) as Any) is Bool)
 					do {
 						// Verify UUID example generator
-						let uuidResult = try XCTUnwrap(testResult?.uuid)
+						let uuidResult = try XCTUnwrap(testResult?.randomUUID)
 						if uuidResult.contains("-") {
 							XCTAssertNotNil(UUID(uuidString: uuidResult))
 						} else {
@@ -439,30 +441,47 @@ class MockServiceTests: XCTestCase {
 						}
 
 						// Verify RandomInt example generator
-						let intResult = try XCTUnwrap(testResult?.baz)
+						let intResult = try XCTUnwrap(testResult?.randomInt)
 						XCTAssertTrue((-42...4242).contains(intResult))
 
 						// Verify Decimal example generator
-						let decimalResult = try XCTUnwrap(testResult?.quux)
+						let decimalResult = try XCTUnwrap(testResult?.randomDecimal)
 						XCTAssertTrue((decimalResult as Any) is Decimal)
 
 						// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
 						XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
 
 						// Verify Hexadecimal value
-						let hexValue = try XCTUnwrap(testResult?.hex)
+						let hexValue = try XCTUnwrap(testResult?.randomHex)
 						XCTAssertEqual(hexValue.count, 14)
 
 						// Verify Random String value
-						let stringValue = try XCTUnwrap(testResult?.randoStr)
+						let stringValue = try XCTUnwrap(testResult?.randomString)
 						XCTAssertEqual(stringValue.count, 38)
 
 						// Verify Regex value
-						let regexValue = try XCTUnwrap(testResult?.regex)
-
+						let regexValue = try XCTUnwrap(testResult?.randomRegex)
 						let regex = try! NSRegularExpression(pattern: testRegex)
 						let range = NSRange(location: 0, length: regexValue.utf16.count)
 						XCTAssertNotNil(regex.firstMatch(in: regexValue, options: [], range: range))
+
+						// Verify random date value
+						let dateValue = try XCTUnwrap(testResult?.randomDate)
+						let dateRegex = try! NSRegularExpression(pattern: #"\d{4}/\d{2}"#)
+						let dateRange = NSRange(location: 0, length: dateValue.utf16.count)
+						XCTAssertNotNil(dateRegex.firstMatch(in: dateValue, options: [], range: dateRange))
+
+						// Verify random time value
+						let timeValue = try XCTUnwrap(testResult?.randomTime)
+						let timeRegex = try! NSRegularExpression(pattern: #"\d{2}:\d{2} - \d{2}"#)
+						let timeRange = NSRange(location: 0, length: timeValue.utf16.count)
+						XCTAssertNotNil(timeRegex.firstMatch(in: timeValue, options: [], range: timeRange))
+
+						// Verify random date time value
+						let dateTimeValue = try XCTUnwrap(testResult?.randomDateTime)
+						let dateTimeRegex = try! NSRegularExpression(pattern: #"\d{2}:\d{2} - \d{2}.\d{2}.\d{2}"#)
+						let dateTimeRange = NSRange(location: 0, length: dateTimeValue.utf16.count)
+						XCTAssertNotNil(dateTimeRegex.firstMatch(in: dateTimeValue, options: [], range: dateTimeRange))
 					} catch {
 						XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
 					}
@@ -524,15 +543,16 @@ private extension MockServiceTests {
 	}
 
 	struct GeneratorsTestModel: Decodable {
-		let foo: String
-		let bar: Bool
-		let baz: Int
-		let hex: String
-		let qux: Double?
-		let quux: Decimal
-		let uuid: String
-		let randoStr: String
-		let regex: String
+		let randomBool: Bool
+		let randomInt: Int
+		let randomHex: String
+		let randomDecimal: Decimal
+		let randomUUID: String
+		let randomString: String
+		let randomRegex: String
+		let randomDate: String
+		let randomTime: String
+		let randomDateTime: String
 	}
 
 	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {

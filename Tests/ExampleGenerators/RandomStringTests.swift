@@ -45,4 +45,15 @@ class RandomStringTests: XCTestCase {
 		XCTAssertEqual(stringValue.count, 1145)
 	}
 
+	func testRandomRegex() throws {
+		let sut = ExampleGenerator.RandomString(regex: #"\d{1,2}/\d{1,2}"#)
+
+		let attributes = try XCTUnwrap(sut.attributes)
+		XCTAssertTrue(attributes.contains { key, _ in
+			key == "regex"
+		})
+
+		XCTAssertEqual(sut.generator, .regex)
+	}
+
 }

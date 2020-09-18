@@ -22,7 +22,7 @@ import XCTest
 class RandomHexadecimalTests: XCTestCase {
 
 	func testRandomHexadecimal() throws {
-		let sut = ExampleGenerator.Hexadecimal()
+		let sut = ExampleGenerator.RandomHexadecimal()
 
 		XCTAssertEqual(sut.generator, .hexadecimal)
 
@@ -36,7 +36,7 @@ class RandomHexadecimalTests: XCTestCase {
 	}
 
 	func testRandomHexadecimal_WithDigits() throws {
-		let sut = ExampleGenerator.Hexadecimal(digits: 16)
+		let sut = ExampleGenerator.RandomHexadecimal(digits: 16)
 
 		XCTAssertEqual(sut.generator, .hexadecimal)
 

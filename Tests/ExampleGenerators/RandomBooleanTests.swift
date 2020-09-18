@@ -22,7 +22,7 @@ import XCTest
 class RandomBooleanTests: XCTestCase {
 
 	func testBooleanExampleGenerator() {
-		let sut = ExampleGenerator.Boolean()
+		let sut = ExampleGenerator.RandomBool()
 		XCTAssertTrue(sut.value is Bool)
 		XCTAssertEqual(sut.generator, .bool)
 		XCTAssertNil(sut.attributes)

@@ -22,7 +22,7 @@ public extension ExampleGenerator {
 	/// Generates a random string value of the provided size characters
 	struct RandomString: ExampleGeneratorExpressible {
 		internal let value: Any
-		internal let generator: ExampleGenerator.Generator = .string
+		internal let generator: ExampleGenerator.Generator
 		internal var attributes: [String: AnyEncodable]?
 
 		/// Generates a random string value of the provided size characters
@@ -30,9 +30,30 @@ public extension ExampleGenerator {
 		/// - Parameters:
 		///   - size: The size of generated `String`
 		public init(size: Int = 20) {
+			self.generator = .string
 			self.value = String((0..<size).map { _ in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
 			self.attributes = [
 				"size": AnyEncodable(size),
+			]
+		}
+
+		/// Generates a random string value from the provided regular expression
+		///
+		/// Use a raw `String` (eg: `#"\d{2}/\d{2,4}"#`) to avoid interpreting special characters.
+		///
+		/// Feature provided by`kennytm/rand_regex` library (https://github.com/kennytm/rand_regex).
+		///
+		/// - Parameters:
+		///   - regex: The regular expression that defines the generated `String`
+		public init(regex: String) {
+			guard let stringPointer = generate_regex_value(regex).ok._0 else {
+				fatalError("Failed to generate a random string from \"\(regex)\"")
+			}
+
+			self.generator = .regex
+			self.value = String(cString: stringPointer)
+			self.attributes = [
+				"regex": AnyEncodable(regex),
 			]
 		}
 	}

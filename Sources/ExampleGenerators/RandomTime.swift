@@ -20,7 +20,7 @@ import Foundation
 public extension ExampleGenerator {
 
 	/// Generates a Time value from the current time either in ISO format or using the provided format string
-	struct Time: ExampleGeneratorExpressible {
+	struct RandomTime: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .time
 		internal var attributes: [String: AnyEncodable]?

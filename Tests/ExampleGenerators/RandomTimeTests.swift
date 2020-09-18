@@ -22,7 +22,7 @@ import XCTest
 class RandomTimeTests: XCTestCase {
 
 	func testRandomTime() throws {
-		let sut = ExampleGenerator.Time()
+		let sut = ExampleGenerator.RandomTime()
 
 		XCTAssertEqual(sut.generator, .time)
 		XCTAssertNil(sut.attributes)
@@ -32,7 +32,7 @@ class RandomTimeTests: XCTestCase {
 
 	func testRandomTime_WithFormat() throws {
 		let testFormat = "HH:mm"
-		let sut = ExampleGenerator.Time(format: testFormat)
+		let sut = ExampleGenerator.RandomTime(format: testFormat)
 
 		let attributes = try XCTUnwrap(sut.attributes)
 		XCTAssertTrue(attributes.contains { key, _ in

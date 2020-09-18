@@ -20,7 +20,7 @@ import Foundation
 public extension ExampleGenerator {
 
 	/// Generates a random decimal value (BigDecimal) with the provided number of digits
-	struct Decimal: ExampleGeneratorExpressible {
+	struct RandomDecimal: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .decimal
 		internal var attributes: [String: AnyEncodable]?

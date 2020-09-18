@@ -1,5 +1,5 @@
 //
-//  Created by Marko Justinek on 11/9/20.
+//  Created by Marko Justinek on 16/9/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -19,13 +19,13 @@ import Foundation
 
 public extension ExampleGenerator {
 
-	/// Generates a random boolean value
-	struct Boolean: ExampleGeneratorExpressible {
-		internal let value: Any = Bool.random()
-		internal let generator: ExampleGenerator.Generator = .bool
+	/// Generates a random UUID value
+	struct RandomUUID: ExampleGeneratorExpressible {
+		internal let value: Any = UUID().uuidString
+		internal let generator: ExampleGenerator.Generator = .uuid
 		internal let attributes: [String: AnyEncodable]? = nil
 
-		/// Generates a random boolean value
+		/// Generates a random UUID value
 		public init() { }
 	}
 
