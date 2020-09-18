@@ -1,10 +1,6 @@
 //
-//  UUID+Pact.swift
-//  PactSwift
-//
 //  Created by Marko Justinek on 16/9/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
-//
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above

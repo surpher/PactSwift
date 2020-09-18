@@ -1,7 +1,4 @@
 //
-//  MSFileManager.swift
-//  PactSwiftServices
-//
 //  Created by Marko Justinek on 29/4/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / Pact Foundation. All rights reserved.
 //

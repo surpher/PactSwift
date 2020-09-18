@@ -1,7 +1,4 @@
 //
-//  ErrorCapture.swift
-//  PactSwift
-//
 //  Created by Marko Justinek on 20/4/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //

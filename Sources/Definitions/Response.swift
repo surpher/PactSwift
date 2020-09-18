@@ -1,7 +1,4 @@
 //
-//  Response.swift
-//  PactSwift
-//
 //  Created by Marko Justinek on 31/3/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //

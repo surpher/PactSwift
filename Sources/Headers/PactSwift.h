@@ -1,7 +1,4 @@
 //
-//  PactSwift.h
-//  PactSwift
-//
 //  Created by Marko Justinek on 26/3/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //

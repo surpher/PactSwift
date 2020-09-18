@@ -1,7 +1,4 @@
 //
-//  MismatchError.swift
-//  PactSwiftServices
-//
 //  Created by Marko Justinek on 27/4/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / Pact Foundation. All rights reserved.
 //

@@ -1,9 +1,6 @@
 //
-//  IncludesLike.swift
-//  PactSwift
-//
 //  Created by Marko Justinek on 11/4/20.
-//  Copyright © Itty Bitty Apps Pty Ltd / 2020 PACT Foundation. All rights reserved.
+//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above

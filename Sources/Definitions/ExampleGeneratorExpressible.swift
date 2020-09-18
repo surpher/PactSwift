@@ -1,7 +1,4 @@
 //
-//  ExampleGeneratorExpressible.swift
-//  PactSwift
-//
 //  Created by Marko Justinek on 11/9/20.
 //  Copyright © 2020 PACT Foundation. All rights reserved.
 //

@@ -1,7 +1,4 @@
 //
-//  MockServer.swift
-//  PactSwiftServices
-//
 //  Created by Marko Justinek on 12/4/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / Pact Foundation. All rights reserved.
 //
@@ -28,7 +25,7 @@ class MockServer {
 
 	// MARK: - Properties
 
-	/// The url on which Mock Server is running.
+	/// The URL on which Mock Server is running.
 	var baseUrl: String {
 		"\(transferProtocol.rawValue)://\(socketAddress):\(port)"
 	}
