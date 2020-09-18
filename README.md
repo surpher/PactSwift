@@ -131,11 +131,11 @@ class PassingTestsExample: XCTestCase {
         body: [
           "page": Matcher.SomethingLike(1), // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
           "per_page": Matcher.SomethingLike(20),
-          "total": Matcher.SomethingLike(58),
+          "total": ExampleGenerator.RandomInt(min: 20, max: 500),
           "total_pages": Matcher.SomethingLike(3),
           "data": Matcher.EachLike(
             [
-              "id": Matcher.IntegerLike(1),
+              "id": ExampleGenerator.RandomUUID(),
               "first_name": Matcher.SomethingLike("John"),
               "last_name": Matcher.SomethingLike("Tester"),
               "salary": Matcher.DecimalLike(125000.00)
@@ -186,7 +186,15 @@ Or peek into [/Sources/Matchers/][pact-swift-matchers].
 
 ## Example Generators
 
-⚠️  _Work in progress_ ⚠️
+In addition to verbatim value matching and some helpful matchers, you can use a set of example generators that generate random values each time you run your tests.
+
+In some cases, dates and times may need to be relative to the current date and time, and some things like tokens may have a very short life span.
+
+Example generators help you generate random values and define the rules around them.
+
+See [Wiki page about Example Generators][example-generators] for a list of example generators `PactSwift` implements and their basic usage.
+
+Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
 
 ## Verifying your client against the service you are integrating with
 
@@ -220,6 +228,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./Documentation/CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
+[example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 [github-action-xcode11.6]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.6%29%22
 [github-action-xcode12beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2812beta%29%22
 [issues]: https://github.com/surpher/PactSwift/issues
@@ -232,6 +241,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi
 [pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
+[pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/master/Sources/ExampleGenerators
 [pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/master/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
