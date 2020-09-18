@@ -4,9 +4,6 @@ env:
     SIMULATOR_NAME: "iPhone 11 Pro"
 
 on:
-  push:
-    branches:
-      - feature/**
   pull_request:
     branches:
       - master
@@ -28,15 +25,10 @@ jobs:
         id: lfs-cache
         with:
           path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}-v1
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
 
       - name: Git LFS Pull
         run: git lfs pull
-
-      - save_cache:
-        key: v1-my-cache-key-{{ checksum ".assets-id" }}
-        paths:
-          - .git/lfs
 
       - name: Use Xcode 11.6
         run: sudo xcode-select -switch /Applications/Xcode_11.6.app
