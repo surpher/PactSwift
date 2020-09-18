@@ -79,7 +79,7 @@
       </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "PACT_DIR"
+            key = "PACT_OUTPUT_DIR"
             value = "$(PROJECT_DIR)/tmp/pacts"
             isEnabled = "YES">
          </EnvironmentVariable>

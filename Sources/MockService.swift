@@ -164,7 +164,7 @@ extension MockService {
 	/// - parameter completion: Result of the writing the Pact contract to JSON
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
-	/// Set `PACT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
+	/// Set `PACT_OUTPUT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
 	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		pact.interactions = interactions
 		guard let pactData = pact.data, allValidated else {
