@@ -43,24 +43,26 @@ Add `PactSwift` as a dependency to your test target in `Package.swift`:
 ```sh
 ...
 dependencies: [
-	.package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
+ .package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
 ],
 ...
 ```
 
 Run tests in terminal by providing path to static lib as a linker flag:
 
-    swift test -Xlinker -LRelativePathTo/libFolder
+```sh
+swift test -Xlinker -LRelativePathTo/libFolder
+```
 
 ⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
 
-You can compile a custom lib from [pact-reference/rust][pact-reference-rust] codebase.
+You can compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
 
-We're actively looking for an alternative approach to using static libs with SPM!
+⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS! 
 
 ## Xcode setup - Carthage
 
-**NOTE:** This framework is intended to be used in your test target. Do not embed it into your app bundle!
+**NOTE:** This framework is intended to be used in your test target only! Do not embed it into your app bundle!
 
 ### Setup Framework Build Settings
 
@@ -135,7 +137,7 @@ class PassingTestsExample: XCTestCase {
           "total_pages": Matcher.SomethingLike(3),
           "data": Matcher.EachLike(
             [
-              "id": ExampleGenerator.RandomUUID(),
+              "id": ExampleGenerator.RandomUUID(), // We can also use example generators with Pact Spec v3
               "first_name": Matcher.SomethingLike("John"),
               "last_name": Matcher.SomethingLike("Tester"),
               "salary": Matcher.DecimalLike(125000.00)
@@ -147,7 +149,7 @@ class PassingTestsExample: XCTestCase {
     // #5 - Fire up our API client
     let apiClient = RestManager()
 
-    // Run a Pact test and assert our API client makes the request exactly as we promised above
+    // Run a Pact test and assert **our** API client makes the request exactly as we promised above
     mockService.run(waitFor: 1) { [unowned self] completed in
 
       // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
@@ -156,7 +158,7 @@ class PassingTestsExample: XCTestCase {
       // #7 - Make the API request.
       apiClient.getUsers() { users in
 
-          // #8 - Test that the API client handles the response as expected. (eg: `getUsers() -> [User]`)
+          // #8 - Test that **our** API client handles the response as expected. (eg: `getUsers() -> [User]`)
           XCTAssertEqual(users.count, 20)
           XCTAssertEqual(users.first?.firstName, "John")
           XCTAssertEqual(users.first?.lastName, "Tester")
@@ -198,10 +200,10 @@ Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
 
 ## Verifying your client against the service you are integrating with
 
-If you set the `PACT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
-`$(PACT_DIR)/_consumer_name_-_provider_name_.json`.
+If you set the `PACT_PACT_OUTPUT_DIRDIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
+`$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
 
-Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change.
+Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change. Normally you do this regularly in you CI step/s.
 
 See how you can use simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
