@@ -33,7 +33,7 @@ github "surpher/PactSwift" ~> 0.1
 ```
 
 ```sh
-carthage update --platform ios --no-use-binaries
+carthage update --platform ios --cache-builds
 ```
 
 ### Swift Package Manager (beta)
@@ -58,7 +58,7 @@ swift test -Xlinker -LRelativePathTo/libFolder
 
 You can compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
 
-⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS! 
+⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS!
 
 ## Xcode setup - Carthage
 
