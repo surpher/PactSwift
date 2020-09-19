@@ -14,22 +14,22 @@ assignees: ''
 
 # 💬 Description
 
-A clear and concise description of what the bug is.
+<!-- A clear and concise description of what the bug is. -->
 
 # 🦶 Reproduction Steps
 
 Steps to reproduce the behavior, provide an example of the command line issued:
 1. Do this...
-2. Run this `swift run appstoreconnect-cli ...`
+2. Run this `xcrun ...`
 3. Etc.
 
 # 🤔 Expected Results
 
-A clear and concise description of what you expected to happen.
+<!-- A clear and concise description of what you expected to happen. -->
 
 # 😲 Actual Results
 
-A clear and concise description of what actually happened.
+<!-- A clear and concise description of what actually happened. -->
 
 ## 🌳 Logs
 
