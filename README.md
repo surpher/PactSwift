@@ -56,9 +56,7 @@ swift test -Xlinker -LRelativePathTo/libFolder
 
 ⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find the required binaries in `/Resources/` folder.
 
-You can compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
-
-⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Sharing any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS are very much apperciated!
+You can also compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
 
 ## Xcode setup - Carthage
 
