@@ -27,7 +27,6 @@ public extension ExampleGenerator {
 
 		/// Generates a random hexadecimal value (String) with the provided number of digits
 		///
-		/// Will use absolute value for `digits`
 		/// - Parameters:
 		///   - digits: The length of generated hexadecimal string
 		public init(digits: UInt8 = 8) {
