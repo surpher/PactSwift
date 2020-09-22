@@ -18,7 +18,9 @@ assignees: ''
 
 # 🦶 Reproduction Steps
 
-Steps to reproduce the behavior, provide an example of the command line issued:
+<!--  Provide an example of the setup, specific state and exact steps that would help us reproduce the issue -->
+
+Steps to reproduce the behavior: 
 1. Do this...
 2. Run this `xcrun ...`
 3. Etc.

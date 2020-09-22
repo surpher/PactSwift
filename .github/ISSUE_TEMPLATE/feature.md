@@ -9,7 +9,7 @@ assignees: ''
 
 # 🗣 Context
 
-_Describe the context..._
+<!-- Describe the context... -->
 
 # 💬 Narrative
 
@@ -19,11 +19,11 @@ So that ...
 
 # 📝 Notes
 
-_Provide additional notes..._
+<!--  Provide additional notes... -->
 
 # 🎨 Design
 
-_Provide design example, screenshot, text input/output etc_
+<!-- Provide design example, screenshot, text input/output etc -->
 
 # ✅ Acceptance Criteria
 
@@ -33,4 +33,4 @@ _Provide design example, screenshot, text input/output etc_
 
 # 🚫 Out of Scope
 
-_Describe what is out of scope_
+<!-- Describe what is out of scope -->

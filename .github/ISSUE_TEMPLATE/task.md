@@ -7,15 +7,15 @@ assignees: ''
 ---
 # ❕ Problem Statement
 
-_Clearly describe what the problem this tech task is attempting to address._
+<!-- Clearly describe what the problem this tech task is attempting to address. -->
 
 # 💬 Task Description
 
-_A clear and concise description of the task._
+<!-- A clear and concise description of the task. -->
 
 # 👩‍🔧 Technical Design Notes
 
-_Provide any technical design notes here._
+<!-- Provide any technical design notes here. -->
 
 # 🤝 Relationships
 

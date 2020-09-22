@@ -29,7 +29,7 @@ The one major advantage of this framework over [`pact-consumer-swift`][pact-cons
 ### Carthage
 
 ```sh
-github "surpher/PactSwift" ~> 0.1
+github "surpher/PactSwift" ~> 0.3
 ```
 
 ```sh
@@ -56,13 +56,13 @@ swift test -Xlinker -LRelativePathTo/libFolder
 
 ⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
 
-You can compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
-
-⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS!
+You can also compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
 
 ## Xcode setup - Carthage
 
 **NOTE:** This framework is intended to be used in your test target only! Do not embed it into your app bundle!
+
+⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Sharing any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS are very much apperciated!
 
 ### Setup Framework Build Settings
 
@@ -80,11 +80,13 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 #### Destination dir (recommended)
 
-Edit your scheme and add `PACT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
+Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
 
-⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_DIR`.
+⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`.
 
-![destination_dir](./Documentation/images/04_destination_dir.png)
+<p align="center">
+  <img src="Documentation/images/04_destination_dir.png" width="600" alt="destination_dir" />
+</p>
 
 ## Writing Pact tests
 
@@ -200,7 +202,7 @@ Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
 
 ## Verifying your client against the service you are integrating with
 
-If you set the `PACT_PACT_OUTPUT_DIRDIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
+If you set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
 `$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
 
 Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change. Normally you do this regularly in you CI step/s.
