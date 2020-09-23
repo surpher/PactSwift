@@ -69,6 +69,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - interactionDescription: A `String` describing the interaction
+	@discardableResult
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
 		self.description = interactionDescription
 		return self
@@ -84,6 +85,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - providerState: Description of the state.
+	@discardableResult
 	public func given(_ providerState: String) -> Interaction {
 		self.providerState = providerState
 		return self
@@ -106,6 +108,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - providerStates: A list of provider states
+	@discardableResult
 	public func given(_ providerStates: [ProviderState]) -> Interaction {
 		self.providerStates = providerStates
 		return self
@@ -145,6 +148,7 @@ extension Interaction {
 	///   - query: The query parameters of the request
 	///   - headers: The header parameters of the request
 	///   - body: The body of the request
+	@discardableResult
 	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
@@ -163,6 +167,7 @@ extension Interaction {
 	///   - status: The response status code
 	///   - headers: The response headers
 	///   - body: The response body
+	@discardableResult
 	public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
 		return self

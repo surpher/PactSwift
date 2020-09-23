@@ -114,7 +114,7 @@ class PassingTestsExample: XCTestCase {
 
   func testGetUsers() {
     // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API, will behave for this specific API request we are testing here
-    _ = mockService
+    mockService
 
       // #2 - Define the interaction description and provider state for this specific API request that we are testing
       .uponReceiving("A request for a list of users")

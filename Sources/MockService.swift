@@ -90,6 +90,7 @@ open class MockService {
 	/// combination is unique per consumer-provider contract.
 	///
 	/// - parameter description: A description of the API interaction
+	@discardableResult
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)

@@ -47,7 +47,7 @@ class MockServiceTests: XCTestCase {
 	// MARK: - Tests
 
 	func testMockService_SuccessfulGETRequest() {
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user")
@@ -84,7 +84,7 @@ class MockServiceTests: XCTestCase {
 			errorReporter: errorCapture
 		)
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users over SSL connection")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user")
@@ -119,7 +119,7 @@ class MockServiceTests: XCTestCase {
 	}
 
 	func testMockService_Fails_WhenRequestMissing() {
-		_ = mockService
+		mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
 			.withRequest(method: .GET, path: "/actors")
@@ -148,7 +148,7 @@ class MockServiceTests: XCTestCase {
 			"GET /invalidPath"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for alligators")
 			.given("alligators exist")
 			.withRequest(method: .GET, path: "/user")
@@ -189,7 +189,7 @@ class MockServiceTests: XCTestCase {
 			"query param 'state'"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user", query: ["state": ["NSW"], "page": ["2"]])
@@ -222,7 +222,7 @@ class MockServiceTests: XCTestCase {
 			"Body does not match the expected body definition"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .POST, path: "/user", body: ["foo": "bar"])
@@ -261,7 +261,7 @@ class MockServiceTests: XCTestCase {
 			"Body does not match the expected body definition"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .POST, path: "/user", body: ["foo": "bar"])
@@ -301,7 +301,7 @@ class MockServiceTests: XCTestCase {
 			"Body does not match the expected body definition"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .POST, path: "/user", body: ["foo": "bar"])
@@ -338,7 +338,7 @@ class MockServiceTests: XCTestCase {
 			"'testKey'"
 		]
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user", headers: ["testKey": "test/value"])
@@ -401,7 +401,7 @@ class MockServiceTests: XCTestCase {
 	func testMockService_Succeeds_WithGenerators() {
 		let testRegex = #"\d{3}/\d{4,8}"#
 
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of pets")
 			.given("animals exist")
 			.withRequest(method: .GET, path: "/pet")
