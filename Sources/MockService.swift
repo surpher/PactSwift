@@ -24,7 +24,7 @@ let kTimeout: TimeInterval = 10
 /// Initializes a `MockService` object that handles Pact interaction testing.
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
-/// is a self-signed certificate!
+/// is a self-signed certificate.
 open class MockService {
 
 	public enum TransferProtocol: String {
@@ -54,25 +54,27 @@ open class MockService {
 
 	/// Initializes a `MockService` object that handles Pact interaction testing.
 	///
-	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
-	/// - parameter provider: Name of the API provider (eg: "atuh-service")
-	/// - parameter scheme: HTTP scheme
-	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
-	/// is a self-signed certificate!
+	/// is a self-signed certificate
+	///
+	/// - Parameters:
+	///   - consumer: Name of the API consumer (eg: "mobile-app")
+	///   - provider: Name of the API provider (eg: "atuh-service")
+	///   - scheme: HTTP scheme
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
 
 	/// Initializes a `MockService` object that handles Pact interaction testing.
 	///
-	/// - parameter consumer: Name of the API consumer (eg: "mobile-app")
-	/// - parameter provider: Name of the API provider (eg: "atuh-service")
-	/// - parameter scheme: HTTP scheme
-	/// - parameter errorReporter: Injectable object to intercept errors.
-	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
-	/// is a self-signed certificate!
+	/// is a self-signed certificate.
+	///
+	/// - Parameters:
+	///   - consumer: Name of the API consumer (eg: "mobile-app")
+	///   - provider: Name of the API provider (eg: "atuh-service")
+	///   - scheme: HTTP scheme
+	///   - errorReporter: Injectable object to intercept errors
 	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer()
@@ -84,12 +86,10 @@ open class MockService {
 
 	/// Describes the `Interaction` between the consumer and provider.
 	///
-	/// Returns: `Interaction` object
-	///
-	/// - parameter description: A description of the API interaction.
-	///
-	/// NOTE: It is important that the `description` and provider state
+	/// It is important that the `description` and provider state
 	/// combination is unique per consumer-provider contract.
+	///
+	/// - parameter description: A description of the API interaction
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)
@@ -98,15 +98,14 @@ open class MockService {
 
 	/// Runs the Pact test against the code that makes the API request with 10 second timeout.
 	///
-	/// - parameter file: The file to report the failing test in
-	/// - parameter line: The line on which to report the failing test
-	/// - parameter waitFor: Give the test function `waitFor` seconds to test your interaction. Default is 10 seconds
-	/// - parameter testFunction: Your code that makes the API request
-	/// - parameter testCompleted: Completion block notifying `MockService` the test is done.
+	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test.
 	///
-	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test! If you don't,
-	/// your `mockService.run{ }` test will fail with `Waited more than 10.0 seconds` error where time depends on
-	/// your `timeout: TimeInterval?`
+	/// - Parameters:
+	///   - file: The file to report the failing test in
+	///   - line: The line on which to report the failing test
+	///   - waitFor: Give the test function `waitFor` seconds to test your interaction. Default is 10 seconds
+	///   - testFunction: Your code that makes the API request
+	///   - testCompleted: Completion block notifying `MockService` the test is done
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
@@ -189,7 +188,7 @@ extension MockService {
 
 private extension MockService {
 
-	/// Waits for test to be completed and fails if timed out.
+	/// Waits for test to be completed and fails if timed out
 	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
 		let expectation = XCTestExpectation(description: "waitForPactTest")
 		action {
