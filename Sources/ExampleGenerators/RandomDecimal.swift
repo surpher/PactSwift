@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct RandomDecimal: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .decimal
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a random decimal value (BigDecimal) with the provided number of digits
 		///
@@ -32,7 +32,7 @@ public extension ExampleGenerator {
 		public init(digits: Int = 6) {
 			let digits = digits < 9 ? digits : 9
 			self.value = NumberHelper.randomDecimal(digits: digits)
-			self.attributes = [
+			self.rules = [
 				"digits": AnyEncodable(digits < 9 ? digits : 9),
 			]
 		}

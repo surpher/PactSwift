@@ -25,7 +25,7 @@ class RandomDateTests: XCTestCase {
 		let sut = ExampleGenerator.RandomDate()
 
 		XCTAssertEqual(sut.generator, .date)
-		XCTAssertNil(sut.attributes)
+		XCTAssertNil(sut.rules)
 		XCTAssertNotNil(DateHelper.dateFrom(isoString: try XCTUnwrap(sut.value as? String), isoFormat: [.withFullDate, .withDashSeparatorInDate]))
 	}
 
@@ -33,7 +33,7 @@ class RandomDateTests: XCTestCase {
 		let testFormat = "dd-MM-yyyy"
 		let sut = ExampleGenerator.RandomDate(format: testFormat)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "format"
 		})

@@ -25,7 +25,7 @@ class RandomBooleanTests: XCTestCase {
 		let sut = ExampleGenerator.RandomBool()
 		XCTAssertTrue(sut.value is Bool)
 		XCTAssertEqual(sut.generator, .bool)
-		XCTAssertNil(sut.attributes)
+		XCTAssertNil(sut.rules)
 	}
 
 }

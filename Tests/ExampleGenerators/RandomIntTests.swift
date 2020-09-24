@@ -25,7 +25,7 @@ class RandomIntTests: XCTestCase {
 		let expectedKeys = ["min", "max"]
 		let sut = ExampleGenerator.RandomInt(min: -4231, max: 64210)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue((sut.value as Any) is Int)
 		XCTAssertEqual(sut.generator, .int)
 		XCTAssertTrue(attributes.allSatisfy { key, value in expectedKeys.contains(key) })

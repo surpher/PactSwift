@@ -26,7 +26,7 @@ class RandomHexadecimalTests: XCTestCase {
 
 		XCTAssertEqual(sut.generator, .hexadecimal)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "digits"
 		})
@@ -40,7 +40,7 @@ class RandomHexadecimalTests: XCTestCase {
 
 		XCTAssertEqual(sut.generator, .hexadecimal)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "digits"
 		})

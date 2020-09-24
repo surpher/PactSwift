@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct RandomDate: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .date
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a Date value from the current date either in ISO format or using the provided format string
 		/// - Parameters:
@@ -32,7 +32,7 @@ public extension ExampleGenerator {
 			self.value = Date.formattedDate(format: format, isoFormat: .date)
 
 			if let format = format {
-				self.attributes = [
+				self.rules = [
 					"format": AnyEncodable(format),
 				]
 			}

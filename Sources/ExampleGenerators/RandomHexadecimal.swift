@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct RandomHexadecimal: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .hexadecimal
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a random hexadecimal value (String) with the provided number of digits
 		///
@@ -32,7 +32,7 @@ public extension ExampleGenerator {
 		public init(digits: UInt8 = 8) {
 			// MockServer overrides this value and returns a new string so accuracy and correctness here is irrelevant
 			self.value = String((0..<digits).map { _ in "0123456789ABCDEF".randomElement()! })
-			self.attributes = [
+			self.rules = [
 				"digits": AnyEncodable(digits),
 			]
 		}

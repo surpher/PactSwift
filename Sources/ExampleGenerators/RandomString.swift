@@ -27,7 +27,7 @@ public extension ExampleGenerator {
 	struct RandomString: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a random string value of the provided size characters
 		///
@@ -36,7 +36,7 @@ public extension ExampleGenerator {
 		public init(size: Int = 20) {
 			self.generator = .string
 			self.value = String((0..<size).map { _ in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
-			self.attributes = [
+			self.rules = [
 				"size": AnyEncodable(size),
 			]
 		}
@@ -56,7 +56,7 @@ public extension ExampleGenerator {
 
 			self.generator = .regex
 			self.value = String(cString: stringPointer)
-			self.attributes = [
+			self.rules = [
 				"regex": AnyEncodable(regex),
 			]
 		}

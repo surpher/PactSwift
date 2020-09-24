@@ -73,7 +73,7 @@ extension PactBuilder {
 
 private extension PactBuilder {
 
-	//swiftlint:disable:next function_body_length cyclomatic_complexity
+	//swiftlint:disable:next cyclomatic_complexity
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
@@ -119,14 +119,10 @@ private extension PactBuilder {
 
 		case let exampleGenerator as ExampleGeneratorExpressible:
 			let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
-
-			var generatorAttributes: [String: AnyEncodable] = exampleGenerator.attributes ?? [:]
-			generatorAttributes["type"] = AnyEncodable(exampleGenerator.generator.rawValue)
-
 			processedElement = (
 				node: processedGeneratorValue.node,
 				rules: processedGeneratorValue.rules,
-				generators: [node: AnyEncodable(generatorAttributes)]
+				generators: [node: AnyEncodable(exampleGenerator.attributes)]
 			)
 
 		default:

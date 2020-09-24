@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct RandomBool: ExampleGeneratorExpressible {
 		internal let value: Any = Bool.random()
 		internal let generator: ExampleGenerator.Generator = .bool
-		internal let attributes: [String: AnyEncodable]? = nil
+		internal let rules: [String: AnyEncodable]? = nil
 
 		/// Generates a random boolean value
 		public init() { }

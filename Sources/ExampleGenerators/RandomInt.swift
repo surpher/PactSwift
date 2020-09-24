@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct RandomInt: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .int
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a random integer value between provided `min` and `max` values
 		///
@@ -32,7 +32,7 @@ public extension ExampleGenerator {
 		///   - max: Maximum possible value
 		public init(min: Int = 0, max: Int = 2_147_483_647) {
 			self.value = Int.random(in: min...max)
-			self.attributes = [
+			self.rules = [
 				"min": AnyEncodable(min),
 				"max": AnyEncodable(max),
 			]

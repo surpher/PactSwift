@@ -21,6 +21,17 @@ protocol ExampleGeneratorExpressible {
 
 	var value: Any { get }
 	var generator: ExampleGenerator.Generator { get }
-	var attributes: [String: AnyEncodable]? { get }
+	var rules: [String: AnyEncodable]? { get }
+
+}
+
+extension ExampleGeneratorExpressible {
+
+	var attributes: [String: AnyEncodable] {
+		var generatorAttributes: [String: AnyEncodable] = rules ?? [:]
+		generatorAttributes["type"] = AnyEncodable(generator.rawValue)
+
+		return generatorAttributes
+	}
 
 }

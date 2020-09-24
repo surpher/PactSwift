@@ -23,7 +23,7 @@ public extension ExampleGenerator {
 	struct DateTime: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .dateTime
-		internal var attributes: [String: AnyEncodable]?
+		internal var rules: [String: AnyEncodable]?
 
 		/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
 		///
@@ -33,7 +33,7 @@ public extension ExampleGenerator {
 			self.value = Date.formattedDate(format: format, isoFormat: .dateTime)
 
 			if let format = format {
-				self.attributes = [
+				self.rules = [
 					"format": AnyEncodable(format),
 				]
 			}

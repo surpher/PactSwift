@@ -24,7 +24,7 @@ class RandomStringTests: XCTestCase {
 	func testRandomString() throws {
 		let sut = ExampleGenerator.RandomString()
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "size"
 		})
@@ -36,7 +36,7 @@ class RandomStringTests: XCTestCase {
 	func testRandomString_WithSize() throws {
 		let sut = ExampleGenerator.RandomString(size: 1145)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "size"
 		})
@@ -48,7 +48,7 @@ class RandomStringTests: XCTestCase {
 	func testRandomRegex() throws {
 		let sut = ExampleGenerator.RandomString(regex: #"\d{1,2}/\d{1,2}"#)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "regex"
 		})

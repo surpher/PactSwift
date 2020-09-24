@@ -26,7 +26,7 @@ class RandomUUIDTests: XCTestCase {
 
 		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
 		XCTAssertEqual(sut.generator, .uuid)
-		XCTAssertNil(sut.attributes)
+		XCTAssertNil(sut.rules)
 	}
 
 	func testSimpleUUID() {

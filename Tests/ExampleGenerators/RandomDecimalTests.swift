@@ -24,7 +24,7 @@ class RandomDecimalTests: XCTestCase {
 	func testRandomDecimal() throws {
 		let sut = ExampleGenerator.RandomDecimal()
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "digits"
 		})
@@ -36,7 +36,7 @@ class RandomDecimalTests: XCTestCase {
 	func testRandomDecimal_WithDigits() throws {
 		let sut = ExampleGenerator.RandomDecimal(digits: 12)
 
-		let attributes = try XCTUnwrap(sut.attributes)
+		let attributes = try XCTUnwrap(sut.rules)
 		XCTAssertTrue(attributes.contains { key, _ in
 			key == "digits"
 		})
