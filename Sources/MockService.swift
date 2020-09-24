@@ -24,17 +24,17 @@ let kTimeout: TimeInterval = 10
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate.
-open class MockService {
+@objc open class MockService: NSObject {
 
-	public enum TransferProtocol: String {
-		case standard = "http"
-		case secure = "https"
+	@objc public enum TransferProtocol: Int {
+		case standard
+		case secure
 	}
 
 	// MARK: - Properties
 
 	/// The url of `MockService`
-	public var baseUrl: String {
+	@objc public var baseUrl: String {
 		mockServer.baseUrl
 	}
 
@@ -60,6 +60,7 @@ open class MockService {
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
+	@objc(initWithConsumer: provider: transferProtocol:)
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
@@ -176,6 +177,18 @@ extension MockService {
 				self.failWith(error.description)
 				completion?(.failure(error))
 			}
+		}
+	}
+
+}
+
+extension MockService.TransferProtocol {
+
+	/// HTTP Transfer protocol
+	var `protocol`: String {
+		switch self {
+		case .standard: return "http"
+		case .secure: return "https"
 		}
 	}
 

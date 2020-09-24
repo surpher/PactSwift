@@ -27,7 +27,7 @@ class MockServer {
 
 	/// The URL on which Mock Server is running.
 	var baseUrl: String {
-		"\(transferProtocol.rawValue)://\(socketAddress):\(port)"
+		"\(transferProtocol.protocol)://\(socketAddress):\(port)"
 	}
 
 	lazy private var port: Int32 = {
