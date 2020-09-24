@@ -160,13 +160,13 @@ extension MockService {
 	/// Runs the Pact test with default timeout
 	@objc(run:)
 	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
-		run(nil, line: nil, waitFor: kTimeout, testFunction: testFunction)
+		run(waitFor: kTimeout, testFunction: testFunction)
 	}
 
 	/// Runs the Pact test with provided timeout
 	@objc(run: withTimeout:)
 		public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
-			run(nil, line: nil, waitFor: timeout, testFunction: testFunction)
+			run(waitFor: timeout, testFunction: testFunction)
 		}
 
 }
