@@ -18,14 +18,14 @@
 /// An object representing an API request for a Pact test.
 public struct Request {
 
-	let method: PactHTTPMethod
+	let httpMethod: PactHTTPMethod
 	let path: String
 	let query: [String: [String]]?
 	let headers: [String: String]?
 	let body: Any?
 
 	var description: String {
-		let request = "\(method.rawValue.uppercased()) \(path)"
+		let request = "\(httpMethod.method.uppercased()) \(path)"
 		let queryString = query?.compactMap { "\($0)=\($1.joined(separator: ","))" }.joined(separator: "&")
 		let headersString = headers?.compactMap { "\"\($0)\": \"\($1)\"" }.joined(separator: "\n\t")
 
@@ -40,7 +40,7 @@ public struct Request {
 extension Request: Encodable {
 
 	enum CodingKeys: String, CodingKey {
-		case method
+		case httpMethod = "method"
 		case path
 		case query
 		case headers
@@ -58,7 +58,7 @@ extension Request: Encodable {
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
 	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) {
-		self.method = method
+		self.httpMethod = method
 		self.path = path
 		self.query = query
 		self.headers = headers
@@ -81,7 +81,7 @@ extension Request: Encodable {
 
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)
-			try container.encode(method, forKey: .method)
+			try container.encode(method, forKey: .httpMethod)
 			try container.encode(path, forKey: .path)
 			if let query = query { try container.encode(query, forKey: .query) }
 			if let headers = headers { try container.encode(headers, forKey: .headers) }

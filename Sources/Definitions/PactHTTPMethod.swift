@@ -18,17 +18,31 @@
 import Foundation
 
 /// The HTTP method expected in the interaction.
-public enum PactHTTPMethod: String {
+@objc public enum PactHTTPMethod: Int {
 
-	case GET = "get"
-	case HEAD = "head"
-	case POST = "post"
-	case PUT = "put"
-	case PATCH = "patch"
-	case DELETE = "delete"
-	case TRACE = "trace"
-	case CONNECT = "connect"
-	case OPTIONS = "options"
+	case GET
+	case HEAD
+	case POST
+	case PUT
+	case PATCH
+	case DELETE
+	case TRACE
+	case CONNECT
+	case OPTIONS
+
+	var method: String {
+		switch self {
+		case .GET: return "get"
+		case .HEAD: return "head"
+		case .POST: return "post"
+		case .PUT: return "put"
+		case .PATCH: return "patch"
+		case .DELETE: return "delete"
+		case .TRACE: return "trace"
+		case .CONNECT: return "connect"
+		case .OPTIONS: return "options"
+		}
+	}
 
 }
 
@@ -40,7 +54,7 @@ extension PactHTTPMethod: Encodable {
 
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.singleValueContainer()
-		try container.encode(rawValue)
+		try container.encode(method)
 	}
 
 }
