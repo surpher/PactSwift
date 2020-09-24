@@ -59,7 +59,7 @@ open class MockService {
 	///
 	/// - Parameters:
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
-	///   - provider: Name of the API provider (eg: "atuh-service")
+	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
@@ -72,7 +72,7 @@ open class MockService {
 	///
 	/// - Parameters:
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
-	///   - provider: Name of the API provider (eg: "atuh-service")
+	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///   - errorReporter: Injectable object to intercept errors
 	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
