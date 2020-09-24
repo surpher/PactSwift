@@ -18,9 +18,9 @@
 import Foundation
 
 /// Defines the interaction between consumer and provider.
-public class Interaction: Encodable {
+@objc public class Interaction: NSObject, Encodable {
 
-	var description: String?
+	var interactionDescription: String?
 	var providerState: String?
 	var providerStates: [ProviderState]?
 	var request: Request?
@@ -30,14 +30,14 @@ public class Interaction: Encodable {
 
 extension Interaction {
 
-	convenience init(description: String) {
+	@objc convenience init(description: String) {
 		self.init()
-		self.description = description
+		self.interactionDescription = description
 	}
 
 	convenience init(description: String, providerState: String, request: Request? = nil, response: Response? = nil) {
 		self.init()
-		self.description = description
+		self.interactionDescription = description
 		self.providerState = providerState
 		self.request = request
 		self.response = response
@@ -45,7 +45,7 @@ extension Interaction {
 
 	convenience init(description: String, providerStates: [ProviderState], request: Request? = nil, response: Response? = nil) {
 		self.init()
-		self.description = description
+		self.interactionDescription = description
 		self.providerStates = providerStates
 		self.request = request
 		self.response = response
@@ -71,7 +71,7 @@ extension Interaction {
 	///   - interactionDescription: A `String` describing the interaction
 	@discardableResult
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
-		self.description = interactionDescription
+		self.interactionDescription = interactionDescription
 		return self
 	}
 

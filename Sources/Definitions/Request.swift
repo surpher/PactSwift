@@ -34,6 +34,7 @@ public struct Request {
 	}
 
 	private let bodyEncoder: (Encoder) throws -> Void
+
 }
 
 extension Request: Encodable {

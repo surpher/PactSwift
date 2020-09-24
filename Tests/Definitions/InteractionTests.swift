@@ -25,7 +25,7 @@ class InteractionTests: XCTestCase {
 
 	func testConvenienceInit_WithDescription() {
 		sut = Interaction(description: "A test request")
-		XCTAssertEqual(sut.description, "A test request")
+		XCTAssertEqual(sut.interactionDescription, "A test request")
 	}
 
 	func testGivenState_WithArray() {

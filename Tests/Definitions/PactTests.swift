@@ -44,7 +44,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).description
+		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first).interactionDescription
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
