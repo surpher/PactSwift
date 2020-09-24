@@ -91,6 +91,7 @@ let kTimeout: TimeInterval = 10
 	///
 	/// - parameter description: A description of the API interaction
 	@discardableResult
+	@objc(uponReceiving:)
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)
@@ -149,6 +150,24 @@ let kTimeout: TimeInterval = 10
 			}
 		}
 	}
+
+}
+
+extension MockService {
+
+	// MARK: - ObjC exposure
+
+	/// Runs the Pact test with default timeout
+	@objc(run:)
+	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
+		run(nil, line: nil, waitFor: kTimeout, testFunction: testFunction)
+	}
+
+	/// Runs the Pact test with provided timeout
+	@objc(run: withTimeout:)
+		public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
+			run(nil, line: nil, waitFor: timeout, testFunction: testFunction)
+		}
 
 }
 
