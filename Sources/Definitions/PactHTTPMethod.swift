@@ -17,7 +17,7 @@
 
 import Foundation
 
-/// The HTTP method expected in the interaction.
+/// The HTTP method expected in the interaction
 @objc public enum PactHTTPMethod: Int {
 
 	case GET

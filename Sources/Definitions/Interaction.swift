@@ -17,7 +17,7 @@
 
 import Foundation
 
-/// Defines the interaction between consumer and provider.
+/// Defines the interaction between consumer and provider
 @objc public class Interaction: NSObject, Encodable {
 
 	var interactionDescription: String?
@@ -55,7 +55,7 @@ extension Interaction {
 
 extension Interaction {
 
-	/// Defines the description of the interaction.
+	/// Defines the description of the interaction
 	///
 	/// It is important to provide a meaningful description so that
 	/// developers on the provider side can understand what the
@@ -70,12 +70,13 @@ extension Interaction {
 	/// - Parameters:
 	///   - interactionDescription: A `String` describing the interaction
 	@discardableResult
+	@objc(uponReceivingARequestWithDescription:)
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
 		self.interactionDescription = interactionDescription
 		return self
 	}
 
-	/// Defines the provider state for the given interaction.
+	/// Defines the provider state for the given interaction
 	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider Pact tests.
@@ -92,7 +93,7 @@ extension Interaction {
 		return self
 	}
 
-	/// Defines the provider state for the given interaction.
+	/// Defines the provider states with parameters for the given interaction
 	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider side Pact tests.
@@ -115,7 +116,7 @@ extension Interaction {
 		return self
 	}
 
-	/// Defines the provider state for the given interaction.
+	/// Defines the provider state for the given interaction
 	///
 	/// It is important to provide a meaningful description with
 	/// values that help prepare provider side Pact tests.
@@ -172,6 +173,20 @@ extension Interaction {
 	@discardableResult
 	@objc public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
+		return self
+	}
+
+}
+
+// MARK: - Objective-C
+
+extension Interaction {
+
+	/// Defines the provider states with parameters for the given interaction
+	@discardableResult
+	@objc(givenProviderStates:)
+	public func objCGiven(_ providerStates: [ObjCProviderState]) -> Interaction {
+		self.providerStates = providerStates.map { $0.state }
 		return self
 	}
 

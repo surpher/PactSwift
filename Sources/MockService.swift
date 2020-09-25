@@ -155,7 +155,7 @@ let kTimeout: TimeInterval = 10
 
 extension MockService {
 
-	// MARK: - ObjC exposure
+	// MARK: - Objective-C
 
 	/// Runs the Pact test with default timeout
 	@objc(run:)
