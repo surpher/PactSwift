@@ -52,7 +52,7 @@ class MockServer {
 	func setup(pact: Data, protocol: MockService.TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
 		Logger.log(message: "Setting up libpact_mock_server", data: pact)
 		transferProtocol = `protocol`
-		Logger.log(message: "Setting up MockServer for Pact", data: pact)
+		Logger.log(message: "Setting up MockServer for Pact interaction test")
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8),
 			"\(socketAddress):\(port)",
