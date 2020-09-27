@@ -36,8 +36,6 @@ class MockServiceTests: XCTestCase {
 	}
 
 	override func tearDown() {
-		mockService.finalize()
-		
 		mockService = nil
 		errorCapture = nil
 
@@ -45,6 +43,29 @@ class MockServiceTests: XCTestCase {
 	}
 
 	// MARK: - Tests
+
+	func testMockService_SimpleGetRequest() {
+		mockService
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .GET, path: "/elements")
+			.willRespondWith(status: 200)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run(waitFor: 1) { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/elements")!) { data, response, error in
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(200, response.statusCode)
+				}
+				completion()
+				testExpectation.fulfill()
+			}
+			task.resume()
+		}
+		waitForExpectations(timeout: 1)
+	}
 
 	func testMockService_SuccessfulGETRequest() {
 		mockService
