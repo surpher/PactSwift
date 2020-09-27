@@ -47,4 +47,5 @@ $(SRCROOT)/Sources/Services/Logger.swift
 $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift
+$(SRCROOT)/Sources/Services/PactLoggingLevel.swift
 $(SRCROOT)/Sources/MockService.swift

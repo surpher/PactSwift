@@ -52,6 +52,7 @@ class MockServer {
 	func setup(pact: Data, protocol: MockService.TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
 		Logger.log(message: "Setting up libpact_mock_server", data: pact)
 		transferProtocol = `protocol`
+		Logger.log(message: "Setting up MockServer for Pact", data: pact)
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8),
 			"\(socketAddress):\(port)",
@@ -76,6 +77,7 @@ class MockServer {
 	func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
 		Logger.log(message: "Setting up libpact_mock_server to write into file", data: pact)
 		shutdownMockServer()
+		Logger.log(message: "Starting up MockServer to finalize writing the Pact with data:", data: pact)
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
 			"\(socketAddress):\(port)",
@@ -129,6 +131,7 @@ private extension MockServer {
 	/// Shuts down the Mock Server and releases the socket address
 	func shutdownMockServer() {
 		if port > 0 {
+			Logger.log(message: "Shutting down mock server on port \(port)")
 			cleanup_mock_server(port)
 		}
 	}

@@ -100,7 +100,7 @@ let kTimeout: TimeInterval = 10
 
 	/// Runs the Pact test against the code that makes the API request with 10 second timeout.
 	///
-	/// Make sure you call the completion block (eg: `testCompleted()`) at the end of your test.
+	/// Make sure you call the completion block at the end of your test.
 	///
 	/// - Parameters:
 	///   - file: The file to report the failing test in
@@ -165,9 +165,9 @@ extension MockService {
 
 	/// Runs the Pact test with provided timeout
 	@objc(run: withTimeout:)
-		public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
-			run(waitFor: timeout, testFunction: testFunction)
-		}
+	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
+		run(waitFor: timeout, testFunction: testFunction)
+	}
 
 }
 
