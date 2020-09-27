@@ -116,6 +116,14 @@ extension Interaction {
 		return self
 	}
 
+	/// Defines the provider states with parameters for the given interaction
+	@discardableResult
+	@objc(givenProviderStates:)
+	public func objCGiven(_ providerStates: [ObjCProviderState]) -> Interaction {
+		self.providerStates = providerStates.map { $0.state }
+		return self
+	}
+
 	/// Defines the provider state for the given interaction
 	///
 	/// It is important to provide a meaningful description with
@@ -173,20 +181,6 @@ extension Interaction {
 	@discardableResult
 	@objc public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
-		return self
-	}
-
-}
-
-// MARK: - Objective-C
-
-extension Interaction {
-
-	/// Defines the provider states with parameters for the given interaction
-	@discardableResult
-	@objc(givenProviderStates:)
-	public func objCGiven(_ providerStates: [ObjCProviderState]) -> Interaction {
-		self.providerStates = providerStates.map { $0.state }
 		return self
 	}
 
