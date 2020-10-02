@@ -84,7 +84,7 @@ Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) wit
 
 ⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`.
 
-To enable logging, edit your scheme and add `PACT_LOGGING_ENABLED: true` to capture telemetry for debugging analysis using the unified logging system.
+To enable logging, edit your scheme and add `PACT_ENABLE_LOGGING: true` to capture telemetry for debugging analysis using the unified logging system.
 
 <p align="center">
   <img src="Documentation/images/04_destination_dir.png" width="600" alt="destination_dir" />
