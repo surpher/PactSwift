@@ -16,7 +16,6 @@
 //
 
 import Foundation
-import os.log
 import XCTest
 
 let kTimeout: TimeInterval = 10
@@ -111,6 +110,7 @@ open class MockService {
 		pact.interactions = [currentInteraction]
 
 		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
+			Logger.log(message: "Setting up pact test", data: pactData)
 			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
 				switch $0 {
 				case .success:
@@ -135,11 +135,7 @@ open class MockService {
 					self.finalize {
 						switch $0 {
 						case .success(let message):
-							if #available(iOS 10, OSX 10.14, *) {
-								os_log(.debug, "%@", message)
-							} else {
-								debugPrint(message)
-							}
+							Logger.log(message: message, data: self.pact.data)
 							completion()
 						case .failure(let error):
 							self.failWith(error.description, file: file, line: line)

@@ -50,6 +50,7 @@ class MockServer {
 
 	/// Spin up a Mock Server with expected interactions as defined in Pact.
 	func setup(pact: Data, protocol: MockService.TransferProtocol = .standard, completion: (Result<Int, MockServerError>) -> Void) {
+		Logger.log(message: "Setting up libpact_mock_server", data: pact)
 		transferProtocol = `protocol`
 		port = create_mock_server(
 			String(data: pact, encoding: .utf8),
@@ -73,6 +74,7 @@ class MockServer {
 
 	/// Finalise by writing the contract file onto disk
 	func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
+		Logger.log(message: "Setting up libpact_mock_server to write into file", data: pact)
 		shutdownMockServer()
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),

@@ -125,6 +125,8 @@
 		ADA17E502513848A004F1A82 /* RandomTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */; };
 		ADA17E5225138908004F1A82 /* RandomDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E5125138908004F1A82 /* RandomDecimal.swift */; };
 		ADA17E5325138908004F1A82 /* RandomDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E5125138908004F1A82 /* RandomDecimal.swift */; };
+		ADA1F7DE2526B5E100439736 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1F7DD2526B5E100439736 /* Logger.swift */; };
+		ADA1F7DF2526B5E100439736 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA1F7DD2526B5E100439736 /* Logger.swift */; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+Pact.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
@@ -269,6 +271,7 @@
 		ADA17E4B251383EB004F1A82 /* RandomTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTime.swift; sourceTree = "<group>"; };
 		ADA17E4E2513848A004F1A82 /* RandomTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTimeTests.swift; sourceTree = "<group>"; };
 		ADA17E5125138908004F1A82 /* RandomDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimal.swift; sourceTree = "<group>"; };
+		ADA1F7DD2526B5E100439736 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+Pact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Pact.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
@@ -368,9 +371,10 @@
 		AD646FA82460F71E00979AFC /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AD646FC42460F7D200979AFC /* PactSocketFinder */,
-				AD646FC12460F7C200979AFC /* MockServer */,
 				AD646FBE2460F7B400979AFC /* FileManager */,
+				ADA1F7DC2526B5CE00439736 /* Logging */,
+				AD646FC12460F7C200979AFC /* MockServer */,
+				AD646FC42460F7D200979AFC /* PactSocketFinder */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -504,6 +508,14 @@
 				AD8FC8112463BECF00361854 /* libpact_mock_server.a */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		ADA1F7DC2526B5CE00439736 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				ADA1F7DD2526B5E100439736 /* Logger.swift */,
+			);
+			name = Logging;
 			sourceTree = "<group>";
 		};
 		ADAC3D5F2442983B0078CCC7 /* Frameworks */ = {
@@ -1008,6 +1020,7 @@
 				AD646FBD2460F77D00979AFC /* PactError.swift in Sources */,
 				AD8DF437243EA4580062CB1A /* PactInteractionNode.swift in Sources */,
 				AD646FBC2460F77D00979AFC /* MismatchError.swift in Sources */,
+				ADA1F7DE2526B5E100439736 /* Logger.swift in Sources */,
 				ADBC60DC2513639700BBE666 /* RandomDate.swift in Sources */,
 				AD8DF435243C53750062CB1A /* PactBuilder.swift in Sources */,
 				ADD03175251235A800C6099B /* UUID+Pact.swift in Sources */,
@@ -1099,6 +1112,7 @@
 				AD8FC7EE2463BBA400361854 /* Bundle+Pact.swift in Sources */,
 				AD8FC7E72463BB9F00361854 /* PactBuilder.swift in Sources */,
 				AD8FC7F92463BBB800361854 /* SomethingLike.swift in Sources */,
+				ADA1F7DF2526B5E100439736 /* Logger.swift in Sources */,
 				ADBC60DD2513639800BBE666 /* RandomDate.swift in Sources */,
 				AD8FC7DD2463BB9A00361854 /* VerificationError.swift in Sources */,
 				ADD03176251235A800C6099B /* UUID+Pact.swift in Sources */,

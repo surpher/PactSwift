@@ -1,5 +1,5 @@
 //
-//  Created by Marko Justinek on 1/4/20.
+//  Created by Marko Justinek on 2/10/20.
 //  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -16,35 +16,44 @@
 //
 
 import Foundation
+import os.log
 
-struct Pact: Encodable {
+enum Logger {
 
-	private let metadata = Metadata()
+	static func log(message: String, data: Data? = nil) {
+		guard case .enabled = PactLoggingLevel(value: ProcessInfo.processInfo.environment["PACT_ENABLE_LOGGING"]) else {
+			return
+		}
 
-	// MARK: - Properties
+		let stringData = data.flatMap { String(data: $0, encoding: .utf8) } ?? ""
 
-	let consumer: Pacticipant
-	let provider: Pacticipant
+		if #available(iOS 10, OSX 10.14, *) {
+			os_log(
+				"PactSwift: %{private}s",
+				log: .default,
+				type: .default,
+				"\(message): \(stringData)"
+			)
+		} else {
+			debugPrint("PactSwift: \(message)\n\(stringData)")
+		}
 
-	var interactions: [Interaction] = []
-
-	var payload: [String: Any] {
-		[
-			"consumer": consumer.name,
-			"provider": provider.name,
-			"interactions": interactions,
-			"metadata": metadata,
-		]
 	}
 
-	var data: Data? {
-		do {
-			let encoder = JSONEncoder()
-			return try encoder.encode(self)
-		} catch {
-			Logger.log(message: error.localizedDescription)
+}
+
+private extension Logger {
+
+	enum PactLoggingLevel: String {
+		case enabled
+		case disabled
+
+		init(value: String?) {
+			switch value {
+			case "true": self = .enabled
+			default: self = .disabled
+			}
 		}
-		return nil
 	}
 
 }

@@ -29,7 +29,7 @@ The one major advantage of this framework over [`pact-consumer-swift`][pact-cons
 ### Carthage
 
 ```sh
-github "surpher/PactSwift" ~> 0.3
+github "surpher/PactSwift"
 ```
 
 ```sh
@@ -54,7 +54,7 @@ Run tests in terminal by providing path to static lib as a linker flag:
 swift test -Xlinker -LRelativePathTo/libFolder
 ```
 
-⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find them in `/Resources/` folder.
+⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find the required binaries in `/Resources/` folder.
 
 You can also compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
 
@@ -78,11 +78,13 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 ![runpath_search_paths](./Documentation/images/03_runpath_search_paths.png)
 
-#### Destination dir (recommended)
+#### Environment variables (recommended)
 
 Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
 
 ⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`.
+
+To enable logging, edit your scheme and add `PACT_LOGGING_ENABLED: true` to capture telemetry for debugging analysis using the unified logging system.
 
 <p align="center">
   <img src="Documentation/images/04_destination_dir.png" width="600" alt="destination_dir" />

@@ -43,6 +43,7 @@ $(SRCROOT)/Sources/ExampleGenerators/RandomTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomUUID.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift
+$(SRCROOT)/Sources/Services/Logger.swift
 $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift
