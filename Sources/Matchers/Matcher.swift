@@ -21,3 +21,13 @@ public struct Matcher {
 	// This is a namespace placeholder.
 	// Implement any matchers as `Struct`s in an Matcher extension.
 }
+
+@objc(Matcher)
+public class ObjcMatcher: NSObject {
+
+	@objc(decimalLike:)
+	public class func objcDecimalLike(_ value: Decimal) {
+		_ = Matcher.DecimalLike(value)
+	}
+
+}
