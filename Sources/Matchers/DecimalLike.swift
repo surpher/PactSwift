@@ -46,3 +46,34 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+/// Defines a Pact matcher that expects a `Decimal` value.
+///
+/// Use this matcher when you care about the type being a `Decimal`
+/// but the value itself does not matter.
+///
+/// ```
+/// @{@"foo": [Matcher DecimalLike(1234)] }
+/// ```
+/// - Parameters:
+///   - value: The value MockService should expect or respond with
+@objc(Matcher_DecimalLike)
+public class ObjcDecimalLike: NSObject, ObjcMatcher {
+
+	var value: Decimal
+
+	/// Defines a Pact matcher that expects a `Decimal` value.
+	///
+	/// - parameter value: The value MockService should expect or respond with
+	@objc public init(value: Decimal) {
+		self.value = value
+	}
+
+	var matcher: MatchingRuleExpressible {
+		Matcher.DecimalLike(value)
+	}
+
+}
+

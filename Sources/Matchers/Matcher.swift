@@ -22,12 +22,10 @@ public struct Matcher {
 	// Implement any matchers as `Struct`s in an Matcher extension.
 }
 
-@objc(Matcher)
-public class ObjcMatcher: NSObject {
+// MARK: - Objective-C
 
-	@objc(decimalLike:)
-	public class func objcDecimalLike(_ value: Decimal) {
-		_ = Matcher.DecimalLike(value)
-	}
+protocol ObjcMatcher {
+
+	var matcher: MatchingRuleExpressible { get }
 
 }

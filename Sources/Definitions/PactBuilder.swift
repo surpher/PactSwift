@@ -73,11 +73,17 @@ extension PactBuilder {
 
 private extension PactBuilder {
 
-	//swiftlint:disable:next cyclomatic_complexity
+	//swiftlint:disable:next cyclomatic_complexity function_body_length
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
-		switch element {
+		var elementToProcess = element
+
+		if let objcElement = element as? ObjcMatcher {
+			elementToProcess = objcElement.matcher
+		}
+
+		switch elementToProcess {
 		case let array as [Any]:
 			let processedArray = try process(array, at: node)
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
