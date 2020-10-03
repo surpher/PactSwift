@@ -38,7 +38,7 @@ public extension Matcher {
 
 		// MARK: - Initializers
 
-		/// Defines a Pact matcher that explicitly expects the provided value.
+		/// Defines a Pact matcher that explicitly expects the provided value
 		///
 		/// - parameter value: The value to be returned by MockService
 		public init(_ value: Any) {
@@ -50,13 +50,17 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_EqualTo)
+@objc(PFMatcherEqualTo)
 public class ObjcEqualTo: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc public init(value: Any) {
-		matcher = Matcher.EqualTo(value)
+	/// Defines a Pact matcher that explicitly expects the provided value
+	///
+	/// - parameter value: The value to be returned by MockService
+	@objc(value:)
+	public init(value: Any) {
+		type = Matcher.EqualTo(value)
 	}
 
 }

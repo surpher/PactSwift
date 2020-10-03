@@ -73,15 +73,11 @@ extension PactBuilder {
 
 private extension PactBuilder {
 
-	//swiftlint:disable:next cyclomatic_complexity function_body_length
+	//swiftlint:disable:next cyclomatic_complexity
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
-		var elementToProcess = element
-
-		if let objcElement = element as? ObjcMatcher {
-			elementToProcess = objcElement.matcher
-		}
+		let elementToProcess = mapPactObject(element)
 
 		switch elementToProcess {
 		case let array as [Any]:
@@ -138,6 +134,17 @@ private extension PactBuilder {
 		return processedElement
 	}
 
+	// Maps Objc object to a Swift object
+	func mapPactObject(_ value: Any) -> Any {
+		switch value {
+		case let matcher as ObjcMatcher:
+			return matcher.type
+		default:
+			return value
+		}
+	}
+
+	// Processes the array object and extracts any matchers or generators
 	func process(_ array: [Any], at node: String) throws -> (node: [AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableArray = [AnyEncodable]()
 		var matchingRules: [String: AnyEncodable] = [:]
@@ -158,6 +165,7 @@ private extension PactBuilder {
 		}
 	}
 
+	// Processes a dictionary object and extracts any matchers or generators
 	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]

@@ -26,6 +26,6 @@ public struct Matcher {
 
 protocol ObjcMatcher {
 
-	var matcher: MatchingRuleExpressible { get }
+	var type: MatchingRuleExpressible { get }
 
 }

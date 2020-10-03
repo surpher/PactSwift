@@ -40,13 +40,14 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_IntegerLike)
+@objc(PFMatcherIntegerLike)
 public class ObjcIntegerLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc public init(value: Int) {
-		matcher = Matcher.IntegerLike(value)
+	@objc(value:)
+	public init(value: Int) {
+		type = Matcher.IntegerLike(value)
 	}
 
 }

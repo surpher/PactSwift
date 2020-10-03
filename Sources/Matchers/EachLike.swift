@@ -19,7 +19,7 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher for a `Set` but does not care about the actual values.
+	/// Defines a Pact matcher for a `Set` but does not care about the actual value(s).
 	///
 	/// Use this matcher when you expect a `Set` of values.
 	/// You can specifiy the expected minimum and maximum
@@ -33,7 +33,7 @@ public extension Matcher {
 	///   "elements": Matcher.EachLike(
 	///     [
 	///       "foo": "bar",
-	///       "bar": "baz"
+	///       "bar": Matcher.SomethingLike(5)
 	///     ],
 	///     max: 10
 	///   ) // Set of 0 - 10 objects.
@@ -57,7 +57,7 @@ public extension Matcher {
 		///
 		/// Defines a `Set` where its capacity is of at least `1` occurance of `Value`.
 		///
-		/// - parameter value: The value to be returned by MockService.
+		/// - parameter value: Expected type or object
 		public init(_ value: Any) {
 			self.value = [value]
 			self.min = 1
@@ -68,8 +68,8 @@ public extension Matcher {
 		///
 		/// Defines a `Set` where its capacity is at least `min` occurances of provided `Value`.
 		///
-		/// - parameter value: The value to be returned by MockService.
-		/// - parameter min: Defines the minimum capacity of the `Set`
+		/// - parameter value: Expected type or object
+		/// - parameter min: Minimum expected number of occurances of provided `value`
 		public init(_ value: Any, min: Int) {
 			self.value = [value]
 			self.min = min
@@ -80,8 +80,8 @@ public extension Matcher {
 		///
 		/// Defines a `Set` where its capacity can be of `1` to `max` of provided `Value`.
 		///
-		/// - parameter value: The value to be returned by MockService.
-		/// - parameter max: Defines maximum capacity of the `Set`
+		/// - parameter value: Expected type or object
+		/// - parameter max: Maximum expected number of occurances of provided `value`
 		public init(_ value: Any, max: Int) {
 			self.value = [value]
 			self.min = nil
@@ -92,9 +92,9 @@ public extension Matcher {
 		///
 		/// Defines a `Set` where its capacity can be of `min` to `max` of provided `Value`.
 		///
-		/// - parameter value: The value to be returned by MockService.
-		/// - parameter min: Defines the minimum capacity of the `Set`
-		/// - parameter max: Defines maximum capacity of the `Set`
+		/// - parameter value: Expected type or object
+		/// - parameter min: Minimum expected number of occurances of provided `value`
+		/// - parameter max: Maximum expected number of occurances of provided `value`
 		public init(_ value: Any, min: Int, max: Int) {
 			self.value = [value]
 			self.min = min
@@ -106,17 +106,26 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_EachLike)
+@objc(PFMatcherEachLike)
 public class ObjcEachLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc public init(value: Any) {
-		matcher = Matcher.EachLike(value)
+	/// Defines a Pact matcher describing a set
+	/// - Parameter value: Expected value
+	@objc(value:)
+	public init(value: Any) {
+		type = Matcher.EachLike(value)
 	}
 
-	@objc public init(value: Any, min: Int, max: Int) {
-		matcher = Matcher.EachLike(value, min: min, max: max)
+	/// Defines a Pact matcher describing a set
+	/// - Parameters:
+	///   - value: Expected type or object
+	///   - min: Minimum expected number of occurances of provided `value`
+	///   - max: Maximum expected number of occurances of provided `value`
+	@objc(value: min: max:)
+	public init(value: Any, min: Int, max: Int) {
+		type = Matcher.EachLike(value, min: min, max: max)
 	}
 
 }

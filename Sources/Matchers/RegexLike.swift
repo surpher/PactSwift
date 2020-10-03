@@ -60,13 +60,14 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_RegexLike)
+@objc(PFMatcherRegexLike)
 public class ObjcRegexLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc public init(value: String, term: String) {
-		matcher = Matcher.RegexLike(value, term: term)
+	@objc(value: term:)
+	public init(value: String, term: String) {
+		type = Matcher.RegexLike(value, term: term)
 	}
 
 }

@@ -59,17 +59,17 @@ public extension Matcher {
 /// ```
 /// - Parameters:
 ///   - value: The value MockService should expect or respond with
-@objc(Matcher_DecimalLike)
+@objc(PFMatcherDecimalLike)
 public class ObjcDecimalLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
 	/// Defines a Pact matcher that expects a `Decimal` value.
 	///
 	/// - parameter value: The value MockService should expect or respond with
-	@objc public init(value: Decimal) {
-		self.matcher = Matcher.DecimalLike(value)
+	@objc(value:)
+	public init(value: Decimal) {
+		self.type = Matcher.DecimalLike(value)
 	}
 
 }
-

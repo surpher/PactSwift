@@ -19,7 +19,7 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects a specific `Type` as defined by the provided value.
+	/// Defines a Pact matcher that expects a specific `Type` as defined by the provided value
 	///
 	/// Use this matcher where you expect a specific `Type` in
 	/// the interaction between consumer and provider, but the
@@ -37,7 +37,7 @@ public extension Matcher {
 
 		// MARK: - Initializers
 
-		/// Defines a Pact matcher that expects a specific `Type`.
+		/// Defines a Pact matcher that expects a specific `Type`
 		///
 		/// - parameter value: The value MockService should expect or respond with
 		public init(_ value: Any) {
@@ -49,13 +49,17 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_SomethingLike)
+@objc(PFMatcherSomethingLike)
 public class ObjcSomethingLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc public init(value: Any) {
-		matcher = Matcher.SomethingLike(value)
+	/// Defines a Pact matcher that expects a specific `Type`
+	///
+	/// - parameter value: Value of expected type
+	@objc(value:)
+	public init(value: Any) {
+		type = Matcher.SomethingLike(value)
 	}
 
 }

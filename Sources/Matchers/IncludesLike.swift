@@ -77,19 +77,19 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-@objc(Matcher_IncludesLike)
+@objc(PFMatcherIncludesLike)
 public class ObjcIncludesLike: NSObject, ObjcMatcher {
 
-	let matcher: MatchingRuleExpressible
+	let type: MatchingRuleExpressible
 
-	@objc(initWithIncludesAll: generate:)
+	@objc(includesAll: generate:)
 	public init(includesAll: [String], generate: String?) {
-		matcher = Matcher.IncludesLike(includesAll, combine: .AND, generate: generate)
+		type = Matcher.IncludesLike(includesAll, combine: .AND, generate: generate)
 	}
 
-	@objc(initWithIncludesAny: generate:)
+	@objc(includesAny: generate:)
 	public init(includesAny: [String], generate: String?) {
-		matcher = Matcher.IncludesLike(includesAny, combine: .OR, generate: generate)
+		type = Matcher.IncludesLike(includesAny, combine: .OR, generate: generate)
 	}
 
 }
