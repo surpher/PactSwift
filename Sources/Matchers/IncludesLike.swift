@@ -74,3 +74,22 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(Matcher_IncludesLike)
+public class ObjcIncludesLike: NSObject, ObjcMatcher {
+
+	let matcher: MatchingRuleExpressible
+
+	@objc(initWithIncludesAll: generate:)
+	public init(includesAll: [String], generate: String?) {
+		matcher = Matcher.IncludesLike(includesAll, combine: .AND, generate: generate)
+	}
+
+	@objc(initWithIncludesAny: generate:)
+	public init(includesAny: [String], generate: String?) {
+		matcher = Matcher.IncludesLike(includesAny, combine: .OR, generate: generate)
+	}
+
+}

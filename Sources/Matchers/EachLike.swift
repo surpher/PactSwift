@@ -103,3 +103,20 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(Matcher_EachLike)
+public class ObjcEachLike: NSObject, ObjcMatcher {
+
+	let matcher: MatchingRuleExpressible
+
+	@objc public init(value: Any) {
+		matcher = Matcher.EachLike(value)
+	}
+
+	@objc public init(value: Any, min: Int, max: Int) {
+		matcher = Matcher.EachLike(value, min: min, max: max)
+	}
+
+}

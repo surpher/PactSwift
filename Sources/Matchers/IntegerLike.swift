@@ -37,3 +37,16 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(Matcher_IntegerLike)
+public class ObjcIntegerLike: NSObject, ObjcMatcher {
+
+	let matcher: MatchingRuleExpressible
+
+	@objc public init(value: Int) {
+		matcher = Matcher.IntegerLike(value)
+	}
+
+}

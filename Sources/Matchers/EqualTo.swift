@@ -47,3 +47,16 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(Matcher_EqualTo)
+public class ObjcEqualTo: NSObject, ObjcMatcher {
+
+	let matcher: MatchingRuleExpressible
+
+	@objc public init(value: Any) {
+		matcher = Matcher.EqualTo(value)
+	}
+
+}

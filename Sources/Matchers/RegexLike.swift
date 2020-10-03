@@ -57,3 +57,16 @@ public extension Matcher {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(Matcher_RegexLike)
+public class ObjcRegexLike: NSObject, ObjcMatcher {
+
+	let matcher: MatchingRuleExpressible
+
+	@objc public init(value: String, term: String) {
+		matcher = Matcher.RegexLike(value, term: term)
+	}
+
+}
