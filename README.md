@@ -211,6 +211,10 @@ Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a host
 
 See how you can use simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
+## Objective-C support
+
+PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See Demo projects repository for examples of Pact tests written in Objective-C.
+
 ## Demo projects
 
 See [pact-swift-examples][demo-projects] repo.
