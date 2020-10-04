@@ -40,3 +40,22 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomInt)
+public class ObjcRandomInt: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a random integer value between provided `min` and `max` values
+	///
+	/// - Parameters:
+	///   - min: Minimum possible value
+	///   - max: Maximum possible value
+	@objc(min: max:)
+	public init(min: Int = 0, max: Int = 2_147_483_647) {
+		type = ExampleGenerator.RandomInt(min: min, max: max)
+	}
+
+}

@@ -63,3 +63,34 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomString)
+public class OjbcRandomString: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a random string value of the provided size characters
+	///
+	/// - Parameters:
+	///   - size: The size of generated `String`
+	@objc(size:)
+	public init(size: Int = 20) {
+		type = ExampleGenerator.RandomString(size: size)
+	}
+
+	/// Generates a random string value from the provided regular expression
+	///
+	/// Use a raw `String` (eg: `#"\d{2}/\d{2,4}"#`) to avoid interpreting special characters.
+	///
+	/// Feature provided by`kennytm/rand_regex` library (https://github.com/kennytm/rand_regex).
+	///
+	/// - Parameters:
+	///   - regex: The regular expression that defines the generated `String`
+	@objc(regex:)
+	public init(regex: String) {
+		type = ExampleGenerator.RandomString(regex: regex)
+	}
+
+}

@@ -41,3 +41,21 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomTime)
+public class ObjcRandomTime: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a Time value from the current time either in ISO format or using the provided format string
+	///
+	/// - Parameters:
+	///   - format: The format of generated time
+	@objc(format:)
+	public init(format: String? = nil) {
+		type = ExampleGenerator.RandomTime(format: format)
+	}
+
+}

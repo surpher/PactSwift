@@ -52,3 +52,21 @@ private enum NumberHelper {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomDecimal)
+public class ObjcRandomDecimal: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a random decimal value (BigDecimal) with the provided number of digits
+	///
+	/// - Parameters:
+	///   - digits: Number of digits of the generated `Decimal` value
+	@objc(digits:)
+	public init(digits: Int = 6) {
+		type = ExampleGenerator.RandomDecimal(digits: digits)
+	}
+
+}

@@ -38,3 +38,11 @@ extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+protocol ObjcGenerator {
+
+	var type: ExampleGeneratorExpressible { get }
+
+}

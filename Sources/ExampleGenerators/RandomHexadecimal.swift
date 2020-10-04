@@ -39,3 +39,21 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomHexadecimal)
+public class ObjcRandomHexadecimal: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a random hexadecimal value (String) with the provided number of digits
+	///
+	/// - Parameters:
+	///   - digits: The length of generated hexadecimal string
+	@objc(digits:)
+	public init(digits: Int = 8) {
+		type = ExampleGenerator.RandomHexadecimal(digits: UInt8(digits))
+	}
+
+}

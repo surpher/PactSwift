@@ -20,7 +20,7 @@ import Foundation
 public extension ExampleGenerator {
 
 	/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
-	struct DateTime: ExampleGeneratorExpressible {
+	struct RandomDateTime: ExampleGeneratorExpressible {
 		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .dateTime
 		internal var rules: [String: AnyEncodable]?
@@ -38,6 +38,24 @@ public extension ExampleGenerator {
 				]
 			}
 		}
+	}
+
+}
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomDateTime)
+public class ObjcRandomDateTime: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a Date and Time (timestamp) value from the current date and time either in ISO format or using the provided format string
+	///
+	/// - Parameters:
+	///   - format: The format of generated timestamp
+	@objc(format:)
+	public init(format: String? = nil) {
+		type = ExampleGenerator.RandomDateTime(format: format)
 	}
 
 }

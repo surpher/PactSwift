@@ -30,3 +30,17 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomUUID)
+public class ObjcRandomUUID: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible = ExampleGenerator.RandomUUID()
+
+	/// Generates a random UUID value
+	public override init() {
+		super.init()
+	}
+
+}

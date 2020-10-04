@@ -139,6 +139,8 @@ private extension PactBuilder {
 		switch value {
 		case let matcher as ObjcMatcher:
 			return matcher.type
+		case let generator as ObjcGenerator:
+			return generator.type
 		default:
 			return value
 		}

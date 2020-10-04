@@ -30,3 +30,17 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomBool)
+public class ObjcRandomBool: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible = ExampleGenerator.RandomBool()
+
+	/// Generates a random boolean value
+	@objc public override init() {
+		super.init()
+	}
+
+}

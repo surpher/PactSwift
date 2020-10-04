@@ -40,3 +40,20 @@ public extension ExampleGenerator {
 	}
 
 }
+
+// MARK: - Objective-C
+
+@objc(PFGeneratorRandomDate)
+public class ObjcRandomDate: NSObject, ObjcGenerator {
+
+	let type: ExampleGeneratorExpressible
+
+	/// Generates a Date value from the current date either in ISO format or using the provided format string
+	/// - Parameters:
+	///   - format: The format of generated date
+	@objc(format:)
+	public init(format: String? = nil) {
+		type = ExampleGenerator.RandomDate(format: format)
+	}
+
+}
