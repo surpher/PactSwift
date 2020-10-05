@@ -75,14 +75,14 @@ class MockServer {
 
 	/// Finalise by writing the contract file onto disk
 	func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
-		Logger.log(message: "Setting up libpact_mock_server to write into file", data: pact)
-		shutdownMockServer()
 		Logger.log(message: "Starting up MockServer to finalize writing the Pact with data:", data: pact)
+
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
 			"\(socketAddress):\(port)",
 			tls
 		)
+
 		writePactContractFile {
 			switch $0 {
 			case .success(let message):
@@ -91,6 +91,8 @@ class MockServer {
 				completion?(.failure(error))
 			}
 		}
+
+		shutdownMockServer()
 	}
 
 }
@@ -129,7 +131,8 @@ private extension MockServer {
 	}
 
 	/// Shuts down the Mock Server and releases the socket address
-	func shutdownMockServer() {
+	func shutdownMockServer(on port: Int32? = nil) {
+		let port = port ?? self.port
 		if port > 0 {
 			Logger.log(message: "Shutting down mock server on port \(port)")
 			cleanup_mock_server(port)
