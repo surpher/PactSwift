@@ -18,13 +18,25 @@
 import Foundation
 
 /// Defines the interaction between consumer and provider
-@objc public class Interaction: NSObject, Encodable {
+@objc public class Interaction: NSObject {
 
 	var interactionDescription: String?
 	var providerState: String?
 	var providerStates: [ProviderState]?
 	var request: Request?
 	var response: Response?
+
+}
+
+extension Interaction: Encodable {
+
+	enum CodingKeys: String, CodingKey {
+		case interactionDescription = "description"
+		case providerState
+		case providerStates
+		case request
+		case response
+	}
 
 }
 
