@@ -438,7 +438,7 @@ class MockServiceTests: XCTestCase {
 					"randomRegex": ExampleGenerator.RandomString(regex: testRegex),
 					"randomDate": ExampleGenerator.RandomDate(format: "yyyy/MM"),
 					"randomTime": ExampleGenerator.RandomTime(format: "HH:mm - ss"),
-					"randomDateTime": ExampleGenerator.DateTime(format: "HH:mm - dd.MM.yy"),
+					"randomDateTime": ExampleGenerator.RandomDateTime(format: "HH:mm - dd.MM.yy"),
 				]
 			)
 
