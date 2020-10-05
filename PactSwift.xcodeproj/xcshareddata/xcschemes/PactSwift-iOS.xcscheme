@@ -50,6 +50,16 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AD8FC7BE2463A06F00361854"
+               BuildableName = "PactSwiftTests_macOS.xctest"
+               BlueprintName = "PactSwiftTests_macOS"
+               ReferencedContainer = "container:PactSwift.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "AD881806242C715B00BF510D"
                BuildableName = "PactSwiftTests_iOS.xctest"
                BlueprintName = "PactSwiftTests_iOS"
