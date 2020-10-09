@@ -405,10 +405,12 @@ class MockServiceTests: XCTestCase {
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
-					let testResult = self.decodeResponse(data: data)
-					XCTAssertEqual(testResult?.foo, "bar")
-					XCTAssertEqual(testResult?.baz?.first, 123)
 					do {
+						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+						XCTAssertEqual(testResult.baz?.first, 123)
+						XCTAssertNil(testResult.nullable_key)
+
 						let responseData = try XCTUnwrap(String(data: data, encoding: .utf8))
 						XCTAssertTrue(responseData.contains("nullable_key"))
 					} catch {
@@ -564,6 +566,7 @@ private extension MockServiceTests {
 	struct TestModel: Decodable {
 		let foo: String
 		let baz: [Int]?
+		let nullable_key: String?
 	}
 
 	func decodeResponse(data: Data) -> TestModel? {

@@ -103,6 +103,9 @@ private extension PactBuilder {
 		case let bool as Bool:
 			processedElement = (node: AnyEncodable(bool), rules: [:], generators: [:])
 
+		case let matcher as Matcher.MatchNull:
+			processedElement = (node: AnyEncodable(nil), rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])], generators: [:])
+
 		case let matcher as Matcher.IncludesLike:
 			let processedMatcherValue = try process(element: matcher.value, at: node)
 			processedElement = (
