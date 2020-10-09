@@ -10,6 +10,7 @@ $(SRCROOT)/Sources/Matchers/Matcher.swift
 $(SRCROOT)/Sources/Matchers/RegexLike.swift
 $(SRCROOT)/Sources/Matchers/IncludesLike.swift
 $(SRCROOT)/Sources/Matchers/DecimalLike.swift
+$(SRCROOT)/Sources/Matchers/MatchNull.swift
 $(SRCROOT)/Sources/Definitions/Metadata.swift
 $(SRCROOT)/Sources/Definitions/PactInteractionNode.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorHandler.swift

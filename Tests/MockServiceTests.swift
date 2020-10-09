@@ -394,7 +394,8 @@ class MockServiceTests: XCTestCase {
 				status: 200,
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
-					"baz": Matcher.EachLike(123, min: 1, max: 5)
+					"baz": Matcher.EachLike(123, min: 1, max: 5),
+					"nullable_key": Matcher.MatchNull(),
 				]
 			)
 
@@ -407,6 +408,12 @@ class MockServiceTests: XCTestCase {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
 					XCTAssertEqual(testResult?.baz?.first, 123)
+					do {
+						let responseData = try XCTUnwrap(String(data: data, encoding: .utf8))
+						XCTAssertTrue(responseData.contains("nullable_key"))
+					} catch {
+						XCTFail("Expected a nullable_key key with null value for Match.MatchNull()")
+					}
 				}
 				testExpectation.fulfill()
 				completion()

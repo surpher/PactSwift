@@ -24,6 +24,15 @@ struct AnyEncodable: Encodable {
 	init<T: Encodable>(_ value: T) {
 		self._encode = { encoder in
 			var container = encoder.singleValueContainer()
+
+			// This is not the greatest of ways to handle an optional value that should be presented as `null` in JSON.
+			// Unfortunately using generics and optionals here do not play nicely where `AnyEncodable(nil)` will not be allowed by Swift.
+			// Force casting the `Matcher.MatchNull().value` to a String should fail catastrophically at PactSwift unit tests level if type is changed.
+			if let value = value as? String, value == Matcher.MatchNull().value as! String {
+				try container.encodeNil()
+				return
+			}
+
 			try container.encode(value)
 		}
 	}
