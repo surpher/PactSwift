@@ -266,8 +266,6 @@
 		AD8FC7D72463ADDB00361854 /* Target-macOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
 		AD8FC8102463BEA600361854 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		AD8FC8112463BECF00361854 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
-		AD8FC8212463C4AA00361854 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/Mac/Nimble.framework; sourceTree = "<group>"; };
-		AD8FC8252463C5AA00361854 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		ADA17E3A25137716004F1A82 /* RandomDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTime.swift; sourceTree = "<group>"; };
 		ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTimeTests.swift; sourceTree = "<group>"; };
 		ADA17E40251377A4004F1A82 /* Date+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+PactSwift.swift"; sourceTree = "<group>"; };
@@ -482,7 +480,6 @@
 				ADD6993D242C861600C5C2C2 /* .swiftlint.yml */,
 				ADCB2562242C83E20048BD18 /* Configurations */,
 				ADC6FAE024302BA800026714 /* Documentation */,
-				ADAC3D5F2442983B0078CCC7 /* Frameworks */,
 				AD8817FF242C715A00BF510D /* Products */,
 				AD646FCC2460F82D00979AFC /* Resources */,
 				AD8A32D6242CCF5600283080 /* Scripts */,
@@ -524,15 +521,6 @@
 				ADA1F7DD2526B5E100439736 /* Logger.swift */,
 			);
 			name = Logging;
-			sourceTree = "<group>";
-		};
-		ADAC3D5F2442983B0078CCC7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AD8FC8252463C5AA00361854 /* Nimble.framework */,
-				AD8FC8212463C4AA00361854 /* Nimble.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ADB7C11B2432D41100A16CDE /* Extensions */ = {
@@ -775,7 +763,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "PACT Foundation";
 				TargetAttributes = {
 					AD8817FD242C715A00BF510D = {

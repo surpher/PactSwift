@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1140"
+   LastUpgradeVersion = "1200"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -17,6 +17,20 @@
                BlueprintIdentifier = "AD8817FD242C715A00BF510D"
                BuildableName = "PactSwift.framework"
                BlueprintName = "PactSwift_iOS"
+               ReferencedContainer = "container:PactSwift.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AD8FC7BE2463A06F00361854"
+               BuildableName = "PactSwiftTests_macOS.xctest"
+               BlueprintName = "PactSwiftTests_macOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,16 +60,6 @@
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "AD8FC7BE2463A06F00361854"
-               BuildableName = "PactSwiftTests_macOS.xctest"
-               BlueprintName = "PactSwiftTests_macOS"
-               ReferencedContainer = "container:PactSwift.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
