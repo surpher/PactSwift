@@ -110,7 +110,6 @@
 		AD8FC8092463BBD100361854 /* MockServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD646FC82460F7F300979AFC /* MockServerTests.swift */; };
 		AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4700244D0FD600E4F7EE /* ErrorCapture.swift */; };
 		AD8FC82C2463C9EE00361854 /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8FC8112463BECF00361854 /* libpact_mock_server.a */; };
-		AD8FC82D2463C9FA00361854 /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8FC8102463BEA600361854 /* libpact_mock_server.a */; };
 		ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3E2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */; };
@@ -171,6 +170,8 @@
 		ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4703244D101700E4F7EE /* ErrorReportable.swift */; };
 		ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */; };
 		ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE2937E2435DB14008AFBC9 /* ProviderState.swift */; };
+		ADE512C9253511810020EF57 /* libpact_mock_server.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE512C8253511810020EF57 /* libpact_mock_server.dylib */; };
+		ADE512CE2535119D0020EF57 /* libpact_mock_server.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ADE512C8253511810020EF57 /* libpact_mock_server.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 		ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 		ADE9B3CA250A435B00274672 /* EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C9250A435B00274672 /* EqualToTests.swift */; };
@@ -193,6 +194,20 @@
 			remoteInfo = PactSwift_macOS;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ADE512CF2535119D0020EF57 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				ADE512CE2535119D0020EF57 /* libpact_mock_server.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		AD10361324468AB3002C97CA /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
@@ -264,7 +279,6 @@
 		AD8FC7D52463ADC300361854 /* Target-macOS-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD8FC7D62463ADCF00361854 /* Target-macOS-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD8FC7D72463ADDB00361854 /* Target-macOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
-		AD8FC8102463BEA600361854 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		AD8FC8112463BECF00361854 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		ADA17E3A25137716004F1A82 /* RandomDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTime.swift; sourceTree = "<group>"; };
 		ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTimeTests.swift; sourceTree = "<group>"; };
@@ -303,6 +317,7 @@
 		ADDE4703244D101700E4F7EE /* ErrorReportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportable.swift; sourceTree = "<group>"; };
 		ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		ADE2937E2435DB14008AFBC9 /* ProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderState.swift; sourceTree = "<group>"; };
+		ADE512C8253511810020EF57 /* libpact_mock_server.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libpact_mock_server.dylib; sourceTree = "<group>"; };
 		ADE9B3C6250A3C4700274672 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 		ADE9B3C9250A435B00274672 /* EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -328,7 +343,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8FC82D2463C9FA00361854 /* libpact_mock_server.a in Frameworks */,
+				ADE512C9253511810020EF57 /* libpact_mock_server.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,7 +517,7 @@
 		AD8FC80B2463BD8B00361854 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				AD8FC8102463BEA600361854 /* libpact_mock_server.a */,
+				ADE512C8253511810020EF57 /* libpact_mock_server.dylib */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -728,6 +743,7 @@
 				AD8FC7B32463A06F00361854 /* Sources */,
 				AD8FC7B42463A06F00361854 /* Frameworks */,
 				AD8FC7B52463A06F00361854 /* Resources */,
+				ADE512CF2535119D0020EF57 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
