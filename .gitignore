@@ -105,6 +105,3 @@ Packages
 
 Carthage/
 .swiftpm*
-
-### Vendor Build folder ###
-Vendor/build/*

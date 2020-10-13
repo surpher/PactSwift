@@ -28,9 +28,23 @@ If you want to work on something else, such as a new feature or fixing a bug, it
 - Clone your fork:
   - `git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
   - See the [GitHub documentation][fork-docs] about managing your fork.
-- This repo uses [LFS](https://help.github.com/en/github/managing-large-files/configuring-git-large-file-storage). 
+- This repo uses [LFS](https://help.github.com/en/github/managing-large-files/configuring-git-large-file-storage).
 	- Make sure you fetch the files `git lfs fetch --all` into your fork.
 	- `git lfs pull` to pull the binaries needed when running Xcode builds/tests
+- Resolve any submodules:
+
+```sh
+cd PactSwift
+git submodule update --init --recursive
+```
+
+Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` dynamic library from Rust shared codebase set as a submodule in this project.
+
+```sh
+brew install rust
+```
+
+or follow official [instructions](https://www.rust-lang.org/tools/install).
 
 #### Recommended
 
@@ -43,7 +57,7 @@ If you want to work on something else, such as a new feature or fixing a bug, it
 
 - Please write unit tests for your code changes.
 - Run the unit tests with `⌘U` in Xcode before submitting your Pull Request.
-- Run `swift build -Xlinker -LPathTolibpact_mock_server.aFolder` (unfortunate, but will need to do for now).
+- Run tests in CLI `$PROJECT_DIR/Scripts/run_tests`
 
 ## Submitting a Pull Request
 
