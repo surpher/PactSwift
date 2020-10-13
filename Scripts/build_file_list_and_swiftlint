@@ -17,6 +17,8 @@
 #  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
+set -eu
+
 if [ $# -ne 2 ]; then
 		echo "usage: build_file_list_and_swiftlint project_name swiftlint_yml"
 		exit 1
@@ -45,10 +47,14 @@ else
 	echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
 fi
 
+echo "--- 🤖 Checking if Rust is installed..."
+
 if which cargo >/dev/null; then
-	echo "--- 👍 Rust toolchain available"
+	echo "--- 👍 cargo installed"
+elif command -v ~/.cargo/bin/cargo &> /dev/null; then
+	echo "--- 👍 cargo installed in ~/.cargo/bin/"
 else
 	echo "--- 🚨 Rust not installed"
-	echo "Please install rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
+	echo "ERROR: cargo is required and is not found in `~/.cargo/bin`. Install Rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
 	exit 1
 fi
