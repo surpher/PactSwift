@@ -64,16 +64,12 @@ extension Request: Encodable {
 		self.headers = headers
 		self.body = body
 
-		var encodableBody: AnyEncodable?
-		var matchingRules: AnyEncodable?
-		var generators: AnyEncodable?
+		var pact: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
 
 		if let body = body {
 			do {
-				let pactBody = try PactBuilder(with: body).encoded(for: .body)
-				encodableBody = pactBody.node
-				matchingRules = pactBody.rules
-				generators = pactBody.generators
+				let parsedPact = try PactBuilder(with: body).encoded(for: .body)
+				pact = (body: parsedPact.node, matchingRules: parsedPact.rules, generators: parsedPact.generators)
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}
@@ -85,9 +81,9 @@ extension Request: Encodable {
 			try container.encode(path, forKey: .path)
 			if let query = query { try container.encode(query, forKey: .query) }
 			if let headers = headers { try container.encode(headers, forKey: .headers) }
-			if let encodableBody = encodableBody { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
-			if let generators = generators { try container.encode(generators, forKey: .generators) }
+			if let encodableBody = pact.body { try container.encode(encodableBody, forKey: .body) }
+			if let matchingRules = pact.matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
+			if let generators = pact.generators { try container.encode(generators, forKey: .generators) }
 		}
 	}
 
