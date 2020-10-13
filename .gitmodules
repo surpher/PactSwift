@@ -1,3 +1,6 @@
 [submodule "Vendor/pact-reference"]
 	path = Vendor/pact-reference
 	url = https://github.com/pact-foundation/pact-reference.git
+[submodule "Submodules/pact-reference"]
+	path = Submodules/pact-reference
+	url = https://github.com/pact-foundation/pact-reference.git

@@ -317,7 +317,6 @@
 		ADDE4703244D101700E4F7EE /* ErrorReportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportable.swift; sourceTree = "<group>"; };
 		ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		ADE2937E2435DB14008AFBC9 /* ProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderState.swift; sourceTree = "<group>"; };
-		ADE512E525352BC00020EF57 /* Vendor */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Vendor; sourceTree = "<group>"; };
 		ADE512F0253533840020EF57 /* libpact_mock_server_ffi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libpact_mock_server_ffi.dylib; sourceTree = "<group>"; };
 		ADE9B3C6250A3C4700274672 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 		ADE9B3C9250A435B00274672 /* EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToTests.swift; sourceTree = "<group>"; };
@@ -501,7 +500,6 @@
 				AD8A32D6242CCF5600283080 /* Scripts */,
 				ADCB2560242C83670048BD18 /* Sources */,
 				ADCB2561242C83710048BD18 /* Tests */,
-				ADE512E525352BC00020EF57 /* Vendor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1000,7 +998,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/Vendor/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Vendor/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.dylib \"$PROJECT_DIR/Resources/macOS/libpact_mock_server_ffi.dylib\"\n";
+			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.dylib \"$PROJECT_DIR/Resources/macOS/libpact_mock_server_ffi.dylib\"\n";
 		};
 		ADE512E725352C910020EF57 /* Update dylib references */ = {
 			isa = PBXShellScriptBuildPhase;
