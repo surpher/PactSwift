@@ -105,3 +105,7 @@ Packages
 
 Carthage/
 .swiftpm*
+
+
+### Submodules ###
+Vendor/*
