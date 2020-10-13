@@ -15,7 +15,7 @@
 </p>
 
 > ⚠️ **NOTE** ⚠️  
-> _pact-swift_ is under heavy development and not all features are complete.
+> _PactSwift_ is under heavy development and not all features are complete.
 > Not everything is documented properly.
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
@@ -38,25 +38,19 @@ carthage update --platform ios --cache-builds
 
 ### Swift Package Manager (beta)
 
-Add `PactSwift` as a dependency to your test target in `Package.swift`:
-
-```sh
-...
-dependencies: [
- .package(url: "https://github.com/surpher/PactSwift.git", .branch("master"))
-],
-...
-```
-
-Run tests in terminal by providing path to static lib as a linker flag:
-
-```sh
-swift test -Xlinker -LRelativePathTo/libFolder
-```
-
 ⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find the required binaries in `/Resources/` folder.
 
-You can also compile your own static lib from [pact-reference/rust][pact-reference-rust] project.
+### Required Dependencies
+
+PactSwift uses `libpact_mock_server` written in Rust-lang found [pact-foundation/pact-reference][pact-reference-rust] and this `libpact_mock_server` dynamic library is built as part of the PactSwift build process.
+
+Install Rust using Homebrew:
+
+```sh
+brew install rust
+```
+
+or follow installation instructions available at [rust-lang][rust-lang-installation].
 
 ## Xcode setup - Carthage
 
@@ -255,3 +249,4 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/master/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
+[rust-lang-installation]: https://www.rust-lang.org/tools/install

@@ -10,7 +10,7 @@ on:
 
 jobs:
   test_ios:
-    name: Test framework
+    name: Run tests
     runs-on: macOS-latest
 
     steps:
