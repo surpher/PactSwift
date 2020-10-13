@@ -44,3 +44,11 @@ else
 	echo "--- ⚠️ Swiftlint"
 	echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
 fi
+
+if which cargo >/dev/null; then
+	echo "--- 👍 Rust toolchain available"
+else
+	echo "--- 🚨 Rust not installed"
+	echo "Please install rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
+	exit 1
+fi
