@@ -1000,7 +1000,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\n\ncd Vendor/pact-reference/rust/pact_mock_server_ffi && cargo build --target=x86_64-apple-darwin --release\n";
+			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/Vendor/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Vendor/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.dylib \"$PROJECT_DIR/Resources/macOS/libpact_mock_server_ffi.dylib\"\n";
 		};
 		ADE512E725352C910020EF57 /* Update dylib references */ = {
 			isa = PBXShellScriptBuildPhase;
