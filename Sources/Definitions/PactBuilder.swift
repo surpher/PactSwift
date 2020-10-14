@@ -47,7 +47,9 @@ struct PactBuilder {
 				generators: processedType.generators.isEmpty ? nil : AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.generators))])
 			)
 		} catch {
-			throw EncodingError.notEncodable(typeDefinition)
+			let encodingError = EncodingError.notEncodable(typeDefinition)
+			Logger.log(message: encodingError.localizedDescription)
+			throw encodingError
 		}
 	}
 
