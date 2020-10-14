@@ -38,8 +38,9 @@ struct PactBuilder {
 	/// - `Dictionary<String, Encodable>`
 	///
 	/// - parameter interactionNode: The top level node in PACT contract file
-	func encoded(for interactionNode: PactInteractionElement) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
+	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
+			Logger.log(message: "Processing\n\(typeDefinition)")
 			let processedType = try process(element: typeDefinition, at: "$")
 			return (
 				node: processedType.node,
