@@ -38,7 +38,7 @@ struct PactBuilder {
 	/// - `Dictionary<String, Encodable>`
 	///
 	/// - parameter interactionNode: The top level node in PACT contract file
-	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
+	func encoded(for interactionNode: PactInteractionElement) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: "$")
 			return (
@@ -77,10 +77,9 @@ private extension PactBuilder {
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
-//		let elementToProcess = mapPactObject(element)
+		let elementToProcess = mapPactObject(element)
 
-//		switch elementToProcess {
-		switch element {
+		switch elementToProcess {
 		case let array as [Any]:
 			let processedArray = try process(array, at: node)
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)

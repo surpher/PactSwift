@@ -20,6 +20,7 @@ $(SRCROOT)/Sources/Definitions/Pact.swift
 $(SRCROOT)/Sources/Definitions/ProviderState.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorType.swift
 $(SRCROOT)/Sources/Definitions/Response.swift
+$(SRCROOT)/Sources/Definitions/PactInteractionElement.swift
 $(SRCROOT)/Sources/Definitions/PactError.swift
 $(SRCROOT)/Sources/Definitions/Interaction.swift
 $(SRCROOT)/Sources/Definitions/Request.swift

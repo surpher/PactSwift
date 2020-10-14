@@ -73,7 +73,7 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "MockServiceTests/testMockService_Succeeds_WithMatchersInRequestBody()">
+                  Identifier = "MockServiceTests/testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody()">
                </Test>
             </SkippedTests>
          </TestableReference>
