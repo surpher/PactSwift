@@ -77,9 +77,10 @@ private extension PactBuilder {
 	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
-		let elementToProcess = mapPactObject(element)
+//		let elementToProcess = mapPactObject(element)
 
-		switch elementToProcess {
+//		switch elementToProcess {
+		switch element {
 		case let array as [Any]:
 			let processedArray = try process(array, at: node)
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
