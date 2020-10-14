@@ -385,20 +385,19 @@ class MockServiceTests: XCTestCase {
 
 	// MARK: - Using matchers
 
-	// TODO(https://github.com/pact-foundation/pact-reference/issues/78) - Test disabled due to unexpected behaviour in libpact_mock_server_ffi when sending a POST request
 	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() {
 		mockService
 			.uponReceiving("Request to create a new user")
 			.given("user does not exist")
 			.withRequest(
 				method: .POST,
-				path: "/user",
+				path: "/user/add",
 				query: nil,
 				headers: ["Content-Type": "application/json"],
 				body: [
 					"name": Matcher.SomethingLike("Joe"),
-				 "age": Matcher.IntegerLike(42)
-				 ]
+					"age": Matcher.IntegerLike(42)
+				]
 			)
 			.willRespondWith(
 				status: 201
@@ -434,7 +433,8 @@ class MockServiceTests: XCTestCase {
 			.given("user exists")
 			.withRequest(
 				method: .PUT,
-				path: "/user",
+				path: "/user/update",
+				headers: ["Content-Type": "application/json"],
 				body: [
 					"name": Matcher.SomethingLike("Joe"),
 					"age": Matcher.IntegerLike(42)
@@ -447,11 +447,12 @@ class MockServiceTests: XCTestCase {
 		let testExpectation = expectation(description: #function)
 
 		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/add")!
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/update")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 
 			request.httpMethod = "PUT"
+			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 			request.httpBody = #"{"name":"Joe","age":42}"#.data(using: .utf8)
 
 			let task = session.dataTask(with: request) { data, response, error in 
