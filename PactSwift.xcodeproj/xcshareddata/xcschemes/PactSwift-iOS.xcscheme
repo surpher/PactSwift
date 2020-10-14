@@ -69,6 +69,11 @@
                BlueprintName = "PactSwiftTests_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "MockServiceTests/testMockService_Succeeds_WithMatchersInRequestBody()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
@@ -100,7 +105,7 @@
          <EnvironmentVariable
             key = "PACT_ENABLE_LOGGING"
             value = "true"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

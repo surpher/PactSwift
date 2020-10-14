@@ -385,8 +385,90 @@ class MockServiceTests: XCTestCase {
 
 	// MARK: - Using matchers
 
+	// TODO(https://github.com/pact-foundation/pact-reference/issues/78) - Test disabled due to unexpected behaviour in libpact_mock_server_ffi when sending a POST request
+	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() {
+		mockService
+			.uponReceiving("Request to create a new user")
+			.given("user does not exist")
+			.withRequest(
+				method: .POST,
+				path: "/user",
+				query: nil,
+				headers: ["Content-Type": "application/json"],
+				body: [
+					"name": Matcher.SomethingLike("Joe"),
+				 "age": Matcher.IntegerLike(42)
+				 ]
+			)
+			.willRespondWith(
+				status: 201
+			)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/add")!
+			let session = URLSession.shared
+			var request = URLRequest(url: requestURL)
+
+			request.httpMethod = "POST"
+			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+			request.httpBody = #"{"name":"Joseph","age":24}"#.data(using: .utf8)
+
+			let task = session.dataTask(with: request) { data, response, error in
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(response.statusCode, 201)
+				}
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 1)
+	}
+
+	func testMockService_Succeeds_WithMatchersInRequestBody() {
+		mockService
+			.uponReceiving("Request to update a user")
+			.given("user exists")
+			.withRequest(
+				method: .PUT,
+				path: "/user",
+				body: [
+					"name": Matcher.SomethingLike("Joe"),
+					"age": Matcher.IntegerLike(42)
+				]
+			)
+			.willRespondWith(
+				status: 201
+			)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/add")!
+			let session = URLSession.shared
+			var request = URLRequest(url: requestURL)
+
+			request.httpMethod = "PUT"
+			request.httpBody = #"{"name":"Joe","age":42}"#.data(using: .utf8)
+
+			let task = session.dataTask(with: request) { data, response, error in 
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(response.statusCode, 201)
+				}
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 1)
+	}
+
 	func testMockService_Succeeds_WithMatchers() {
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user")
@@ -528,7 +610,7 @@ class MockServiceTests: XCTestCase {
 	// MARK: - Write pact contract
 
 	func testMockService_Writes_PactContract() {
-		_ = mockService
+		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/user")
