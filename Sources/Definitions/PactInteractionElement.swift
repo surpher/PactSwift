@@ -17,11 +17,11 @@
 
 import Foundation
 
-enum PactInteractionElement: String {
+enum PactInteractionNode: String {
 
 	case body
 	case headers
-	case path
-	case query
+	case matchingRules
+	case generators
 
 }
