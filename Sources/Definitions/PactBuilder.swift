@@ -40,7 +40,6 @@ struct PactBuilder {
 	/// - parameter interactionNode: The top level node in PACT contract file
 	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
-			Logger.log(message: "Processing\n\(typeDefinition)")
 			let processedType = try process(element: typeDefinition, at: "$")
 			return (
 				node: processedType.node,
@@ -48,9 +47,7 @@ struct PactBuilder {
 				generators: processedType.generators.isEmpty ? nil : AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.generators))])
 			)
 		} catch {
-			let encodingError = EncodingError.notEncodable(typeDefinition)
-			Logger.log(message: encodingError.localizedDescription)
-			throw encodingError
+			throw EncodingError.notEncodable(typeDefinition)
 		}
 	}
 
@@ -77,12 +74,15 @@ extension PactBuilder {
 private extension PactBuilder {
 
 	//swiftlint:disable:next cyclomatic_complexity function_body_length
-	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+		func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
 		let elementToProcess = mapPactObject(element)
 
 		switch elementToProcess {
+
+		// Collections:
+
 		case let array as [Any]:
 			let processedArray = try process(array, at: node)
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
@@ -90,6 +90,8 @@ private extension PactBuilder {
 		case let dict as [String: Any]:
 			let processedDict = try process(dict, at: node)
 			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules, generators: processedDict.generators)
+
+		// Simple types:
 
 		case let string as String:
 			processedElement = (node: AnyEncodable(string), rules: [:], generators: [:])
@@ -106,8 +108,16 @@ private extension PactBuilder {
 		case let bool as Bool:
 			processedElement = (node: AnyEncodable(bool), rules: [:], generators: [:])
 
-		case let matcher as Matcher.MatchNull:
-			processedElement = (node: AnyEncodable(nil), rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])], generators: [:])
+		// Matchers:
+
+		case let matcher as Matcher.DecimalLike:
+			processedElement = try processMatcher(matcher, at: node)
+
+		case let matcher as Matcher.EachLike:
+			processedElement = try processMatcher(matcher, at: node)
+
+		case let matcher as Matcher.EqualTo:
+			processedElement = try processMatcher(matcher, at: node)
 
 		case let matcher as Matcher.IncludesLike:
 			let processedMatcherValue = try process(element: matcher.value, at: node)
@@ -117,27 +127,76 @@ private extension PactBuilder {
 				generators: processedMatcherValue.generators
 			)
 
-		case let matcher as MatchingRuleExpressible:
-			let processedMatcherValue = try process(element: matcher.value, at: node)
+		case let matcher as Matcher.IntegerLike:
+			processedElement = try processMatcher(matcher, at: node)
+
+		case let matcher as Matcher.MatchNull:
 			processedElement = (
-				node: processedMatcherValue.node,
+				node: AnyEncodable(nil),
 				rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])],
-				generators: processedMatcherValue.generators
+				generators: [:]
 			)
 
-		case let exampleGenerator as ExampleGeneratorExpressible:
-			let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
-			processedElement = (
-				node: processedGeneratorValue.node,
-				rules: processedGeneratorValue.rules,
-				generators: [node: AnyEncodable(exampleGenerator.attributes)]
-			)
+		case let matcher as Matcher.RegexLike:
+			processedElement = try processMatcher(matcher, at: node)
+
+		case let matcher as Matcher.SomethingLike:
+			processedElement = try processMatcher(matcher, at: node)
+
+		// Example generators:
+
+		case let exampleGenerator as ExampleGenerator.RandomBool:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomDate:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomDateTime:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomDecimal:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomHexadecimal:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomInt:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomString:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomTime:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.RandomUUID:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		// Anything else is not considered safe to encode in PactSwift
 
 		default:
 			throw EncodingError.notEncodable(element)
 		}
 
 		return processedElement
+	}
+
+	func processMatcher(_ matcher: MatchingRuleExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+		let processedMatcherValue = try process(element: matcher.value, at: node)
+		return (
+			node: processedMatcherValue.node,
+			rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])],
+			generators: processedMatcherValue.generators
+		)
+	}
+
+	func processExampleGenerator(_ exampleGenerator: ExampleGeneratorExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+		let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
+		return (
+			node: processedGeneratorValue.node,
+			rules: processedGeneratorValue.rules,
+			generators: [node: AnyEncodable(exampleGenerator.attributes)]
+		)
 	}
 
 	// Maps Objc object to a Swift object
