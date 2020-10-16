@@ -26,25 +26,7 @@ The one major advantage of this framework over [`pact-consumer-swift`][pact-cons
 
 ## Installation
 
-### Carthage
-
-```sh
-github "surpher/PactSwift"
-```
-
-```sh
-carthage update --platform ios --cache-builds
-```
-
-### Swift Package Manager (beta)
-
-⚠️ Using `PactSwift` through SPM requires you to link a `libpact_mock_server.a` for the appropriate architecture. You can find the required binaries in `/Resources/` folder.
-
-### Required Dependencies
-
-PactSwift uses `libpact_mock_server` written in Rust-lang found [pact-foundation/pact-reference][pact-reference-rust] and this `libpact_mock_server` dynamic library is built as part of the PactSwift build process.
-
-Install Rust using Homebrew:
+`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It is build as a dynamic library during a PactSwift Build Phase and requires Rust installed on your machine:
 
 ```sh
 brew install rust
@@ -52,11 +34,24 @@ brew install rust
 
 or follow installation instructions available at [rust-lang][rust-lang-installation].
 
+### Carthage
+
+```sh
+github "surpher/PactSwift"
+```
+
+```sh
+carthage update [--cache-builds --verbose]
+```
+
+### Swift Package Manager (⚠️ beta ⚠️)
+
+Currently focusing on getting functionality right and distribution through Carthage. The project follows the SPM structure and it _might_ work. Reliable SPM support will be looked into soon.
+
 ## Xcode setup - Carthage
 
-**NOTE:** This framework is intended to be used in your test target only! Do not embed it into your app bundle!
-
-⚠️ We're looking for an alternative approach to using static libs with SPM and reducing the size of static lib for obvious reasons! Sharing any ideas and workarounds to reduce the size, storage and saving bandwidth for you and us and for our GitHub Actions to stop piling up the costs for LFS are very much apperciated!
+**NOTE:**  
+This framework is intended to be used in your test target only! Do not embed it into your app bundle!
 
 ### Setup Framework Build Settings
 
