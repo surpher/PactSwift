@@ -574,6 +574,7 @@
 			);
 			path = Sources;
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		ADCB2561242C83710048BD18 /* Tests */ = {
 			isa = PBXGroup;
@@ -588,6 +589,7 @@
 			);
 			path = Tests;
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		ADCB2562242C83E20048BD18 /* Configurations */ = {
 			isa = PBXGroup;
