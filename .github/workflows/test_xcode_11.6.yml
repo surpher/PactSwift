@@ -4,6 +4,13 @@ env:
     SIMULATOR_NAME: "iPhone 11 Pro"
 
 on:
+  push:
+    branches:
+      - master
+      - 'tech/**'
+      - 'fix/**'
+      - 'feat/**'
+      - 'feature/**'
   pull_request:
     branches:
       - master
@@ -19,21 +26,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Create LFS file list
-        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
-
-      - name: Restore LFS cache
-        uses: actions/cache@v2
-        id: lfs-cache
-        with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
-          restore-keys: |
-            ${{ runner.os }}-lfs-
-
-      - name: Git LFS Pull
-        run: git lfs pull
-
       - name: Use Xcode 11.6
         run: sudo xcode-select -switch /Applications/Xcode_11.6.app
 
@@ -43,7 +35,7 @@ jobs:
 
       - name: Build and Test SPM support
         run: |
-          set -o pipefail && swift build -c debug
+          echo "⚠️ SKIPPING: \"set -o pipefail && swift build -c debug | xcbeautify\""
           echo "⚠️ SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
 
       - name: Test iOS target (Xcode)
