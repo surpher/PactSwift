@@ -22,15 +22,42 @@ The [Core Contributors][core-contributor] usually tag issues that are ready to b
 
 If you want to work on something else, such as a new feature or fixing a bug, it would be helpful if you submit a new issue, so that we can have a chance to discuss it first. We might have some pointers for you on how to get started, or how to best integrate it with existing solutions.
 
+### Prepare the tools
+
+Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` dynamic library from Rust shared codebase set as a submodule in this project:
+
+```sh
+brew install rust
+```
+
+Use Homebrew to install [SwiftLint](https://github.com/realm/SwiftLint):
+
+```sh
+brew install swiftlint
+```
+
+Install [Carthage](https://github.com/Carthage/Carthage) to test your changes and PactSwift builds successfully when distributing through Carthage:
+
+```sh
+brew install carthage
+```
+
+Install [xcbeautify](https://github.com/thii/xcbeautify)
+
+```sh
+brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
+brew install swiftlint xcbeautify
+```
+
 ### Checking out the Code
 
 - Click the “Fork” button in the upper right corner of the [repo][repo].
-- Clone your fork:
-  - `git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
-  - See the [GitHub documentation][fork-docs] about managing your fork.
-- This repo uses [LFS](https://help.github.com/en/github/managing-large-files/configuring-git-large-file-storage).
-	- Make sure you fetch the files `git lfs fetch --all` into your fork.
-	- `git lfs pull` to pull the binaries needed when running Xcode builds/tests
+- Clone your fork (consult [GitHub documentation][fork-docs] about managing your forks):
+
+```sh
+git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
+```
+
 - Resolve any submodules:
 
 ```sh
@@ -38,15 +65,9 @@ cd PactSwift
 git submodule update --init --recursive
 ```
 
-Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` dynamic library from Rust shared codebase set as a submodule in this project.
-
-```sh
-brew install rust
-```
-
 or follow official [instructions](https://www.rust-lang.org/tools/install).
 
-#### Recommended
+#### Workflow
 
 - Create a new branch to work on with `git checkout -b <YOUR_BRANCH_NAME>`.
   - Branch names should be descriptive of what you're working on, eg: `docs/updating-contributing-guide`, `fix/create-user-crash`.
@@ -94,6 +115,7 @@ All contributions to this project are also under this license as per [GitHub's T
 [issues]: https://github.com/surpher/PactSwift/issues
 [new-issue]: https://github.com/surpher/PactSwift/issues/new/choose
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
+[good-first-issue]: https://github.com/surpher/PactSwift/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [core-contributor]: CORE_CONTRIBUTOR.md
 [license]: ../LICENSE.md
