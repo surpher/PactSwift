@@ -110,3 +110,10 @@ Carthage/
 ## Submodules     ##
 ####################
 Submodules/pact-reference/rust/target/**
+
+
+###################
+## Binaries      ##
+###################
+*.a
+
