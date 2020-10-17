@@ -41,8 +41,10 @@ github "surpher/PactSwift"
 ```
 
 ```sh
-carthage update [--cache-builds --verbose]
+carthage update
 ```
+
+Note: If you do not need to support both iOS **and** macOS, use either `--platform ios` or `--platform macos` to avoid buililding PactSwift for the platform you do not need. Use `--cache-builds --verbose` to save time and see the build progress.
 
 ### Swift Package Manager (⚠️ beta ⚠️)
 
