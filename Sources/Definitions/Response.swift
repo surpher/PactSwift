@@ -45,12 +45,12 @@ extension Response: Encodable {
 		self.headers = headers
 
 		var bodyValues: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
-		var headersValues: (headers: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+		var headerValues: (headers: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
 
 		if let headers = headers {
 			do {
-				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .headers)
-				headersValues = (headers: parsedHeaders.node, matchingRules: parsedHeaders.rules, generators: parsedHeaders.generators)
+				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .header)
+				headerValues = (headers: parsedHeaders.node, matchingRules: parsedHeaders.rules, generators: parsedHeaders.generators)
 			} catch {
 				fatalError("Can not process headers with non-encodable (non-JSON safe) values")
 			}
@@ -68,9 +68,9 @@ extension Response: Encodable {
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(statusCode, forKey: .statusCode)
-			if let headers = headersValues.headers { try container.encode(headers, forKey: .headers) }
+			if let headers = headerValues.headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = bodyValues.body { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Request.mergeMatchingRulesFor(headers: headersValues.matchingRules, body: bodyValues.matchingRules) {
+			if let matchingRules = Response.mergeMatchingRulesFor(header: headerValues.matchingRules, body: bodyValues.matchingRules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
 			if let generators = bodyValues.generators { try container.encode(generators, forKey: .generators) }
@@ -85,11 +85,11 @@ extension Response: Encodable {
 
 extension Response {
 
-	static func mergeMatchingRulesFor(headers: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
+	static func mergeMatchingRulesFor(header: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
 		var merged: [String: AnyEncodable] = [:]
 
-		if let headers = headers {
-			merged["headers"] = headers
+		if let header = header {
+			merged["header"] = header
 		}
 
 		if let body = body {
