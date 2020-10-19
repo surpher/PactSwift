@@ -56,54 +56,27 @@ extension Request: Encodable {
 	///   - query: A url query
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
-	init(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) { // swiftlint:disable:this cyclomatic_complexity
+	init(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) {
 		self.httpMethod = method
 		self.path = path
 		self.query = query
 		self.headers = headers
 
-		var queryValues: (query: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
-		var headersValues: (headers: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
-		var bodyValues: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
-
-		if let query = query {
-			do {
-				let parsedQuery = try PactBuilder(with: query).encoded(for: .query)
-				queryValues = (query: parsedQuery.node, matchingRules: parsedQuery.rules, generators: parsedQuery.generators)
-			} catch {
-				fatalError("Can not process query with non-encodable (non-JSON safe) values")
-			}
-		}
-
-		if let headers = headers {
-			do {
-				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .header)
-				headersValues = (headers: parsedHeaders.node, matchingRules: parsedHeaders.rules, generators: parsedHeaders.generators)
-			} catch {
-				fatalError("Can not process headers with non-encodable (non-JSON safe) values")
-			}
-		}
-
-		if let body = body {
-			do {
-				let parsedPact = try PactBuilder(with: body).encoded(for: .body)
-				bodyValues = (body: parsedPact.node, matchingRules: parsedPact.rules, generators: parsedPact.generators)
-			} catch {
-				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
-			}
-		}
+		let queryValues = Request.process(element: query, for: .query)
+		let headersValues = Request.process(element: headers, for: .header)
+		let bodyValues = Request.process(element: body, for: .body)
 
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(method, forKey: .httpMethod)
 			try container.encode(path, forKey: .path)
-			if let query = queryValues.query { try container.encode(query, forKey: .query) }
-			if let headers = headersValues.headers { try container.encode(headers, forKey: .headers) }
-			if let encodableBody = bodyValues.body { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Request.mergeMatchingRulesFor(query: queryValues.matchingRules, header: headersValues.matchingRules, body: bodyValues.matchingRules) {
+			if let query = queryValues?.node { try container.encode(query, forKey: .query) }
+			if let headers = headersValues?.node { try container.encode(headers, forKey: .headers) }
+			if let encodableBody = bodyValues?.node { try container.encode(encodableBody, forKey: .body) }
+			if let matchingRules = Request.mergeMatchingRulesFor(query: queryValues?.rules, header: headersValues?.rules, body: bodyValues?.rules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
-			if let generators = bodyValues.generators { try container.encode(generators, forKey: .generators) }
+			if let generators = bodyValues?.generators { try container.encode(generators, forKey: .generators) }
 		}
 	}
 
@@ -113,7 +86,7 @@ extension Request: Encodable {
 
 }
 
-extension Request {
+private extension Request {
 
 	static func mergeMatchingRulesFor(query: AnyEncodable?, header: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
 		var merged: [String: AnyEncodable] = [:]
@@ -131,6 +104,19 @@ extension Request {
 		}
 
 		return merged.isEmpty ? nil : AnyEncodable(merged)
+	}
+
+	static func process(element: Any?, for interactionElement: PactInteractionNode) -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
+		if let element = element {
+			do {
+				let encodedElement = try PactBuilder(with: element).encoded(for: interactionElement)
+				return (node: encodedElement.node, rules: encodedElement.rules, generators: encodedElement.generators)
+			} catch {
+				fatalError("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")
+			}
+		}
+
+		return nil
 	}
 
 }
