@@ -213,7 +213,7 @@ class MockServiceTests: XCTestCase {
 		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
-			.withRequest(method: .GET, path: "/user", query: ["state": ["NSW"], "page": ["2"]])
+			.withRequest(method: .GET, path: "/user", query: ["state": [Matcher.EqualTo("NSW")], "page": ["2"]])
 			.willRespondWith(
 				status: 200
 			)
@@ -507,6 +507,49 @@ class MockServiceTests: XCTestCase {
 		}
 
 		waitForExpectations(timeout: 1)
+	}
+
+	func testMockService_Succeeds_WithMatcherInHeaders() throws {
+		mockService
+			.uponReceiving("Request for list of movies")
+			.withRequest(
+				method: .GET,
+				path: "/movies",
+				query: nil,
+				headers: ["Authorization": Matcher.RegexLike("Bearer abcd12345", term: #"^Bearer \w+$"#)],
+				body: nil
+			)
+			.willRespondWith(status: 200, body: [
+				"foo": "bar",
+				"baz": Matcher.EachLike(1)
+			])
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/movies")!
+			var request = URLRequest(url: requestURL)
+			let session = URLSession.shared
+
+			request.setValue("Bearer bdjksl1234352", forHTTPHeaderField: "Authorization")
+
+			let task = session.dataTask(with: request) { data, response, error in
+				if let data = data {
+					do {
+						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+					} catch {
+						XCTFail("Expected a valid response object when asking for a list of /movies")
+					}
+				}
+
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 5)
 	}
 
 	// MARK: - Using Example Generators

@@ -132,9 +132,9 @@ class PactTests: XCTestCase {
 		let testPact = prepareTestPact(interactions: interaction)
 
 		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first?.request?.query))
-		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"]).contains("100")))
-		XCTAssertTrue(try (XCTUnwrap(testResult["state"]).contains("NSW")))
-		XCTAssertTrue(try (XCTUnwrap(testResult["term"]).contains("80 CLARENCE ST, SYDNEY NSW 2000")))
+		XCTAssertTrue(try (XCTUnwrap(testResult["max_results"]).contains { $0 as! String == "100" }))
+		XCTAssertTrue(try (XCTUnwrap(testResult["state"]).contains { $0 as! String == "NSW" }))
+		XCTAssertTrue(try (XCTUnwrap(testResult["term"]).contains { $0 as! String == "80 CLARENCE ST, SYDNEY NSW 2000" }))
 	}
 
 	func testPact_SetsProviderState() throws {

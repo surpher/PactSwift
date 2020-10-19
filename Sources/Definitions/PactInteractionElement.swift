@@ -20,8 +20,7 @@ import Foundation
 enum PactInteractionNode: String {
 
 	case body
-	case headers
-	case matchingRules
-	case generators
+	case header
+	case query
 
 }

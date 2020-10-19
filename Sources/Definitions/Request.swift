@@ -20,12 +20,12 @@ public struct Request {
 
 	let httpMethod: PactHTTPMethod
 	let path: String
-	let query: [String: [String]]?
+	let query: [String: [Any]]?
 	let headers: [String: Any]?
 
 	var description: String {
 		let request = "\(httpMethod.method.uppercased()) \(path)"
-		let queryString = query?.compactMap { "\($0)=\($1.joined(separator: ","))" }.joined(separator: "&")
+		let queryString = query?.compactMap { "\($0)=\($1.map { "\($0)," })" }.dropLast().joined(separator: "&")
 		let headersString = headers?.compactMap { "\"\($0)\": \"\($1)\"" }.joined(separator: "\n\t")
 
 		return
@@ -56,18 +56,28 @@ extension Request: Encodable {
 	///   - query: A url query
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
-	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) {
+	init(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) { // swiftlint:disable:this cyclomatic_complexity
 		self.httpMethod = method
 		self.path = path
 		self.query = query
 		self.headers = headers
 
-		var bodyValues: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+		var queryValues: (query: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
 		var headersValues: (headers: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+		var bodyValues: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+
+		if let query = query {
+			do {
+				let parsedQuery = try PactBuilder(with: query).encoded(for: .query)
+				queryValues = (query: parsedQuery.node, matchingRules: parsedQuery.rules, generators: parsedQuery.generators)
+			} catch {
+				fatalError("Can not process query with non-encodable (non-JSON safe) values")
+			}
+		}
 
 		if let headers = headers {
 			do {
-				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .headers)
+				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .header)
 				headersValues = (headers: parsedHeaders.node, matchingRules: parsedHeaders.rules, generators: parsedHeaders.generators)
 			} catch {
 				fatalError("Can not process headers with non-encodable (non-JSON safe) values")
@@ -87,10 +97,10 @@ extension Request: Encodable {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(method, forKey: .httpMethod)
 			try container.encode(path, forKey: .path)
-			if let query = query { try container.encode(query, forKey: .query) }
+			if let query = queryValues.query { try container.encode(query, forKey: .query) }
 			if let headers = headersValues.headers { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = bodyValues.body { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Request.mergeMatchingRulesFor(headers: headersValues.matchingRules, body: bodyValues.matchingRules) {
+			if let matchingRules = Request.mergeMatchingRulesFor(query: queryValues.matchingRules, header: headersValues.matchingRules, body: bodyValues.matchingRules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
 			if let generators = bodyValues.generators { try container.encode(generators, forKey: .generators) }
@@ -105,15 +115,19 @@ extension Request: Encodable {
 
 extension Request {
 
-	static func mergeMatchingRulesFor(headers: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
+	static func mergeMatchingRulesFor(query: AnyEncodable?, header: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
 		var merged: [String: AnyEncodable] = [:]
 
-		if let headers = headers {
-			merged["headers"] = headers
+		if let header = header {
+			merged["header"] = header
 		}
 
 		if let body = body {
 			merged["body"] = body
+		}
+
+		if let query = query {
+			merged["query"] = query
 		}
 
 		return merged.isEmpty ? nil : AnyEncodable(merged)

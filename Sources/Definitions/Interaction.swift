@@ -172,7 +172,7 @@ extension Interaction {
 	///   - body: The body of the request
 	@discardableResult
 	@objc(withRequestHTTPMethod: path: query: headers: body:)
-	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
+	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
 	}

@@ -339,7 +339,7 @@ class PactBuilderTests: XCTestCase {
 		let testPact = prepareTestPact(requestBody: testBody, requestHeaders: testHeaders)
 		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules)
 
-		XCTAssertEqual(testResult.headers?.foo.matchers.first?.match, "type")
+		XCTAssertEqual(testResult.header?.foo.matchers.first?.match, "type")
 		XCTAssertEqual(testResult.body?.foo?.matchers.first?.match, "type")
 	}
 
@@ -454,7 +454,7 @@ private extension PactBuilderTests {
 				let matchingRules: TestMatchingRulesModel
 				struct TestMatchingRulesModel: Decodable {
 					let body: TestBodyModel?
-					let headers: TestHeadersModel?
+					let header: TestHeadersModel?
 					struct TestBodyModel: Decodable {
 						let foo: TestMatchersModel?
 						let bar: TestMatchersModel?
