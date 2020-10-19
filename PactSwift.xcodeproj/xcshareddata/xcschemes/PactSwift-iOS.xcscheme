@@ -69,11 +69,6 @@
                BlueprintName = "PactSwiftTests_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "MockServiceTests/testMockService_Succeeds_WithMatchersInRequestBody()">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

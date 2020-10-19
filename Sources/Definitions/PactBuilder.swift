@@ -40,10 +40,10 @@ struct PactBuilder {
 	/// - parameter interactionNode: The top level node in PACT contract file
 	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
-			let processedType = try process(element: typeDefinition, at: "$")
+			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
 			return (
 				node: processedType.node,
-				rules: processedType.rules.isEmpty ? nil : AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.rules))]),
+				rules: processedType.rules.isEmpty ? nil : AnyEncodable(AnyEncodable(processedType.rules)),
 				generators: processedType.generators.isEmpty ? nil : AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.generators))])
 			)
 		} catch {
@@ -242,7 +242,7 @@ private extension PactBuilder {
 			try dictionary
 				.enumerated()
 				.forEach {
-					let childElement = try process(element: $0.element.value, at: "\(node).\($0.element.key)")
+					let childElement = try process(element: $0.element.value, at: node.isEmpty ? "\($0.element.key)" : "\(node).\($0.element.key)")
 					encodableDictionary[$0.element.key] = childElement.node
 					matchingRules = merge(matchingRules, with: childElement.rules)
 					generators = merge(generators, with: childElement.generators)

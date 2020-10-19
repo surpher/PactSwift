@@ -21,8 +21,7 @@ public struct Request {
 	let httpMethod: PactHTTPMethod
 	let path: String
 	let query: [String: [String]]?
-	let headers: [String: String]?
-	let body: Any?
+	let headers: [String: Any]?
 
 	var description: String {
 		let request = "\(httpMethod.method.uppercased()) \(path)"
@@ -57,19 +56,28 @@ extension Request: Encodable {
 	///   - query: A url query
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
-	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) {
+	init(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) {
 		self.httpMethod = method
 		self.path = path
 		self.query = query
 		self.headers = headers
-		self.body = body
 
-		var pact: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+		var bodyValues: (body: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+		var headersValues: (headers: AnyEncodable?, matchingRules: AnyEncodable?, generators: AnyEncodable?)
+
+		if let headers = headers {
+			do {
+				let parsedHeaders = try PactBuilder(with: headers).encoded(for: .headers)
+				headersValues = (headers: parsedHeaders.node, matchingRules: parsedHeaders.rules, generators: parsedHeaders.generators)
+			} catch {
+				fatalError("Can not process headers with non-encodable (non-JSON safe) values")
+			}
+		}
 
 		if let body = body {
 			do {
 				let parsedPact = try PactBuilder(with: body).encoded(for: .body)
-				pact = (body: parsedPact.node, matchingRules: parsedPact.rules, generators: parsedPact.generators)
+				bodyValues = (body: parsedPact.node, matchingRules: parsedPact.rules, generators: parsedPact.generators)
 			} catch {
 				fatalError("Can not instantiate a `Request` with non-encodable `body`.")
 			}
@@ -80,15 +88,35 @@ extension Request: Encodable {
 			try container.encode(method, forKey: .httpMethod)
 			try container.encode(path, forKey: .path)
 			if let query = query { try container.encode(query, forKey: .query) }
-			if let headers = headers { try container.encode(headers, forKey: .headers) }
-			if let encodableBody = pact.body { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = pact.matchingRules { try container.encode(matchingRules, forKey: .matchingRules) }
-			if let generators = pact.generators { try container.encode(generators, forKey: .generators) }
+			if let headers = headersValues.headers { try container.encode(headers, forKey: .headers) }
+			if let encodableBody = bodyValues.body { try container.encode(encodableBody, forKey: .body) }
+			if let matchingRules = Request.mergeMatchingRulesFor(headers: headersValues.matchingRules, body: bodyValues.matchingRules) {
+				try container.encode(matchingRules, forKey: .matchingRules)
+			}
+			if let generators = bodyValues.generators { try container.encode(generators, forKey: .generators) }
 		}
 	}
 
 	public func encode(to encoder: Encoder) throws {
 		try bodyEncoder(encoder)
+	}
+
+}
+
+extension Request {
+
+	static func mergeMatchingRulesFor(headers: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
+		var merged: [String: AnyEncodable] = [:]
+
+		if let headers = headers {
+			merged["headers"] = headers
+		}
+
+		if let body = body {
+			merged["body"] = body
+		}
+
+		return merged.isEmpty ? nil : AnyEncodable(merged)
 	}
 
 }

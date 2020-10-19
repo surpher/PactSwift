@@ -434,10 +434,10 @@ class MockServiceTests: XCTestCase {
 			.withRequest(
 				method: .PUT,
 				path: "/user/update",
-				headers: ["Content-Type": "application/json"],
+				headers: ["Content-Type": Matcher.EqualTo("application/json")],
 				body: [
 					"name": Matcher.SomethingLike("Joe"),
-					"age": Matcher.IntegerLike(42)
+					"age": Matcher.SomethingLike(42)
 				]
 			)
 			.willRespondWith(

@@ -28,8 +28,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.EqualTo("2016-07-19")
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.match, "equality")
 	}
@@ -41,8 +41,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.SomethingLike("2016-07-19")
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.match, "type")
 	}
@@ -62,8 +62,8 @@ class PactBuilderTests: XCTestCase {
 			]
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.min, 1)
 		XCTAssertEqual(testResult.match, "type")
@@ -83,8 +83,8 @@ class PactBuilderTests: XCTestCase {
 			]
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.min, 3)
 		XCTAssertEqual(testResult.match, "type")
@@ -104,8 +104,8 @@ class PactBuilderTests: XCTestCase {
 			]
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.max, 5)
 		XCTAssertEqual(testResult.match, "type")
@@ -126,8 +126,8 @@ class PactBuilderTests: XCTestCase {
 			]
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SetLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.min, 1)
 		XCTAssertEqual(testResult.max, 5)
@@ -141,8 +141,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.IntegerLike(1234)
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.match, "integer")
 	}
@@ -154,8 +154,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.DecimalLike(1234)
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node.matchers.first)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node.matchers.first)
 
 		XCTAssertEqual(testResult.match, "decimal")
 	}
@@ -167,8 +167,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let matchers = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let matchers = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node)
 
 		XCTAssertEqual(matchers.matchers.first?.match, "regex")
 		XCTAssertEqual(matchers.matchers.first?.regex, "\\d{4}-\\d{2}-\\d{2}")
@@ -183,8 +183,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.IncludesLike("2020-12-31", "2019-12-31")
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node)
 
 		XCTAssertEqual(testResult.combine, "AND")
 		XCTAssertEqual(testResult.matchers.count, 2)
@@ -198,8 +198,8 @@ class PactBuilderTests: XCTestCase {
 			"data": Matcher.IncludesLike("2020-12-31", "2019-12-31", combine: .OR)
 		]
 
-		let testPact = prepareTestPact(for: testBody)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericLikeTestModel.self, from: testPact.data!).interactions.first?.response.matchingRules.body.node)
 
 		XCTAssertEqual(testResult.combine, "OR")
 		XCTAssertEqual(testResult.matchers.count, 2)
@@ -207,124 +207,141 @@ class PactBuilderTests: XCTestCase {
 		XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
 	}
 
-		// MARK: - Example generators
+	// MARK: - Example generators
 
-		func testPact_SetsExampleGenerator_RandomBool() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomBool()
-			]
+	func testPact_SetsExampleGenerator_RandomBool() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomBool()
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "RandomBoolean")
-		}
+		XCTAssertEqual(testResult.type, "RandomBoolean")
+	}
 
-		func testPact_SetsExampleGenerator_RandomDate() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy")
-			]
+	func testPact_SetsExampleGenerator_RandomDate() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy")
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "Date")
-			XCTAssertEqual(testResult.format, "dd-MM-yyyy")
-		}
+		XCTAssertEqual(testResult.type, "Date")
+		XCTAssertEqual(testResult.format, "dd-MM-yyyy")
+	}
 
-		func testPact_SetsExampleGenerator_RandomDateTime() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy"),
-				"foo": ExampleGenerator.RandomDateTime(format: "HH:mm (dd/MM)")
-			]
+	func testPact_SetsExampleGenerator_RandomDateTime() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy"),
+			"foo": ExampleGenerator.RandomDateTime(format: "HH:mm (dd/MM)")
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body)
 
-			XCTAssertEqual(testResult.node.type, "Date")
-			XCTAssertEqual(testResult.node.format, "dd-MM-yyyy")
+		XCTAssertEqual(testResult.node.type, "Date")
+		XCTAssertEqual(testResult.node.format, "dd-MM-yyyy")
 
-			XCTAssertEqual(testResult.foo?.type, "DateTime")
-			XCTAssertEqual(testResult.foo?.format, "HH:mm (dd/MM)")
-		}
+		XCTAssertEqual(testResult.foo?.type, "DateTime")
+		XCTAssertEqual(testResult.foo?.format, "HH:mm (dd/MM)")
+	}
 
-		func testPact_SetsExampleGenerator_RandomDecimal() throws {
-			let testBody: Any = [
-					"data": ExampleGenerator.RandomDecimal(digits: 5)
-			]
+	func testPact_SetsExampleGenerator_RandomDecimal() throws {
+		let testBody: Any = [
+				"data": ExampleGenerator.RandomDecimal(digits: 5)
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "RandomDecimal")
-			XCTAssertEqual(testResult.digits, 5)
-		}
+		XCTAssertEqual(testResult.type, "RandomDecimal")
+		XCTAssertEqual(testResult.digits, 5)
+	}
 
-		func testPact_SetsExampleGenerator_RandomHexadecimal() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomHexadecimal(digits: 16)
-			]
+	func testPact_SetsExampleGenerator_RandomHexadecimal() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomHexadecimal(digits: 16)
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "RandomHexadecimal")
-			XCTAssertEqual(testResult.digits, 16)
-		}
+		XCTAssertEqual(testResult.type, "RandomHexadecimal")
+		XCTAssertEqual(testResult.digits, 16)
+	}
 
-		func testPact_SetsExampleGenerator_RandomInt() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomInt(min: 2, max: 16)
-			]
+	func testPact_SetsExampleGenerator_RandomInt() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomInt(min: 2, max: 16)
+		]
 
-			let testPact = prepareTestPact(for: testBody)
+		let testPact = prepareTestPact(responseBody: testBody)
 
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "RandomInt")
-			XCTAssertEqual(testResult.min, 2)
-			XCTAssertEqual(testResult.max, 16)
-		}
+		XCTAssertEqual(testResult.type, "RandomInt")
+		XCTAssertEqual(testResult.min, 2)
+		XCTAssertEqual(testResult.max, 16)
+	}
 
-		func testPact_SetsExampleGenerator_RandomString() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomString(size: 32),
-				"foo": ExampleGenerator.RandomString(regex: #"\d{3}"#)
-			]
+	func testPact_SetsExampleGenerator_RandomString() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomString(size: 32),
+			"foo": ExampleGenerator.RandomString(regex: #"\d{3}"#)
+		]
 
-			let testPact = prepareTestPact(for: testBody)
+		let testPact = prepareTestPact(responseBody: testBody)
 
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body)
 
-			XCTAssertEqual(testResult.node.type, "RandomString")
-			XCTAssertEqual(testResult.node.size, 32)
+		XCTAssertEqual(testResult.node.type, "RandomString")
+		XCTAssertEqual(testResult.node.size, 32)
 
-			XCTAssertEqual(testResult.foo?.type, "Regex")
-			XCTAssertEqual(testResult.foo?.regex, "\\d{3}")
-		}
+		XCTAssertEqual(testResult.foo?.type, "Regex")
+		XCTAssertEqual(testResult.foo?.regex, "\\d{3}")
+	}
 
-		func testPact_SetsExampleGenerator_RandomTime() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomTime(format: "hh - mm")
-			]
+	func testPact_SetsExampleGenerator_RandomTime() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomTime(format: "hh - mm")
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "Time")
-			XCTAssertEqual(testResult.format, "hh - mm")
-		}
+		XCTAssertEqual(testResult.type, "Time")
+		XCTAssertEqual(testResult.format, "hh - mm")
+	}
 
-		func testPact_SetsExampleGenerator_RandomUUID() throws {
-			let testBody: Any = [
-				"data": ExampleGenerator.RandomUUID()
-			]
+	func testPact_SetsExampleGenerator_RandomUUID() throws {
+		let testBody: Any = [
+			"data": ExampleGenerator.RandomUUID()
+		]
 
-			let testPact = prepareTestPact(for: testBody)
-			let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.request.generators.body.node)
+		let testPact = prepareTestPact(responseBody: testBody)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body.node)
 
-			XCTAssertEqual(testResult.type, "Uuid")
-		}
+		XCTAssertEqual(testResult.type, "Uuid")
+	}
+
+	// MARK: - Testing parsing for headers
+
+	func testPact_ProcessesMatchers_InHeaders() throws {
+		let testHeaders: Any = [
+			"foo": Matcher.SomethingLike("bar")
+		]
+		let testBody: Any = [
+			"foo": Matcher.SomethingLike("baz")
+		]
+
+		let testPact = prepareTestPact(requestBody: testBody, requestHeaders: testHeaders)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules)
+
+		XCTAssertEqual(testResult.headers?.foo.matchers.first?.match, "type")
+		XCTAssertEqual(testResult.body?.foo?.matchers.first?.match, "type")
+	}
 
 }
 
@@ -336,8 +353,8 @@ private extension PactBuilderTests {
 	struct GenericLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {
-			let request: TestRequestModel
-			struct TestRequestModel: Decodable {
+			let response: TestResponseModel
+			struct TestResponseModel: Decodable {
 				let matchingRules: TestMatchingRulesModel
 				struct TestMatchingRulesModel: Decodable {
 					let body: TestNodeModel
@@ -371,8 +388,8 @@ private extension PactBuilderTests {
 		struct GenericExampleGeneratorTestModel: Decodable {
 			let interactions: [TestInteractionModel]
 			struct TestInteractionModel: Decodable {
-				let request: TestRequestModel
-				struct TestRequestModel: Decodable {
+				let response: TestResponseModel
+				struct TestResponseModel: Decodable {
 					let generators: TestGeneratorModel
 					struct TestGeneratorModel: Decodable {
 						let body: TestNodeModel
@@ -404,7 +421,7 @@ private extension PactBuilderTests {
 	struct SetLikeTestModel: Decodable {
 		let interactions: [TestInteractionModel]
 		struct TestInteractionModel: Decodable {
-			let request: TestRequestModel
+			let response: TestRequestModel
 			struct TestRequestModel: Decodable {
 				let matchingRules: TestMatchingRulesModel
 				struct TestMatchingRulesModel: Decodable {
@@ -428,16 +445,87 @@ private extension PactBuilderTests {
 		}
 	}
 
-	func prepareTestPact(for body: Any) -> Pact {
+	// This test model is tightly coupled with the Pact that includes matchers in request body
+	struct SomethingLikeTestModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let request: TestResponseModel
+			struct TestResponseModel: Decodable {
+				let matchingRules: TestMatchingRulesModel
+				struct TestMatchingRulesModel: Decodable {
+					let body: TestBodyModel?
+					let headers: TestHeadersModel?
+					struct TestBodyModel: Decodable {
+						let foo: TestMatchersModel?
+						let bar: TestMatchersModel?
+						enum CodingKeys: String, CodingKey {
+							case foo = "$.foo"
+							case bar = "$.bar"
+						}
+						struct TestMatchersModel: Decodable {
+							let matchers: [TestTypeModel]
+							let combine: String?
+							struct TestTypeModel: Decodable {
+								let match: String
+								let regex: String?
+								let value: String?
+								let min: Int?
+								let max: Int?
+							}
+						}
+					}
+					struct TestHeadersModel: Decodable {
+						let foo: TestMatchersModel
+						let bar: TestMatchersModel?
+						struct TestMatchersModel: Decodable {
+							let matchers: [TestTypeModel]
+							let combine: String?
+							struct TestTypeModel: Decodable {
+								let match: String
+								let regex: String?
+								let value: String?
+								let min: Int?
+								let max: Int?
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	func prepareTestPact(responseBody: Any) -> Pact {
 		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
+
+		let interaction = Interaction(description: "test Encodable Pact", providerStates: [firstProviderState])
+			.withRequest(method: .GET, path: "/")
+			.willRespondWith(
+				status: 200,
+				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
+				body: responseBody
+			)
+
+		return Pact(
+			consumer: Pacticipant.consumer("test-consumer"),
+			provider: Pacticipant.provider("test-provider"),
+			interactions: [interaction]
+		)
+	}
+
+	func prepareTestPact(requestBody: Any, requestHeaders: Any?) -> Pact {
+		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
+
+		let headers: [String: Any]? = requestHeaders != nil ? (requestHeaders as! [String : Any]) : nil
 
 		let interaction = Interaction(description: "test Encodable Pact", providerStates: [firstProviderState])
 			.withRequest(
 				method: .GET,
 				path: "/",
-				query: ["max_results": ["100"]],
-				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
-				body: body
+				headers: headers,
+				body: requestBody
+			)
+			.willRespondWith(
+				status: 200
 			)
 
 		return Pact(
@@ -448,5 +536,3 @@ private extension PactBuilderTests {
 	}
 
 }
-
-

@@ -172,7 +172,7 @@ extension Interaction {
 	///   - body: The body of the request
 	@discardableResult
 	@objc(withRequestHTTPMethod: path: query: headers: body:)
-	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
+	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [String]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
 		return self
 	}
@@ -191,7 +191,7 @@ extension Interaction {
 	///   - headers: The response headers
 	///   - body: The response body
 	@discardableResult
-	@objc public func willRespondWith(status: Int, headers: [String: String]? = nil, body: Any? = nil) -> Interaction {
+	@objc public func willRespondWith(status: Int, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		self.response = Response(statusCode: status, headers: headers, body: body)
 		return self
 	}
