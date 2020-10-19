@@ -100,7 +100,7 @@ class PactTests: XCTestCase {
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first?.request?.headers))
+		let testResult = try XCTUnwrap(((testPact.payload["interactions"] as? [Interaction])?.first?.request?.headers) as? [String: String])
 		XCTAssertEqual(testResult["Content-Type"], expectedResult["Content-Type"])
 		XCTAssertEqual(testResult["X-Value"], expectedResult["X-Value"])
 	}
