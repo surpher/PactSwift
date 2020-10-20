@@ -33,6 +33,7 @@ $(SRCROOT)/Sources/Definitions/MatchingRuleExpressible.swift
 $(SRCROOT)/Sources/Definitions/ErrorReporter.swift
 $(SRCROOT)/Sources/Definitions/MockServerError.swift
 $(SRCROOT)/Sources/Definitions/VerificationError.swift
+$(SRCROOT)/Sources/Definitions/Toolbox.swift
 $(SRCROOT)/Sources/Definitions/RequestError.swift
 $(SRCROOT)/Sources/Definitions/AnyEncodable.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomBool.swift

@@ -44,15 +44,15 @@ extension Response: Encodable {
 		self.statusCode = statusCode
 		self.headers = headers
 
-		let bodyValues = Response.process(element: body, for: .body)
-		let headerValues = Response.process(element: headers, for: .header)
+		let bodyValues = Toolbox.process(element: body, for: .body)
+		let headerValues = Toolbox.process(element: headers, for: .header)
 
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(statusCode, forKey: .statusCode)
 			if let header = headerValues?.node { try container.encode(header, forKey: .headers) }
 			if let encodableBody = bodyValues?.node { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Response.mergeMatchingRulesFor(header: headerValues?.rules, body: bodyValues?.rules) {
+			if let matchingRules = Toolbox.mergeMatchingRulesFor(body: bodyValues?.rules, header: headerValues?.rules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
 			if let generators = bodyValues?.generators { try container.encode(generators, forKey: .generators) }
@@ -61,37 +61,6 @@ extension Response: Encodable {
 
 	public func encode(to encoder: Encoder) throws {
 		try bodyEncoder(encoder)
-	}
-
-}
-
-private extension Response {
-
-	static func mergeMatchingRulesFor(header: AnyEncodable?, body: AnyEncodable?) -> AnyEncodable? {
-		var merged: [String: AnyEncodable] = [:]
-
-		if let header = header {
-			merged["header"] = header
-		}
-
-		if let body = body {
-			merged["body"] = body
-		}
-
-		return merged.isEmpty ? nil : AnyEncodable(merged)
-	}
-
-	static func process(element: Any?, for interactionElement: PactInteractionNode) -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
-		if let element = element {
-			do {
-				let encodedElement = try PactBuilder(with: element).encoded(for: interactionElement)
-				return (node: encodedElement.node, rules: encodedElement.rules, generators: encodedElement.generators)
-			} catch {
-				fatalError("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")
-			}
-		}
-
-		return nil
 	}
 
 }
