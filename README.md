@@ -50,6 +50,13 @@ Note: If you do not need to support both iOS **and** macOS, use either `--platfo
 
 Currently focusing on getting functionality right and distribution through Carthage. The project follows the SPM structure and it _might_ work. Reliable SPM support will be looked into soon.
 
+Due to limitations of sharing binaries through SPM the following steps are required in order to use `PactSwift` through SPM in Xcode:
+
+ - Add `PactSwift` as a swift package and add it to test target
+ - Find the location of the package and its `Resources` folder in Finder or terminal (eg: `??/PactSwift/Resources/iOS` - probably in DerivedData)
+ - Replace the fake `Resources/iOS/libpact_mock_server.a` with your own compiled fat library `libpact_mock_server.a`
+ - Update Build Settings for your test target by setting `Library Search Paths` to `$(BUILD_DIR)/../../SourcePackages/checkouts/PactSwift/Resources/` - recursive
+
 ## Xcode setup - Carthage
 
 **NOTE:**  
