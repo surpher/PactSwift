@@ -29,6 +29,7 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - digits: Number of digits of the generated `Decimal` value
+		/// - Precondition: `digits` is a positive value
 		public init(digits: Int = 6) {
 			let digits = digits < 9 ? digits : 9
 			self.value = NumberHelper.randomDecimal(digits: digits)
@@ -64,6 +65,7 @@ public class ObjcRandomDecimal: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - digits: Number of digits of the generated `Decimal` value
+	/// - Precondition: `digits` is a positive value
 	@objc(digits:)
 	public init(digits: Int = 6) {
 		type = ExampleGenerator.RandomDecimal(digits: digits)
