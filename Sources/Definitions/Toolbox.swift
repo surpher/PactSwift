@@ -48,7 +48,7 @@ enum Toolbox {
 	static func process(element: Any?, for interactionElement: PactInteractionNode) -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
 		if let element = element {
 			do {
-				let encodedElement = try PactBuilder(with: element).encoded(for: interactionElement)
+				let encodedElement = try PactBuilder(with: element, for: interactionElement).encoded()
 				return (node: encodedElement.node, rules: encodedElement.rules, generators: encodedElement.generators)
 			} catch {
 				fatalError("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")

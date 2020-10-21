@@ -20,9 +20,11 @@ import Foundation
 struct PactBuilder {
 
 	let typeDefinition: Any
+	let interactionNode: PactInteractionNode
 
-	init(with value: Any) {
+	init(with value: Any, for interactionNode: PactInteractionNode) {
 		self.typeDefinition = value
+		self.interactionNode = interactionNode
 	}
 
 	/// Returns a tuple of a Pact Contract interaction's node object (eg, request `body`)
@@ -36,9 +38,7 @@ struct PactBuilder {
 	/// - `Double`
 	/// - `Array<Encodable>`
 	/// - `Dictionary<String, Encodable>`
-	///
-	/// - parameter interactionNode: The top level node in PACT contract file
-	func encoded(for interactionNode: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
+	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
 			return (
@@ -221,7 +221,7 @@ private extension PactBuilder {
 			try array
 				.enumerated()
 				.forEach {
-					let childElement = try process(element: $0.element, at: "\(node)[\($0.offset)]")
+					let childElement = try process(element: $0.element, at: interactionNode == .body ? "\(node)[\($0.offset)]" : "\(node)")
 					encodableArray.append(childElement.node)
 					matchingRules = merge(matchingRules, with: childElement.rules)
 					generators = merge(generators, with: childElement.generators)
