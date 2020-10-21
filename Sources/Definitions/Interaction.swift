@@ -159,10 +159,22 @@ extension Interaction {
 
 	/// Defines the expected request for the interaction.
 	///
-	///At a minimum the `method` and `path` required to test an API request.
+	/// At a minimum the `method` and `path` required to test an API request.
 	/// By not providing a value for `query`, `headers` or `body` it is
 	/// understood that the presence of those values in the request
 	/// is _not required_ but they can be present.
+	///
+	/// `query` expects a dictionary where the value is an array conforming
+	///  to `String` or a string `Matcher`.
+	///
+	///  ```
+	///  // Verbatim matching for '?states=VIC,NSW,ACT'
+	///  query: ["states": ["ACT", "NSW", "VIC"]]
+	///
+	///  // Matching using a string Matcher for
+	///  query: ["states": [Matcher.SomethingLike("VIC")]] // or
+	///  query: ["states": [Matcher.IncludesLike("VIC")]
+	///  ```
 	///
 	/// - Parameters:
 	///   - method: The HTTP method of the request
