@@ -70,6 +70,7 @@ public extension Matcher {
 		///
 		/// - parameter value: Expected type or object
 		/// - parameter min: Minimum expected number of occurances of provided `value`
+		/// - Precondition: `min` must be a positive value
 		public init(_ value: Any, min: Int) {
 			self.value = [value]
 			self.min = min
@@ -82,6 +83,7 @@ public extension Matcher {
 		///
 		/// - parameter value: Expected type or object
 		/// - parameter max: Maximum expected number of occurances of provided `value`
+		/// - Precondition: `min` must be a positive value
 		public init(_ value: Any, max: Int) {
 			self.value = [value]
 			self.min = nil
@@ -95,6 +97,7 @@ public extension Matcher {
 		/// - parameter value: Expected type or object
 		/// - parameter min: Minimum expected number of occurances of provided `value`
 		/// - parameter max: Maximum expected number of occurances of provided `value`
+		/// - Precondition: `min` and `max` must each be a positive value
 		public init(_ value: Any, min: Int, max: Int) {
 			self.value = [value]
 			self.min = min
@@ -123,6 +126,7 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	///   - value: Expected type or object
 	///   - min: Minimum expected number of occurances of provided `value`
 	///   - max: Maximum expected number of occurances of provided `value`
+	/// - Precondition: `min` and `max` must each be a positive value
 	@objc(value: min: max:)
 	public init(value: Any, min: Int, max: Int) {
 		type = Matcher.EachLike(value, min: min, max: max)

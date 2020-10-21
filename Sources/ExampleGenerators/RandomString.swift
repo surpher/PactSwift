@@ -33,6 +33,7 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - size: The size of generated `String`
+		/// - Precondition: `size` is a positive value
 		public init(size: Int = 20) {
 			self.generator = .string
 			self.value = String((0..<size).map { _ in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
@@ -75,6 +76,7 @@ public class OjbcRandomString: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - size: The size of generated `String`
+	/// - Precondition: `size` is a positive value
 	@objc(size:)
 	public init(size: Int = 20) {
 		type = ExampleGenerator.RandomString(size: size)

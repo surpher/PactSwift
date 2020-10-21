@@ -30,6 +30,7 @@ public extension ExampleGenerator {
 		/// - Parameters:
 		///   - min: Minimum possible value
 		///   - max: Maximum possible value
+		/// - Precondition: `min` is a positive value
 		public init(min: Int = 0, max: Int = 2_147_483_647) {
 			self.value = Int.random(in: min...max)
 			self.rules = [
@@ -53,6 +54,7 @@ public class ObjcRandomInt: NSObject, ObjcGenerator {
 	/// - Parameters:
 	///   - min: Minimum possible value
 	///   - max: Maximum possible value
+	/// - Precondition: `min` is a positive value
 	@objc(min: max:)
 	public init(min: Int = 0, max: Int = 2_147_483_647) {
 		type = ExampleGenerator.RandomInt(min: min, max: max)
