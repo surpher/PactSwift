@@ -54,7 +54,7 @@ Due to limitations of sharing binaries through SPM the following steps are requi
 
  - Add `PactSwift` as a swift package and add it to test target
  - Find the location of the package and its `Resources` folder in Finder or terminal (eg: `??/PactSwift/Resources/iOS` - probably in DerivedData)
- - Replace the fake `Resources/iOS/libpact_mock_server.a` with your own compiled fat library `libpact_mock_server.a`
+ - Replace the fake `Resources/iOS/libpact_mock_server.a` with your own compiled fat library [`libpact_mock_server.a`][pact-reference-rust]
  - Update Build Settings for your test target by setting `Library Search Paths` to `$(BUILD_DIR)/../../SourcePackages/checkouts/PactSwift/Resources/` - recursive
 
 ## Xcode setup - Carthage
