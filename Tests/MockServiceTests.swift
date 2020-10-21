@@ -552,6 +552,53 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 5)
 	}
 
+	func testMockService_Succeeds_WithMatchersInRequestQuery() throws {
+		mockService
+			.uponReceiving("Request for list of songs")
+			.withRequest(
+				method: .GET,
+				path: "/songs",
+				query: [
+					"page": [Matcher.SomethingLike("5")],
+					"size": [Matcher.SomethingLike("25")]
+				]
+			)
+			.willRespondWith(status: 200, body: [
+				"foo": "bar",
+				"array_example": [
+					Matcher.EachLike("one", min: 2, max: 10),
+					Matcher.EachLike(1, min: 1, max: 25),
+				]
+			])
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/songs?page=&size=25")!
+			var request = URLRequest(url: requestURL)
+			let session = URLSession.shared
+
+			request.setValue("Bearer bdjksl1234352", forHTTPHeaderField: "Authorization")
+
+			let task = session.dataTask(with: request) { data, response, error in
+				if let data = data {
+					do {
+						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+					} catch {
+						XCTFail("Expected a valid response object when asking for a list of /movies")
+					}
+				}
+
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 5)
+	}
+
 	// MARK: - Using Example Generators
 
 	func testMockService_Succeeds_WithGenerators() {
