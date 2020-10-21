@@ -20,7 +20,11 @@ import Foundation
 extension Bundle {
 
 	static var pact: Bundle? {
-		Bundle(identifier: "au.com.pact-foundation.PactSwift")
+		#if os(iOS)
+			return Bundle(identifier: "au.com.pact-foundation.iOS.PactSwift")
+		#elseif os(macOS)
+			return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")
+		#endif
 	}
 
 	var shortVersion: String? {
