@@ -7,7 +7,14 @@ env:
 on:
   push:
     branches:
+      - master
       - 'tech/**'
+      - 'fix/**'
+      - 'feat/**'
+      - 'feature/**'
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test_ios:
@@ -33,13 +40,10 @@ jobs:
           rustup target add x86_64-apple-darwin
           cd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target=x86_64-apple-darwin --target-dir ../../../../${{ env.RUST_BUILD_OUTPUT_DIR }}
           cd ../../../..
-          echo "⚠️ current dir"
           pwd
-          echo "⚠️ listing contents of folder ${{ env.RUST_BINARY_DIR }}:"
           ls -la ${{ env.RUST_BINARY_DIR }}
-          echo "⚠️ Renaming binary filename"
           cp ${{ env.RUST_BINARY_DIR }}/libpact_mock_server_ffi.a ${{ env.RUST_BINARY_DIR }}/libpact_mock_server.a
-          echo "⚠️ running swift build -c debug"
+          echo "👷‍♀️ running swift build -c debug"
           set -o pipefail && swift build -c debug | xcbeautify
-          echo "⚠️ running swift test"
+          echo "🧪 running swift test"
           set -o pipefail && swift test -Xlinker -L${{ env.RUST_BINARY_DIR }} | xcbeautify
