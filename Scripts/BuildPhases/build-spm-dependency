@@ -55,6 +55,9 @@ if [[ $PLATFORM == "macos" ]]; then
 	cd $SRCROOT_DIR
 	# Rename the build binary for macOS // replace RUST_MACOS_BUILD_DIR
 	cp "${RUST_MACOS_BUILD_DIR}/libpact_mock_server_ffi.dylib" "${SRCROOT_DIR}/Resources/macOS/libpact_mock_server_ffi.dylib"
+
+	echo "ℹ️ Rust build location: ${RUST_MACOS_BUILD_DIR}"
+	echo "ℹ️ PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
 else
 	# Build the Rust dependency (fat binary) for aarch64 (iOS device) and x86_64 (iOS simulator)
 	cargo lipo --release
@@ -62,4 +65,7 @@ else
 	cd $SRCROOT_DIR
 	# Rename the build binary for iOS (built with cargo lipo)
 	cp "${RUST_IOS_BUILD_DIR}/libpact_mock_server_ffi.a" "${SRCROOT_DIR}/Resources/iOS/libpact_mock_server.a"
+
+	echo "ℹ️ Rust build location: ${RUST_IOS_BUILD_DIR}"
+	echo "ℹ️ PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
 fi

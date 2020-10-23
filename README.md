@@ -31,6 +31,7 @@ The one major advantage of this framework over [`pact-consumer-swift`][pact-cons
 
 ```sh
 brew install rust
+cargo install cargo-lipo
 ```
 
 or follow installation instructions available at [rust-lang][rust-lang-installation].

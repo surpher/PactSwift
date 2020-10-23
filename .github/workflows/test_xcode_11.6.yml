@@ -33,11 +33,6 @@ jobs:
         run: |
           Scripts/prepare_build_tools
 
-      - name: Build and Test SPM support
-        run: |
-          echo "⚠️ SKIPPING: \"set -o pipefail && swift build -c debug | xcbeautify\""
-          echo "⚠️ SKIPPING: \"set -o pipefail && swift test -Xlinker -LResources/macOS | xcbeautify\""
-
       - name: Test iOS target (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
