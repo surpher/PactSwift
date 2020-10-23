@@ -46,16 +46,19 @@ carthage update
 
 Note: If you do not need to support both iOS **and** macOS, use either `--platform ios` or `--platform macos` to avoid buililding PactSwift for the platform you do not need. Use `--cache-builds --verbose` to save time and see the build progress.
 
-### Swift Package Manager (⚠️ beta ⚠️)
+### Swift Package Manager
 
-Currently focusing on getting functionality right and distribution through Carthage. The project follows the SPM structure and it _might_ work. Reliable SPM support will be looked into soon.
+```sh
+dependencies: [
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.3.0"))
+]
+```
 
-Due to limitations of sharing binaries through SPM the following steps are required in order to use `PactSwift` through SPM in Xcode:
+Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use PactSwift with SPM!
 
- - Add `PactSwift` as a swift package and add it to test target
- - Find the location of the package and its `Resources` folder in Finder or terminal (eg: `??/PactSwift/Resources/iOS` - probably in DerivedData)
- - Replace the fake `Resources/iOS/libpact_mock_server.a` with your own compiled fat library [`libpact_mock_server.a`][pact-reference-rust]
- - Update Build Settings for your test target by setting `Library Search Paths` to `$(BUILD_DIR)/../../SourcePackages/checkouts/PactSwift/Resources/` - recursive
+Currently focusing on getting functionality right and distribution through Carthage. Reliable SPM support will be looked into soon.
+
+Check [pact-swift-examples][demo-projects] for an example.
 
 ## Xcode setup - Carthage
 
@@ -84,9 +87,27 @@ Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) wit
 
 To enable logging, edit your scheme and add `PACT_ENABLE_LOGGING: true` to capture telemetry for debugging analysis using the unified logging system.
 
-<p align="center">
-  <img src="Documentation/images/04_destination_dir.png" width="600" alt="destination_dir" />
-</p>
+<img src="Documentation/images/04_destination_dir.png" width="580" alt="destination_dir" />
+
+## Xcode setup - Swift Package Manager
+
+The decision to drop Git LFS and avoid cost of running GitHub LFS has driven the decision for Xcode to build the Git Submodule [`pact-reference/rust`][]. This means the first time the project builds, it will compile the Rust code too. Any builds after that will be skipped as long as the Rust codebase is unchanged and Rust build folder contains the build libraries.
+
+### Set PactSwift as a Swift Package
+
+<img src="Documentation/images/05-swift-package.png" width="600" alt="swift package" />
+
+### Define a Build Step Run Script
+
+Set write permissions for Xcode to replace the fake binaries with the one compiled by your machine. Use the `PactSwift/Scripts/BuildPhases/build-spm-dependency` script in the package folder:
+
+<img src="Documentation/images/06-build-step.png" width="600" alt="build step" />
+
+### Set the Library Search Path
+
+Add `PactSwift/Resources -recursive` to `Library Search Paths` build setting:
+
+ <img src="Documentation/images/07-library-search-path.png" width="600" alt="library search path" />
 
 ## Writing Pact tests
 
