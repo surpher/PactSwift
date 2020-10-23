@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -xeu
+set -o pipefail
+
+# Check for dependencies
+echo "--- 👮‍♀️ Checking if Rust is installed..."
+
+if which cargo >/dev/null; then
+	echo "--- 👍 cargo installed"
+elif command -v ~/.cargo/bin/cargo &> /dev/null; then
+	PATH="$HOME/.cargo/bin:$PATH"
+	echo "--- 👍 cargo installed in ~/.cargo/bin/"
+else
+	echo "--- 🚨 Rust not installed"
+	echo "ERROR: cargo is required and is not found, not even in `~/.cargo/bin`.\nInstall Rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
+	exit 1
+fi
+
+# Path to pact-reference/rust
+RUST_SRC_DIR="Submodules/pact-reference/rust/pact_mock_server_ffi"
+
+# Bind the BUILD_DIR
+BUILD_DIR=${BUILD_DIR:-}
+
+# Building for platform
+PLATFORM=${1:="ios"}
+
+# else build for CLI
+if [ -z "$BUILD_DIR" ]; then
+	# Runnning in CLI
+	SRCROOT_DIR=${SRCROOT:-"$(command pwd)"}
+  PACTSWIFT_SRC_DIR="${SRCROOT_DIR}/${RUST_SRC_DIR}"
+	RUST_IOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/universal/release/"
+	RUST_MACOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release/"
+else
+	# Running in Xcode
+	SRCROOT_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/"
+	PACTSWIFT_SRC_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/${RUST_SRC_DIR}"
+  RUST_IOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/universal/release/"
+	RUST_MACOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release/"
+fi
+
+# Build the libpact_mock_server_ffi binary
+# Add target triples
+rustup target add aarch64-apple-ios x86_64-apple-ios x86_64-apple-darwin
+
+# Change into Submodules' dependency folder
+cd $PACTSWIFT_SRC_DIR
+
+if [[ $PLATFORM == "macos" ]]; then
+	# Build the Rust dependency for darwin architecture
+	cargo build --release --target=x86_64-apple-darwin
+	# Change back to $SRCROOT
+	cd $SRCROOT_DIR
+	# Rename the build binary for macOS // replace RUST_MACOS_BUILD_DIR
+	cp "${RUST_MACOS_BUILD_DIR}/libpact_mock_server_ffi.dylib" "${SRCROOT_DIR}/Resources/macOS/libpact_mock_server_ffi.dylib"
+else
+	# Build the Rust dependency (fat binary) for aarch64 (iOS device) and x86_64 (iOS simulator)
+	cargo lipo --release
+	# Change back to $SRCROOT
+	cd $SRCROOT_DIR
+	# Rename the build binary for iOS (built with cargo lipo)
+	cp "${RUST_IOS_BUILD_DIR}/libpact_mock_server_ffi.a" "${SRCROOT_DIR}/Resources/iOS/libpact_mock_server.a"
+fi
