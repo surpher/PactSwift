@@ -23,11 +23,11 @@ This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
 Implements [Pact Specification v3][pact-specification-v3].
 
-The one major advantage of this framework over [`pact-consumer-swift`][pact-consumer-swift] is that it does not depend on Ruby Mock Service to be running on your machine (or on CI/CD agent). Also, it does not require you to fiddle with test pre-actions and post-actions.
+The one major advantage of this framework over [`pact-consumer-swift`][pact-consumer-swift] is that it does not depend on Ruby Mock Service to be running on your machine (or on CI/CD agent) but instead takes advantage of [`libpact_mock_server`][pact-reference-rust] binary and running it "in process". Also, it does not require you to fiddle with test pre-actions and post-actions.
 
 ## Installation
 
-`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It is build as a dynamic library during a PactSwift Build Phase and requires Rust installed on your machine:
+`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a PactSwift Build Phase and requires Rust installed on your machine:
 
 ```sh
 brew install rust
@@ -35,6 +35,8 @@ cargo install cargo-lipo
 ```
 
 or follow installation instructions available at [rust-lang][rust-lang-installation].
+
+The first time `PactSwift` is built on your machine it will take quite a long time due to also compiling the Rust binary. As long as the compiled binary exists in the Rust build folder, it will skip re-compiling it and build times should be much shorter.
 
 ### Carthage
 
@@ -45,8 +47,6 @@ github "surpher/PactSwift"
 ```sh
 carthage update
 ```
-
-Note: If you do not need to support both iOS **and** macOS, use either `--platform ios` or `--platform macos` to avoid buililding PactSwift for the platform you do not need. Use `--cache-builds --verbose` to save time and see the build progress.
 
 ### Swift Package Manager
 
@@ -60,7 +60,7 @@ Due to limitations of sharing binaries through SPM and the size of the compiled 
 
 Currently focusing on getting functionality right and distribution through Carthage. Reliable SPM support will be looked into soon.
 
-Check [pact-swift-examples][demo-projects] for an example.
+Check [pact-swift-examples][demo-projects] for an example on how to set it up for Xcode and CI/CD.
 
 ## Xcode setup - Carthage
 
@@ -81,19 +81,9 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 ![runpath_search_paths](./Documentation/images/03_runpath_search_paths.png)
 
-#### Environment variables (recommended)
-
-Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
-
-⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`.
-
-To enable logging, edit your scheme and add `PACT_ENABLE_LOGGING: true` to capture telemetry for debugging analysis using the unified logging system.
-
-<img src="Documentation/images/04_destination_dir.png" width="580" alt="destination_dir" />
-
 ## Xcode setup - Swift Package Manager
 
-The decision to drop Git LFS and avoid cost of running GitHub LFS has driven the decision for Xcode to build the Git Submodule [`pact-reference/rust`][]. This means the first time the project builds, it will compile the Rust code too. Any builds after that will be skipped as long as the Rust codebase is unchanged and Rust build folder contains the build libraries.
+The decision to drop Git LFS and avoid cost of running GitHub LFS has driven the decision for Xcode to build the Git Submodule [`pact-reference/rust`][pact-reference-rust]. This means the first time the project builds, it will compile the Rust code too. Any builds after that will be skipped as long as the Rust codebase is unchanged and Rust build folder contains the build libraries.
 
 ### Set PactSwift as a Swift Package
 
@@ -105,11 +95,21 @@ Set write permissions for Xcode to replace the fake binaries with the one compil
 
 <img src="Documentation/images/06-build-step.png" width="600" alt="build step" />
 
-### Set the Library Search Path
+### Edit search paths
 
-Add `PactSwift/Resources -recursive` to `Library Search Paths` build setting:
+Add `$BUILD_DIR/../../SourcePackages/checkouts/PactSwift/Resources` -recursive to `Library Search Paths` and `Frameworks Search Paths` in your test target's build settings.
 
  <img src="Documentation/images/07-library-search-path.png" width="600" alt="library search path" />
+
+## PactSwift Environment variables
+
+Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
+
+⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`.
+
+To enable logging, edit your scheme and add `PACT_ENABLE_LOGGING: true` to capture telemetry for debugging analysis using the unified logging system.
+
+<img src="Documentation/images/04_destination_dir.png" width="580" alt="destination_dir" />
 
 ## Writing Pact tests
 
