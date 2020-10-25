@@ -41,7 +41,7 @@ The first time `PactSwift` is built on your machine it will take quite a long ti
 ### Carthage
 
 ```sh
-github "surpher/PactSwift"
+github "surpher/PactSwift" ~> 0.3
 ```
 
 ### Swift Package Manager
@@ -54,9 +54,7 @@ dependencies: [
 
 Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use PactSwift with SPM!
 
-Currently focusing on getting functionality right and distribution through Carthage. Reliable SPM support will be looked into soon.
-
-Check [pact-swift-examples][demo-projects] for an example on how to set it up for Xcode and CI/CD.
+See [pact-swift-examples][demo-projects] for an example on how to set it up for Xcode and CI/CD.
 
 ## Xcode setup - Carthage
 
