@@ -196,8 +196,34 @@ class PassingTestsExample: XCTestCase {
   }
 
   // More tests for other interactions and/or provider states...
-  func testGetUsers_Unauthorised() {
-    // ... code
+  func testCreateUser() {
+    mockService
+      .uponReceiving("A request to create a user")
+      .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
+      .withRequest(
+        method: .POST,
+        path: "/api/users",
+        body: [
+          "first_name": "John",
+          "last_name": "Appleseed",
+          "age": Matcher.SomethingLike(42),
+          "dob": Matcher.RegexLike("15-07-2001", term: #"\d{4}:\d{2}:\d{2}"#),
+          "trivia": [
+            "favourite_words": Matcher.EachLike("foo"),
+            "bar": Matcher.IncludesLike("baz")
+          ]
+        ]
+      )
+      .willRespondWith(
+        status: 201
+      )
+
+   let apiClient = RestManager()
+
+    mockService.run { completed in
+     // trigger your network request and assert the expectations
+     completed()
+    }
   }
   // etc.
 }
