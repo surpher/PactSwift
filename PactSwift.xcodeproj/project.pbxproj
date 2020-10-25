@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD05C1D22545284000922161 /* libpact_mock_server.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD05C1D12545284000922161 /* libpact_mock_server.a */; };
 		AD10361424468AB3002C97CA /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD10361324468AB3002C97CA /* MockService.swift */; };
 		AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
 		AD4B970725138FCE00C37560 /* RandomDecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B970425138F7600C37560 /* RandomDecimalTests.swift */; };
@@ -170,8 +171,6 @@
 		ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4703244D101700E4F7EE /* ErrorReportable.swift */; };
 		ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */; };
 		ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE2937E2435DB14008AFBC9 /* ProviderState.swift */; };
-		ADE512F1253533840020EF57 /* libpact_mock_server_ffi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADE512F0253533840020EF57 /* libpact_mock_server_ffi.dylib */; };
-		ADE512F8253533E90020EF57 /* libpact_mock_server_ffi.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = ADE512F0253533840020EF57 /* libpact_mock_server_ffi.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 		ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C6250A3C4700274672 /* Matcher.swift */; };
 		ADE9B3CA250A435B00274672 /* EqualToTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADE9B3C9250A435B00274672 /* EqualToTests.swift */; };
@@ -204,7 +203,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ADE512F8253533E90020EF57 /* libpact_mock_server_ffi.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +210,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AD05C1D12545284000922161 /* libpact_mock_server.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpact_mock_server.a; sourceTree = "<group>"; };
 		AD10361324468AB3002C97CA /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		AD103617244693A6002C97CA /* MockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceTests.swift; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
@@ -319,7 +318,6 @@
 		ADDE4703244D101700E4F7EE /* ErrorReportable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportable.swift; sourceTree = "<group>"; };
 		ADDE4705244D11DE00E4F7EE /* ErrorReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReporter.swift; sourceTree = "<group>"; };
 		ADE2937E2435DB14008AFBC9 /* ProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderState.swift; sourceTree = "<group>"; };
-		ADE512F0253533840020EF57 /* libpact_mock_server_ffi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libpact_mock_server_ffi.dylib; sourceTree = "<group>"; };
 		ADE9B3C6250A3C4700274672 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 		ADE9B3C9250A435B00274672 /* EqualToTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualToTests.swift; sourceTree = "<group>"; };
 		ADEFD133253EEF230081A1B1 /* Toolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbox.swift; sourceTree = "<group>"; };
@@ -346,7 +344,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADE512F1253533840020EF57 /* libpact_mock_server_ffi.dylib in Frameworks */,
+				AD05C1D22545284000922161 /* libpact_mock_server.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,7 +518,7 @@
 		AD8FC80B2463BD8B00361854 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				ADE512F0253533840020EF57 /* libpact_mock_server_ffi.dylib */,
+				AD05C1D12545284000922161 /* libpact_mock_server.a */,
 			);
 			path = macOS;
 			sourceTree = "<group>";
@@ -747,9 +745,8 @@
 				AD8FC7D02463A09900361854 /* Lint Project */,
 				AD8FC7CF2463A08900361854 /* Lint Target */,
 				AD8FC7D12463A0A100361854 /* Swiftlint */,
-				ADE512E625352C370020EF57 /* Cargo build (libpact_mock_server.dylib) */,
+				ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library  - `cargo build --release` */,
 				AD8FC7B32463A06F00361854 /* Sources */,
-				ADE512E725352C910020EF57 /* Update dylib references */,
 				AD8FC7B42463A06F00361854 /* Frameworks */,
 				AD8FC7B52463A06F00361854 /* Resources */,
 				ADE512CF2535119D0020EF57 /* Embed Libraries */,
@@ -1007,7 +1004,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run SwiftLint before even attempting to compil\n./Scripts/build_file_list_and_swiftlint PactSwift ../.swiftlint.yml\n";
 		};
-		ADE512E625352C370020EF57 /* Cargo build (libpact_mock_server.dylib) */ = {
+		ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library  - `cargo build --release` */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1016,32 +1013,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Cargo build (libpact_mock_server.dylib)";
+			name = "Build libpact_mock_server.a static library  - `cargo build --release`";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.dylib \"$PROJECT_DIR/Resources/macOS/libpact_mock_server_ffi.dylib\"\n";
-		};
-		ADE512E725352C910020EF57 /* Update dylib references */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Update dylib references";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export DYLIB=libpact_mock_server_ffi.dylib\n\nmkdir -p \"$TARGET_BUILD_DIR/$TARGET_NAME.framework/Versions/A/Frameworks\"\ncp -f \"$PROJECT_DIR/Resources/macOS/$DYLIB\" \"$TARGET_BUILD_DIR/$TARGET_NAME.framework/Versions/A/Frameworks\"\n\ninstall_name_tool -change @executable_path/$DYLIB @loader_path/../Frameworks/$DYLIB \"$TARGET_BUILD_DIR/$TARGET_NAME.framework/Versions/A/Frameworks/$DYLIB\"\n";
+			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.a \"$PROJECT_DIR/Resources/macOS/libpact_mock_server.a\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

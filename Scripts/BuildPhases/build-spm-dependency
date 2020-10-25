@@ -30,15 +30,15 @@ PLATFORM=${1:="ios"}
 if [ -z "$BUILD_DIR" ]; then
 	# Runnning in CLI
 	SRCROOT_DIR=${SRCROOT:-"$(command pwd)"}
-  PACTSWIFT_SRC_DIR="${SRCROOT_DIR}/${RUST_SRC_DIR}"
-	RUST_IOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/universal/release/"
-	RUST_MACOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release/"
+	PACTSWIFT_SRC_DIR="${SRCROOT_DIR}/${RUST_SRC_DIR}"
+	RUST_IOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/universal/release"
+	RUST_MACOS_BUILD_DIR="${SRCROOT_DIR}/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release"
 else
 	# Running in Xcode
-	SRCROOT_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/"
+	SRCROOT_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift"
 	PACTSWIFT_SRC_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/${RUST_SRC_DIR}"
-  RUST_IOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/universal/release/"
-	RUST_MACOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release/"
+	RUST_IOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/universal/release"
+	RUST_MACOS_BUILD_DIR="${BUILD_DIR}/../../SourcePackages/checkouts/PactSwift/Submodules/pact-reference/rust/target/x86_64-apple-darwin/release"
 fi
 
 # Build the libpact_mock_server_ffi binary
@@ -54,10 +54,10 @@ if [[ $PLATFORM == "macos" ]]; then
 	# Change back to $SRCROOT
 	cd $SRCROOT_DIR
 	# Rename the build binary for macOS // replace RUST_MACOS_BUILD_DIR
-	cp "${RUST_MACOS_BUILD_DIR}/libpact_mock_server_ffi.dylib" "${SRCROOT_DIR}/Resources/macOS/libpact_mock_server_ffi.dylib"
+	cp "${RUST_MACOS_BUILD_DIR}/libpact_mock_server_ffi.a" "${SRCROOT_DIR}/Resources/macOS/libpact_mock_server.a"
 
-	echo "ℹ️ Rust build location: ${RUST_MACOS_BUILD_DIR}"
-	echo "ℹ️ PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
+	echo "[INFO]: Rust build location: ${RUST_MACOS_BUILD_DIR}"
+	echo "[INFO]: PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
 else
 	# Build the Rust dependency (fat binary) for aarch64 (iOS device) and x86_64 (iOS simulator)
 	cargo lipo --release
@@ -66,6 +66,6 @@ else
 	# Rename the build binary for iOS (built with cargo lipo)
 	cp "${RUST_IOS_BUILD_DIR}/libpact_mock_server_ffi.a" "${SRCROOT_DIR}/Resources/iOS/libpact_mock_server.a"
 
-	echo "ℹ️ Rust build location: ${RUST_IOS_BUILD_DIR}"
-	echo "ℹ️ PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
+	echo "[INFO]: Rust build location: ${RUST_IOS_BUILD_DIR}"
+	echo "[INFO]: PactSwift Resources location: ${SRCROOT_DIR}/Resources/"
 fi
