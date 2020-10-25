@@ -16,8 +16,8 @@
 </p>
 
 > ⚠️ **NOTE** ⚠️  
-> _PactSwift_ is under heavy development and not all features are complete.
-> Not everything is documented properly.
+> _PactSwift_ is under heavy development. 
+> Any and all help with testing, raising issues and suggestions for improvement is more than welcome.
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
