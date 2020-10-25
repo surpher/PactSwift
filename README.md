@@ -201,7 +201,7 @@ class PassingTestsExample: XCTestCase {
           "first_name": "John",
           "last_name": "Appleseed",
           "age": Matcher.SomethingLike(42),
-          "dob": Matcher.RegexLike("15-07-2001", term: #"\d{4}:\d{2}:\d{2}"#),
+          "dob": Matcher.RegexLike("15-07-2001", term: #"\d{2}-\d{2}-\d{4}"#),
           "trivia": [
             "favourite_words": Matcher.EachLike("foo"),
             "bar": Matcher.IncludesLike("baz")
