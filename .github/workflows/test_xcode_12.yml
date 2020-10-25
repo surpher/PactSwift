@@ -1,0 +1,44 @@
+name: Run tests (12)
+
+on:
+  push:
+    branches:
+      - master
+      - 'tech/**'
+      - 'fix/**'
+      - 'feat/**'
+      - 'feature/**'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test_ios:
+    name: Run tests
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 12.2
+        run: sudo xcode-select -switch /Applications/Xcode_12.app
+
+      - name: Prepare Tools
+        run: |
+          Scripts/prepare_build_tools
+
+      - name: Test iOS target (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+
+      - name: Test macOS target (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" | xcbeautify
+
+      - name: Test it builds for Carthage
+        run: |
+          echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
+          ./Scripts/carthage_xcode12 build --no-skip-current

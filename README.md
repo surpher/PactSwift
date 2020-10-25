@@ -8,7 +8,7 @@
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
 [![CI (11.6)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.6)/badge.svg)][github-action-xcode11.6]
-[![CI (12beta)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12beta)/badge.svg)][github-action-xcode12beta]
+[![CI (12)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12)/badge.svg)][github-action-xcode12]
 [![Run tests for SPM (Xcode 12)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20for%20SPM%20(Xcode%2012)/badge.svg)][github-action-xcode-spm]
 
 <p align="center">
@@ -287,7 +287,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 [github-action-xcode11.6]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.6%29%22
-[github-action-xcode12beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2812beta%29%22
+[github-action-xcode12]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2812%29%22
 [github-action-xcode-spm]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+for+SPM+%28Xcode+12%29%22
 [issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
