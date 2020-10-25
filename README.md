@@ -77,7 +77,7 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 ## Xcode setup - Swift Package Manager
 
-The decision to drop Git LFS and avoid cost of running GitHub LFS has driven the decision for Xcode to build the Git Submodule [`pact-reference/rust`][pact-reference-rust]. This means the first time the project builds, it will compile the Rust code too. Any builds after that will be skipped as long as the Rust codebase is unchanged and Rust build folder contains the build libraries.
+The decision to drop Git LFS and avoid cost of running GitHub LFS has driven the decision for Xcode to build the Git Submodule [`pact-reference/rust`][pact-reference-rust]. This means the first time the project builds, it will compile the Rust code too. Any builds after that will be skipped as long as the Rust codebase is unchanged and Rust build folder contains the built binaries.
 
 ### Set PactSwift as a Swift Package
 
