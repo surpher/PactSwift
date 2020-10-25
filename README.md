@@ -44,10 +44,6 @@ The first time `PactSwift` is built on your machine it will take quite a long ti
 github "surpher/PactSwift"
 ```
 
-```sh
-carthage update
-```
-
 ### Swift Package Manager
 
 ```sh
