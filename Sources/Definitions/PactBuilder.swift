@@ -22,6 +22,11 @@ struct PactBuilder {
 	let typeDefinition: Any
 	let interactionNode: PactInteractionNode
 
+	/// Creates a PactBuilder object which processes the DSL
+	///
+	/// - Parameters:
+	///   - value: The DSL to process and extract matchers and example generators
+	///   - interactionNode: The part of interaction to process (eg: `body`, `header` or `query`)
 	init(with value: Any, for interactionNode: PactInteractionNode) {
 		self.typeDefinition = value
 		self.interactionNode = interactionNode
@@ -32,12 +37,7 @@ struct PactBuilder {
 	/// It erases node object's type and casts the node and leaf values into an `Encodable`-safe type.
 	///
 	/// Transforms the following supported types into `AnyEncodable`:
-	///
-	/// - `String`
-	/// - `Int`
-	/// - `Double`
-	/// - `Array<Encodable>`
-	/// - `Dictionary<String, Encodable>`
+	/// `String`, `Int`, `Double`, `Decimal`, `Bool`, `Array<Encodable>`, `Dictionary<String, Encodable>`, `PactSwift.Matcher<>`, `PactSwift.ExampleGenerator<>`
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
@@ -74,7 +74,7 @@ extension PactBuilder {
 private extension PactBuilder {
 
 	//swiftlint:disable:next cyclomatic_complexity function_body_length
-		func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func process(element: Any, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
 		let elementToProcess = mapPactObject(element)
