@@ -281,9 +281,9 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
 [carthage]: https://github.com/Carthage/Carthage
-[code-of-conduct]: ./Documentation/CODE_OF_CONDUCT.md
+[code-of-conduct]: ./CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
-[contributing]: ./Documentation/CONTRIBUTING.md
+[contributing]: ./CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 [github-action-xcode11.6]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.6%29%22
