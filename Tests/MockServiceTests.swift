@@ -385,6 +385,33 @@ class MockServiceTests: XCTestCase {
 
 	// MARK: - Using matchers
 
+	func testMockService_Succeeds_ForGetWithMatcherInRequestPath() {
+		mockService
+			.uponReceiving("Request for a list of foo")
+			.given("foos exist")
+			.withRequest(
+				method: .GET,
+				path: Matcher.RegexLike("/hello/dear/world", term: #"^/\w+/([a-z])+/world$"#)
+			)
+			.willRespondWith(status: 200)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/hello/cruel/world")!) { data, response, error in
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(response.statusCode, 200)
+				}
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 1)
+	}
+
 	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() {
 		mockService
 			.uponReceiving("Request to create a new user")
