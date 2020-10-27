@@ -25,12 +25,14 @@ public extension Matcher {
 	/// Use this matcher where you expect a term defined
 	/// by a regular expression term.
 	///
+	/// Request `path` accepts this matcher.
+	///
 	/// ```
 	/// [
 	///   "foo": Matcher.RegexLike("2020-04-27", term: "\d{4}-\d{2}-\d{2}")
 	/// ]
 	/// ```
-	struct RegexLike: MatchingRuleExpressible {
+	struct RegexLike: MatchingRuleExpressible, PactPathParameter {
 		internal let value: Any
 		internal let term: String
 
