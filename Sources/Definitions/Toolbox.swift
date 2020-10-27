@@ -23,7 +23,7 @@ enum Toolbox {
 	///   - body: The PactBuilder processed object representing interaction's body
 	///   - query: The PactBuilder processed object representing interaction's query
 	///   - header The PactBuilder processed object representing interaction's header
-	static func mergeMatchingRulesFor(body: AnyEncodable?, query: AnyEncodable? = nil, header: AnyEncodable? = nil) -> AnyEncodable? {
+	static func merge(body: AnyEncodable?, query: AnyEncodable? = nil, header: AnyEncodable? = nil) -> AnyEncodable? {
 		var merged: [String: AnyEncodable] = [:]
 
 		if let header = header {

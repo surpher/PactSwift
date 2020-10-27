@@ -52,10 +52,12 @@ extension Response: Encodable {
 			try container.encode(statusCode, forKey: .statusCode)
 			if let header = headerValues?.node { try container.encode(header, forKey: .headers) }
 			if let encodableBody = bodyValues?.node { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Toolbox.mergeMatchingRulesFor(body: bodyValues?.rules, header: headerValues?.rules) {
+			if let matchingRules = Toolbox.merge(body: bodyValues?.rules, header: headerValues?.rules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
-			if let generators = bodyValues?.generators { try container.encode(generators, forKey: .generators) }
+			if let generators = Toolbox.merge(body: bodyValues?.generators, header: headerValues?.generators) {
+				try container.encode(generators, forKey: .generators)
+			}
 		}
 	}
 

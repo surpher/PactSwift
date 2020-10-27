@@ -43,8 +43,8 @@ struct PactBuilder {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
 			return (
 				node: processedType.node,
-				rules: processedType.rules.isEmpty ? nil : AnyEncodable(AnyEncodable(processedType.rules)),
-				generators: processedType.generators.isEmpty ? nil : AnyEncodable([interactionNode.rawValue: AnyEncodable(AnyEncodable(processedType.generators))])
+				rules: processedType.rules.isEmpty ? nil : AnyEncodable(processedType.rules),
+				generators: processedType.generators.isEmpty ? nil : AnyEncodable(processedType.generators)
 			)
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
