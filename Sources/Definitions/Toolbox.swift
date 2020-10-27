@@ -22,8 +22,9 @@ enum Toolbox {
 	/// - Parameters:
 	///   - body: The PactBuilder processed object representing interaction's body
 	///   - query: The PactBuilder processed object representing interaction's query
-	///   - header The PactBuilder processed object representing interaction's header
-	static func merge(body: AnyEncodable?, query: AnyEncodable? = nil, header: AnyEncodable? = nil) -> AnyEncodable? {
+	///   - header: The PactBuilder processed object representing interaction's header
+	///   - path: The PactBuilder processed object representing request path
+	static func merge(body: AnyEncodable?, query: AnyEncodable? = nil, header: AnyEncodable? = nil, path: AnyEncodable? = nil) -> [String: AnyEncodable]? {
 		var merged: [String: AnyEncodable] = [:]
 
 		if let header = header {
@@ -38,20 +39,24 @@ enum Toolbox {
 			merged["query"] = query
 		}
 
-		return merged.isEmpty ? nil : AnyEncodable(merged)
+		if let path = path {
+			merged["path"] = path
+		}
+
+		return merged.isEmpty ? nil : merged
 	}
 
 	/// Runs the `Any` type through PactBuilder and returns a Pact tuple
 	/// - Parameters:
 	///   - element: The object to process through PactBuilder
 	///   - interactionElement: The network interaction element the object relates to
-	static func process(element: Any?, for interactionElement: PactInteractionNode) -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
+	static func process(element: Any?, for interactionElement: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
 		if let element = element {
 			do {
 				let encodedElement = try PactBuilder(with: element, for: interactionElement).encoded()
 				return (node: encodedElement.node, rules: encodedElement.rules, generators: encodedElement.generators)
 			} catch {
-				fatalError("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")
+				throw EncodingError.notEncodable("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")
 			}
 		}
 

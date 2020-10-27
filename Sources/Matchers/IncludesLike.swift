@@ -54,8 +54,10 @@ public extension Matcher {
 
 		/// Defines a Pact matcher that expects a `Set` of `String` values to be present.
 		///
-		/// - Parameter values: Set of `String` values expected to be present
-		/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
+		/// - Parameters:
+		///   - values: Set of `String` values expected to be present
+		///   - combine: Defines whether matchers are combine with logical AND or OR
+		///   - generate: The value MockServer will return
 		public init(_ values: String..., combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values
@@ -64,8 +66,10 @@ public extension Matcher {
 
 		/// Defines a Pact matcher that expects a set of values.
 		///
-		/// - Parameter values: Set of `String` values expected to be present
-		/// - Parameter combine: Defines whether matchers are combine with logical AND or OR
+		/// - Parameters:
+		///   - values: Set of `String` values expected to be present
+		///   - combine: Defines whether matchers are combine with logical AND or OR
+		///   - generate: The value MockServer will return
 		public init(_ values: [String], combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values

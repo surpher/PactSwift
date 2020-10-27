@@ -19,7 +19,7 @@
 public struct Request {
 
 	let httpMethod: PactHTTPMethod
-	let path: String
+	let path: PactPathParameter
 	let query: [String: [Any]]?
 	let headers: [String: Any]?
 
@@ -28,8 +28,7 @@ public struct Request {
 		let queryString = query?.compactMap { "\($0)=\($1.map { "\($0)," })" }.dropLast().joined(separator: "&")
 		let headersString = headers?.compactMap { "\"\($0)\": \"\($1)\"" }.joined(separator: "\n\t")
 
-		return
-			"\(request) \(queryString ?? "")\(headersString != nil ? "\n\n\tHeaders:\n\t" + headersString! : "")"
+		return "\(request) \(queryString ?? "")\(headersString != nil ? "\n\n\tHeaders:\n\t" + headersString! : "")"
 	}
 
 	private let bodyEncoder: (Encoder) throws -> Void
@@ -56,24 +55,25 @@ extension Request: Encodable {
 	///   - query: A url query
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
-	init(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) {
+	init(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) throws {
 		self.httpMethod = method
 		self.path = path
 		self.query = query
 		self.headers = headers
 
-		let queryValues = Toolbox.process(element: query, for: .query)
-		let headersValues = Toolbox.process(element: headers, for: .header)
-		let bodyValues = Toolbox.process(element: body, for: .body)
+		let queryValues = try Toolbox.process(element: query, for: .query)
+		let headersValues = try Toolbox.process(element: headers, for: .header)
+		let bodyValues = try Toolbox.process(element: body, for: .body)
+		let pathValues = try Toolbox.process(element: path, for: .path)
 
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)
 			try container.encode(method, forKey: .httpMethod)
-			try container.encode(path, forKey: .path)
+			if let path = pathValues?.node { try container.encode(path, forKey: .path) }
 			if let query = queryValues?.node { try container.encode(query, forKey: .query) }
 			if let headers = headersValues?.node { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = bodyValues?.node { try container.encode(encodableBody, forKey: .body) }
-			if let matchingRules = Toolbox.merge(body: bodyValues?.rules, query: queryValues?.rules, header: headersValues?.rules) {
+			if let matchingRules = Toolbox.merge(body: bodyValues?.rules, query: queryValues?.rules, header: headersValues?.rules, path: pathValues?.rules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
 			if let generators = Toolbox.merge(body: bodyValues?.generators, query: queryValues?.generators, header: headersValues?.generators) {

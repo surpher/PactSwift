@@ -40,12 +40,12 @@ extension Response: Encodable {
 	///   - statusCode: The status code of the API response
 	///   - headers: Headers of the API response
 	///   - body: Optional body in the API response
-	init(statusCode: Int, headers: [String: Any]? = nil, body: Any? = nil) {
+	init(statusCode: Int, headers: [String: Any]? = nil, body: Any? = nil) throws {
 		self.statusCode = statusCode
 		self.headers = headers
 
-		let bodyValues = Toolbox.process(element: body, for: .body)
-		let headerValues = Toolbox.process(element: headers, for: .header)
+		let bodyValues = try Toolbox.process(element: body, for: .body)
+		let headerValues = try Toolbox.process(element: headers, for: .header)
 
 		self.bodyEncoder = {
 			var container = $0.container(keyedBy: CodingKeys.self)

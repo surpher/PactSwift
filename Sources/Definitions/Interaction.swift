@@ -183,9 +183,20 @@ extension Interaction {
 	///   - headers: The header parameters of the request
 	///   - body: The body of the request
 	@discardableResult
-	@objc(withRequestHTTPMethod: path: query: headers: body:)
-	public func withRequest(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
-		self.request = Request(method: method, path: path, query: query, headers: headers, body: body)
+	public func withRequest(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
+		do {
+			self.request = try Request(method: method, path: path, query: query, headers: headers, body: body)
+		} catch {
+			Logger.log(message: "Can not prepare a Request with non-encodable data!")
+		}
+
+		return self
+	}
+
+	@discardableResult
+	@objc(withReqeustHTTPMethod: path: query: headers: body:)
+	public func objCWithRequest(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
+		withRequest(method: method, path: path, query: query, headers: headers, body: body)
 		return self
 	}
 
@@ -204,7 +215,11 @@ extension Interaction {
 	///   - body: The response body
 	@discardableResult
 	@objc public func willRespondWith(status: Int, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
-		self.response = Response(statusCode: status, headers: headers, body: body)
+		do {
+			self.response = try Response(statusCode: status, headers: headers, body: body)
+		} catch {
+			Logger.log(message: "Can not prepare a Response with non-encodable data!")
+		}
 		return self
 	}
 

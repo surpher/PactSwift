@@ -1,6 +1,7 @@
 $(SRCROOT)/Sources/Extensions/Dictionary+Pact.swift
 $(SRCROOT)/Sources/Extensions/Date+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Bundle+Pact.swift
+$(SRCROOT)/Sources/Extensions/String+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/UUID+Pact.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)/Sources/Matchers/EqualTo.swift
@@ -12,6 +13,7 @@ $(SRCROOT)/Sources/Matchers/IncludesLike.swift
 $(SRCROOT)/Sources/Matchers/DecimalLike.swift
 $(SRCROOT)/Sources/Matchers/MatchNull.swift
 $(SRCROOT)/Sources/Definitions/Metadata.swift
+$(SRCROOT)/Sources/Definitions/PactPathParameter.swift
 $(SRCROOT)/Sources/Definitions/PactInteractionNode.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorHandler.swift
 $(SRCROOT)/Sources/Definitions/PactHTTPMethod.swift
@@ -24,6 +26,7 @@ $(SRCROOT)/Sources/Definitions/PactInteractionElement.swift
 $(SRCROOT)/Sources/Definitions/PactError.swift
 $(SRCROOT)/Sources/Definitions/Interaction.swift
 $(SRCROOT)/Sources/Definitions/Request.swift
+$(SRCROOT)/Sources/Definitions/EncodingError.swift
 $(SRCROOT)/Sources/Definitions/ExampleGeneratorExpressible.swift
 $(SRCROOT)/Sources/Definitions/ErrorReportable.swift
 $(SRCROOT)/Sources/Definitions/PactBuilder.swift
@@ -51,4 +54,4 @@ $(SRCROOT)/Sources/Services/MockServer.swift
 $(SRCROOT)/Sources/Services/PactFileManager.swift
 $(SRCROOT)/Sources/Services/PactSocketFinder.swift
 $(SRCROOT)/Sources/Services/PactLoggingLevel.swift
-$(SRCROOT)/Sources/MockService.swift
+$(SRCROOT)/Sources/Services/MockService.swift

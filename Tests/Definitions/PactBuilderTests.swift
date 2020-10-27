@@ -345,6 +345,26 @@ class PactBuilderTests: XCTestCase {
 		XCTAssertEqual(testResult.matchingRules.body?.foo?.matchers.first?.match, "type")
 	}
 
+	// MARK: - Testing parsing for path
+
+	func testPact_ProcessesMatcher_InRequestPath() throws {
+		let path = Matcher.RegexLike("/some/1234", term: #"^/some/\{d}+$"#)
+		
+		let testHeaders: Any = [
+			"foo": Matcher.SomethingLike("bar"),
+			"bar": ExampleGenerator.RandomBool(),
+		]
+		let testBody: Any = [
+			"foo": Matcher.SomethingLike("baz"),
+		]
+
+		let testPact = prepareTestPact(path: path, requestBody: testBody, requestHeaders: testHeaders)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.path?.matchers.first)
+
+		XCTAssertEqual(testResult.match, "regex")
+		XCTAssertEqual(testResult.regex, #"^/some/\{d}+$"#)
+	}
+
 }
 
 // MARK: - Private Utils -
@@ -458,6 +478,7 @@ private extension PactBuilderTests {
 				struct TestMatchingRulesModel: Decodable {
 					let body: TestBodyModel?
 					let header: TestHeadersModel?
+					let path: TestPathModel?
 					struct TestBodyModel: Decodable {
 						let foo: TestMatchersModel?
 						let bar: TestMatchersModel?
@@ -490,6 +511,14 @@ private extension PactBuilderTests {
 								let min: Int?
 								let max: Int?
 							}
+						}
+					}
+					struct TestPathModel: Decodable {
+						let matchers: [TestTypeModel]
+						let combine: String?
+						struct TestTypeModel: Decodable {
+							let match: String
+							let regex: String
 						}
 					}
 				}
@@ -530,7 +559,7 @@ private extension PactBuilderTests {
 		)
 	}
 
-	func prepareTestPact(requestBody: Any, requestHeaders: Any?) -> Pact {
+	func prepareTestPact(path: PactPathParameter = "/", requestBody: Any, requestHeaders: Any?) -> Pact {
 		let firstProviderState = ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"])
 
 		let headers: [String: Any]? = requestHeaders != nil ? (requestHeaders as! [String : Any]) : nil
@@ -538,7 +567,7 @@ private extension PactBuilderTests {
 		let interaction = Interaction(description: "test Encodable Pact", providerStates: [firstProviderState])
 			.withRequest(
 				method: .GET,
-				path: "/",
+				path: path,
 				headers: headers,
 				body: requestBody
 			)

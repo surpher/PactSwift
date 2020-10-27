@@ -1,6 +1,6 @@
 //
-//  Created by Marko Justinek on 9/4/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Created by Marko Justinek on 27/10/20.
+//  Copyright © 2020 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -17,11 +17,16 @@
 
 import Foundation
 
-enum PactInteractionNode: String {
+enum EncodingError: Error {
+	case notEncodable(Any?)
+	case unknown
 
-	case body
-	case header
-	case path
-	case query
-
+	var localizedDescription: String {
+		switch self {
+		case .notEncodable(let element):
+			return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
+		default:
+			return "Error casting unknown type into an Encodable type!"
+		}
+	}
 }

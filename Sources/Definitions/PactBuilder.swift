@@ -41,31 +41,13 @@ struct PactBuilder {
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
-			return (
-				node: processedType.node,
-				rules: processedType.rules.isEmpty ? nil : AnyEncodable(processedType.rules),
-				generators: processedType.generators.isEmpty ? nil : AnyEncodable(processedType.generators)
-			)
+			let node = processedType.node
+			let rules = process(matchingRules: processedType.rules)
+			let generators = processedType.generators.isEmpty ? nil : AnyEncodable(processedType.generators)
+
+			return (node: node, rules: rules, generators: generators)
 		} catch {
 			throw EncodingError.notEncodable(typeDefinition)
-		}
-	}
-
-}
-
-extension PactBuilder {
-
-	enum EncodingError: Error {
-		case notEncodable(Any?)
-		case unknown
-
-		var localizedDescription: String {
-			switch self {
-			case .notEncodable(let element):
-				return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
-			default:
-				return "Error casting unknown type into an Encodable type!"
-			}
 		}
 	}
 
@@ -208,6 +190,15 @@ private extension PactBuilder {
 			return generator.type
 		default:
 			return value
+		}
+	}
+
+	// Processes the rules and handles the specific rule handling for Request path
+	func process(matchingRules: [String: AnyEncodable]) -> AnyEncodable? {
+		if interactionNode == .path, let pathRulesKey = matchingRules.keys.first, pathRulesKey.isEmpty == true {
+			return AnyEncodable(matchingRules.values.first)
+		} else {
+			return matchingRules.isEmpty ? nil : AnyEncodable(matchingRules)
 		}
 	}
 

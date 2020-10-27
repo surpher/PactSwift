@@ -108,7 +108,7 @@ class AnyEncodableTests: XCTestCase {
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			do {
-				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				let testResult = try XCTUnwrap(error as? EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("unsupportedDate"))
 			} catch {
 				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
@@ -135,7 +135,7 @@ class AnyEncodableTests: XCTestCase {
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			do {
-				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				let testResult = try XCTUnwrap(error as? EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\(testDateString) "))
 			} catch {
 				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
@@ -155,7 +155,7 @@ class AnyEncodableTests: XCTestCase {
 			XCTFail("Expected the EncodableWrapper to throw!")
 		} catch {
 			do {
-				let testResult = try XCTUnwrap(error as? PactBuilder.EncodingError)
+				let testResult = try XCTUnwrap(error as? EncodingError)
 				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\"foo\":"))
 			} catch {
 				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")

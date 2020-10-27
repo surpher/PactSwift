@@ -40,7 +40,7 @@ class PactTests: XCTestCase {
 
 	func testPact_SetsInteractionDescription() throws {
 		let expectedResult = "test interaction"
-		let interaction = prepareInteraction(description: expectedResult)
+		let interaction = try prepareInteraction(description: expectedResult)
 
 		let testPact = prepareTestPact(interactions: interaction)
 
@@ -52,7 +52,7 @@ class PactTests: XCTestCase {
 
 	func testPact_SetsInteractionRequestMethod() throws {
 		let expectedResult: PactHTTPMethod = .POST
-		let interaction = prepareInteraction(description: "test_post_interaction", method: .POST)
+		let interaction = try prepareInteraction(description: "test_post_interaction", method: .POST)
 
 		let testPact = prepareTestPact(interactions: interaction)
 
@@ -62,11 +62,11 @@ class PactTests: XCTestCase {
 
 	func testPact_SetsInteractionRequestPath() throws {
 		let expectedResult = "/interactions"
-		let interaction = prepareInteraction(description: "test_path_interaction", path: expectedResult)
+		let interaction = try prepareInteraction(description: "test_path_interaction", path: expectedResult)
 
 		let testPact = prepareTestPact(interactions: interaction)
 
-		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first?.request?.path)
+		let testResult = try XCTUnwrap((testPact.payload["interactions"] as? [Interaction])?.first?.request?.path as? String)
 		XCTAssertEqual(testResult, expectedResult)
 	}
 
@@ -85,14 +85,14 @@ class PactTests: XCTestCase {
 					params: ["user": "Fred"]
 				)
 			],
-			request: Request(
+			request: try Request(
 				method: .GET,
 				path: "/",
 				query: nil,
 				headers: expectedResult,
 				body: nil
 			),
-			response: Response(
+			response: try Response(
 				statusCode: 200,
 				headers: nil
 			)
@@ -117,13 +117,13 @@ class PactTests: XCTestCase {
 		let interaction = Interaction(
 			description: "test query dictionary",
 			providerState: "some testable provider state",
-			request: Request(
+			request: try Request(
 				method: .GET,
 				path: "/autoComplete/address",
 				query: expectedResult,
 				headers: nil
 			),
-			response: Response(
+			response: try Response(
 				statusCode: 200,
 				headers: nil
 			)
@@ -143,8 +143,8 @@ class PactTests: XCTestCase {
 		let interaction = Interaction(
 			description: "test provider state",
 			providerState: expectedResult,
-			request: Request(method: .GET, path: "/"),
-			response: Response(statusCode: 200)
+			request: try Request(method: .GET, path: "/"),
+			response: try Response(statusCode: 200)
 		)
 
 		let testPact = prepareTestPact(interactions: interaction)
@@ -164,8 +164,8 @@ class PactTests: XCTestCase {
 				ProviderState(description: "an alligator with the given name exists", params: ["name": "Mary"]),
 				ProviderState(description: "the user is logged in", params: ["username": "Fred"])
 			],
-			request: Request(method: .GET, path: "/"),
-			response: Response(statusCode: 200)
+			request: try Request(method: .GET, path: "/"),
+			response: try Response(statusCode: 200)
 		)
 
 		let testPact = prepareTestPact(interactions: interaction)
@@ -180,7 +180,7 @@ class PactTests: XCTestCase {
 
 	func testPact_SetsInteractionResponseStatusCode() throws {
 		let expectedResult = 201
-		let interaction = prepareInteraction(description: "test_statusCode_interaction", statusCode: expectedResult)
+		let interaction = try prepareInteraction(description: "test_statusCode_interaction", statusCode: expectedResult)
 
 		let testPact = prepareTestPact(interactions: interaction)
 
@@ -207,14 +207,14 @@ class PactTests: XCTestCase {
 		let interaction = Interaction(
 			description: "test Encodable Pact",
 			providerStates: [firstProviderState, secondProviderState],
-			request: Request(
+			request: try Request(
 				method: .GET,
 				path: "/",
 				query: ["max_results": ["100"]],
 				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
 				body: testBody
 			),
-			response: Response(
+			response: try Response(
 				statusCode: 200
 			)
 		)
@@ -269,12 +269,12 @@ private extension PactTests {
 		Pact(consumer: Pacticipant.consumer(testConsumer), provider: Pacticipant.provider(testProvider), interactions: interactions)
 	}
 
-	func prepareInteraction(description: String, method: PactHTTPMethod = .GET, path: String = "/", statusCode: Int = 200) -> Interaction {
+	func prepareInteraction(description: String, method: PactHTTPMethod = .GET, path: String = "/", statusCode: Int = 200) throws -> Interaction {
 		Interaction(
 			description: description,
 			providerState: "some testable provider state",
-			request: Request(method: method, path: path),
-			response: Response(statusCode: statusCode)
+			request: try Request(method: method, path: path),
+			response: try Response(statusCode: statusCode)
 		)
 	}
 
