@@ -330,17 +330,19 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_ProcessesMatchers_InHeaders() throws {
 		let testHeaders: Any = [
-			"foo": Matcher.SomethingLike("bar")
+			"foo": Matcher.SomethingLike("bar"),
+			"bar": ExampleGenerator.RandomBool(),
 		]
 		let testBody: Any = [
-			"foo": Matcher.SomethingLike("baz")
+			"foo": Matcher.SomethingLike("baz"),
 		]
 
 		let testPact = prepareTestPact(requestBody: testBody, requestHeaders: testHeaders)
-		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules)
+		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request)
 
-		XCTAssertEqual(testResult.header?.foo.matchers.first?.match, "type")
-		XCTAssertEqual(testResult.body?.foo?.matchers.first?.match, "type")
+		XCTAssertEqual(testResult.matchingRules.header?.foo.matchers.first?.match, "type")
+		XCTAssertEqual(testResult.generators?.header.bar.type, "RandomBoolean")
+		XCTAssertEqual(testResult.matchingRules.body?.foo?.matchers.first?.match, "type")
 	}
 
 }
@@ -452,6 +454,7 @@ private extension PactBuilderTests {
 			let request: TestResponseModel
 			struct TestResponseModel: Decodable {
 				let matchingRules: TestMatchingRulesModel
+				let generators: TestGeneratorsModel?
 				struct TestMatchingRulesModel: Decodable {
 					let body: TestBodyModel?
 					let header: TestHeadersModel?
@@ -487,6 +490,21 @@ private extension PactBuilderTests {
 								let min: Int?
 								let max: Int?
 							}
+						}
+					}
+				}
+				struct TestGeneratorsModel: Decodable {
+					let header: TestHeaderModel
+					struct TestHeaderModel: Decodable {
+						let bar: TestAttributesModel
+						struct TestAttributesModel: Decodable {
+							let type: String
+							let min: Int?
+							let max: Int?
+							let digits: Int?
+							let size: Int?
+							let regex: String?
+							let format: String?
 						}
 					}
 				}
