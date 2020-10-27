@@ -194,7 +194,7 @@ class PassingTestsExample: XCTestCase {
       .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
       .withRequest(
         method: .POST,
-        path: "/api/users",
+        path: Matcher.RegexLike("/api/group/whoopididoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
         body: [
           "first_name": "John",
           "last_name": "Appleseed",
