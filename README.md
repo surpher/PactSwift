@@ -21,7 +21,7 @@
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
-Implements [Pact Specification v3][pact-specification-v3]. It takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process". 
+It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process". 
 
 ## Installation
 
@@ -192,7 +192,7 @@ class PassingTestsExample: XCTestCase {
       .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
       .withRequest(
         method: .POST,
-        path: Matcher.RegexLike("/api/group/whoopididoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
+        path: Matcher.RegexLike("/api/group/whoopeedeedoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
         body: [
           "first_name": "John",
           "last_name": "Appleseed",
