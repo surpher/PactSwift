@@ -68,7 +68,7 @@ public extension ExampleGenerator {
 // MARK: - Objective-C
 
 @objc(PFGeneratorRandomString)
-public class OjbcRandomString: NSObject, ObjcGenerator {
+public class ObjcRandomString: NSObject, ObjcGenerator {
 
 	let type: ExampleGeneratorExpressible
 
