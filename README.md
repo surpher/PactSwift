@@ -21,9 +21,7 @@
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
-Implements [Pact Specification v3][pact-specification-v3].
-
-The one major advantage of this framework over [`pact-consumer-swift`][pact-consumer-swift] is that it does not depend on Ruby Mock Service to be running on your machine (or on CI/CD agent) but instead takes advantage of [`libpact_mock_server`][pact-reference-rust] binary and running it "in process". Also, it does not require you to fiddle with test pre-actions and post-actions.
+Implements [Pact Specification v3][pact-specification-v3]. It takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process". 
 
 ## Installation
 
