@@ -501,7 +501,7 @@ private extension PactBuilderTests {
 			.withRequest(method: .GET, path: "/")
 			.willRespondWith(
 				status: 200,
-				headers: ["Content-Type": "applicatoin/json; charset=UTF-8", "X-Value": "testCode"],
+				headers: ["Content-Type": "application/json; charset=UTF-8", "X-Value": "testCode"],
 				body: responseBody
 			)
 
