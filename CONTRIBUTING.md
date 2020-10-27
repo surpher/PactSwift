@@ -65,6 +65,13 @@ cd PactSwift
 git submodule update --init --recursive
 ```
 
+- When you first build for a specific platform, `libpact_mock_server.a` binary will be compiled and will show up in your git changes. Assume any `.a` files as unchanged in order to avoid accidentially committing them into the repository:
+
+```sh
+git update-index --assume-unchanged ./Resources/iOS/libpact_mock_server.a
+git update-index --assume-unchanged ./Resources/macOS/libpact_mock_server.a
+```
+
 or follow official [instructions](https://www.rust-lang.org/tools/install).
 
 #### Workflow
