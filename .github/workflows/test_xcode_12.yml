@@ -28,7 +28,7 @@ jobs:
         env:
           cache-name: cache-rust-targets
         with:
-          path: ./Submodules/pact-reference/rust/target
+          path: Submodules/pact-reference/rust/target
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/CACHEDIR.TAG') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
