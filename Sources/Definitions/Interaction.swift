@@ -194,7 +194,7 @@ extension Interaction {
 	}
 
 	@discardableResult
-	@objc(withReqeustHTTPMethod: path: query: headers: body:)
+	@objc(withRequestHTTPMethod: path: query: headers: body:)
 	public func objCWithRequest(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		withRequest(method: method, path: path, query: query, headers: headers, body: body)
 		return self
