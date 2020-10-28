@@ -42,3 +42,7 @@ jobs:
         run: |
           echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
           ./Scripts/carthage_xcode12 build --no-skip-current
+
+      - name: Upload code coverage
+        run: |
+          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
