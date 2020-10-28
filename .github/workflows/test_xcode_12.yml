@@ -49,4 +49,4 @@ jobs:
 
       - name: Build demo projects
         run: |
-          ./Scripts/build_demo_projects
+          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"pact-swift-commit"}'
