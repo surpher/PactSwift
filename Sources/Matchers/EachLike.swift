@@ -55,53 +55,64 @@ public extension Matcher {
 
 		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
 		///
-		/// Defines a `Set` where its capacity is of at least `1` occurance of `Value`.
+		/// Defines a `Set` where its capacity is of at least `1` occurance of `value`.
 		///
-		/// - parameter value: Expected type or object
-		public init(_ value: Any) {
-			self.value = [value]
+		/// - Parameters:
+		///   - value: Template to base the comparison on
+		///   - count: Number of examples to generate, defaults to `1`
+		public init(_ value: Any, count: Int = 1) {
+			self.value = Array(repeating: value, count: (count > 1) ? count : 1)
 			self.min = 1
 			self.max = nil
 		}
 
 		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
 		///
-		/// Defines a `Set` where its capacity is at least `min` occurances of provided `Value`.
+		/// Defines a `Set` where its capacity is at least `min` occurances of provided `value`.
 		///
-		/// - parameter value: Expected type or object
-		/// - parameter min: Minimum expected number of occurances of provided `value`
-		/// - Precondition: `min` must be a positive value
-		public init(_ value: Any, min: Int) {
-			self.value = [value]
+		/// - Parameters:
+		///   - value: Template to base the comparison on
+		///   - min: Minimum expected number of occurances of provided `value`
+		///   - count: Number of examples to generate, defaults to `1`
+		///
+		/// - Precondition: `min` must be a positive value and less than or equal to `count`
+		public init(_ value: Any, min: Int, count: Int = 1) {
+			self.value = Array(repeating: value, count: (count > min) ? count : min)
 			self.min = min
 			self.max = nil
 		}
 
 		/// Defines a Pact matcher that defines a `Set` but does not care about the actual values.
 		///
-		/// Defines a `Set` where its capacity can be of `1` to `max` of provided `Value`.
+		/// Defines a `Set` where its capacity can be of `1` to `max` of provided `value`.
 		///
-		/// - parameter value: Expected type or object
-		/// - parameter max: Maximum expected number of occurances of provided `value`
-		/// - Precondition: `min` must be a positive value
-		public init(_ value: Any, max: Int) {
-			self.value = [value]
+		/// - Parameters:
+		///   - value: Template to base the comparison on
+		///   - max: Maximum expected number of occurances of provided `value`
+		///   - count: Number of examples to generate, defaults to `1`
+		///
+		/// - Precondition: `max` must be a positive value and not greater than `count`
+		public init(_ value: Any, max: Int, count: Int = 1) {
+			self.value = Array(repeating: value, count: (count > max) ? max : count)
 			self.min = nil
 			self.max = max
 		}
 
 		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
 		///
-		/// Defines a `Set` where its capacity can be of `min` to `max` of provided `Value`.
+		/// Defines a `Set` where its capacity can be of `min` to `max` of provided `value`.
 		///
-		/// - parameter value: Expected type or object
-		/// - parameter min: Minimum expected number of occurances of provided `value`
-		/// - parameter max: Maximum expected number of occurances of provided `value`
-		/// - Precondition: `min` and `max` must each be a positive value
-		public init(_ value: Any, min: Int, max: Int) {
-			self.value = [value]
-			self.min = min
-			self.max = max
+		/// - Parameters:
+		///   - value: Template to base the comparison on
+		///   - min: Minimum expected number of occurances of provided `value`
+		///   - max: Maximum expected number of occurances of provided `value`
+		///   - count: Number of examples to generate, defaults to `1`
+		/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+		public init(_ value: Any, min: Int, max: Int, count: Int = 1) {
+			self.value = Array(repeating: value, count: count < min ? min : (count > max) ? max : count)
+			self.min = Swift.min(min, max)
+			self.max = Swift.max(min, max)
 		}
 	}
 
@@ -115,21 +126,25 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	let type: MatchingRuleExpressible
 
 	/// Defines a Pact matcher describing a set
-	/// - Parameter value: Expected value
-	@objc(value:)
-	public init(value: Any) {
-		type = Matcher.EachLike(value)
+	/// - Parameters
+	///   - value: Template to base the comparison on
+	///   - count: Number of examples to generate, defaults to `1`
+	@objc(value: count:)
+	public init(value: Any, count: Int = 1) {
+		type = Matcher.EachLike(value, count: count)
 	}
 
 	/// Defines a Pact matcher describing a set
 	/// - Parameters:
-	///   - value: Expected type or object
+	///   - value: Template to base the comparison on
 	///   - min: Minimum expected number of occurances of provided `value`
 	///   - max: Maximum expected number of occurances of provided `value`
-	/// - Precondition: `min` and `max` must each be a positive value
-	@objc(value: min: max:)
-	public init(value: Any, min: Int, max: Int) {
-		type = Matcher.EachLike(value, min: min, max: max)
+	///   - count: Number of examples to generate, defaults to `1`
+	/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+	@objc(value: min: max: count:)
+	public init(value: Any, min: Int, max: Int, count: Int = 1) {
+		type = Matcher.EachLike(value, min: min, max: max, count: count)
 	}
 
 }

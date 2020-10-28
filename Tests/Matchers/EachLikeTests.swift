@@ -64,4 +64,10 @@ class EachLikeTests: XCTestCase {
 		XCTAssertEqual(testResult.max, 5)
 	}
 
+	func testMatcher_EachLike_InitsWithCount() throws {
+		// Array of count
+		let testResult = try XCTUnwrap(Matcher.EachLike("foo", count: 3).value as? [String])
+		XCTAssertEqual(testResult.count, 3)
+	}
+
 }

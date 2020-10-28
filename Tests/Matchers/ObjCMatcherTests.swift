@@ -45,7 +45,7 @@ class ObjCMatcherTests: XCTestCase {
 		let testSubject = ObjcEachLike(value: "foo", min: 2, max: 9)
 
 		XCTAssertTrue((testSubject.type as Any) is Matcher.EachLike)
-		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? [String]), ["foo"])
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? [String]), ["foo", "foo"])
 		XCTAssertEqual(try XCTUnwrap(testSubject.type as? Matcher.EachLike).min, 2)
 		XCTAssertEqual(try XCTUnwrap(testSubject.type as? Matcher.EachLike).max, 9)
 	}

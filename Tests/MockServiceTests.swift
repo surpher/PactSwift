@@ -593,7 +593,7 @@ class MockServiceTests: XCTestCase {
 			.willRespondWith(status: 200, body: [
 				"foo": "bar",
 				"array_example": [
-					Matcher.EachLike("one", min: 2, max: 10),
+					Matcher.EachLike("one", min: 2, max: 10, count: 5),
 					Matcher.EachLike(1, min: 1, max: 25),
 				]
 			])
