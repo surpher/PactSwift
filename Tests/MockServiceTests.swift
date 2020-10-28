@@ -727,7 +727,12 @@ class MockServiceTests: XCTestCase {
 
 	// MARK: - Write pact contract
 
-	func testMockService_Writes_PactContract() {
+	func testMockService_Writes_PactContract() throws {
+		let expectedFileName = "pactswift_unit_tests_write_file-with_api_provider.json"
+		removeFile(expectedFileName)
+
+		mockService = MockService(consumer: "pactswift_unit_tests_write_file", provider: "with_api_provider", errorReporter: errorCapture)
+
 		mockService
 			.uponReceiving("Request for list of users")
 			.given("users exist")
@@ -736,7 +741,7 @@ class MockServiceTests: XCTestCase {
 				status: 200,
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
-					"baz": Matcher.EachLike(123, min: 1, max: 5)
+					"baz": Matcher.EachLike(123, min: 1, max: 5, count: 3)
 				]
 			)
 
@@ -749,11 +754,16 @@ class MockServiceTests: XCTestCase {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
 					XCTAssertEqual(testResult?.baz?.first, 123)
+					XCTAssertEqual(testResult?.baz?.count, 3)
 				}
 				completion()
-				testExpectation.fulfill()
 			}
 			task.resume()
+		}
+
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+			XCTAssertTrue(self.fileExists(expectedFileName))
+			testExpectation.fulfill()
 		}
 
 		waitForExpectations(timeout: 1)
@@ -807,6 +817,27 @@ extension MockServiceTests: URLSessionDelegate {
 
 		let credential = URLCredential(trust: serverTrust)
 		completionHandler(.useCredential, credential)
+	}
+
+	// FileManager
+
+	@discardableResult
+	func fileExists(_ filename: String) -> Bool {
+		FileManager.default.fileExists(atPath: PactFileManager.pactDirectoryPath + "/\(filename)")
+	}
+
+	@discardableResult
+	func removeFile(_ filename: String) -> Bool {
+		if fileExists(filename) {
+			do {
+				try FileManager.default.removeItem(at: URL(fileURLWithPath: PactFileManager.pactDirectoryPath + "/\(filename)"))
+				return true
+			} catch {
+				debugPrint("Could not remove file \(PactFileManager.pactDirectoryPath + "/\(filename)")")
+				return false
+			}
+		}
+		return false
 	}
 
 }
