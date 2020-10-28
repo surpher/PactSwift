@@ -23,6 +23,18 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Cache Rust targets
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-rust-targets
+        with:
+          path: ./Submodules/pact-reference/rust/target
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/CACHEDIR.TAG') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
       - name: Use Xcode 12.2
         run: sudo xcode-select -switch /Applications/Xcode_12.app
 
