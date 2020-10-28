@@ -46,3 +46,7 @@ jobs:
       - name: Upload code coverage
         run: |
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
+
+      - name: Build demo projects
+        run: |
+          ./Scripts/build_demo_projects
