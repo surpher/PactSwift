@@ -44,11 +44,11 @@ jobs:
 
       - name: Test iOS target (Xcode)
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
       - name: Test macOS target (Xcode)
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES| xcbeautify
 
       - name: Test it builds for Carthage
         run: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Upload code coverage
         run: |
-          bash <(curl -s https://codecov.io/bash)
+          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
 
       - name: Build demo projects
         run: |
