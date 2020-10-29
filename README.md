@@ -42,6 +42,8 @@ The first time `PactSwift` is built on your machine it will take quite a long ti
 github "surpher/PactSwift" ~> 0.3
 ```
 
+Please note Carthage is not too happy with Xcode 12 - https://github.com/surpher/PactSwift/issues/27.
+
 ### Swift Package Manager
 
 ```sh
