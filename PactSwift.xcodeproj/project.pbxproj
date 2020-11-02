@@ -396,6 +396,7 @@
 		AD641A362434354C00785CE1 /* Definitions */ = {
 			isa = PBXGroup;
 			children = (
+				AD8DF432243C437F0062CB1A /* AnyEncodableTests.swift */,
 				ADC3AA36247C8C4B0034446E /* InteractionTests.swift */,
 				AD641A372434355C00785CE1 /* MetadataTests.swift */,
 				ADC4466C247BC840004D2267 /* MockServerErrorTests.swift */,
@@ -460,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				AD646FC82460F7F300979AFC /* MockServerTests.swift */,
+				AD103617244693A6002C97CA /* MockServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -571,11 +573,9 @@
 		ADCB2561242C83710048BD18 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				AD8DF432243C437F0062CB1A /* AnyEncodableTests.swift */,
 				AD641A362434354C00785CE1 /* Definitions */,
 				ADD031692512218500C6099B /* ExampleGenerators */,
 				AD7891B8244150FF0014BCC8 /* Matchers */,
-				AD103617244693A6002C97CA /* MockServiceTests.swift */,
 				AD646FC72460F7ED00979AFC /* Services */,
 				ADDE46FD244D0FBA00E4F7EE /* TestHelpers */,
 			);
