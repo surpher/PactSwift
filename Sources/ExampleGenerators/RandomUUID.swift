@@ -21,7 +21,7 @@ public extension ExampleGenerator {
 
 	/// Generates a random UUID value
 	struct RandomUUID: ExampleGeneratorExpressible {
-		internal let value: Any = UUID().uuidString
+		internal let value: Any = UUID().rfc4122String
 		internal let generator: ExampleGenerator.Generator = .uuid
 		internal let rules: [String: AnyEncodable]? = nil
 

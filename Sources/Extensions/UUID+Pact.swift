@@ -24,20 +24,9 @@ extension UUID {
 		self.uuidString.replacingOccurrences(of: "-", with: "").lowercased()
 	}
 
-}
-
-extension String {
-
-	/// Returns the `UUID` given the `String` itself represents a valid simple UUID (without hyphens)
-	var uuid: UUID? {
-		guard !self.contains("-") else {
-			return nil
-		}
-
-		var str: String = self
-		[8, 13, 18, 23].forEach { str.insert("-", at: str.index(str.startIndex, offsetBy: $0)) }
-
-		return UUID(uuidString: str.uppercased())
+	/// Returns an RFC4122-compliant string created from the UUID, such as "385336e1-d647-44a8-8b1b-3dbf4a073416"
+	var rfc4122String: String {
+		uuidString.lowercased()
 	}
 
 }

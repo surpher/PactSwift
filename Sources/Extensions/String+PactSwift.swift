@@ -27,10 +27,10 @@ extension String {
 			return nil
 		}
 
-		var str: String = self
-		[8, 13, 18, 23].forEach { str.insert("-", at: str.index(str.startIndex, offsetBy: $0)) }
+		var uuidString: String = self
+		[8, 13, 18, 23].forEach { uuidString.insert("-", at: uuidString.index(uuidString.startIndex, offsetBy: $0)) }
 
-		return UUID(uuidString: str.uppercased())
+		return UUID(uuidString: uuidString)
 	}
 
 }
