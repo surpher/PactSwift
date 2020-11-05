@@ -18,3 +18,19 @@
 import Foundation
 
 extension String: PactPathParameter { }
+
+extension String {
+
+	/// Returns the `UUID` given the `String` itself represents a valid simple UUID (without hyphens)
+	var uuid: UUID? {
+		guard !self.contains("-") else {
+			return nil
+		}
+
+		var str: String = self
+		[8, 13, 18, 23].forEach { str.insert("-", at: str.index(str.startIndex, offsetBy: $0)) }
+
+		return UUID(uuidString: str.uppercased())
+	}
+
+}
