@@ -15,16 +15,16 @@
 </p>
 
 > ⚠️ **NOTE** ⚠️  
-> _PactSwift_ is under heavy development. 
+> `PactSwift` is under heavy development.
 > Any and all help with testing, raising issues and suggestions for improvement is more than welcome.
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
 It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process". 
 
-## Installation
+## Requirements
 
-`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a PactSwift Build Phase and requires Rust installed on your machine:
+`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase and requires Rust installed on your machine:
 
 ```sh
 brew install rust
@@ -34,6 +34,8 @@ cargo install cargo-lipo
 or follow installation instructions available at [rust-lang][rust-lang-installation].
 
 The first time `PactSwift` is built on your machine it will take quite a long time due to also compiling the Rust binary. As long as the compiled binary exists in the Rust build folder, it will skip re-compiling it and build times should be much shorter.
+
+## Installation
 
 ### Carthage
 
@@ -51,7 +53,7 @@ dependencies: [
 ]
 ```
 
-Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use PactSwift with SPM!
+Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use `PactSwift` with SPM!
 
 See [pact-swift-examples][demo-projects] for an example on how to set it up for Xcode and CI/CD.
 
