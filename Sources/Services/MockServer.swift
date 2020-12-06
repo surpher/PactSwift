@@ -30,17 +30,18 @@ class MockServer {
 		"\(transferProtocol.protocol)://\(socketAddress):\(port)"
 	}
 
-	lazy private var port: Int32 = {
-		PactSocketFinder.unusedPort()
-	}()
-
 	private let socketAddress = "0.0.0.0"
+	private let port: Int32
 	private var transferProtocol: MockService.TransferProtocol = .standard
 	private var tls: Bool {
 		transferProtocol == .secure ? true : false
 	}
 
 	// MARK: - Lifecycle
+
+	init(port: Int32? = nil) {
+		self.port = port ?? PactSocketFinder.unusedPort()
+	}
 
 	deinit {
 		shutdownMockServer()
@@ -53,15 +54,15 @@ class MockServer {
 		Logger.log(message: "Setting up libpact_mock_server", data: pact)
 		transferProtocol = `protocol`
 		Logger.log(message: "Setting up MockServer for Pact interaction test")
-		port = create_mock_server(
+		let mockServerPort = create_mock_server(
 			String(data: pact, encoding: .utf8),
 			"\(socketAddress):\(port)",
 			tls
 		)
 
-		return (port > 1_200)
-			? completion(Result.success(Int(port)))
-			: completion(Result.failure(MockServerError(code: Int(port))))
+		return (mockServerPort > 1_200)
+			? completion(Result.success(Int(mockServerPort)))
+			: completion(Result.failure(MockServerError(code: Int(mockServerPort))))
 	}
 
 	/// Verify interactions

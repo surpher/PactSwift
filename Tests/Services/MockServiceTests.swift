@@ -58,9 +58,37 @@ class MockServiceTests: XCTestCase {
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/elements")!) { data, response, error in
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(200, response.statusCode)
+					completion()
+					testExpectation.fulfill()
+				} else {
+					XCTFail("Expected response code 200")
 				}
-				completion()
-				testExpectation.fulfill()
+			}
+			task.resume()
+		}
+		waitForExpectations(timeout: 1)
+	}
+
+	func testMockService_SimpleGetRequest_WithExplicitPort() {
+		mockService = MockService(consumer: "Explicit-Port-Consumer", provider: "Explicit-Port-Provider", scheme: .standard, port: 12345, errorReporter: errorCapture)
+		mockService
+			.uponReceiving("Request for a list (explicit port)")
+			.given("elements exist (explicit port)")
+			.withRequest(method: .GET, path: "/elements/on-port")
+			.willRespondWith(status: 200)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run(waitFor: 1) { completion in
+			let session = URLSession.shared
+			let task = session.dataTask(with: URL(string: "http://0.0.0.0:12345/elements/on-port")!) { data, response, error in
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(200, response.statusCode)
+					completion()
+					testExpectation.fulfill()
+				} else {
+					XCTFail("Expected response code 200")
+				}
 			}
 			task.resume()
 		}
@@ -87,9 +115,11 @@ class MockServiceTests: XCTestCase {
 				if let data = data {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
+					completion()
+					testExpectation.fulfill()
+				} else {
+					XCTFail("Expected a decodable response data")
 				}
-				completion()
-				testExpectation.fulfill()
 			}
 			task.resume()
 		}
@@ -126,12 +156,12 @@ class MockServiceTests: XCTestCase {
 				if let data = data {
 					let testResult = self.decodeResponse(data: data)
 					XCTAssertEqual(testResult?.foo, "bar")
+					completion()
+					testExpectation.fulfill()
 				}
 				if let error = error {
 					XCTFail(error.localizedDescription)
 				}
-				completion()
-				testExpectation.fulfill()
 			}
 			task.resume()
 		}
