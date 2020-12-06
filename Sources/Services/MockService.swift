@@ -68,16 +68,36 @@ let kTimeout: TimeInterval = 10
 	/// Initializes a `MockService` object that handles Pact interaction testing.
 	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
+	/// is a self-signed certificate
+	///
+	/// - Parameters:
+	///   - consumer: Name of the API consumer (eg: "mobile-app")
+	///   - provider: Name of the API provider (eg: "auth-service")
+	///   - scheme: HTTP scheme
+	///   - port: The port number to run the MockServer on (greater than 1200)
+	@objc(initWithConsumer: provider: transferProtocol: port:)
+	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int) {
+		self.init(consumer: consumer, provider: provider, scheme: scheme, port: port, errorReporter: ErrorReporter())
+	}
+
+	/// Initializes a `MockService` object that handles Pact interaction testing.
+	///
+	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate.
 	///
 	/// - Parameters:
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
+	///   - port: The port number to run the MockServer on
 	///   - errorReporter: Injectable object to intercept errors
-	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int? = nil, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
-		mockServer = MockServer()
+		if let port = port {
+			mockServer = MockServer(port: Int32(port))
+		} else {
+			mockServer = MockServer()
+		}
 		self.errorReporter = errorReporter ?? ErrorReporter()
 		self.transferProtocolScheme = scheme
 	}
