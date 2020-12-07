@@ -28,7 +28,7 @@ It implements [Pact Specification v3][pact-specification-v3] and takes advantage
 
 ## Requirements
 
-`PactSwift` uses [`libpact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase and requires Rust installed on your machine:
+`PactSwift` uses [`pact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase and requires Rust installed on your machine:
 
 ```sh
 brew install rust
