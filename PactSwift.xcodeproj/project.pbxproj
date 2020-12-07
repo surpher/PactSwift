@@ -928,7 +928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run SwiftLint before even attempting to compil\n./Scripts/build_file_list_and_swiftlint PactSwift ../.swiftlint.yml\n";
+			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
 		};
 		ADC3C4CC242CCCEB00D3FDCE /* Lint Project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1002,7 +1002,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run SwiftLint before even attempting to compil\n./Scripts/build_file_list_and_swiftlint PactSwift ../.swiftlint.yml\n";
+			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
 		};
 		ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library  - `cargo build --release` */ = {
 			isa = PBXShellScriptBuildPhase;

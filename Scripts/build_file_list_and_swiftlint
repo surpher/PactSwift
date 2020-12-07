@@ -19,6 +19,9 @@
 
 set -eu
 
+SRCROOT=${SRCROOT:-"."}
+DERIVED_FILE_DIR=${DERIVED_FILE_DIR:-"."}
+
 if [ $# -ne 2 ]; then
 		echo "usage: build_file_list_and_swiftlint project_name swiftlint_yml"
 		exit 1
