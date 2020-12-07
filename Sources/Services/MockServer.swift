@@ -39,8 +39,12 @@ class MockServer {
 
 	// MARK: - Lifecycle
 
-	init(port: Int32? = nil) {
-		self.port = port ?? PactSocketFinder.unusedPort()
+	init(port: Int? = nil) {
+		if let port = port {
+			self.port = Int32(port)
+		} else {
+			self.port = PactSocketFinder.unusedPort()
+		}
 	}
 
 	deinit {

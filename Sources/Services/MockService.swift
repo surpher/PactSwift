@@ -93,11 +93,7 @@ let kTimeout: TimeInterval = 10
 	///   - errorReporter: Injectable object to intercept errors
 	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int? = nil, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
-		if let port = port {
-			mockServer = MockServer(port: Int32(port))
-		} else {
-			mockServer = MockServer()
-		}
+		mockServer = MockServer(port: port)
 		self.errorReporter = errorReporter ?? ErrorReporter()
 		self.transferProtocolScheme = scheme
 	}
