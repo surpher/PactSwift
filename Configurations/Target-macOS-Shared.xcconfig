@@ -1,5 +1,9 @@
 PRODUCT_NAME = PactSwift
 
+// TODO: Once `libpact_mock_server` contains both slices for `arch64` and `x86_64` the following should be removed
+ONLY_ACTIVE_ARCH = YES
+EXCLUDED_ARCHS = arm64 arm64e
+
 SDKROOT = macosx
 MACOSX_DEPLOYMENT_TARGET = 10.12
 CODE_SIGN_STYLE = Automatic
