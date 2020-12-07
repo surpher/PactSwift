@@ -18,6 +18,11 @@ import Foundation
 
 enum Toolbox {
 
+	/// PactSwift version
+	static var pactSwiftVersion: String {
+		Bundle.pact?.shortVersion ?? "0.3.6"
+	}
+
 	/// Merges the Pact top level elements into one dictionary thac can be Encoded
 	/// - Parameters:
 	///   - body: The PactBuilder processed object representing interaction's body
