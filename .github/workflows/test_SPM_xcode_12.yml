@@ -7,7 +7,6 @@ env:
 on:
   push:
     branches:
-      - master
       - 'tech/**'
       - 'fix/**'
       - 'feat/**'
@@ -40,7 +39,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Use Xcode 12
-        run: sudo xcode-select -switch /Applications/Xcode_12.app
+        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: Prepare Tools
         run: |

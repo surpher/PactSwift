@@ -3,7 +3,6 @@ name: Run tests (12)
 on:
   push:
     branches:
-      - master
       - 'tech/**'
       - 'fix/**'
       - 'feat/**'
@@ -36,7 +35,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.app
+        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: Prepare Tools
         run: |
@@ -44,7 +43,7 @@ jobs:
 
       - name: Test iOS target (Xcode)
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 12 Pro" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
       - name: Test macOS target (Xcode)
         run: |
