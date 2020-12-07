@@ -20,7 +20,7 @@ import Foundation
 struct Metadata {
 
 	let pactSpec = PactVersion("3.0.0")
-	let pactSwift = PactVersion(Bundle.pact?.shortVersion ?? "0.3.5")
+	let pactSwift = PactVersion(Bundle.pact?.shortVersion ?? "0.3.6")
 
 	struct PactVersion: Encodable {
 		let version: String
