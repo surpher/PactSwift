@@ -42,15 +42,26 @@ else
 fi
 
 # Build the libpact_mock_server_ffi binary
-# Add target triples
-rustup target add aarch64-apple-ios x86_64-apple-ios x86_64-apple-darwin
+# Change to nighly toolchain
+rustup install nightly
+RUSTUP_UPDATE_ROOT=https://dev-static.rust-lang.org/rustup sh <(curl --proto '=https' --tlsv1.2 -sSf https://dev-static.rust-lang.org/rustup/rustup-init.sh) --default-toolchain beta
+rustup default nightly-x86_64-apple-darwin
+
+# Add required target triples
+rustup target add aarch64-apple-ios aarch64-apple-darwin x86_64-apple-ios x86_64-apple-darwin
 
 # Change into Submodules' dependency folder
 cd $PACTSWIFT_SRC_DIR
 
 if [[ $PLATFORM == "macos" ]]; then
-	# Build the Rust dependency for darwin architecture
-	cargo build --release --target=x86_64-apple-darwin
+	# Build the Rust dependency for darwin
+	CURRENT_ARCH="$(uname -m)"
+	if [[ $CURRENT_ARCH == "x86_64" ]]; then
+		cargo build --release --target=x86_64-apple-darwin
+	else
+		cargo build --release --target=aarm64-apple-darwin
+	fi
+
 	# Change back to $SRCROOT
 	cd $SRCROOT_DIR
 	# Rename the build binary for macOS // replace RUST_MACOS_BUILD_DIR

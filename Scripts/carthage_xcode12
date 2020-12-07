@@ -3,7 +3,9 @@
 # carthage_xcode12
 # Usage example: ./carthage_xcode12 build --platform iOS
 #
-# Author: https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323
+# Sources:
+# - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323
+# - https://github.com/Carthage/Carthage/issues/3019#issuecomment-734415287
 
 set -euo pipefail
 

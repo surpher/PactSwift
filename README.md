@@ -14,13 +14,17 @@
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 </p>
 
-> ⚠️ **NOTE** ⚠️  
-> `PactSwift` is under heavy development.
-> Any and all help with testing, raising issues and suggestions for improvement is more than welcome.
-
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
-It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process". 
+It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
+
+> ⚠️ **NOTE** ⚠️  
+> `PactSwift` is under heavy development. We are specifically looking into supporting for `arm64`, `arm64e` along with `x86_64`.  
+> Any and all help with testing, raising issues and suggestions for improvement is more than welcome.
+
+> 🚨 **IMPORTANT** 🚨  
+> Due to the new Apple Silicon architecture and required tools' limited support for `arm64` and `arm64e` architecture, `PactSwift` only works for macOS `x86_64` architecture **for now**!   
+> Any and all help finding a working solution is more than welcome. See [#52][github-issues-52].
 
 ## Requirements
 
@@ -289,6 +293,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [github-action-xcode11.6]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2811.6%29%22
 [github-action-xcode12]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+%2812%29%22
 [github-action-xcode-spm]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Run+tests+for+SPM+%28Xcode+12%29%22
+[github-issues-52]: https://github.com/surpher/PactSwift/issues/52
 [issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
 [matchers]: https://github.com/surpher/pact-swift/wiki/Matchers
@@ -304,7 +309,6 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
 [rust-lang-installation]: https://www.rust-lang.org/tools/install
-
 [project-ios]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-iOS-Example
 [workflow-ios]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+project%22
 [project-ios-spm]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-iOS-SPM-Example
