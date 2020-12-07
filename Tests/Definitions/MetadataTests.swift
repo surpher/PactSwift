@@ -26,7 +26,10 @@ class MetadataTests: XCTestCase {
 	}
 
 	func testMetadata_SetsPactSwiftVersion() throws {
-		let expectedResult = bundleVersion() ?? "maybe have another look at this?"
+		guard let expectedResult = bundleVersion() else {
+			XCTFail("Expexted version number")
+			return
+		}
 		XCTAssertEqual(try XCTUnwrap(Metadata().pactSwift.version), expectedResult)
 	}
 
@@ -36,9 +39,9 @@ private extension MetadataTests {
 
 	func bundleVersion() -> String? {
 		#if os(iOS)
-			return Bundle(identifier: "au.com.pact-foundation.iOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String
+		return Bundle(identifier: "au.com.pact-foundation.iOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String
 		#elseif os(macOS)
-			return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0.3.6"
+		return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String ?? Toolbox.pactSwiftVersion
 		#endif
 	}
 
