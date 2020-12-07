@@ -6,7 +6,6 @@ env:
 on:
   push:
     branches:
-      - master
       - 'tech/**'
       - 'fix/**'
       - 'feat/**'

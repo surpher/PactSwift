@@ -4,7 +4,7 @@ set -xeu
 set -o pipefail
 
 # Overridable Environment
-SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 11 Pro'}
+SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 12 Pro'}
 
 # Check for dependencies
 if ! [ -x "$(command -v xcbeautify)" ]; then
