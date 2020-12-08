@@ -4,12 +4,6 @@ env:
     SIMULATOR_NAME: "iPhone 11 Pro"
 
 on:
-  push:
-    branches:
-      - 'tech/**'
-      - 'fix/**'
-      - 'feat/**'
-      - 'feature/**'
   pull_request:
     branches:
       - master

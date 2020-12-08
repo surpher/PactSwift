@@ -5,12 +5,6 @@ env:
   RUST_BINARY_DIR: "build/rust/x86_64-apple-darwin/release"
 
 on:
-  push:
-    branches:
-      - 'tech/**'
-      - 'fix/**'
-      - 'feat/**'
-      - 'feature/**'
   pull_request:
     branches:
       - master
