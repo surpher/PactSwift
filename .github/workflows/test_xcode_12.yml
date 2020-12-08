@@ -22,10 +22,9 @@ jobs:
           cache-name: cache-rust-targets
         with:
           path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/CACHEDIR.TAG') }}
+          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
+            ${{ runner.os }}-carthage-
             ${{ runner.os }}-
 
       - name: Use Xcode 12.2
