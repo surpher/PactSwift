@@ -16,23 +16,21 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Cache Rust targets
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-rust-targets
-        with:
-          path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Cartfile.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-carthage-
-            ${{ runner.os }}-
-
       - name: Use Xcode 12.2
         run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: Prepare Tools
         run: |
           Scripts/prepare_build_tools
+
+      - name: "Cache dependencies"
+        uses: actions/cache@v2
+        with:
+          path: Submodules/pact-reference/rust/target
+          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-carthage-
+            ${{ runner.os }}-
 
       - name: Test iOS target (Xcode)
         run: |
@@ -46,11 +44,3 @@ jobs:
         run: |
           echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
           ./Scripts/carthage_xcode12 build --no-skip-current
-
-      - name: Upload code coverage
-        run: |
-          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
-
-      - name: Build demo projects
-        run: |
-          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
