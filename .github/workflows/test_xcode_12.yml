@@ -1,12 +1,6 @@
 name: Run tests (12)
 
 on:
-  push:
-    branches:
-      - 'tech/**'
-      - 'fix/**'
-      - 'feat/**'
-      - 'feature/**'
   pull_request:
     branches:
       - master
