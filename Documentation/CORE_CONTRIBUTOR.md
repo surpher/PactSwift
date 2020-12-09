@@ -35,4 +35,4 @@ We work in a high-trust environment which implies that anyone and everyone is ab
 We want to keep _PactSwift_ focused and robust. Avoid adding new dependencies to the code base unless absolutely necessary.
 
 [vision]: VISION.md
-[code-of-conduct]: CODE_OF_CONDUCT.md
+[code-of-conduct]: ../CODE_OF_CONDUCT.md

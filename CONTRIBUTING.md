@@ -24,7 +24,7 @@ If you want to work on something else, such as a new feature or fixing a bug, it
 
 ### Prepare the tools
 
-Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile [`libpact_mock_server.a`][pact-reference-rust] dynamic library from Rust shared codebase brought in as a submodule into this project:
+Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` static library from Rust shared codebase set as a submodule in this project:
 
 ```sh
 brew install rust
@@ -134,12 +134,11 @@ All contributions to this project are also under this license as per [GitHub's T
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
 [good-first-issue]: https://github.com/surpher/PactSwift/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 [code-of-conduct]: CODE_OF_CONDUCT.md
-[core-contributor]: CORE_CONTRIBUTOR.md
-[license]: ../LICENSE.md
+[core-contributor]: Documentation/CORE_CONTRIBUTOR.md
+[license]: LICENSE.md
 [repo]: https://github.com/surpher/PactSwift
 [commit-messages]: https://chris.beams.io/posts/git-commit/
 [semantic-commit-messages]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
 [fork-docs]: https://help.github.com/articles/working-with-forks/
-[pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi
-[pr-template]: ../.github/PULL_REQUEST_TEMPLATE.md
+[pr-template]: .github/PULL_REQUEST_TEMPLATE.md
 [pr-docs]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review

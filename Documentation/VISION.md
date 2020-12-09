@@ -1,9 +1,9 @@
 # Our Vision
 
-⚠️ TO DO ⚠️
+_PactSwift_ automates the process of generating Pact contracts.
 
-## _PactSwift_'s Relationship with [Itty Bitty Apps](https://ittybittyapps.com) and [PACT Foundation](https://github.com/pact-foundation)
+_PactSwift_ provides a simple and easy to use framework in one's Swift or Objective-C project that creates workflows where Pact contracts are generated.
 
-Itty Bitty Apps is an Apple (and Android) focused application development consultancy. We've built [other great tools](https://revealapp.com) for iOS developers.
+_PactSwift_ will continue to evolve, in a measured way that extends its functionality to make it an indespensable tool for developers writing [Consumer Driven contracts][consumer-driven-contracts].
 
-PACT Foundation intends to keep _PactSwift_ open source and available as a standalone development tool.
+[consumer-driven-contracts]: https://martinfowler.com/articles/consumerDrivenContracts.html
