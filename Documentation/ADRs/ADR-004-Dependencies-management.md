@@ -4,7 +4,7 @@ Almost all software we write depends on some other code, library or development 
 
 # Decision
 
-The main dependency is the programmable in-process mock server that can receive network requests and respond with the response we define. This dependency is written in rust and is available at [pact-foundation/pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi).
+The main dependency is the programmable in-process mock server that can receive network requests and respond with the response we define. This dependency is written in rust and is available at [pact-foundation/pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/main/rust/pact_mock_server_ffi).
 
 The binary framework(s) that are built using `cargo lipo --release` command are added into the Xcode project.
 

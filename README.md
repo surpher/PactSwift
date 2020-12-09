@@ -5,7 +5,7 @@
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
-[![codecov](https://codecov.io/gh/surpher/PactSwift/branch/master/graph/badge.svg)][codecov-io]
+[![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
 [![CI (11.6)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(11.6)/badge.svg)][github-action-xcode11.6]
 [![CI (12)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20(12)/badge.svg)][github-action-xcode12]
 [![Run tests for SPM (Xcode 12)](https://github.com/surpher/PactSwift/workflows/Run%20tests%20for%20SPM%20(Xcode%2012)/badge.svg)][github-action-xcode-spm]
@@ -301,21 +301,21 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
 [pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
 [pact-docs]: https://docs.pact.io
-[pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi
+[pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/main/rust/pact_mock_server_ffi
 [pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
-[pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/master/Sources/ExampleGenerators
-[pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/master/Sources/Matchers
+[pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/main/Sources/ExampleGenerators
+[pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/main/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
 [rust-lang-installation]: https://www.rust-lang.org/tools/install
-[project-ios]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-iOS-Example
+[project-ios]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-Example
 [workflow-ios]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+project%22
-[project-ios-spm]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-iOS-SPM-Example
+[project-ios-spm]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-SPM-Example
 [workflow-ios-spm]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+%28SPM%29+project%22
-[project-ios-objc]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-iOS-ObjC-Example
+[project-ios-objc]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-ObjC-Example
 [workflow-ios-objc]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+%28Objective-C%29+project%22
-[project-macos]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-macOS-Example
+[project-macos]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-macOS-Example
 [workflow-macos]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+macOS+project%22
-[project-macos-spm]: https://github.com/surpher/pact-swift-examples/tree/master/Pact-macOS-SPM-Example
+[project-macos-spm]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-macOS-SPM-Example
 [workflow-macos-spm]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+macOS+%28SPM%29+project%22
