@@ -24,10 +24,20 @@ If you want to work on something else, such as a new feature or fixing a bug, it
 
 ### Prepare the tools
 
-Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` dynamic library from Rust shared codebase set as a submodule in this project:
+Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile [`libpact_mock_server.a`][pact-reference-rust] dynamic library from Rust shared codebase brought in as a submodule into this project:
 
 ```sh
 brew install rust
+
+# Install nightly toolchain (required until aarch64-apple-darwin is available in stable)
+rustup toolchain install nightly
+
+# Add target triples
+rustup target add aarch64-apple-ios aarch64-apple-darwin x86_64-apple-ios x86_64-apple-darwin
+
+# Helping tools
+cargo install cargo-lipo
+cargo install cbindgen
 ```
 
 Use Homebrew to install [SwiftLint](https://github.com/realm/SwiftLint):
@@ -130,5 +140,6 @@ All contributions to this project are also under this license as per [GitHub's T
 [commit-messages]: https://chris.beams.io/posts/git-commit/
 [semantic-commit-messages]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
 [fork-docs]: https://help.github.com/articles/working-with-forks/
+[pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/master/rust/pact_mock_server_ffi
 [pr-template]: ../.github/PULL_REQUEST_TEMPLATE.md
 [pr-docs]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review
