@@ -1,6 +1,6 @@
 //
 //  Created by Marko Justinek on 16/9/20.
-//  Copyright © 2020 Itty Bitty Apps Pty Ltd / PACT Foundation. All rights reserved.
+//  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
