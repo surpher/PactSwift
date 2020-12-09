@@ -35,9 +35,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-carthage-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-carthage-
+            ${{ runner.os }}-pactswift-submodule-
             ${{ runner.os }}-
 
       - name: Test iOS target (Xcode)
