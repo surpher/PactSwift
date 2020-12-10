@@ -50,6 +50,8 @@
 		AD7891C424415E9F0014BCC8 /* DecimalLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */; };
 		AD8546F42513601800211E28 /* RandomDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8546F32513601800211E28 /* RandomDateTests.swift */; };
 		AD8546F52513601800211E28 /* RandomDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8546F32513601800211E28 /* RandomDateTests.swift */; };
+		AD879B9D258242AC00F85B0B /* PactSwiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */; };
+		AD879B9E258242AC00F85B0B /* PactSwiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */; };
 		AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8817FE242C715A00BF510D /* PactSwift.framework */; };
 		AD88180F242C715B00BF510D /* PactSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PactSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD8DF42C243BF9430062CB1A /* AnyEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF42B243BF9430062CB1A /* AnyEncodable.swift */; };
@@ -269,6 +271,7 @@
 		AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalLikeTests.swift; sourceTree = "<group>"; };
 		AD8546F025135F4200211E28 /* RandomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDate.swift; sourceTree = "<group>"; };
 		AD8546F32513601800211E28 /* RandomDateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTests.swift; sourceTree = "<group>"; };
+		AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactSwiftVersion.swift; sourceTree = "<group>"; };
 		AD8817FE242C715A00BF510D /* PactSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PactSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD881801242C715A00BF510D /* PactSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PactSwift.h; sourceTree = "<group>"; };
 		AD881802242C715A00BF510D /* Info-iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-iOS.plist"; sourceTree = "<group>"; };
@@ -552,6 +555,7 @@
 				AD646FAD2460F76F00979AFC /* MockServer */,
 				AD646FAB2460F75B00979AFC /* Pact */,
 				ADEFD133253EEF230081A1B1 /* Toolbox.swift */,
+				AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */,
 			);
 			path = Definitions;
 			sourceTree = "<group>";
@@ -1033,6 +1037,7 @@
 				AD641A3C24344ED400785CE1 /* Pacticipant.swift in Sources */,
 				AD646FC62460F7DC00979AFC /* PactSocketFinder.swift in Sources */,
 				ADA17E41251377A4004F1A82 /* Date+PactSwift.swift in Sources */,
+				AD879B9D258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				AD8DF43B243EEF390062CB1A /* MatchingRuleExpressible.swift in Sources */,
 				ADB7C16B2433283400A16CDE /* Response.swift in Sources */,
 				AD8DF42C243BF9430062CB1A /* AnyEncodable.swift in Sources */,
@@ -1134,6 +1139,7 @@
 				AD8FC7E02463BB9A00361854 /* RequestError.swift in Sources */,
 				AD8FC7FB2463BBC200361854 /* PactSocketFinder.swift in Sources */,
 				ADA17E42251377A4004F1A82 /* Date+PactSwift.swift in Sources */,
+				AD879B9E258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				AD8FC7E32463BB9F00361854 /* ErrorReporter.swift in Sources */,
 				AD8FC7E92463BB9F00361854 /* Pacticipant.swift in Sources */,
 				AD8FC7E12463BB9F00361854 /* AnyEncodable.swift in Sources */,

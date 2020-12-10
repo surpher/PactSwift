@@ -41,7 +41,7 @@ private extension MetadataTests {
 		#if os(iOS)
 		return Bundle(identifier: "au.com.pact-foundation.iOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String
 		#elseif os(macOS)
-		return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String ?? Toolbox.pactSwiftVersion
+		return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")?.infoDictionary?["CFBundleShortVersionString"] as? String ?? pactSwiftVersion
 		#endif
 	}
 
