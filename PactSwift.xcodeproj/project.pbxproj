@@ -872,7 +872,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}\"/Scripts/BuildPhases/cargo-build-macos\n";
+			shellScript = "\"${PROJECT_DIR}\"/Scripts/BuildPhases/cargo-build-ios\n";
 		};
 		AD8FC7CF2463A08900361854 /* Lint Target */ = {
 			isa = PBXShellScriptBuildPhase;
