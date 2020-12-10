@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
 
-set -xeu
+set -eu
 set -o pipefail
 
 # Check for dependencies
 echo "--- 👮‍♀️ Checking if Rust is installed..."
 
 if which cargo >/dev/null; then
-	echo "--- 👍 cargo installed"
+	echo "👍  cargo installed"
 elif command -v ~/.cargo/bin/cargo &> /dev/null; then
-	PATH="$HOME/.cargo/bin:$PATH"
-	echo "--- 👍 cargo installed in ~/.cargo/bin/"
+	echo "👍  cargo installed in ~/.cargo/bin/"
 else
-	echo "--- 🚨 Rust not installed"
-	echo "ERROR: cargo is required and is not found, not even in `~/.cargo/bin`.\nInstall Rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
+	echo "🚨  Rust not installed"
+	echo "ERROR: cargo is required and is not found in `~/.cargo/bin`. Install Rust using either homebrew or follow instructions at https://www.rust-lang.org/tools/install"
 	exit 1
 fi
 
