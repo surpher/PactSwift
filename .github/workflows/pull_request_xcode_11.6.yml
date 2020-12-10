@@ -1,7 +1,8 @@
 name: Pull Request (Xcode 11.6)
 
 env:
-    SIMULATOR_NAME: "iPhone 11 Pro"
+  RUST_BUILD_OUTPUT_DIR: "build/rust"
+  RUST_BINARY_DIR: "build/rust/x86_64-apple-darwin/release"
 
 on:
   pull_request:
