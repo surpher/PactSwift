@@ -45,6 +45,19 @@ function updateVersionFile {
 	sed -i '' "2s/.*/$MARKETING_VERSION/" $CONFIGURATION_FILE
 }
 
+function pushNewVersion {
+	updateVersionFile "$VERSION"
+
+	git add $VERSION_FILE
+	git add $CONFIGURATION_FILE
+	git add $RELEASE_NOTES
+
+	git commit -m "${RELEASE_NAME}"
+
+	git push origin || die "Failed to push version changes to origin"
+	git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
+}
+
 # Release flow
 
 echo "👮‍♀️  Verifying if version tag is reasonable"
@@ -87,18 +100,16 @@ echo "🏷  Tagging release version"
 git tag "$VERSION_TAG" -F "$RELEASE_NOTES" || die "Failed to tag version"
 
 if [ -z "$DRY_RUN" ]; then
-    echo "🚅  Pushing tag to origin"
-		updateVersionFile "$VERSION"
+	echo "🚅  Pushing release version tag to origin"
 
-		git push origin || die "Failed to push version changes to origin"
-    git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
+	pushNewVersion
 
-    echo
-    echo "---------------- PactSwift version $VERSION_TAG ----------------"
-    echo
+	echo
+	echo "---------------- Released PactSwift version $VERSION_TAG ----------------"
+	echo
 
-		rm ${RELEASE_NOTES}.backup
+	rm ${RELEASE_NOTES}.backup
 else
-    echo "-> Dry run completed."
-		git tag -d "$VERSION_TAG"
+	git tag -d "$VERSION_TAG"
+	echo "-> Dry run completed."
 fi
