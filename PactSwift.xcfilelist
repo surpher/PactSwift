@@ -18,6 +18,7 @@ $(SRCROOT)/Sources/Definitions/PactInteractionNode.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorHandler.swift
 $(SRCROOT)/Sources/Definitions/PactHTTPMethod.swift
 $(SRCROOT)/Sources/Definitions/MismatchErrorType.swift
+$(SRCROOT)/Sources/Definitions/PactSwiftVersion.swift
 $(SRCROOT)/Sources/Definitions/Pact.swift
 $(SRCROOT)/Sources/Definitions/ProviderState.swift
 $(SRCROOT)/Sources/Definitions/VerificationErrorType.swift
