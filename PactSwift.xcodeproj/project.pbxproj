@@ -745,7 +745,7 @@
 				AD8FC7D02463A09900361854 /* Lint Project */,
 				AD8FC7CF2463A08900361854 /* Lint Target */,
 				AD8FC7D12463A0A100361854 /* Swiftlint */,
-				ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library  - `cargo build --release` */,
+				ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library */,
 				AD8FC7B32463A06F00361854 /* Sources */,
 				AD8FC7B42463A06F00361854 /* Frameworks */,
 				AD8FC7B52463A06F00361854 /* Resources */,
@@ -872,7 +872,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\n\nrustup target add x86_64-apple-ios\nrustup target add aarch64-apple-ios\ncargo install cargo-lipo\ncd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo lipo --release\n\ncp \"$PROJECT_DIR/Submodules/pact-reference/rust/target/universal/release/libpact_mock_server_ffi.a\" \"$PROJECT_DIR/Resources/iOS/libpact_mock_server.a\"\n\n";
+			shellScript = "\"${PROJECT_DIR}\"/Scripts/BuildPhases/cargo-build-macos\n";
 		};
 		AD8FC7CF2463A08900361854 /* Lint Target */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -928,7 +928,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
+			shellScript = "# Run SwiftLint before even attempting to compile\n\"${PROJECT_DIR}\"/Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
 		};
 		ADC3C4CC242CCCEB00D3FDCE /* Lint Project */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1002,9 +1002,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run SwiftLint before even attempting to compile\n./Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
+			shellScript = "# Run SwiftLint before even attempting to compile\n\"${PROJECT_DIR}\"/Scripts/build_file_list_and_swiftlint PactSwift ./.swiftlint.yml\n";
 		};
-		ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library  - `cargo build --release` */ = {
+		ADE512E625352C370020EF57 /* Build libpact_mock_server.a static library */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1013,14 +1013,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Build libpact_mock_server.a static library  - `cargo build --release`";
+			name = "Build libpact_mock_server.a static library";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH=\"$HOME/.cargo/bin:$PATH\"\nexport RUST_BUILD_OUTPUT_DIR=\"$PROJECT_DIR/build\"\nmkdir -p $RUST_BUILD_OUTPUT_DIR\n\ncd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target-dir $RUST_BUILD_OUTPUT_DIR\n\ncp $RUST_BUILD_OUTPUT_DIR/release/deps/libpact_mock_server_ffi.a \"$PROJECT_DIR/Resources/macOS/libpact_mock_server.a\"\n";
+			shellScript = "\"${PROJECT_DIR}\"/Scripts/BuildPhases/cargo-build-macos\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

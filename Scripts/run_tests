@@ -1,21 +1,37 @@
 #!/usr/bin/env bash
 
-set -xeu
+set -eu
 set -o pipefail
 
 # Overridable Environment
 SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 12 Pro'}
+SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
 
 # Check for dependencies
-if ! [ -x "$(command -v xcbeautify)" ]; then
-  echo 'Error: xcbeautify is not installed.' >&2
-  exit 1
-fi
+$SCRIPTS_DIR/check_build_tools
+
+# # Run iOS tests
+echo "--- 📱  Running iOS tests"
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 12 Pro" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+
+# # Run macOS tests
+echo "--- 🖥  Running macOS tests"
+set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES| xcbeautify
+
+# Carthage build
+echo "--- 📦  Building as a Carthage dependency"
+${SCRIPTS_DIR}/carthage_xcode12 build --no-skip-current
 
 # Build and test for SPM
+echo "--- 🏗  Building swift (SPM)"
 swift build -c debug
 swift test -Xlinker -LResources/macOS
 
 # Run tests
+echo "--- 📱  Running iOS tests (SPM)"
 set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=${SIMULATOR_NAME}" | xcbeautify
+
+echo "--- 🖥  Running macOS tests (SPM) - x86_64"
 set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=OS X,arch=x86_64" | xcbeautify
+
+echo "👍  All hunky dory!"
