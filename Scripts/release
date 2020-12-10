@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# Overridable Environment
+
+SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
+VERSION_FILE="${SCRIPTS_DIR}/../Sources/Definitions/PactSwiftVersion.swift"
+RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
+REMOTE_BRANCH=main
+VERSION=$1
+RELEASE_NAME=$2
+DRY_RUN=$3
+VERSION_TAG="v$VERSION"
+
+# Functions
+
+function help {
+    echo "Usage: release VERSION RELEASE_NAME DRY_RUN"
+    echo
+    echo "VERSION should be the version to release and should not include the 'v' prefix"
+    echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
+    echo
+    echo "FLAGS"
+    echo "  -d  Dry run, won't push anything"
+    echo
+    echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release'"
+    echo
+    exit 2
+}
+
+function die {
+    echo "🚨  [ERROR] $@"
+    echo
+    exit 1
+}
+
+if [ $# -lt 2 ]; then
+    help
+fi
+
+function updateVersionFile {
+	sed -i '' "2s/.*/let pactSwiftVersion = \"$@\"/" $VERSION_FILE
+
+	MARKETING_VERSION="MARKETING_VERSION = $@"
+	sed -i '' "2s/.*/$MARKETING_VERSION/" $CONFIGURATION_FILE
+}
+
+# Release flow
+
+echo "👮‍♀️  Verifying if version tag is reasonable"
+
+echo $VERSION_TAG | grep -q "^vv"
+if [ $? -eq 0 ]; then
+    die "This tag ($VERSION) is in an incorrect format. You should remove the 'v' prefix."
+fi
+
+echo $VERSION_TAG | grep -q -E "^v\d+\.\d+\.\d+(-\w+(\.\d)?)?\$"
+if [ $? -ne 0 ]; then
+    die "This tag ($VERSION) is in an incorrect format. It should be in 'v{MAJOR}.{MINOR}.{PATCH}(-{PRERELEASE_NAME}.{PRERELEASE_VERSION})' form."
+fi
+
+echo "👮‍♀️  Verifying version ($VERSION) is unique"
+git describe --exact-match "$VERSION_TAG" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    die "Tag ($VERSION) already exists! Aborting."
+else
+    echo "👍 Tag is unique"
+fi
+
+echo "🏗  Generating release notes to $RELEASE_NOTES"
+cp $RELEASE_NOTES ${RELEASE_NOTES}.backup
+echo "# ${VERSION} - ${RELEASE_NAME}\n" > ${RELEASE_NOTES}.next
+LATEST_TAG=`git describe --abbrev=0  --tags --match=v[0-9].[0-9].[0-9]`
+git log --pretty='* %h - %s (%an, %ad)' ${LATEST_TAG}..HEAD >> ${RELEASE_NOTES}.next
+cat $RELEASE_NOTES.next | cat - ${RELEASE_NOTES}.backup > ${RELEASE_NOTES}
+rm ${RELEASE_NOTES}.next
+git add $RELEASE_NOTES || { die "Failed to add ${RELEASE_NOTES} to INDEX"; }
+mv ${RELEASE_NOTES}.backup ${RELEASE_NOTES}
+
+echo "🚢  Releasing version $VERSION (tag: $VERSION_TAG)..."
+
+echo "⛓  Ensuring no differences to origin/$REMOTE_BRANCH"
+git fetch origin || die "Failed to fetch origin"
+git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to origin/$REMOTE_BRANCH. Cannot update version safely"
+
+echo "🏷  Tagging release version"
+git tag "$VERSION_TAG" -F "$RELEASE_NOTES" || die "Failed to tag version"
+
+if [ -z "$DRY_RUN" ]; then
+    echo "🚅  Pushing tag to origin"
+		updateVersionFile "$VERSION"
+
+		git push origin || die "Failed to push version changes to origin"
+    git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
+
+    echo
+    echo "---------------- PactSwift version $VERSION_TAG ----------------"
+    echo
+
+		rm ${RELEASE_NOTES}.backup
+else
+    echo "-> Dry run completed."
+		git tag -d "$VERSION_TAG"
+fi
