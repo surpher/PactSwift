@@ -19,6 +19,6 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 PACT Foundation. All rights reserved.</string>
+	<string>Copyright © 2020 Marko Justinek. All rights reserved.</string>
 </dict>
 </plist>
