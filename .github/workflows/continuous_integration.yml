@@ -7,16 +7,28 @@ env:
 on:
   push:
     branches:
-      - main
       - 'tech/**'
       - 'fix/**'
       - 'feat/**'
       - 'feature/**'
 
 jobs:
-  test_ios:
-    name: Run iOS tests
+  test:
+    name: Run tests
     runs-on: macOS-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
+          - scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+
+    env:
+      SCHEME: ${{ matrix.scheme }}
+      DESTINATION: ${{ matrix.destination }}
 
     steps:
       - name: Checkout repository
@@ -35,30 +47,22 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-ios-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pactswift-ios-submodule-
+            ${{ runner.os }}-pactswift-submodule-
             ${{ runner.os }}-
 
-      - name: Test iOS target (Xcode)
+      - name: Run tests (Xcode)
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 12 Pro" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
-
-      - name: Test it builds for Carthage
-        run: |
-          echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-          ./Scripts/carthage_xcode12 build --no-skip-current --platform ios
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
       - name: Upload code coverage
         run: |
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
 
-      - name: Build demo projects
-        run: |
-          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
-
-  test_macos:
-    name: Run macOS tests
+  test_carthage:
+    needs: [test]
+    name: Test Carthage
     runs-on: macOS-latest
 
     steps:
@@ -70,27 +74,19 @@ jobs:
       - name: Use Xcode 12.2
         run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
-      - name: Prepare Tools
-        run: |
-          Scripts/prepare_build_tools
-
       - name: "Cache dependencies"
         uses: actions/cache@v2
         with:
           path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-macos-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pactswift-macos-submodule-
+            ${{ runner.os }}-pactswift-submodule-
             ${{ runner.os }}-
 
-      - name: Test macOS target (Xcode)
-        run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES| xcbeautify
-
-      - name: Test it builds for Carthage
+      - name: Carthage build
         run: |
           echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-          ./Scripts/carthage_xcode12 build --no-skip-current --platform macos
+          ./Scripts/carthage_xcode12 build --no-skip-current --platform "ios,macos,tvos"
 
   test_spm:
     name: Swift CLI build and test (SPM)
@@ -130,3 +126,21 @@ jobs:
           set -o pipefail && swift build -c debug | xcbeautify
           echo "🧪 running swift test"
           set -o pipefail && swift test -Xlinker -L${{ env.RUST_BINARY_DIR }} | xcbeautify
+
+  after_success:
+    needs: [test, test_carthage, test_spm]
+    name: Build demo projects
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 12.2
+        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
+
+      - name: Build demo projects
+        run: |
+          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
