@@ -1,18 +1,28 @@
-name: Pull Request (Xcode 11.6)
+name: Continuous Integration
 
 env:
   RUST_BUILD_OUTPUT_DIR: "build/rust"
   RUST_BINARY_DIR: "build/rust/x86_64-apple-darwin/release"
 
-on:
-  pull_request:
-    branches:
-      - main
+on: [pull_request]
 
 jobs:
-  test_ios:
-    name: Run iOS tests
+  test:
+    name: Run tests
     runs-on: macOS-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 11 Pro"
+          - scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+
+    env:
+      SCHEME: ${{ matrix.scheme }}
+      DESTINATION: ${{ matrix.destination }}
 
     steps:
       - name: Checkout repository
@@ -31,22 +41,41 @@ jobs:
         uses: actions/cache@v2
         with:
           path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-ios-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-pactswift-ios-submodule-
+            ${{ runner.os }}-pactswift-submodule-
             ${{ runner.os }}-
 
-      - name: Test iOS target (Xcode)
+      - name: Run tests (Xcode)
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-iOS -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcbeautify
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
-      - name: Test macOS target (Xcode)
-        run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme PactSwift-macOS -destination "platform=macOS,arch=x86_64" | xcbeautify
+  test_carthage:
+    needs: [test]
+    name: Test Carthage
+    runs-on: macOS-latest
 
-      - name: Test it builds for Carthage
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 11.6
+        run: sudo xcode-select -switch /Applications/Xcode_11.6.app
+
+      - name: "Cache dependencies"
+        uses: actions/cache@v2
+        with:
+          path: Submodules/pact-reference/rust/target
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pactswift-submodule-
+            ${{ runner.os }}-
+
+      - name: Carthage build
         run: |
-          carthage build --no-skip-current
+          carthage build --no-skip-current --platform "ios,macos,tvos"
 
   test_spm:
     name: Swift CLI build and test (SPM)
@@ -86,4 +115,3 @@ jobs:
           set -o pipefail && swift build -c debug | xcbeautify
           echo "🧪 running swift test"
           set -o pipefail && swift test -Xlinker -L${{ env.RUST_BINARY_DIR }} | xcbeautify
-
