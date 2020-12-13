@@ -4,13 +4,7 @@ env:
   RUST_BUILD_OUTPUT_DIR: "build/rust"
   RUST_BINARY_DIR: "build/rust/x86_64-apple-darwin/release"
 
-on:
-  push:
-    branches:
-      - 'tech/**'
-      - 'fix/**'
-      - 'feat/**'
-      - 'feature/**'
+on: [push]
 
 jobs:
   test:
