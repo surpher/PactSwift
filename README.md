@@ -90,6 +90,8 @@ Set write permissions for Xcode to replace the fake binaries with the one compil
 
 <img src="Documentation/images/06-build-step.png" width="600" alt="build step" />
 
+Make sure you set the `PATH` with location of your `cargo` and `rustup`.
+
 ### Edit search paths
 
 Add `$BUILD_DIR/../../SourcePackages/checkouts/PactSwift/Resources` -recursive to `Library Search Paths` and `Frameworks Search Paths` in your test target's build settings.
