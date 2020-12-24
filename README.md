@@ -6,7 +6,7 @@
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
-[![Continous Integration](https://github.com/surpher/PactSwift/workflows/Continuous%20Integration/badge.svg)][github-actions-ci]
+[![Build](https://github.com/surpher/PactSwift/workflows/Build/badge.svg)][github-actions-ci]
 
 <p align="center">
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
@@ -291,7 +291,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 
-[github-actions-ci]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Continuous+Integration%22
+[github-actions-ci]: https://github.com/surpher/PactSwift/actions?query=workflow%3ABuild
 
 [github-issues-52]: https://github.com/surpher/PactSwift/issues/52
 [issues]: https://github.com/surpher/PactSwift/issues
