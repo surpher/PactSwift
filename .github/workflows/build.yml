@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Build
 
 env:
   RUST_BUILD_OUTPUT_DIR: "build/rust"
@@ -53,6 +53,49 @@ jobs:
       - name: Upload code coverage
         run: |
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
+
+  test_big_sur:
+    name: Run on macOS 11
+    runs-on: macos-11.0
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
+          - scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+
+    env:
+      SCHEME: ${{ matrix.scheme }}
+      DESTINATION: ${{ matrix.destination }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 12.3
+        run: sudo xcode-select -switch /Applications/Xcode_12.3.app
+
+      - name: Prepare Tools
+        run: |
+          Scripts/prepare_build_tools
+
+      - name: "Cache dependencies"
+        uses: actions/cache@v2
+        with:
+          path: Submodules/pact-reference/rust/target
+          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pactswift-submodule-
+            ${{ runner.os }}-
+
+      - name: Run tests (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
   test_carthage:
     needs: [test]
