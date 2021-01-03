@@ -319,4 +319,4 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [project-macos]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-macOS-Example
 [workflow-macos]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+macOS+project%22
 [project-macos-spm]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-macOS-SPM-Example
-[workflow-macos-spm]: https://github.com/surpher/pact-swift-examples/workflows/Test%20macOS%20(SPM)%20project/badge.svg
+[workflow-macos-spm]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+macOS+%28SPM%29+project%22
