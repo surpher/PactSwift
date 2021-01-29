@@ -8,8 +8,8 @@ on: [push]
 
 jobs:
   test:
-    name: Run tests
-    runs-on: macOS-latest
+    name: Run on macOS 11
+    runs-on: macos-11.0
 
     strategy:
       fail-fast: true
@@ -30,9 +30,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
-
       - name: Prepare Tools
         run: |
           Scripts/prepare_build_tools
@@ -50,23 +47,16 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
-      - name: Upload code coverage
-        run: |
-          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
-
   test_carthage:
     needs: [test]
     name: Test Carthage
-    runs-on: macOS-latest
+    runs-on: macos-11.0
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
-
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: "Cache dependencies"
         uses: actions/cache@v2
@@ -84,16 +74,13 @@ jobs:
 
   test_spm:
     name: Swift CLI build and test (SPM)
-    runs-on: macOS-latest
+    runs-on: macos-11.0
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
-
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: Prepare Tools
         run: |
@@ -124,16 +111,13 @@ jobs:
   after_success:
     needs: [test, test_carthage, test_spm]
     name: Build demo projects
-    runs-on: macOS-latest
+    runs-on: macos-11.0
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
-
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
 
       - name: Build demo projects
         run: |
