@@ -1,3 +1,4 @@
 [submodule "Submodules/pact-reference"]
 	path = Submodules/pact-reference
 	url = https://github.com/pact-foundation/pact-reference.git
+	ignore = dirty
