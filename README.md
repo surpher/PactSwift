@@ -16,13 +16,9 @@ This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
 It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
 
-> ⚠️ **NOTE** ⚠️  
-> `PactSwift` is under heavy development. We are specifically looking into supporting `arm64`, `arm64e` alongside `x86_64`.  
-> Any and all help with testing, raising issues and suggestions for improvement is more than welcome.
-
-> 🚨 **IMPORTANT** 🚨  
-> Due to the new Apple Silicon architecture and required tools' limited support for `arm64` and `arm64e` architecture, `PactSwift` works on macOS `x86_64` machines but running it on `arch64-darwin` machines might be broken, **for now**!  
-> Any and all help finding a working solution is more than welcome. See [#52][github-issues-52].
+> ⚠️ **NOTE** ⚠️   
+> Due to the new Apple Silicon architecture and required tools' perhaps limited support for `arm64` and `arm64e` architecture, `PactSwift` works on macOS `x86_64` machines but running it on `arch64-darwin` machines _might_ be broken!  
+> Any and all help testing and raising issues and PRs are welcome. See [#52][github-issues-52].
 
 ## Requirements
 
