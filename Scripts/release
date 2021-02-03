@@ -62,10 +62,12 @@ function pushNewVersion {
 	git add $RELEASE_NOTES
 
 	git commit -m "${RELEASE_NAME}"
-	git tag -a $VERSION_TAG -m "Release version $VERSION_TAG" || die "Failed to tag version"
+	git tag "$VERSION_TAG" -F "$RELEASE_NOTES" || die "Failed to tag version"
 
-	git push origin || die "Failed to push version changes to origin"
-	git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
+	# git push origin || die "Failed to push version changes to origin"
+	# git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
+
+	git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
 }
 
 # Release flow
