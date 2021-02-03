@@ -59,6 +59,16 @@ jobs:
     name: Test Carthage
     runs-on: macOS-latest
 
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - platform: "ios"
+          - platform: "macos"
+
+    env:
+      PLATFORM: ${{ matrix.platform }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -80,7 +90,7 @@ jobs:
       - name: Carthage build
         run: |
           echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-          ./Scripts/carthage_xcode12 build --no-skip-current --platform "ios,macos,tvos"
+          ./Scripts/carthage_xcode12 build --no-skip-current --platform "$PLATFORM"
 
   test_spm:
     name: Swift CLI build and test (SPM)
