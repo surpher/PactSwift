@@ -16,6 +16,11 @@ else
 	exit 1
 fi
 
+# Environment Variables
+
+# The architecture of current machine running this script
+CURRENT_ARCH="$(uname -m)"
+
 # Path to pact-reference/rust
 RUST_SRC_DIR="Submodules/pact-reference/rust/pact_mock_server_ffi"
 
@@ -41,24 +46,28 @@ else
 fi
 
 # Build the libpact_mock_server_ffi binary
-# Change to nighly toolchain
-rustup install nightly
-# RUSTUP_UPDATE_ROOT=https://dev-static.rust-lang.org/rustup sh <(curl --proto '=https' --tlsv1.2 -sSf https://dev-static.rust-lang.org/rustup/rustup-init.sh) --default-toolchain beta
-rustup toolchain install nightly
-rustup default nightly-x86_64-apple-darwin
+
+# Use the stable rust toolchain
+rustup default stable
 
 # Add required target triples
-rustup target add aarch64-apple-ios aarch64-apple-darwin x86_64-apple-ios x86_64-apple-darwin
+rustup target add aarch64-apple-ios x86_64-apple-ios x86_64-apple-darwin
 
 # Change into Submodules' dependency folder
 cd $PACTSWIFT_SRC_DIR
 
 if [[ $PLATFORM == "macos" ]]; then
 	# Build the Rust dependency for darwin
-	CURRENT_ARCH="$(uname -m)"
 	if [[ $CURRENT_ARCH == "x86_64" ]]; then
 		cargo build --release --target=x86_64-apple-darwin
 	else
+		# Default the rust toolchain to the one that includes aarm64-apple-darwin
+		# WARNING: - A nightly toolchain is not stable
+		rustup install nightly
+		rustup toolchain install nightly
+		rustup default nightly-x86_64-apple-darwin
+		rustup target add aarch64-apple-darwin
+
 		cargo build --release --target=aarm64-apple-darwin
 	fi
 
