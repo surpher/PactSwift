@@ -21,7 +21,7 @@ struct MismatchError: Decodable {
 
 	let type: String
 	let expected: Expected
-	let actual: Actual
+	let actual: Actual?
 	let parameter: String?
 	let mismatch: String?
 
