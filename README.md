@@ -17,7 +17,7 @@ This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
 
 > ⚠️ **NOTE** ⚠️   
-> Due to the new Apple Silicon architecture and required tools' perhaps limited support for `arm64` and `arm64e` architecture, `PactSwift` works on macOS `x86_64` machines but running it on `arch64-darwin` machines _might_ be broken!  
+> Due to the new Apple Silicon architecture and required tools' perhaps limited support for `arm64` and `arm64e` architecture, `PactSwift` works on macOS `x86_64` machines but running it on `arch64-darwin` machines _might_ be broken! Feel free to reach out with any questions in our [Slack channel][slack-channel].  
 > Any and all help testing and raising issues and PRs are welcome. See [#52][github-issues-52].
 
 ## Requirements
@@ -305,6 +305,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-twitter]: http://twitter.com/pact_up
 [releases]: https://github.com/surpher/PactSwift/releases
 [rust-lang-installation]: https://www.rust-lang.org/tools/install
+[slack-channel]: https://pact-foundation.slack.com/archives/C9VBGNT4K
 
 [project-ios]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-Example
 [workflow-ios]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+project%22
