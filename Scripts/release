@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-# Overridable Environment
+# set -x
+set -o pipefail
 
-SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+# Overridable Environment
+if [[ "$CI" == true ]] ; then
+	echo "YES CI"
+	SCRIPTS_DIR="${GITHUB_WORKSPACE}/Scripts"
+else
+	echo "NOT CI"
+	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+fi
+
 CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
 VERSION_FILE="${SCRIPTS_DIR}/../Sources/Definitions/PactSwiftVersion.swift"
 RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
@@ -15,7 +24,7 @@ VERSION_TAG="v$VERSION"
 # Functions
 
 function help {
-    echo "Usage: release VERSION RELEASE_NAME DRY_RUN"
+    echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
     echo
     echo "VERSION should be the version to release and should not include the 'v' prefix"
     echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
@@ -23,7 +32,7 @@ function help {
     echo "FLAGS"
     echo "  -d  Dry run, won't push anything"
     echo
-    echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release'"
+    echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
     echo
     exit 2
 }
@@ -67,9 +76,9 @@ if [ $? -eq 0 ]; then
     die "This tag ($VERSION) is in an incorrect format. You should remove the 'v' prefix."
 fi
 
-echo $VERSION_TAG | grep -q -E "^v\d+\.\d+\.\d+(-\w+(\.\d)?)?\$"
+echo $VERSION_TAG | grep -q -E "^v[0-9]+\.[0-9]+\.[0-9]+(-\w+(\.\d)?)?$"
 if [ $? -ne 0 ]; then
-    die "This tag ($VERSION) is in an incorrect format. It should be in 'v{MAJOR}.{MINOR}.{PATCH}(-{PRERELEASE_NAME}.{PRERELEASE_VERSION})' form."
+    die "This tag $VERSION is in an incorrect format. It should be in 'v{MAJOR}.{MINOR}.{PATCH}(-{PRERELEASE_NAME}.{PRERELEASE_VERSION})' form."
 fi
 
 echo "👮‍♀️  Verifying version ($VERSION) is unique"
