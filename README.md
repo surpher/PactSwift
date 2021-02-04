@@ -60,7 +60,7 @@ See [pact-swift-examples][demo-projects] for an example on how to set it up for 
 **NOTE:**  
 This framework is intended to be used in your test target only! Do not embed it into your app bundle!
 
-### Setup Framework Build Settings
+### Edit Build Settings - Carthage
 
 #### Framework Search Paths
 
@@ -78,17 +78,25 @@ In your test targets build settings, update `Runpath Search Paths` configuration
 
 ### Set PactSwift as a Swift Package
 
+Use the available PactSwift version number.
+
+If you live dangerously, use `main` as the branch (not recommended) to always use the latest changes in PactSwift framework.
+
 <img src="Documentation/images/05-swift-package.png" width="600" alt="swift package" />
 
-### Define a Build Step Run Script
+### Set up a Build Phase - Run Script
 
-Set write permissions for Xcode to replace the fake binaries with the one compiled by your machine. Use the `PactSwift/Scripts/BuildPhases/build-spm-dependency` script in the package folder:
+PactSwift framework will build it's `libpact_mock_server.a` binary from Rust source code. In order to do that, you need to set up a Build Phase to build it using the script provided in the PactSwift framework's repository (`./Scripts/BuildPhases/build-spm-dependency`).
+
+Set write permissions for Xcode to replace the existing fake binaries (in `./Resources/`) with the one compiled by your machine. Use the `PactSwift/Scripts/BuildPhases/build-spm-dependency` script in the package folder:
 
 <img src="Documentation/images/06-build-step.png" width="600" alt="build step" />
 
 Make sure you set the `PATH` with location of your `cargo` and `rustup`.
 
-### Edit search paths
+### Edit Build Settings - SPM
+
+#### Library Search Paths
 
 Add `$BUILD_DIR/../../SourcePackages/checkouts/PactSwift/Resources` -recursive to `Library Search Paths` and `Frameworks Search Paths` in your test target's build settings.
 
