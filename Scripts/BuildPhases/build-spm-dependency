@@ -61,13 +61,16 @@ if [[ $PLATFORM == "macos" ]]; then
 	if [[ $CURRENT_ARCH == "x86_64" ]]; then
 		cargo build --release --target=x86_64-apple-darwin
 	else
-		# Default the rust toolchain to the one that includes aarm64-apple-darwin
+		# Default the rust toolchain to the aarm64-apple-darwin
 		# WARNING: - A nightly toolchain is not stable
 		rustup install nightly
 		rustup toolchain install nightly
-		rustup default nightly-x86_64-apple-darwin
+		rustup default nightly-aarch64-apple-darwin
+
+		# Add aarch64 build target
 		rustup target add aarch64-apple-darwin
 
+		# Build the binary for aarm64
 		cargo build --release --target=aarm64-apple-darwin
 	fi
 
