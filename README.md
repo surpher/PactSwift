@@ -22,7 +22,7 @@ It implements [Pact Specification v3][pact-specification-v3] and takes advantage
 
 ## Requirements
 
-`PactSwift` uses [`pact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase and requires Rust installed on your machine:
+`PactSwift` uses [`pact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase on your first project build and requires Rust installed on your machine. You can install Rust using Homebrew:
 
 ```sh
 brew install rust
@@ -31,7 +31,7 @@ cargo install cargo-lipo
 
 or follow installation instructions available at [rust-lang][rust-lang-installation].
 
-The first time `PactSwift` is built on your machine it will take quite a long time due to also compiling the Rust binary. As long as the compiled binary exists in the Rust build folder, it will skip re-compiling it and build times should be much shorter.
+The first time `PactSwift` is built on your machine it will take quite a long time due to also compiling the Rust binary. As long as the compiled binary exists in the Rust build folder and submodule has not changed, it will skip re-compiling it and build times should be much shorter.
 
 ## Installation
 
@@ -53,7 +53,7 @@ dependencies: [
 
 Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use `PactSwift` with SPM!
 
-See [pact-swift-examples][demo-projects] for an example on how to set it up for Xcode and CI/CD.
+See [pact-swift-examples][demo-projects] for a examples on how to set it up for Xcode and CI/CD.
 
 ## Xcode setup - Carthage
 
