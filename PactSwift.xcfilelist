@@ -1,8 +1,8 @@
-$(SRCROOT)/Sources/Extensions/Dictionary+Pact.swift
+$(SRCROOT)/Sources/Extensions/Bundle+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Date+PactSwift.swift
-$(SRCROOT)/Sources/Extensions/Bundle+Pact.swift
+$(SRCROOT)/Sources/Extensions/UUID+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/String+PactSwift.swift
-$(SRCROOT)/Sources/Extensions/UUID+Pact.swift
+$(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)/Sources/Matchers/EqualTo.swift
 $(SRCROOT)/Sources/Matchers/EachLike.swift
