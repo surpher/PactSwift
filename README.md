@@ -269,7 +269,7 @@ See [pact-swift-examples][demo-projects] repo.
 
 | Project | Status | Dependency manager |
 | ---     | ---    | --- |
-| [iOS][project-ios] | [![Test iOS project](https://github.com/surpher/pact-swift-examples/workflows/Test%20iOS%20project/badge.svg)][workflow-ios] | Carthage |
+| [iOS][project-ios] | [![Test iOS project](https://github.com/surpher/pact-swift-examples/actions/workflows/test_iOS_xcode_12.4.yml/badge.svg)][workflow-ios] | Carthage |
 | [iOS (Objective-C)][project-ios-objc] | [![Test iOS (Objective-C) project](https://github.com/surpher/pact-swift-examples/workflows/Test%20iOS%20(Objective-C)%20project/badge.svg)][workflow-ios-objc] | Carthage |
 | [iOS][project-ios-spm] | [![Test iOS (SPM) project](https://github.com/surpher/pact-swift-examples/workflows/Test%20iOS%20(SPM)%20project/badge.svg)][workflow-ios-spm] | Swift Package Manager |
 | [macOS][project-macos] | [![Test macOS project](https://github.com/surpher/pact-swift-examples/workflows/Test%20macOS%20project/badge.svg)][workflow-macos]| Carthage |
@@ -316,7 +316,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [slack-channel]: https://pact-foundation.slack.com/archives/C9VBGNT4K
 
 [project-ios]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-Example
-[workflow-ios]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+project%22
+[workflow-ios]: https://github.com/surpher/pact-swift-examples/actions/workflows/test_iOS_xcode_12.4.yml
 [project-ios-spm]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-SPM-Example
 [workflow-ios-spm]: https://github.com/surpher/pact-swift-examples/actions?query=workflow%3A%22Test+iOS+%28SPM%29+project%22
 [project-ios-objc]: https://github.com/surpher/pact-swift-examples/tree/main/Pact-iOS-ObjC-Example
