@@ -40,6 +40,8 @@ cargo install cargo-lipo
 cargo install cbindgen
 ```
 
+See this [gist][gist-rust] for a short list of Rust commands that might help with this project.
+
 Use Homebrew to install [SwiftLint](https://github.com/realm/SwiftLint):
 
 ```sh
@@ -132,6 +134,7 @@ All contributions to this project are also under this license as per [GitHub's T
 [issues]: https://github.com/surpher/PactSwift/issues
 [new-issue]: https://github.com/surpher/PactSwift/issues/new/choose
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
+[gist-rust]: https://gist.github.com/surpher/bbf88e191e9d1f01ab2e2bbb85f9b528
 [good-first-issue]: https://github.com/surpher/PactSwift/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 [code-of-conduct]: CODE_OF_CONDUCT.md
 [core-contributor]: Documentation/CORE_CONTRIBUTOR.md
