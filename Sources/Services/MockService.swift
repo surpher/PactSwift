@@ -24,6 +24,7 @@ let kTimeout: TimeInterval = 10
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate.
+///
 @objc open class MockService: NSObject {
 
 	@objc public enum TransferProtocol: Int {
@@ -43,7 +44,7 @@ let kTimeout: TimeInterval = 10
 	private var pact: Pact
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
-	private var allValidated: Bool = true
+	private var allValidated = true
 	private var transferProtocolScheme: TransferProtocol
 
 	private let mockServer: MockServer
@@ -60,6 +61,7 @@ let kTimeout: TimeInterval = 10
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
+	///
 	@objc(initWithConsumer: provider: transferProtocol:)
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
@@ -75,6 +77,7 @@ let kTimeout: TimeInterval = 10
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///   - port: The port number to run the MockServer on (greater than 1200)
+	///
 	@objc(initWithConsumer: provider: transferProtocol: port:)
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, port: port, errorReporter: ErrorReporter())
@@ -91,6 +94,7 @@ let kTimeout: TimeInterval = 10
 	///   - scheme: HTTP scheme
 	///   - port: The port number to run the MockServer on
 	///   - errorReporter: Injectable object to intercept errors
+	///
 	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int? = nil, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		mockServer = MockServer(port: port)
@@ -106,6 +110,7 @@ let kTimeout: TimeInterval = 10
 	/// combination is unique per consumer-provider contract.
 	///
 	/// - parameter description: A description of the API interaction
+	///
 	@discardableResult
 	@objc(uponReceiving:)
 	public func uponReceiving(_ description: String) -> Interaction {
@@ -124,6 +129,7 @@ let kTimeout: TimeInterval = 10
 	///   - waitFor: Give the test function `waitFor` seconds to test your interaction. Default is 10 seconds
 	///   - testFunction: Your code that makes the API request
 	///   - testCompleted: Completion block notifying `MockService` the test is done
+	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
@@ -197,6 +203,7 @@ extension MockService {
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
 	/// Set `PACT_OUTPUT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
+	///
 	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		pact.interactions = interactions
 		guard let pactData = pact.data, allValidated else {

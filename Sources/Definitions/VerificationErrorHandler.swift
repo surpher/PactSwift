@@ -39,7 +39,7 @@ struct VerificationErrorHandler {
 		var actualRequest: String = ""
 		var errorReason: String = ""
 
-		errors.forEach { error in //swiftlint:disable:this closure_body_length
+		errors.forEach { error in // swiftlint:disable:this closure_body_length
 			errorReason = VerificationErrorType(error.type).rawValue
 
 			switch VerificationErrorType(error.type) {

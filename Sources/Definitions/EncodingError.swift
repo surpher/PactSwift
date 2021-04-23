@@ -24,7 +24,7 @@ enum EncodingError: Error {
 	var localizedDescription: String {
 		switch self {
 		case .notEncodable(let element):
-			return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" //swiftlint:disable:this line_length
+			return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" // swiftlint:disable:this line_length
 		default:
 			return "Error casting unknown type into an Encodable type!"
 		}

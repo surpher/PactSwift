@@ -34,7 +34,7 @@ enum PactSocketFinder {
 private extension PactSocketFinder {
 
 	static var randomPort: in_port_t {
-		in_port_t(arc4random_uniform(2_000) + 4_000) //swiftlint:disable:this legacy_random
+		in_port_t(arc4random_uniform(2_000) + 4_000) // swiftlint:disable:this legacy_random
 	}
 
 	// The following code block referenced from: https://stackoverflow.com/a/49728137
