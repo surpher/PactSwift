@@ -55,6 +55,7 @@ extension Request: Encodable {
 	///   - query: A url query
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
+	///
 	init(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) throws {
 		self.httpMethod = method
 		self.path = path

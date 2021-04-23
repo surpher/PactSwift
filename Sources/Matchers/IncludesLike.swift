@@ -31,6 +31,7 @@ public extension Matcher {
 	///   "bar": Matcher.IncludesLike(["1", "Jane", "John"], combine: .AND)
 	/// ]
 	/// ```
+	///
 	struct IncludesLike: MatchingRuleExpressible {
 		public enum IncludeCombine: String {
 			case AND
@@ -58,6 +59,7 @@ public extension Matcher {
 		///   - values: Set of `String` values expected to be present
 		///   - combine: Defines whether matchers are combine with logical AND or OR
 		///   - generate: The value MockServer will return
+		///
 		public init(_ values: String..., combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values
@@ -70,6 +72,7 @@ public extension Matcher {
 		///   - values: Set of `String` values expected to be present
 		///   - combine: Defines whether matchers are combine with logical AND or OR
 		///   - generate: The value MockServer will return
+		///
 		public init(_ values: [String], combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
 			self.includeStringValues = values

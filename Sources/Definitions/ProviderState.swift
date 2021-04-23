@@ -27,6 +27,7 @@ public struct ProviderState: Encodable {
 	///
 	/// - parameter description: The description of the state
 	/// - parameter params: The `Key` `Value` pair of the expected state (eg: `"user_id": "1"`)
+	///
 	public init(description: String, params: [String: String]) {
 		self.name = description
 		self.params = params

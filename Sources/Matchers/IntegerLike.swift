@@ -24,6 +24,7 @@ public extension Matcher {
 	/// Use this matcher where you expect an `Int` to be passed in
 	/// the interaction between consumer and provider, but the
 	/// value is not important.
+	///
 	struct IntegerLike: MatchingRuleExpressible {
 
 		internal let value: Any

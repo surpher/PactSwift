@@ -25,7 +25,7 @@ class MockServer {
 
 	// MARK: - Properties
 
-	/// The URL on which Mock Server is running.
+	/// The URL on which MockServer is running.
 	var baseUrl: String {
 		"\(transferProtocol.protocol)://\(socketAddress):\(port)"
 	}
@@ -39,6 +39,7 @@ class MockServer {
 
 	// MARK: - Lifecycle
 
+	/// Initializes a MockServer on a given port. If none is provided a random unused port will be used
 	init(port: Int? = nil) {
 		if let port = port {
 			self.port = Int32(port)
@@ -80,7 +81,7 @@ class MockServer {
 
 	/// Finalise by writing the contract file onto disk
 	func finalize(pact: Data, completion: ((Result<String, MockServerError>) -> Void)?) {
-		Logger.log(message: "Starting up MockServer to finalize writing the Pact with data:", data: pact)
+		Logger.log(message: "Starting up MockServer to finalize writing Pact with data:", data: pact)
 
 		create_mock_server(
 			String(data: pact, encoding: .utf8)?.replacingOccurrences(of: "\\", with: ""),
@@ -119,7 +120,7 @@ private extension MockServer {
 		return errorDescription
 	}
 
-	/// Writes the PACT contract file to disk
+	/// Writes the Pact file to disk
 	func writePactContractFile(completion: (Result<String, MockServerError>) -> Void) {
 		guard PactFileManager.isPactDirectoryAvailable() else {
 			completion(.failure(.failedToWriteFile))
@@ -132,10 +133,10 @@ private extension MockServer {
 			completion(.failure(MockServerError(code: Int(writeResult))))
 			return
 		}
-		completion(.success("Pact interaction written to \(pactDir)"))
+		completion(.success("Pact written to \(pactDir)"))
 	}
 
-	/// Shuts down the Mock Server and releases the socket address
+	/// Shuts down the MockServer and releases the socket address
 	func shutdownMockServer(on port: Int32? = nil) {
 		let port = port ?? self.port
 		if port > 0 {

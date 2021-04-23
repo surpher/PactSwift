@@ -27,6 +27,7 @@ struct PactBuilder {
 	/// - Parameters:
 	///   - value: The DSL to process and extract matchers and example generators
 	///   - interactionNode: The part of interaction to process (eg: `body`, `header` or `query`)
+	///
 	init(with value: Any, for interactionNode: PactInteractionNode) {
 		self.typeDefinition = value
 		self.interactionNode = interactionNode
@@ -38,6 +39,7 @@ struct PactBuilder {
 	///
 	/// Transforms the following supported types into `AnyEncodable`:
 	/// `String`, `Int`, `Double`, `Decimal`, `Bool`, `Array<Encodable>`, `Dictionary<String, Encodable>`, `PactSwift.Matcher<>`, `PactSwift.ExampleGenerator<>`
+	///
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
 		do {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
@@ -126,7 +128,8 @@ private extension PactBuilder {
 			processedElement = try processMatcher(matcher, at: node)
 
 		// Example generators:
-
+		// There is a bug in Swift where generics don't seem to work with improving the below.
+		// That is why each ExampleGenerator type is explicitly stated in its own case statement and is not DRY.
 		case let exampleGenerator as ExampleGenerator.RandomBool:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
 

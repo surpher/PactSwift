@@ -31,6 +31,7 @@ public extension Matcher {
 	///   "foo": Matcher.DecimalLike(1234)
 	/// ]
 	/// ```
+	///
 	struct DecimalLike: MatchingRuleExpressible {
 		internal let value: Any
 		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("decimal")]]
@@ -40,6 +41,7 @@ public extension Matcher {
 		/// Defines a Pact matcher that expects a `Decimal` value.
 		///
 		/// - parameter value: The value MockService should expect or respond with
+		///
 		public init(_ value: Decimal) {
 			self.value = value
 		}
@@ -59,6 +61,7 @@ public extension Matcher {
 /// ```
 /// - Parameters:
 ///   - value: The value MockService should expect or respond with
+///
 @objc(PFMatcherDecimalLike)
 public class ObjcDecimalLike: NSObject, ObjcMatcher {
 
@@ -67,6 +70,7 @@ public class ObjcDecimalLike: NSObject, ObjcMatcher {
 	/// Defines a Pact matcher that expects a `Decimal` value.
 	///
 	/// - parameter value: The value MockService should expect or respond with
+	///
 	@objc(value:)
 	public init(value: Decimal) {
 		self.type = Matcher.DecimalLike(value)

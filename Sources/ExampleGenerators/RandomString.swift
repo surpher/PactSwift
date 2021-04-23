@@ -33,7 +33,9 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - size: The size of generated `String`
+		///
 		/// - Precondition: `size` is a positive value
+		///
 		public init(size: Int = 20) {
 			self.generator = .string
 			self.value = String((0..<size).map { _ in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".randomElement()! })
@@ -50,6 +52,7 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - regex: The regular expression that defines the generated `String`
+		///
 		public init(regex: String) {
 			guard let stringPointer = generate_regex_value(regex).ok._0 else {
 				fatalError("Failed to generate a random string from \"\(regex)\"")
@@ -76,7 +79,9 @@ public class ObjcRandomString: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - size: The size of generated `String`
+	///
 	/// - Precondition: `size` is a positive value
+	///
 	@objc(size:)
 	public init(size: Int = 20) {
 		type = ExampleGenerator.RandomString(size: size)
@@ -90,6 +95,7 @@ public class ObjcRandomString: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - regex: The regular expression that defines the generated `String`
+	///
 	@objc(regex:)
 	public init(regex: String) {
 		type = ExampleGenerator.RandomString(regex: regex)

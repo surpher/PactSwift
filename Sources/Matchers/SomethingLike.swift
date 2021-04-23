@@ -31,6 +31,7 @@ public extension Matcher {
 	///   "bar": Matcher.SomethingLike(1) // Matches an `Int`
 	/// ]
 	/// ```
+	///
 	struct SomethingLike: MatchingRuleExpressible {
 		internal let value: Any
 		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("type")]]
@@ -40,6 +41,7 @@ public extension Matcher {
 		/// Defines a Pact matcher that expects a specific `Type`
 		///
 		/// - parameter value: The value MockService should expect or respond with
+		///
 		public init(_ value: Any) {
 			self.value = value
 		}
@@ -57,6 +59,7 @@ public class ObjcSomethingLike: NSObject, ObjcMatcher {
 	/// Defines a Pact matcher that expects a specific `Type`
 	///
 	/// - parameter value: Value of expected type
+	///
 	@objc(value:)
 	public init(value: Any) {
 		type = Matcher.SomethingLike(value)

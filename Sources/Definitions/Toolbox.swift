@@ -24,6 +24,7 @@ enum Toolbox {
 	///   - query: The PactBuilder processed object representing interaction's query
 	///   - header: The PactBuilder processed object representing interaction's header
 	///   - path: The PactBuilder processed object representing request path
+	///
 	static func merge(body: AnyEncodable?, query: AnyEncodable? = nil, header: AnyEncodable? = nil, path: AnyEncodable? = nil) -> [String: AnyEncodable]? {
 		var merged: [String: AnyEncodable] = [:]
 
@@ -50,6 +51,7 @@ enum Toolbox {
 	/// - Parameters:
 	///   - element: The object to process through PactBuilder
 	///   - interactionElement: The network interaction element the object relates to
+	///
 	static func process(element: Any?, for interactionElement: PactInteractionNode) throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?)? {
 		if let element = element {
 			do {

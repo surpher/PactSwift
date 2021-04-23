@@ -38,6 +38,7 @@ public extension Matcher {
 	///     max: 10
 	///   ) // Set of 0 - 10 objects.
 	/// ```
+	///
 	struct EachLike: MatchingRuleExpressible {
 
 		internal let value: Any
@@ -60,6 +61,7 @@ public extension Matcher {
 		/// - Parameters:
 		///   - value: Template to base the comparison on
 		///   - count: Number of examples to generate, defaults to `1`
+		///
 		public init(_ value: Any, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > 1) ? count : 1)
 			self.min = 1
@@ -76,6 +78,7 @@ public extension Matcher {
 		///   - count: Number of examples to generate, defaults to `1`
 		///
 		/// - Precondition: `min` must be a positive value and less than or equal to `count`
+		///
 		public init(_ value: Any, min: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > min) ? count : min)
 			self.min = min
@@ -92,6 +95,7 @@ public extension Matcher {
 		///   - count: Number of examples to generate, defaults to `1`
 		///
 		/// - Precondition: `max` must be a positive value and not greater than `count`
+		///
 		public init(_ value: Any, max: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > max) ? max : count)
 			self.min = nil
@@ -107,8 +111,11 @@ public extension Matcher {
 		///   - min: Minimum expected number of occurances of provided `value`
 		///   - max: Maximum expected number of occurances of provided `value`
 		///   - count: Number of examples to generate, defaults to `1`
+		///
 		/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+		///
 		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+		///
 		public init(_ value: Any, min: Int, max: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: count < min ? min : (count > max) ? max : count)
 			self.min = Swift.min(min, max)
@@ -126,22 +133,28 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	let type: MatchingRuleExpressible
 
 	/// Defines a Pact matcher describing a set
+	///
 	/// - Parameters
 	///   - value: Template to base the comparison on
 	///   - count: Number of examples to generate, defaults to `1`
+	///
 	@objc(value: count:)
 	public init(value: Any, count: Int = 1) {
 		type = Matcher.EachLike(value, count: count)
 	}
 
 	/// Defines a Pact matcher describing a set
+	///
 	/// - Parameters:
 	///   - value: Template to base the comparison on
 	///   - min: Minimum expected number of occurances of provided `value`
 	///   - max: Maximum expected number of occurances of provided `value`
 	///   - count: Number of examples to generate, defaults to `1`
+	///
 	/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+	///
 	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+	///
 	@objc(value: min: max: count:)
 	public init(value: Any, min: Int, max: Int, count: Int = 1) {
 		type = Matcher.EachLike(value, min: min, max: max, count: count)

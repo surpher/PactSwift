@@ -25,9 +25,11 @@ public extension ExampleGenerator {
 		internal let generator: ExampleGenerator.Generator = .date
 		internal var rules: [String: AnyEncodable]?
 
-		/// Generates a Date value from the current date either in ISO format or using the provided format string
+		/// Generates a `Date` value from the current date either in ISO format or using the provided format string
+		/// 
 		/// - Parameters:
 		///   - format: The format of generated date
+		///
 		public init(format: String? = nil) {
 			self.value = Date.formattedDate(format: format, isoFormat: .date)
 
@@ -48,9 +50,11 @@ public class ObjcRandomDate: NSObject, ObjcGenerator {
 
 	let type: ExampleGeneratorExpressible
 
-	/// Generates a Date value from the current date either in ISO format or using the provided format string
+	/// Generates a `Date` value from the current date either in ISO format or using the provided format string
+	///
 	/// - Parameters:
 	///   - format: The format of generated date
+	///
 	@objc(format:)
 	public init(format: String? = nil) {
 		type = ExampleGenerator.RandomDate(format: format)

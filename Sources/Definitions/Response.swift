@@ -40,6 +40,7 @@ extension Response: Encodable {
 	///   - statusCode: The status code of the API response
 	///   - headers: Headers of the API response
 	///   - body: Optional body in the API response
+	///
 	init(statusCode: Int, headers: [String: Any]? = nil, body: Any? = nil) throws {
 		self.statusCode = statusCode
 		self.headers = headers

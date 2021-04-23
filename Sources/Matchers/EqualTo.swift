@@ -31,6 +31,7 @@ public extension Matcher {
 	///   "bar": Matcher.EqualTo(847)
 	/// ]
 	/// ```
+	///
 	struct EqualTo: MatchingRuleExpressible {
 
 		internal let value: Any
@@ -41,6 +42,7 @@ public extension Matcher {
 		/// Defines a Pact matcher that explicitly expects the provided value
 		///
 		/// - parameter value: The value to be returned by MockService
+		///
 		public init(_ value: Any) {
 			self.value = value
 		}
@@ -58,6 +60,7 @@ public class ObjcEqualTo: NSObject, ObjcMatcher {
 	/// Defines a Pact matcher that explicitly expects the provided value
 	///
 	/// - parameter value: The value to be returned by MockService
+	///
 	@objc(value:)
 	public init(value: Any) {
 		type = Matcher.EqualTo(value)

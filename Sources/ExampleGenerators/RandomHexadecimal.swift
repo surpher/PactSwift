@@ -29,7 +29,9 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - digits: The length of generated hexadecimal string
+		///
 		/// - Precondition: `digits` is a positive value
+		///
 		public init(digits: UInt8 = 8) {
 			// MockServer overrides this value and returns a new string so accuracy and correctness here is irrelevant
 			self.value = String((0..<digits).map { _ in "0123456789ABCDEF".randomElement()! })
@@ -52,7 +54,9 @@ public class ObjcRandomHexadecimal: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - digits: The length of generated hexadecimal string
+	///
 	/// - Precondition: `digits` is a positive value
+	///
 	@objc(digits:)
 	public init(digits: Int = 8) {
 		type = ExampleGenerator.RandomHexadecimal(digits: UInt8(digits))

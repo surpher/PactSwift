@@ -29,6 +29,9 @@ public enum MockServerError: Error {
 	case validationFaliure
 	case unknown
 
+	/// Initializes MockServerError with the code provided by MockServer binary.
+	///
+	/// See Rust implementation of MockServer at `pact-foundation/pact-reference`.
 	init(code: Int) {
 		switch code {
 		case 2: self = .failedToWriteFile

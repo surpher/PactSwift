@@ -22,7 +22,7 @@ enum PactFileManager {
 	/// Where Pact contracts are written to.
 	///
 	/// ## macOS
-	/// Running macOS it defaults to app's Documents folder:
+	/// Running tests for macOS it will default to app's Documents folder:
 	///
 	/// (eg: `~/Library/Containers/au.com.pact-foundation.Pact-macOS-Example/Data/Documents`)
 	///
@@ -32,10 +32,9 @@ enum PactFileManager {
 	///
 	/// ## iOS/tvOS or non-Xcode project
 	///
-	/// Default location where Pact contracts are written is `/tmp/pacts`.
+	/// Default location where Pact contracts are written is `/tmp/pacts` and can be overwritten
+	/// with a `PACT_OUTPUT_DIR` environment variable set to an absolute path (eg: `$(PROJECT_DIR)/tmp/pacts`).
 	///
-	/// For iOS/tvOS you can override
-	/// that by defining a `PACT_OUTPUT_DIR` Environment Variable.
 	static var pactDirectoryPath: String {
 		#if os(macOS) || os(OSX)
 		let defaultPath = NSHomeDirectory() + "/Documents"
@@ -54,6 +53,7 @@ enum PactFileManager {
 
 	/// Returns true if the directory where Pact contracts are set to be written to exists.
 	/// If it does not exists, it attempts to create it and if successful, returns true.
+	///
 	static func isPactDirectoryAvailable() -> Bool {
 		if !FileManager.default.fileExists(atPath: pactDirectoryPath) {
 			do {

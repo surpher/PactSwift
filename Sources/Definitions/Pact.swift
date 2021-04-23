@@ -28,6 +28,7 @@ struct Pact: Encodable {
 
 	var interactions: [Interaction] = []
 
+	// These are the top level required nodes of a Pact contract file
 	var payload: [String: Any] {
 		[
 			"consumer": consumer.name,

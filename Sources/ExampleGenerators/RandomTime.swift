@@ -29,6 +29,7 @@ public extension ExampleGenerator {
 		///
 		/// - Parameters:
 		///   - format: The format of generated time
+		///
 		public init(format: String? = nil) {
 			self.value = Date.formattedDate(format: format, isoFormat: .time)
 
@@ -53,6 +54,7 @@ public class ObjcRandomTime: NSObject, ObjcGenerator {
 	///
 	/// - Parameters:
 	///   - format: The format of generated time
+	///
 	@objc(format:)
 	public init(format: String? = nil) {
 		type = ExampleGenerator.RandomTime(format: format)

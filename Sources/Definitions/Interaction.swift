@@ -81,6 +81,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - interactionDescription: A `String` describing the interaction
+	///
 	@discardableResult
 	@objc(uponReceivingARequestWithDescription:)
 	func uponReceiving(_ interactionDescription: String) -> Interaction {
@@ -98,6 +99,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - providerState: Description of the state.
+	///
 	@discardableResult
 	@objc(givenProviderState:)
 	public func given(_ providerState: String) -> Interaction {
@@ -122,6 +124,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - providerStates: A list of provider states
+	///
 	@discardableResult
 	public func given(_ providerStates: [ProviderState]) -> Interaction {
 		self.providerStates = providerStates
@@ -153,6 +156,7 @@ extension Interaction {
 	///
 	/// - Parameters:
 	///   - providerStates: A list of provider states
+	///
 	public func given(_ providerStates: ProviderState...) -> Interaction {
 		given(providerStates)
 	}
@@ -182,6 +186,7 @@ extension Interaction {
 	///   - query: The query parameters of the request
 	///   - headers: The header parameters of the request
 	///   - body: The body of the request
+	///
 	@discardableResult
 	public func withRequest(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		do {
@@ -207,12 +212,13 @@ extension Interaction {
 	/// At a minimum the `status` is required to test an API response.
 	/// By not providing a value for `headers` or `body` it is understood
 	/// that the presence of those values in the response is _not required_
-	/// but the can be present.
+	/// but they can be present.
 	///
 	/// - Parameters:
 	///   - status: The response status code
 	///   - headers: The response headers
 	///   - body: The response body
+	///
 	@discardableResult
 	@objc public func willRespondWith(status: Int, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		do {

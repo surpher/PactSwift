@@ -19,19 +19,18 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects a value
-	/// conforming to a `Regex` term.
+	/// Defines a Pact matcher that expects a value conforming to a `Regex` term.
 	///
-	/// Use this matcher where you expect a term defined
-	/// by a regular expression term.
+	/// Use this matcher where you expect a term defined by a regular expression term.
 	///
-	/// Request `path` accepts this matcher.
+	/// A request `path` also accepts this matcher.
 	///
 	/// ```
 	/// [
 	///   "foo": Matcher.RegexLike("2020-04-27", term: "\d{4}-\d{2}-\d{2}")
 	/// ]
 	/// ```
+	///
 	struct RegexLike: MatchingRuleExpressible, PactPathParameter {
 		internal let value: Any
 		internal let term: String
@@ -47,11 +46,11 @@ public extension Matcher {
 
 		// MARK: - Iitializer
 
-		/// Defines a Pact matcher that expectes a value
-		/// conforming to a `Regex` term.
+		/// Defines a Pact matcher that expectes a value conforming to a `Regex` term.
 		///
 		/// - parameter value: The value MockService should expect or respond with
 		/// - parameter term: The regex term that the `value` conforms to
+		///
 		public init(_ value: String, term: String) {
 			self.value = value
 			self.term = term

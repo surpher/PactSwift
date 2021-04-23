@@ -24,6 +24,7 @@ public struct ExampleGenerator {
 
 extension ExampleGenerator {
 
+	// A list of implemented Example Generators that map to a generator in Pact Specification.
 	enum Generator: String {
 		case int = "RandomInt"
 		case decimal = "RandomDecimal"
