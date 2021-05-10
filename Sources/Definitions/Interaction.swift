@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftToolbox
 
 /// Defines the interaction between consumer and provider
 @objc public class Interaction: NSObject {
