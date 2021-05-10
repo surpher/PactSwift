@@ -14,9 +14,9 @@ DYLIB_INSTALL_NAME_BASE = @rpath
 
 INFOPLIST_FILE = Configurations/Info-iOS.plist
 PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.iOS.PactSwift 
-LIBRARY_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Resources/iOS $(PLATFORM_DIR)/Developer/usr/lib
+LIBRARY_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/usr/lib
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
-FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Resources/iOS
+FRAMEWORK_SEARCH_PATHS = $(inherited)
 HEADER_SEARCH_PATHS = $(PROJECT_DIR)/Sources/Headers
 
 OTHER_LDFLAGS = -weak_framework XCTEST -weak-lXCTestSwiftSupport

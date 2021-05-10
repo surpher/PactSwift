@@ -1,6 +1,5 @@
 PRODUCT_NAME = PactSwift
 
-// TODO: Once `libpact_mock_server` contains both slices for `arch64` and `x86_64` the following should be removed
 ONLY_ACTIVE_ARCH = YES
 EXCLUDED_ARCHS = arm64 arm64e
 
@@ -17,8 +16,8 @@ INFOPLIST_FILE = Configurations/Info-macOS.plist
 PRODUCT_BUNDLE_IDENTIFIER = au.com.pact-foundation.macOS.PactSwift
 DYLIB_INSTALL_NAME_BASE = @rpath
 LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @loader_path/Frameworks
-LIBRARY_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Resources/macOS $(PLATFORM_DIR)/Developer/usr/lib
-FRAMEWORK_SEARCH_PATHS = $(inherited) $(PROJECT_DIR)/Resources/macOS
+LIBRARY_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/usr/lib
+FRAMEWORK_SEARCH_PATHS = $(inherited)
 
 OTHER_LDFLAGS = -weak_framework XCTEST -weak-lXCTestSwiftSupport
 

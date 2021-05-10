@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftMockServer
 @_implementationOnly import PactSwiftToolbox
 import XCTest
 
@@ -136,7 +137,7 @@ let kTimeout: TimeInterval = 10
 
 		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
 			Logger.log(message: "Setting up pact test", data: pactData)
-			self.mockServer.setup(pact: pactData!, protocol: self.transferProtocolScheme) {
+			mockServer.setup(pact: pactData!, protocol: transferProtocolScheme.bridge) {
 				switch $0 {
 				case .success:
 					do {
@@ -144,30 +145,30 @@ let kTimeout: TimeInterval = 10
 							completion()
 						}
 					} catch {
-						self.failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
+						failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
 					}
 				case .failure(let error):
-					self.failWith(error.description)
+					failWith(error.description)
 					completion()
 				}
 			}
 		}
 
-		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { completion in
-			self.mockServer.verify {
+		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self] completion in
+			mockServer.verify {
 				switch $0 {
 				case .success:
-					self.finalize {
+					finalize {
 						switch $0 {
 						case .success(let message):
-							Logger.log(message: message, data: self.pact.data)
+							Logger.log(message: message, data: pact.data)
 							completion()
 						case .failure(let error):
-							self.failWith(error.description, file: file, line: line)
+							failWith(error.description, file: file, line: line)
 						}
 					}
 				case .failure(let error):
-					self.failWith(error.description, file: file, line: line)
+					failWith(error.description, file: file, line: line)
 					completion()
 				}
 			}
@@ -212,12 +213,12 @@ extension MockService {
 			return
 		}
 
-		self.mockServer.finalize(pact: pactData) {
+		mockServer.finalize(pact: pactData) { [unowned self] in
 			switch $0 {
 			case .success(let message):
 				completion?(.success(message))
 			case .failure(let error):
-				self.failWith(error.description)
+				failWith(error.description)
 				completion?(.failure(error))
 			}
 		}
@@ -232,6 +233,13 @@ extension MockService.TransferProtocol {
 		switch self {
 		case .standard: return "http"
 		case .secure: return "https"
+		}
+	}
+
+	var bridge: PactSwiftMockServer.TransferProtocol {
+		switch self {
+		case .standard: return .standard
+		case .secure: return .secure
 		}
 	}
 
