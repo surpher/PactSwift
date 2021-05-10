@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftToolbox
 
 #if SWIFT_PACKAGE
 import PactMockServer
@@ -44,7 +45,7 @@ class MockServer {
 		if let port = port {
 			self.port = Int32(port)
 		} else {
-			self.port = PactSocketFinder.unusedPort()
+			self.port = SocketBinder.unusedPort()
 		}
 	}
 

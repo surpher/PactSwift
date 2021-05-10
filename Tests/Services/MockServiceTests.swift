@@ -18,6 +18,7 @@
 import XCTest
 
 @testable import PactSwift
+@_implementationOnly import PactSwiftToolbox
 
 class MockServiceTests: XCTestCase {
 

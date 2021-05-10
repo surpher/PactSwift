@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftToolbox
 
 struct Pact: Encodable {
 

@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftToolbox
 import XCTest
 
 let kTimeout: TimeInterval = 10
