@@ -26,8 +26,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
+      - name: Use Xcode 12.4
+        run: sudo xcode-select -switch /Applications/Xcode_12.4.app
 
       - name: Prepare Tools
         run: |
@@ -50,80 +50,8 @@ jobs:
         run: |
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
 
-  # test_carthage:
-  #   needs: [test]
-  #   name: Test Carthage
-  #   runs-on: macOS-latest
-
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       include:
-  #         - platform: "ios"
-  #         - platform: "macos"
-
-  #   env:
-  #     PLATFORM: ${{ matrix.platform }}
-
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
-  #       with:
-  #         submodules: recursive
-
-  #     - name: Use Xcode 12.2
-  #       run: sudo xcode-select -switch /Applications/Xcode_12.2.app
-
-  #     - name: "Cache dependencies"
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: Submodules/pact-reference/rust/target
-  #         key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-pactswift-submodule-
-  #           ${{ runner.os }}-
-
-  #     - name: Carthage build
-  #       run: |
-  #         echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-  #         ./Scripts/carthage_xcode12 build --no-skip-current --platform "$PLATFORM"
-
-  test_spm:
-    name: Swift CLI build and test (SPM)
-    runs-on: macOS-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
-
-      - name: Prepare Tools
-        run: |
-          Scripts/prepare_build_tools
-
-      - name: "Cache dependencies"
-        uses: actions/cache@v2
-        with:
-          path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-spm-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pactswift-spm-submodule-
-            ${{ runner.os }}-
-
-      - name: Build binary && swift test
-        run: |
-          echo "👷‍♀️ running swift build -c debug"
-          set -o pipefail && swift build -c debug | xcbeautify
-          echo "🧪 running swift test"
-          set -o pipefail && swift test | xcbeautify
-
   after_success:
-    # needs: [test, test_carthage, test_spm]
-    needs: [test, test_spm]
+    needs: [test]
     name: Build demo projects
     runs-on: macOS-latest
 
