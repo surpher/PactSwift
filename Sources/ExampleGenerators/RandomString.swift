@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftMockServer
 
 #if SWIFT_PACKAGE
 import PactMockServer
@@ -54,12 +55,12 @@ public extension ExampleGenerator {
 		///   - regex: The regular expression that defines the generated `String`
 		///
 		public init(regex: String) {
-			guard let stringPointer = generate_regex_value(regex).ok._0 else {
+			guard let regexValue = MockServer.generate_value(regex: regex) else {
 				fatalError("Failed to generate a random string from \"\(regex)\"")
 			}
 
 			self.generator = .regex
-			self.value = String(cString: stringPointer)
+			self.value = regexValue
 			self.rules = [
 				"regex": AnyEncodable(regex),
 			]

@@ -29,7 +29,6 @@
 		AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A3D24344FA100785CE1 /* PacticipantTests.swift */; };
 		AD641A402434518500785CE1 /* PactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A3F2434518500785CE1 /* PactTests.swift */; };
 		AD641A422434588200785CE1 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A412434588200785CE1 /* Interaction.swift */; };
-		AD646FCB2460F81000979AFC /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD646FCA2460F80B00979AFC /* pact_mock_server.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B624414D500014BCC8 /* PactBuilderTests.swift */; };
 		AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */; };
 		AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */; };
@@ -67,7 +66,6 @@
 		AD8FC7EE2463BBA400361854 /* Bundle+PactSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+PactSwift.swift */; };
 		AD8FC7EF2463BBA400361854 /* Dictionary+PactSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+PactSwift.swift */; };
 		AD8FC7F02463BBA900361854 /* PactSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD881801242C715A00BF510D /* PactSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AD8FC7F12463BBA900361854 /* pact_mock_server.h in Headers */ = {isa = PBXBuildFile; fileRef = AD646FCA2460F80B00979AFC /* pact_mock_server.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD8FC7F22463BBB800361854 /* DecimalLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891C124415E3E0014BCC8 /* DecimalLike.swift */; };
 		AD8FC7F32463BBB800361854 /* EachLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8DF43E244055980062CB1A /* EachLike.swift */; };
 		AD8FC7F42463BBB800361854 /* EqualTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD3C27324416CDF002E73B9 /* EqualTo.swift */; };
@@ -207,7 +205,6 @@
 		AD641A3D24344FA100785CE1 /* PacticipantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacticipantTests.swift; sourceTree = "<group>"; };
 		AD641A3F2434518500785CE1 /* PactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactTests.swift; sourceTree = "<group>"; };
 		AD641A412434588200785CE1 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
-		AD646FCA2460F80B00979AFC /* pact_mock_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pact_mock_server.h; sourceTree = "<group>"; };
 		AD7891B624414D500014BCC8 /* PactBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactBuilderTests.swift; sourceTree = "<group>"; };
 		AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLikeTests.swift; sourceTree = "<group>"; };
 		AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLikeTests.swift; sourceTree = "<group>"; };
@@ -524,7 +521,6 @@
 			isa = PBXGroup;
 			children = (
 				AD881801242C715A00BF510D /* PactSwift.h */,
-				AD646FCA2460F80B00979AFC /* pact_mock_server.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -589,7 +585,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD88180F242C715B00BF510D /* PactSwift.h in Headers */,
-				AD646FCB2460F81000979AFC /* pact_mock_server.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,7 +592,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8FC7F12463BBA900361854 /* pact_mock_server.h in Headers */,
 				AD8FC7F02463BBA900361854 /* PactSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
