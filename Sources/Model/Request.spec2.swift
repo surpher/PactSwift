@@ -17,17 +17,17 @@
 
 /// An object representing an API request for a Pact test.
 ///
-/// Pact version 3.0
+/// Pact version 2.0
 public struct Request {
 
 	let httpMethod: PactHTTPMethod
 	let path: PactPathParameter
-	let query: [String: [Any]]?
+	let query: String?
 	let headers: [String: Any]?
 
 	var description: String {
 		let request = "\(httpMethod.method.uppercased()) \(path)"
-		let queryString = query?.compactMap { "\($0)=\($1.map { "\($0)," })" }.dropLast().joined(separator: "&")
+		let queryString = query
 		let headersString = headers?.compactMap { "\"\($0)\": \"\($1)\"" }.joined(separator: "\n\t")
 
 		return "\(request) \(queryString ?? "")\(headersString != nil ? "\n\n\tHeaders:\n\t" + headersString! : "")"
@@ -58,7 +58,7 @@ extension Request: Encodable {
 	///   - headers: Headers of the http reqeust
 	///   - body: Optional body of the http request
 	///
-	init(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) throws {
+	init(method: PactHTTPMethod, path: PactPathParameter, query: String? = nil, headers: [String: Any]? = nil, body: Any? = nil) throws {
 		self.httpMethod = method
 		self.path = path
 		self.query = query

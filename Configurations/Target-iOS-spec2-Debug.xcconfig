@@ -1,0 +1,3 @@
+#include "Configurations/Target-iOS-spec2-Shared.xcconfig"
+
+SWIFT_OPTIMIZATION_LEVEL = -Onone
