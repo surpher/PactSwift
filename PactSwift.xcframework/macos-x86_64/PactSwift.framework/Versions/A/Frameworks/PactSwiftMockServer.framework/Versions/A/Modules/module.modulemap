@@ -1,0 +1,11 @@
+framework module PactSwiftMockServer {
+  umbrella header "PactSwiftMockServer.h"
+
+  export *
+  module * { export * }
+}
+
+module PactSwiftMockServer.Swift {
+    header "PactSwiftMockServer-Swift.h"
+    requires objc
+}

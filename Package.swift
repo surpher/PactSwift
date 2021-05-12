@@ -1,44 +1,36 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
 	name: "PactSwift",
+
 	platforms: [
 		.macOS(.v10_12),
 		.iOS(.v12),
 		.tvOS(.v12)
 	],
+
 	products: [
 		.library(
 			name: "PactSwift",
 			targets: ["PactSwift"]
 		)
 	],
+
 	dependencies: [
-		.package(url: "https://github.com/surpher/PactMockServer.git", from: "0.0.1-beta"),
-		.package(url: "https://github.com/surpher/PactSwiftMockServer-Dist.git", from: "0.2.0"),
-		.package(url: "https://github.com/surpher/PactSwiftToolbox.git", from: "0.1.0")
+		.package(name: "PactMockServer", url: "https://github.com/surpher/PactMockServer.git", from: "0.0.1-beta"),
+		.package(name: "PactSwiftMockServer", url: "https://github.com/surpher/PactSwiftMockServer-Dist.git", from: "0.2.0"),
+		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", from: "0.1.0")
 	],
+
 	targets: [
-		.target(
+		.binaryTarget(
 			name: "PactSwift",
-			dependencies: [
-				"PactMockServer",
-				"PactSwiftMockServer",
-				"PactSwiftToolbox"
-			],
-			path: "./Sources"
-		),
-		.testTarget(
-			name: "PactSwiftTests",
-			dependencies: [
-				"PactSwift",
-				"PactSwiftMockServer",
-				"PactSwiftToolbox"
-			],
-			path: "./Tests"
-		),
+			path: "PactSwift.xcframework"
+		)
 	],
+
 	swiftLanguageVersions: [.v5]
+
 )
