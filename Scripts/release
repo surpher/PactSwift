@@ -3,25 +3,7 @@
 # set -x
 set -o pipefail
 
-# Overridable Environment
-if [[ "$CI" == true ]] ; then
-	echo "YES CI"
-	SCRIPTS_DIR="${GITHUB_WORKSPACE}/Scripts"
-else
-	echo "NOT CI"
-	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
-fi
-
-CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
-VERSION_FILE="${SCRIPTS_DIR}/../Sources/Definitions/PactSwiftVersion.swift"
-RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
-REMOTE_BRANCH=main
-VERSION=$1
-RELEASE_NAME=$2
-DRY_RUN=$3
-VERSION_TAG="v$VERSION"
-
-# Functions
+# Utilities
 
 function help {
     echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
@@ -42,6 +24,28 @@ function die {
     echo
     exit 1
 }
+
+# Overridable Environment
+
+if [[ "$CI" == true ]] ; then
+	die "Running on CI is not supported!"
+else
+	echo "NOT CI"
+	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+fi
+
+# Vars
+
+CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
+VERSION_FILE="${SCRIPTS_DIR}/../Sources/Definitions/PactSwiftVersion.swift"
+RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
+REMOTE_BRANCH=main
+VERSION=$1
+RELEASE_NAME=$2
+DRY_RUN=$3
+VERSION_TAG="v$VERSION"
+
+# Setup
 
 if [ $# -lt 2 ]; then
     help
