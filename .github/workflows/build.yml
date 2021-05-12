@@ -51,8 +51,7 @@ jobs:
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
 
   test_carthage:
-    needs: [test]
-    name: Test Carthage
+    name: Test Carthage compatibility
     runs-on: macOS-latest
 
     strategy:
