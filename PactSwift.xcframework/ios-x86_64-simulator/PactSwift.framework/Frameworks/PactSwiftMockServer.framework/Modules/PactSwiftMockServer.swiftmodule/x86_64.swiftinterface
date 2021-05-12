@@ -1,0 +1,56 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PactSwiftMockServer
+import Foundation
+@_exported import PactSwiftMockServer
+import Swift
+public enum MockServerError : Swift.Error {
+  case invalidPactJSON
+  case invalidSocketAddress
+  case failedToStart
+  case failedToWriteFile
+  case methodPanicked
+  case nullPointer
+  case portNotFound
+  case validationFaliure
+  case unknown
+  public var description: Swift.String {
+    get
+  }
+  public static func == (a: PactSwiftMockServer.MockServerError, b: PactSwiftMockServer.MockServerError) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@objc public enum TransferProtocol : Swift.Int {
+  case standard
+  case secure
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public class MockServer {
+  public var baseUrl: Swift.String {
+    get
+  }
+  public init(port: Swift.Int? = nil)
+  @objc deinit
+  public func setup(pact: Foundation.Data, protocol: PactSwiftMockServer.TransferProtocol = .standard, completion: (Swift.Result<Swift.Int, PactSwiftMockServer.MockServerError>) -> Swift.Void)
+  public func verify(completion: (Swift.Result<Swift.Bool, PactSwiftMockServer.VerificationError>) -> Swift.Void)
+  public func finalize(pact: Foundation.Data, completion: ((Swift.Result<Swift.String, PactSwiftMockServer.MockServerError>) -> Swift.Void)?)
+  public static func generate_value(regex: Swift.String) -> Swift.String?
+}
+public enum VerificationError : Swift.Error {
+  case reason(Swift.String)
+  public var description: Swift.String {
+    get
+  }
+}
+extension PactSwiftMockServer.MockServerError : Swift.Equatable {}
+extension PactSwiftMockServer.MockServerError : Swift.Hashable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.Equatable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.Hashable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.RawRepresentable {}
