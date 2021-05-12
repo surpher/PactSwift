@@ -49,7 +49,8 @@ carthage update --use-xcframeworks
 ```
 
 **NOTE:**  
-`PactSwift` is intended to be used in your [test target only](./Documentation/images/11_xcode_carthage_xcframework.png)! Do not embed it into your application bundle.
+- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it.
+- See [Scripts/carthage_xcode12][carthage_xcode12]
 
 ## Generated Pact contracts
 
@@ -59,7 +60,7 @@ By default, generated Pact contracts are written to `/tmp/pacts`. Edit your sche
 
 ## Writing Pact tests
 
-- Instantiate a `MockService` object by defining _pacticipants_,
+- Instantiate a `MockService` object by defining [_pacticipants_][pacticipant],
 - Define the state of the provider for an interaction (one Pact test),
 - Define the expected `request` for the interaction,
 - Define the expected `response` for the interaction,
@@ -228,6 +229,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
 [action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
+[carthage_xcode12]: ./Scripts/carthage_xcode12
 [code-of-conduct]: ./CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./CONTRIBUTING.md
@@ -240,6 +242,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
 [matchers]: https://github.com/surpher/pact-swift/wiki/Matchers
+[pacticipant]: https://docs.pact.io/pact_broker/advanced_topics/pacticipant/
 [pact-broker]: https://docs.pact.io/pact_broker
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
 [pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
