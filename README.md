@@ -16,100 +16,46 @@ This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
 It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
 
-> Due to the new Apple Silicon architecture and `libpact_mock_server` dependencies' still limited support for `arm64` and `arm64e` architecture, `PactSwift` running on `arch64-darwin` machines _might_ be broken. Feel free to reach out with any questions in our [Slack channel][slack-channel].  
-> Any and all help testing, raising issues is appreciated and PRs are welcome. See [#52][github-issues-52].
+## Installation
 
-## Requirements
+Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 
-`PactSwift` uses [`pact_mock_server_ffi`][pact-reference-rust] written in Rust-lang as a git submodule. It builds a binary during a `PactSwift` Build Phase on your first project build and requires Rust installed on your machine. You can install Rust using Homebrew:
+### Swift Package Manager
+
+#### Xcode
+
+1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
+2. Use minimum version `0.4.0` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png) 
+3. Add `PactSwift` [Package to Test Target](./Documentation/images/10_xcode_spm_add_package.png) only 
+
+
+#### Package.swift
 
 ```sh
-brew install rust
-cargo install cargo-lipo
+dependencies: [
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.0"))
+]
 ```
-
-or follow installation instructions available at [rust-lang][rust-lang-installation].
-
-The first time `PactSwift` is built on your machine it will take quite a long time due to also compiling the Rust binary. As long as the compiled binary exists in the Rust build folder and submodule has not changed, it will skip re-compiling it and build times should be much shorter.
-
-## Installation
 
 ### Carthage
 
 ```sh
-github "surpher/PactSwift" ~> 0.3
+# Cartfile
+github "surpher/PactSwift" ~> 0.4
 ```
-
-Please note Carthage is not too happy with Xcode 12 - https://github.com/surpher/PactSwift/issues/27.
-
-### Swift Package Manager
 
 ```sh
-dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.3.0"))
-]
+carthage update --use-xcframeworks
 ```
 
-Due to limitations of sharing binaries through SPM and the size of the compiled binaries there are a few extra steps to be made in order to use `PactSwift` with SPM!
-
-See [pact-swift-examples][demo-projects] for a examples on how to set it up for Xcode and CI/CD.
-
-## Xcode setup - Carthage
-
 **NOTE:**  
-This framework is intended to be used in your test target only! Do not embed it into your app bundle!
+`PactSwift` is intended to be used in your [test target only](./Documentation/images/11_xcode_carthage_xcframework.png)! Do not embed it into your application bundle.
 
-### Edit Build Settings - Carthage
+## Generated Pact contracts
 
-#### Framework Search Paths
-
-In your test targets build settings, update `Framework Search Paths` configuration to include `$(PROJECT_DIR)/Carthage/Build/iOS (non-recursive)`:
-
-![framework_search_paths](./Documentation/images/02_framework_search_paths.png)
-
-#### Runpath Search Paths
-
-In your test targets build settings, update `Runpath Search Paths` configuration to include `$(FRAMEWORK_SEARCH_PATHS)`:
-
-![runpath_search_paths](./Documentation/images/03_runpath_search_paths.png)
-
-## Xcode setup - Swift Package Manager
-
-### Set PactSwift as a Swift Package
-
-Use the available PactSwift version number.
-
-If you live dangerously, use `main` as the branch (not recommended) to always use the latest changes in PactSwift framework.
-
-<img src="Documentation/images/05-swift-package.png" width="600" alt="swift package" />
-
-### Set up a Build Phase - Run Script
-
-PactSwift framework will build it's `libpact_mock_server.a` binary from Rust source code. In order to do that, you need to set up a Build Phase to build it using the script provided in the PactSwift framework's repository (`./Scripts/BuildPhases/build-spm-dependency`).
-
-Set write permissions for Xcode to replace the existing fake binaries (in `./Resources/`) with the one compiled by your machine. Use the `PactSwift/Scripts/BuildPhases/build-spm-dependency` script in the package folder:
-
-<img src="Documentation/images/06-build-step.png" width="600" alt="build step" />
-
-Make sure you set the `PATH` with location of your `cargo` and `rustup`.
-
-### Edit Build Settings - SPM
-
-#### Library Search Paths
-
-Add `$BUILD_DIR/../../SourcePackages/checkouts/PactSwift/Resources` -recursive to `Library Search Paths` and `Frameworks Search Paths` in your test target's build settings.
-
- <img src="Documentation/images/07-library-search-path.png" width="600" alt="library search path" />
-
-## PactSwift Environment variables
-
-Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (`Run` step) with path to the directory you want your Pact contracts to be written to. By default, Pact contracts are written to `/tmp/pacts`.
+By default, generated Pact contracts are written to `/tmp/pacts`. Edit your scheme and add `PACT_OUTPUT_DIR` environment variable ([in `Run` step](./Documentation/images/12_xcode_scheme_env_setup.png)) with path to the directory you want your Pact contracts to be written to. 
 
 ⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`. Look at the logs in debug area for the Pact file location.
-
-To enable logging, edit your scheme and add `PACT_ENABLE_LOGGING: true` to capture telemetry for debugging analysis using the unified logging system.
-
-<img src="Documentation/images/04_destination_dir.png" width="580" alt="destination_dir" />
 
 ## Writing Pact tests
 
@@ -260,13 +206,13 @@ See how you can use simple [Pact Broker Client][pact-broker-client] in your term
 
 ## Objective-C support
 
-PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See Demo projects repository for examples of Pact tests written in Objective-C.
+PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See [Demo projects repository][demo-projects] for more examples.
 
 ## Demo projects
 
 [![PactSwift demo projects](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)][pact-swift-examples-workflow]
 
-See [pact-swift-examples][demo-projects] repo.
+More in [pact-swift-examples][demo-projects] repo.
 
 ## Contributing
 
@@ -309,3 +255,5 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [slack-channel]: https://pact-foundation.slack.com/archives/C9VBGNT4K
 
 [pact-swift-examples-workflow]: https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml
+
+[upgrading]: https://github.com/surpher/PactSwift/wiki/Upgrading
