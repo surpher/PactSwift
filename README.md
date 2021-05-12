@@ -49,7 +49,7 @@ carthage update --use-xcframeworks
 ```
 
 **NOTE:**  
-- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it.
+- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
 - See [Scripts/carthage_xcode12][carthage_xcode12]
 
 ## Generated Pact contracts
