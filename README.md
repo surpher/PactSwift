@@ -25,7 +25,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.4.0` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png) 
+2. Use minimum version `0.4.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png) 
 3. Add `PactSwift` [Package to Test Target](./Documentation/images/10_xcode_spm_add_package.png) only 
 
 
@@ -33,7 +33,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.1"))
 ]
 ```
 
@@ -76,9 +76,26 @@ import PactSwift
 
 @testable import ExampleProject
 
+// MockService holds all your interactions and because for each test method, a new instance of the class is allocated and its instance setup executed.
+// That's why we're using a singleton here. I'm open for alternative, better ideas!
+// 
+// https://github.com/surpher/PactSwift/issues/67
+// https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36
+// 
+class MockServiceWrapper {
+	static let shared = MockServiceWrapper()
+	var mockService: MockService
+
+	private init() {
+		mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
+	}
+}
+
+// MARK: - XCTestCase
+
 class PassingTestsExample: XCTestCase {
 
-  var mockService = MockService(consumer: "Example-iOS-app", provider: "some-service")
+  var mockService = MockServiceWrapper.shared.mockService
 
   // MARK: - Tests
 
