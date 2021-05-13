@@ -34,7 +34,7 @@ xcodebuild archive \
     -scheme "${PRODUCT_NAME}-iOS" \
     -archivePath "${TMP_DIR}/iphoneos/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-    SKIP_INSTALL=NO
+    SKIP_INSTALL=NO | xcbeautify
     
 echo "👍  Framework for arm64 built"
 
@@ -45,7 +45,7 @@ xcodebuild archive \
     -scheme "${PRODUCT_NAME}-iOS" \
     -archivePath "${TMP_DIR}/iphonesimulator/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-    SKIP_INSTALL=NO
+    SKIP_INSTALL=NO | xcbeautify
 echo "👍  Framework for iOS Simulator built for x86_64 architecture"
 
 # macOS
@@ -57,7 +57,7 @@ xcodebuild archive \
     -scheme "${PRODUCT_NAME}-macOS" \
     -archivePath "${TMP_DIR}/macos/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-    SKIP_INSTALL=NO
+    SKIP_INSTALL=NO | xcbeautify
 echo "👍  Framework for macOS built for x86_64 architecture"
 
 # XCFramework

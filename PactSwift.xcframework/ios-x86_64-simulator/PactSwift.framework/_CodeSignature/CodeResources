@@ -18,7 +18,7 @@
 		</data>
 		<key>Frameworks/PactSwiftMockServer.framework/Info.plist</key>
 		<data>
-		sSoocZQbOgcJpi9rgnVyfhVHwj0=
+		AJPsaHEgMe087axgbd+r57V+SeQ=
 		</data>
 		<key>Frameworks/PactSwiftMockServer.framework/Modules/PactSwiftMockServer.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -42,11 +42,11 @@
 		</data>
 		<key>Frameworks/PactSwiftMockServer.framework/PactSwiftMockServer</key>
 		<data>
-		uoL69pIIrkOB6Pkn9Yku/iInhp4=
+		5ZeYM1B4I6S/amXAbVxdpl8KZuo=
 		</data>
 		<key>Frameworks/PactSwiftMockServer.framework/_CodeSignature/CodeResources</key>
 		<data>
-		ilLg/IO+Qdtd1syU7GYIQIl41kA=
+		UxZ1PIZS14ufcd1pZvmHG6MwW/4=
 		</data>
 		<key>Headers/PactSwift-Swift.h</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		xbfUDog3soRxFQB0SDH+wqmdupE=
+		XpbjHJgckHFG0/z0Duo5R5kKqSk=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -116,7 +116,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Plnex8E3umt6y2RLZu7qN0rYmHrPwvtrzAtyMFcef/I=
+			r2i/0jFOTF9gbAlF00bwy35qKGrnwkbfAnAsvKffPbk=
 			</data>
 		</dict>
 		<key>Frameworks/PactSwiftMockServer.framework/Modules/PactSwiftMockServer.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -158,14 +158,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			F1CLZKE9/5sJmOn/pJ+Jp6wO4T/XXjtJeV8VYh0Jr2o=
+			g5l2N1gdQaUwvuhCOA1zuuxFMXt0dqWE49ePluflDN8=
 			</data>
 		</dict>
 		<key>Frameworks/PactSwiftMockServer.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oWzwtRL2qFQfw7AprzE23E2SwmoJWOtbR+yVhcRzJO8=
+			nljzWf25sX63q9wvILsugyt9VhMamrZqcQTsMZqIaNI=
 			</data>
 		</dict>
 		<key>Headers/PactSwift-Swift.h</key>

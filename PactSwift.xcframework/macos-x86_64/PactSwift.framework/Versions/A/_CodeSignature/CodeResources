@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		bMwMMOvKZ6YR4cOsWm5UpE+bYiM=
+		P2Vk7fmSWyfLPV4JxpV4P1j0I/0=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,10 +15,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			t/LOLwJhSBysEonkfUbpxQKmj3o=
+			bntuM4TZgm1jZtrXTUWZkncPcpY=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"b7f2ce2f0261481cac1289e47d46e9c502a68f7a"</string>
+			<string>cdhash H"6e7b6e3384d9826d6366dad74d459992770f7296"</string>
 		</dict>
 		<key>Headers/PactSwift-Swift.h</key>
 		<dict>
@@ -87,7 +87,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Wbj4RRo2UDMEj+1GNeuDQmCmnNdPc/+kjLjONU3tog4=
+			JNyA+CtBQiNW4WTDkHctFh3Tz6+aUjJD1ZopdmE97XE=
 			</data>
 		</dict>
 	</dict>
