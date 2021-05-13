@@ -12,12 +12,9 @@
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 </p>
 
-> 🚨 There is a critical issue with the current version v0.4.x where only one of the interactions are written to the Pact contract. 
-> Use `pact-consumer-swift` until this gets resolved. See [issues][issues].
-
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
-It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
+It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server_ffi`][pact-reference-rust] by running it "in process". No need to set up any specific mock services or extra tools 🎉.
 
 ## Installation
 
@@ -28,8 +25,8 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.4.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png) 
-3. Add `PactSwift` [Package to Test Target](./Documentation/images/10_xcode_spm_add_package.png) only 
+2. Use minimum version `0.4.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 
 #### Package.swift
@@ -57,9 +54,9 @@ carthage update --use-xcframeworks
 
 ## Generated Pact contracts
 
-By default, generated Pact contracts are written to `/tmp/pacts`. Edit your scheme and add `PACT_OUTPUT_DIR` environment variable ([in `Run` step](./Documentation/images/12_xcode_scheme_env_setup.png)) with path to the directory you want your Pact contracts to be written to. 
+By default, generated Pact contracts are written to `/tmp/pacts`. Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section) with path to the directory you want your Pact contracts to be written to.
 
-⚠️ Sandboxed apps are limited in where they can write the Pact contract file. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`) and *can not* be overriden by the environment variable `PACT_OUTPUT_DIR`. Look at the logs in debug area for the Pact file location.
+Sandboxed apps (macOS) are limited in where they can write the Pact contract files. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra setting. Look at the logs in debug area for the Pact file location.
 
 ## Writing Pact tests
 
@@ -79,19 +76,13 @@ import PactSwift
 
 @testable import ExampleProject
 
-// MockService holds all your interactions and because for each test method, a new instance of the class is allocated and its instance setup executed.
-// That's why we're using a singleton here. I'm open for alternative, better ideas!
-// 
-// https://github.com/surpher/PactSwift/issues/67
-// https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36
-// 
 class MockServiceWrapper {
-	static let shared = MockServiceWrapper()
-	var mockService: MockService
+  static let shared = MockServiceWrapper()
+  var mockService: MockService
 
-	private init() {
-		mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
-	}
+  private init() {
+    mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
+  }
 }
 
 // MARK: - XCTestCase
@@ -196,6 +187,16 @@ class PassingTestsExample: XCTestCase {
 }
 ```
 
+`MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
+That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a singleton here to keep a reference to one instance of `MockService` for all the Pact tests.  
+I'm open for alternative, better ideas!
+
+References:
+
+- [Issue #67](https://github.com/surpher/PactSwift/issues/67)
+- [Writing Tests](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36)
+
+
 ## Matching
 
 In addition to verbatim value matching, you can use a set of useful matching objects that can increase expressiveness and reduce brittle test cases.
@@ -235,10 +236,19 @@ PactSwift can be used in your Objective-C project with a couple of limitations, 
 
 More in [pact-swift-examples][demo-projects] repo.
 
+## Pact Specification v2
+
+Looking for Swift implementation of [Pact specification v2][pact-specification-v2]? You have two options:
+
+1. [pact-consumer-swift][pact-consumer-swift]
+2. [PactSwift_spec2][pactswift-spec2]
+
 ## Contributing
 
-See [CODE_OF_CONDUCT.md][code-of-conduct]  
-See [CONTRIBUTING.md][contributing]
+See:
+
+- [CODE_OF_CONDUCT.md][code-of-conduct]
+- [CONTRIBUTING.md][contributing]
 
 ## Acknowledgements
 
@@ -266,10 +276,12 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-broker]: https://docs.pact.io/pact_broker
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
 [pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
+[pactswift-spec2]: https://github.com/surpher/PactSwift_spec2
 [pact-docs]: https://docs.pact.io
 [pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/main/rust/pact_mock_server_ffi
 [pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
+[pact-specification-v2]: https://github.com/pact-foundation/pact-specification/tree/version-2
 [pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/main/Sources/ExampleGenerators
 [pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/main/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
