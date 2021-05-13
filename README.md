@@ -12,6 +12,9 @@
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 </p>
 
+> 🚨 There is a critical issue with the current version v0.4.x where only one of the interactions are written to the Pact contract. 
+> Use `pact-consumer-swift` until this gets resolved. See [issues][issues].
+
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
 It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server`][pact-reference-rust] running it "in process".
