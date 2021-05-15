@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/PactSwift-Swift.h</key>
 		<data>
-		BU42OVMZMKIfqPc1rQhFf0SeW8U=
+		jAerVDOhkjhrYvnZNz6l6+k7Eb0=
 		</data>
 		<key>Headers/PactSwift.h</key>
 		<data>
@@ -58,31 +58,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		XpbjHJgckHFG0/z0Duo5R5kKqSk=
+		Ygtw8wtRIYPUAFJXcAMKoZ7t0HY=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		it/ccK8lQNPFABvDV715P9/Fx6s=
+		O5k68YjwqXwUpi/UrhEYz8LH1JA=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		xcclp9XJtj18VI/2tnBNYeLFNEk=
+		r5tqH47lyILeucmGzHuXxCLAv4E=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		9iplWzvhTCyxk6ylnIizIOp7kas=
+		EsGI4OR/0Jx5ngNkKb629hNjLng=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		it/ccK8lQNPFABvDV715P9/Fx6s=
+		O5k68YjwqXwUpi/UrhEYz8LH1JA=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		xcclp9XJtj18VI/2tnBNYeLFNEk=
+		r5tqH47lyILeucmGzHuXxCLAv4E=
 		</data>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftmodule</key>
 		<data>
-		9iplWzvhTCyxk6ylnIizIOp7kas=
+		EsGI4OR/0Jx5ngNkKb629hNjLng=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -172,7 +172,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3JJqM+Whdd3Hf1z87D8R0Crz4ASgaU1aGE7uzsPsZ+s=
+			TcqSQ5Ava/P5aHC025VKTirRs/Es+Zc8MzxHw0yePQc=
 			</data>
 		</dict>
 		<key>Headers/PactSwift.h</key>
@@ -186,42 +186,42 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			V/oF7xkqBHMnlVIvu+cKmuox8++VhN6X5QF2V8IRUVA=
+			7OBDB/FpXwi+hV460JJDE7+p+DupLpAAewVJdw+1c7U=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lQbJtTQGxt/c4XQAFND6JeQR74uY1JDsComyOvtfpNk=
+			gm4MC5vy9XbovmEPzsEJ3HnUqU6cGBjpSn+6s9VNieE=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TXf0CF5ce1ZYbUR2fUkjYFLu3SXQ79XeENxX9aghgoI=
+			wNeKvJt1hoPBQEVmNxejnpOGRKyMgIVdM0QRin60gQw=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			V/oF7xkqBHMnlVIvu+cKmuox8++VhN6X5QF2V8IRUVA=
+			7OBDB/FpXwi+hV460JJDE7+p+DupLpAAewVJdw+1c7U=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lQbJtTQGxt/c4XQAFND6JeQR74uY1JDsComyOvtfpNk=
+			gm4MC5vy9XbovmEPzsEJ3HnUqU6cGBjpSn+6s9VNieE=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TXf0CF5ce1ZYbUR2fUkjYFLu3SXQ79XeENxX9aghgoI=
+			wNeKvJt1hoPBQEVmNxejnpOGRKyMgIVdM0QRin60gQw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

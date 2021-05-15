@@ -62,7 +62,7 @@ class MockServiceTests: XCTestCase {
 					completion()
 					testExpectation.fulfill()
 				} else {
-					XCTFail("Expected response code 200")
+					XCTFail("Expecting response code 200 in \(#function)")
 				}
 			}
 			task.resume()
@@ -88,7 +88,7 @@ class MockServiceTests: XCTestCase {
 					completion()
 					testExpectation.fulfill()
 				} else {
-					XCTFail("Expected response code 200")
+					XCTFail("Expecting response code 200 in \(#function)")
 				}
 			}
 			task.resume()
@@ -114,12 +114,16 @@ class MockServiceTests: XCTestCase {
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
-					let testResult = self.decodeResponse(data: data)
-					XCTAssertEqual(testResult?.foo, "bar")
-					completion()
-					testExpectation.fulfill()
+					do {
+						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+						completion()
+						testExpectation.fulfill()
+					} catch {
+						XCTFail("Expected TestModel in \(#function)")
+					}
 				} else {
-					XCTFail("Expected a decodable response data")
+					XCTFail("Expecting a decodable response data in \(#function)")
 				}
 			}
 			task.resume()
@@ -155,10 +159,14 @@ class MockServiceTests: XCTestCase {
 			XCTAssertTrue(self.mockService.baseUrl.contains("https://"))
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
-					let testResult = self.decodeResponse(data: data)
-					XCTAssertEqual(testResult?.foo, "bar")
-					completion()
-					testExpectation.fulfill()
+					do {
+						let testResult: TestModel  = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+						completion()
+						testExpectation.fulfill()
+					} catch {
+						XCTFail("Expecting a TestModel in \(#function)")
+					}
 				}
 				if let error = error {
 					XCTFail(error.localizedDescription)
@@ -185,7 +193,7 @@ class MockServiceTests: XCTestCase {
 			let testResult = try XCTUnwrap(errorCapture.error?.message)
 			XCTAssertTrue(testResult.contains("Missing request"))
 		} catch {
-			XCTFail("Expected errorCapture object to intercept the failing tests message")
+			XCTFail("Expecting an errorCapture object to intercept the failing tests message in \(#function)")
 		}
 	}
 
@@ -526,6 +534,51 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
+	func testMockService_Succeeds_WithMatchersInEachLike() {
+		mockService
+			.uponReceiving("Request to get a user with options")
+			.given("user with options exists")
+			.withRequest(
+				method: .GET,
+				path: "/user/options"
+			)
+			.willRespondWith(
+				status: 200,
+				body: [
+					"options": Matcher.EachLike(
+						Matcher.SomethingLike("option_one"),
+						min: 3
+					)
+				]
+			)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { completion in
+			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/options")!
+			let session = URLSession.shared
+
+			let task = session.dataTask(with: URLRequest(url: requestURL)) { data, response, error in
+				if let data = data {
+					do {
+						let testResult: EmbeddedMatcherTestModel = try XCTUnwrap(self.decodeResponse(data: data))
+
+						XCTAssertEqual(testResult.options.count, 3)
+						XCTAssertTrue(testResult.options.contains("option_one"))
+					} catch {
+						XCTFail("Expecting an EmbeddedMatcherTestModel object in \(#function)")
+					}
+				}
+
+				testExpectation.fulfill()
+				completion()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 1)
+	}
+
 	func testMockService_Succeeds_WithMatchers() {
 		mockService
 			.uponReceiving("Request for list of users")
@@ -547,7 +600,7 @@ class MockServiceTests: XCTestCase {
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
 					do {
-						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
 						XCTAssertEqual(testResult.foo, "bar")
 						XCTAssertEqual(testResult.baz?.first, 123)
 						XCTAssertNil(testResult.nullable_key)
@@ -555,7 +608,7 @@ class MockServiceTests: XCTestCase {
 						let responseData = try XCTUnwrap(String(data: data, encoding: .utf8))
 						XCTAssertTrue(responseData.contains("nullable_key"))
 					} catch {
-						XCTFail("Expected a nullable_key key with null value for Match.MatchNull()")
+						XCTFail("Expecting a nullable_key key with null value for Match.MatchNull() in \(#function)")
 					}
 				}
 				testExpectation.fulfill()
@@ -594,10 +647,10 @@ class MockServiceTests: XCTestCase {
 			let task = session.dataTask(with: request) { data, response, error in
 				if let data = data {
 					do {
-						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
 						XCTAssertEqual(testResult.foo, "bar")
 					} catch {
-						XCTFail("Expected a valid response object when asking for a list of /movies")
+						XCTFail("Expecting a valid response object when asking for a list of /movies in \(#function)")
 					}
 				}
 
@@ -641,10 +694,10 @@ class MockServiceTests: XCTestCase {
 			let task = session.dataTask(with: request) { data, response, error in
 				if let data = data {
 					do {
-						let testResult = try XCTUnwrap(self.decodeResponse(data: data))
+						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
 						XCTAssertEqual(testResult.foo, "bar")
 					} catch {
-						XCTFail("Expected a valid response object when asking for a list of /movies")
+						XCTFail("Expecting a valid response object when asking for a list of /movies in \(#function)")
 					}
 				}
 
@@ -688,13 +741,14 @@ class MockServiceTests: XCTestCase {
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
 				if let data = data {
-					let testResult = self.decodeGeneratorsResponse(data: data)
-
-					// Verify Bool example generator
-					XCTAssertTrue(((testResult?.randomBool) as Any) is Bool)
 					do {
+						let testResult: GeneratorsTestModel = try XCTUnwrap(self.decodeResponse(data: data))
+
+						// Verify Bool example generator
+						XCTAssertTrue(((testResult.randomBool) as Any) is Bool)
+
 						// Verify UUID example generator
-						let uuidResult = try XCTUnwrap(testResult?.randomUUID)
+						let uuidResult = try XCTUnwrap(testResult.randomUUID)
 						if uuidResult.contains("-") {
 							XCTAssertNotNil(UUID(uuidString: uuidResult))
 						} else {
@@ -702,51 +756,52 @@ class MockServiceTests: XCTestCase {
 						}
 
 						// Verify RandomInt example generator
-						let intResult = try XCTUnwrap(testResult?.randomInt)
+						let intResult = try XCTUnwrap(testResult.randomInt)
 						XCTAssertTrue((-42...4242).contains(intResult))
 
 						// Verify Decimal example generator
-						let decimalResult = try XCTUnwrap(testResult?.randomDecimal)
+						let decimalResult = try XCTUnwrap(testResult.randomDecimal)
 						XCTAssertTrue((decimalResult as Any) is Decimal)
 
 						// TODO - Investigate why MockServer sometimes returns 1 digit less than defined in ExampleGenerator.Decimal(digits: X)
 						// XCTAssertEqual(String(describing: decimalResult).count, 4, accuracy: 1)
 
 						// Verify Hexadecimal value
-						let hexValue = try XCTUnwrap(testResult?.randomHex)
+						let hexValue = try XCTUnwrap(testResult.randomHex)
 						XCTAssertEqual(hexValue.count, 14)
 
 						// Verify Random String value
-						let stringValue = try XCTUnwrap(testResult?.randomString)
+						let stringValue = try XCTUnwrap(testResult.randomString)
 						XCTAssertEqual(stringValue.count, 38)
 
 						// Verify Regex value
-						let regexValue = try XCTUnwrap(testResult?.randomRegex)
+						let regexValue = try XCTUnwrap(testResult.randomRegex)
 						let regex = try! NSRegularExpression(pattern: testRegex)
 						let range = NSRange(location: 0, length: regexValue.utf16.count)
 						XCTAssertNotNil(regex.firstMatch(in: regexValue, options: [], range: range))
 
 						// Verify random date value
-						let dateValue = try XCTUnwrap(testResult?.randomDate)
+						let dateValue = try XCTUnwrap(testResult.randomDate)
 						let dateRegex = try! NSRegularExpression(pattern: #"\d{4}/\d{2}"#)
 						let dateRange = NSRange(location: 0, length: dateValue.utf16.count)
 						XCTAssertNotNil(dateRegex.firstMatch(in: dateValue, options: [], range: dateRange))
 
 						// Verify random time value
-						let timeValue = try XCTUnwrap(testResult?.randomTime)
+						let timeValue = try XCTUnwrap(testResult.randomTime)
 						let timeRegex = try! NSRegularExpression(pattern: #"\d{2}:\d{2} - \d{2}"#)
 						let timeRange = NSRange(location: 0, length: timeValue.utf16.count)
 						XCTAssertNotNil(timeRegex.firstMatch(in: timeValue, options: [], range: timeRange))
 
 						// Verify random date time value
-						let dateTimeValue = try XCTUnwrap(testResult?.randomDateTime)
+						let dateTimeValue = try XCTUnwrap(testResult.randomDateTime)
 						let dateTimeRegex = try! NSRegularExpression(pattern: #"\d{2}:\d{2} - \d{2}.\d{2}.\d{2}"#)
 						let dateTimeRange = NSRange(location: 0, length: dateTimeValue.utf16.count)
 						XCTAssertNotNil(dateTimeRegex.firstMatch(in: dateTimeValue, options: [], range: dateTimeRange))
 					} catch {
-						XCTFail("Failed to successfully decode test model with example generators and extract all expected values")
+						XCTFail("Expecting GeneratorsTestModel in \(#function)")
 					}
 				}
+
 				testExpectation.fulfill()
 				completion()
 			}
@@ -772,7 +827,32 @@ class MockServiceTests: XCTestCase {
 				status: 200,
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
-					"baz": Matcher.EachLike(123, min: 1, max: 5, count: 3)
+					"baz": Matcher.EachLike(123, min: 1, max: 5, count: 3),
+					"array": Matcher.EachLike(
+						[
+							Matcher.SomethingLike("array_value"),
+							Matcher.RegexLike("2021-05-15", term: #"\d{4}-\d{2}-d{2}"#),
+							ExampleGenerator.RandomUUID(),
+							Matcher.EachLike(
+								[
+									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369))
+								]
+							)
+						]
+					),
+					"regex_array": Matcher.EachLike(
+						[
+							"regex_key": Matcher.EachLike(
+								Matcher.RegexLike("1234", term: #"\d{4}"#),
+								min: 2
+							),
+							"regex_nested_object": Matcher.EachLike(
+								[
+									"regex_nested_key": Matcher.RegexLike("12345678", term: #"\d{8}"#)
+								]
+							)
+						]
+					)
 				]
 			)
 
@@ -782,11 +862,18 @@ class MockServiceTests: XCTestCase {
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
-					let testResult = self.decodeResponse(data: data)
-					XCTAssertEqual(testResult?.foo, "bar")
-					XCTAssertEqual(testResult?.baz?.first, 123)
-					XCTAssertEqual(testResult?.baz?.count, 3)
+					do {
+						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
+						XCTAssertEqual(testResult.foo, "bar")
+						XCTAssertEqual(testResult.baz?.first, 123)
+						XCTAssertEqual(testResult.baz?.count, 3)
+						XCTAssertEqual(testResult.regex_array?.first?.regex_key.first, "1234")
+						XCTAssertEqual(testResult.regex_array?.first?.regex_key.count, 2)
+					} catch {
+						XCTFail("Expecting a TestModel in \(#function)")
+					}
 				}
+
 				completion()
 			}
 			task.resume()
@@ -804,14 +891,19 @@ class MockServiceTests: XCTestCase {
 
 private extension MockServiceTests {
 
+	func decodeResponse<D: Decodable>(data: Data) -> D? {
+		try? JSONDecoder().decode(D.self, from: data)
+	}
+
 	struct TestModel: Decodable {
+		struct TestRegex: Decodable {
+			let regex_key: [String]
+		}
 		let foo: String
 		let baz: [Int]?
 		let nullable_key: String?
-	}
-
-	func decodeResponse(data: Data) -> TestModel? {
-		try? JSONDecoder().decode(TestModel.self, from: data)
+		let options: [String]?
+		let regex_array: [TestRegex]?
 	}
 
 	struct GeneratorsTestModel: Decodable {
@@ -827,8 +919,8 @@ private extension MockServiceTests {
 		let randomDateTime: String
 	}
 
-	func decodeGeneratorsResponse(data: Data) -> GeneratorsTestModel? {
-		try? JSONDecoder().decode(GeneratorsTestModel.self, from: data)
+	struct EmbeddedMatcherTestModel: Decodable {
+		let options: [String]
 	}
 
 }

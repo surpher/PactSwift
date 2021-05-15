@@ -98,7 +98,7 @@ private extension PactBuilder {
 			processedElement = try processMatcher(matcher, at: node)
 
 		case let matcher as Matcher.EachLike:
-			processedElement = try processMatcher(matcher, at: node)
+			processedElement = try processEachLikeMatcher(matcher, at: node)
 
 		case let matcher as Matcher.EqualTo:
 			processedElement = try processMatcher(matcher, at: node)
@@ -171,6 +171,20 @@ private extension PactBuilder {
 		return (
 			node: processedMatcherValue.node,
 			rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])],
+			generators: processedMatcherValue.generators
+		)
+	}
+
+	func processEachLikeMatcher(_ matcher: Matcher.EachLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+		var processedMatcherValue = try process(element: matcher.value, at: node)
+		let processedChild = try process(matcher.value as! [Any], at: node)
+
+		processedMatcherValue.rules[node] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
+		processedChild.rules.forEach { processedMatcherValue.rules[$0] = $1 }
+
+		return (
+			node: processedMatcherValue.node,
+			rules: processedMatcherValue.rules,
 			generators: processedMatcherValue.generators
 		)
 	}
