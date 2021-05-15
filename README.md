@@ -241,7 +241,7 @@ More in [pact-swift-examples][demo-projects] repo.
 Looking for Swift implementation of [Pact specification v2][pact-specification-v2]? You have two options:
 
 1. [pact-consumer-swift][pact-consumer-swift]
-2. [PactSwift_spec2][pactswift-spec2]
+2. [PactSwift_spec2][pactswift-spec2] (WIP)
 
 ## Contributing
 
