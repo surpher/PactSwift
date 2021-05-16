@@ -108,6 +108,8 @@
 		AD7891C024415C710014BCC8 /* IntegerLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891BF24415C710014BCC8 /* IntegerLikeTests.swift */; };
 		AD7891C224415E3E0014BCC8 /* DecimalLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891C124415E3E0014BCC8 /* DecimalLike.swift */; };
 		AD7891C424415E9F0014BCC8 /* DecimalLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */; };
+		AD78FB48264FD21900765BD3 /* PactContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD78FB47264FD21900765BD3 /* PactContractTests.swift */; };
+		AD78FB49264FD21900765BD3 /* PactContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD78FB47264FD21900765BD3 /* PactContractTests.swift */; };
 		AD8546F42513601800211E28 /* RandomDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8546F32513601800211E28 /* RandomDateTests.swift */; };
 		AD8546F52513601800211E28 /* RandomDateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8546F32513601800211E28 /* RandomDateTests.swift */; };
 		AD879B9D258242AC00F85B0B /* PactSwiftVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */; };
@@ -315,6 +317,7 @@
 		AD7891BF24415C710014BCC8 /* IntegerLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerLikeTests.swift; sourceTree = "<group>"; };
 		AD7891C124415E3E0014BCC8 /* DecimalLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalLike.swift; sourceTree = "<group>"; };
 		AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalLikeTests.swift; sourceTree = "<group>"; };
+		AD78FB47264FD21900765BD3 /* PactContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactContractTests.swift; sourceTree = "<group>"; };
 		AD8546F025135F4200211E28 /* RandomDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDate.swift; sourceTree = "<group>"; };
 		AD8546F32513601800211E28 /* RandomDateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTests.swift; sourceTree = "<group>"; };
 		AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactSwiftVersion.swift; sourceTree = "<group>"; };
@@ -544,6 +547,7 @@
 			isa = PBXGroup;
 			children = (
 				AD103617244693A6002C97CA /* MockServiceTests.swift */,
+				AD78FB47264FD21900765BD3 /* PactContractTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1377,6 +1381,7 @@
 				ADA17E492513808B004F1A82 /* DateHelper.swift in Sources */,
 				AD8546F42513601800211E28 /* RandomDateTests.swift in Sources */,
 				AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */,
+				AD78FB48264FD21900765BD3 /* PactContractTests.swift in Sources */,
 				ADDE4702244D0FDE00E4F7EE /* ErrorCapture.swift in Sources */,
 				AD4B970D2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */,
 				ADD0316C251221A300C6099B /* RandomBooleanTests.swift in Sources */,
@@ -1464,6 +1469,7 @@
 				ADA17E4A2513808B004F1A82 /* DateHelper.swift in Sources */,
 				AD8546F52513601800211E28 /* RandomDateTests.swift in Sources */,
 				AD8FC8022463BBD000361854 /* PactTests.swift in Sources */,
+				AD78FB49264FD21900765BD3 /* PactContractTests.swift in Sources */,
 				AD8FC8082463BBD100361854 /* MockServiceTests.swift in Sources */,
 				AD4B970E2513A0C300C37560 /* RandomHexadecimalTests.swift in Sources */,
 				ADD0316D251221A300C6099B /* RandomBooleanTests.swift in Sources */,
