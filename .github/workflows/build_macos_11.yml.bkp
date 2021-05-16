@@ -1,9 +1,5 @@
 name: Build
 
-env:
-  RUST_BUILD_OUTPUT_DIR: "build/rust"
-  RUST_BINARY_DIR: "build/rust/x86_64-apple-darwin/release"
-
 on: [push]
 
 jobs:
@@ -34,15 +30,6 @@ jobs:
         run: |
           Scripts/prepare_build_tools
 
-      - name: "Cache dependencies"
-        uses: actions/cache@v2
-        with:
-          path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pactswift-submodule-
-            ${{ runner.os }}-
-
       - name: Run tests (Xcode)
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
@@ -57,15 +44,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
-
-      - name: "Cache dependencies"
-        uses: actions/cache@v2
-        with:
-          path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pactswift-submodule-
-            ${{ runner.os }}-
 
       - name: Carthage build
         run: |
@@ -86,23 +64,8 @@ jobs:
         run: |
           Scripts/prepare_build_tools
 
-      - name: "Cache dependencies"
-        uses: actions/cache@v2
-        with:
-          path: Submodules/pact-reference/rust/target
-          key: ${{ runner.os }}-pactswift-spm-submodule-${{ hashFiles('**/Submodules/pact-reference/rust/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pactswift-spm-submodule-
-            ${{ runner.os }}-
-
       - name: Build binary && swift test
         run: |
-          mkdir -p ${{ env.RUST_BUILD_OUTPUT_DIR }}
-          rustup target add x86_64-apple-darwin
-          cd Submodules/pact-reference/rust/pact_mock_server_ffi && cargo build --release --target=x86_64-apple-darwin --target-dir ../../../../${{ env.RUST_BUILD_OUTPUT_DIR }}
-          cd ../../../..
-          ls -la ${{ env.RUST_BINARY_DIR }}
-          cp ${{ env.RUST_BINARY_DIR }}/libpact_mock_server_ffi.a ${{ env.RUST_BINARY_DIR }}/libpact_mock_server.a
           echo "👷‍♀️ running swift build -c debug"
           set -o pipefail && swift build -c debug | xcbeautify
           echo "🧪 running swift test"

@@ -106,12 +106,6 @@ Packages
 Carthage/
 .swiftpm*
 
-####################
-## Submodules     ##
-####################
-Submodules/pact-reference/rust/target/**
-
-
 ###################
 ## Binaries      ##
 ###################
