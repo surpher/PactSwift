@@ -25,7 +25,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.4.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.4.2` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 
@@ -33,7 +33,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.1"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.2"))
 ]
 ```
 
