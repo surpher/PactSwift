@@ -176,9 +176,7 @@ private extension PactBuilder {
 	}
 
 	func processEachLikeMatcher(_ matcher: Matcher.EachLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
-		// Get the type of EachLike matcher's value
 		var newNode: String
-
 		let elementToProcess = mapPactObject(matcher.value)
 		switch elementToProcess {
 		case _ as [Any]:
@@ -188,30 +186,7 @@ private extension PactBuilder {
 		}
 
 		var processedMatcherValue = try process(element: matcher.value, at: newNode, isEachLike: true)
-
-		// Add the top level matcher for the EachLike
-		//
-		// JSON:
-		// `$.data.array_of_objects`
-		//
-		// DSL:
-		// "data": [
-		//   "array_of_objects": EachLike([
-		//     "key_string": SomethingLike("key_string"),
-		//     "key_array": EachLike(IntegerLike(369))
-		//   ])
-		// ]
 		processedMatcherValue.rules[node] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
-
-		// If processedChildNodeValue is an Array, not a dict
-		// then process as all array elements need to match the type node[*] -- only if it's in the EachLike
-
-		// If it's in a "static" array [] in the body definition, then it should be node[index]
-
-		//
-
-		// If processedChildNodeValue is a Dictionary
-		// then process as all dictionary keys need to match the type node[*].*
 
 		return (
 			node: processedMatcherValue.node,
@@ -260,7 +235,6 @@ private extension PactBuilder {
 			try array
 				.enumerated()
 				.forEach {
-//					let childElement = try process(element: $0.element, at: interactionNode == .body ? "\(node)[\($0.offset)]" : "\(node)", isEachLike: false)
 					let childElement = try process(element: $0.element, at: interactionNode == .body ? "\(node)\(isEachLike ? "" : "[\($0.offset)]")" : "\(node)", isEachLike: false)
 					encodableArray.append(childElement.node)
 					matchingRules = merge(matchingRules, with: childElement.rules)
