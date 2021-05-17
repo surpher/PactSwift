@@ -71,6 +71,7 @@ jobs:
 
   after_success:
     needs: [test, test_carthage]
+    if: github.ref == 'refs/heads/main'
     name: Build demo projects
     runs-on: macOS-latest
 

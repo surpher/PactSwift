@@ -16,6 +16,7 @@ on:
 
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     name: Release a new version
     runs-on: ubuntu-latest
 
