@@ -62,7 +62,7 @@ class PactContractTests: XCTestCase {
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
 				// print("\nINTERACTIONS:\n\(interactions)")
-				let numOfExpectedInteractions = 3
+				let numOfExpectedInteractions = 4
 				assert(
 					interactions.count == numOfExpectedInteractions,
 					"Expected \(numOfExpectedInteractions) interactions in Pact contract"
@@ -70,17 +70,22 @@ class PactContractTests: XCTestCase {
 
 				// MARK: - Validate Matchers
 
-				let responseMatchers = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for list of users")
+				let responseMatchers = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
 				// print("\nMATCHERS:\n\(matchersOne)")
 				let expectedMatchersOne = [
-					"$.foo",
-					"$.baz",
-					"$.array",
-					"$.array[0][1]",
-					"$.array[0][3][0].3rd_level_nested",
-					"$.array[0][3][0].3rd_level_nested[0]",
-					"$.regex_array[0].regex_nested_object[0].regex_nested_key",
-					"$.regex_array[0].regex_key"
+					"$.array_of_objects",
+					"$.array_of_objects[*].key_for_explicit_array[0]",
+					"$.array_of_objects[*].key_for_explicit_array[1]",
+					"$.array_of_objects[*].key_for_explicit_array[2]",
+					"$.array_of_objects[*].key_for_explicit_array[3]",
+					"$.array_of_objects[*].key_for_explicit_array[4]",
+					"$.array_of_objects[*].key_for_matcher_array",
+					"$.array_of_objects[*].key_for_matcher_array[*]",
+					"$.array_of_objects[*].key_int",
+					"$.array_of_objects[*].key_string",
+					"$.array_of_strings",
+					"$.array_of_strings[*]",
+					"$.includes_like",
 				]
 				assert(
 					expectedMatchersOne.allSatisfy { expectedKey -> Bool in
@@ -108,7 +113,7 @@ class PactContractTests: XCTestCase {
 
 				let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")
 				let expectedGenerators = [
-					"$.array[0][2]": "Uuid"
+					"$.array_of_arrays[*][2]": "Uuid"
 				]
 
 				assert(
@@ -129,6 +134,56 @@ class PactContractTests: XCTestCase {
 
 	// MARK: - Tests that write the Pact contract
 
+	func testBugExample() {
+		mockService
+			.uponReceiving("bug example")
+			.given("some state")
+			.withRequest(method: .GET, path: "/bugfix")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"array_of_objects": Matcher.EachLike(
+						[
+							"key_string": Matcher.SomethingLike("String value"),
+							"key_int": Matcher.IntegerLike(123),
+							"key_for_matcher_array": Matcher.EachLike(
+								Matcher.SomethingLike("matcher_array_value")
+							),
+							"key_for_explicit_array": [
+								Matcher.SomethingLike("explicit_array_value_one"),
+								Matcher.SomethingLike(1),
+								Matcher.IntegerLike(936),
+								Matcher.DecimalLike(123.23),
+								Matcher.RegexLike("2021-05-17", term: #"\d{4-\d{2}-\d{2}"#),
+								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
+							]
+						]
+					),
+					"array_of_strings": Matcher.EachLike(
+						Matcher.SomethingLike("A string")
+					),
+					"includes_like": Matcher.IncludesLike("included", generate: "Value _included_ is included in this string")
+				]
+			)
+
+		mockService.run { [mockService] completed in
+			URLSession(configuration: .ephemeral)
+				.dataTask(with: URL(string: "\(mockService.baseUrl)/bugfix")!) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						XCTFail("Expected network request to succeed in \(#function)!")
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					completed()
+				}
+				.resume()
+		}
+	}
+
 	func testPactContract_WritesMatchersAndGenerators() {
 		mockService
 			.uponReceiving("Request for list of users")
@@ -139,14 +194,14 @@ class PactContractTests: XCTestCase {
 				body: [
 					"foo": Matcher.SomethingLike("bar"),
 					"baz": Matcher.EachLike(123, min: 1, max: 5, count: 3),
-					"array": Matcher.EachLike(
+					"array_of_arrays": Matcher.EachLike(
 						[
 							Matcher.SomethingLike("array_value"),
 							Matcher.RegexLike("2021-05-15", term: #"\d{4}-\d{2}-d{2}"#),
 							ExampleGenerator.RandomUUID(),
 							Matcher.EachLike(
 								[
-									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369))
+									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369), count: 2)
 								]
 							)
 						]
