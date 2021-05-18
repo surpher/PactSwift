@@ -62,15 +62,16 @@ class PactContractTests: XCTestCase {
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
 				// print("\nINTERACTIONS:\n\(interactions)")
-				let numOfExpectedInteractions = 4
+				let numOfExpectedInteractions = 6
 				assert(
 					interactions.count == numOfExpectedInteractions,
 					"Expected \(numOfExpectedInteractions) interactions in Pact contract"
 				)
 
-				// MARK: - Validate Matchers
+				// MARK: - Validate Matchers for Interactions
 
-				let responseMatchers = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
+				// Validate interaction "bug example"
+				let bugExampleInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
 				// print("\nMATCHERS:\n\(matchersOne)")
 				let expectedMatchersOne = [
 					"$.array_of_objects",
@@ -89,13 +90,43 @@ class PactContractTests: XCTestCase {
 				]
 				assert(
 					expectedMatchersOne.allSatisfy { expectedKey -> Bool in
-						responseMatchers.contains { generatedKey, _ -> Bool in
+						bugExampleInteraction.contains { generatedKey, _ -> Bool in
 							expectedKey == generatedKey
 						}
 					},
 					"Not all expected generators found in Pact contract file"
 				)
 
+				// Validate interaction "a request for roles with sub-roles"
+				let arrayOnRootInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for roles with sub-roles")
+				let expectedNodesForArrayOnRoot = [
+					"$[*].id"
+				]
+				assert(
+					expectedNodesForArrayOnRoot.allSatisfy { expectedKey -> Bool in
+						arrayOnRootInteraction.contains { generatedKey, _ -> Bool in
+							expectedKey == generatedKey
+						}
+					},
+					"Not all expected generators found in Pact contract file"
+				)
+
+				// Validate interaction "Request for animals with children"
+				let animalsWithChildrenInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for animals with children")
+				let expectedNodesForAnimalsWithChildren = [
+					"$.animals",
+					"$.animals[*].children",
+					"$.animals[*].children[*]",
+				]
+				assert(
+					expectedNodesForAnimalsWithChildren.allSatisfy { expectedKey -> Bool in
+						animalsWithChildrenInteraction.contains { generatedKey, _ -> Bool in
+							expectedKey == generatedKey
+						}
+					}
+				)
+
+				// Validate interaction "Request for list of users in state"
 				let requestMatchers = try PactContractTests.extract(.matchingRules, in: .request, interactions: interactions, description: "Request for list of users in state")
 				let expectedMatchersTwo = [
 					"$.foo"
@@ -184,6 +215,76 @@ class PactContractTests: XCTestCase {
 		}
 	}
 
+	func testExample_AnimalsWithChildren() {
+		mockService
+			.uponReceiving("a request for animals with children")
+			.given("animals have children")
+			.withRequest(method: .GET, path: "/animals")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"animals": Matcher.EachLike(
+						[
+							"children": Matcher.EachLike(
+								Matcher.SomethingLike("Mary"),
+								min: 0
+							),
+						]
+					)
+				]
+			)
+
+		mockService.run { [mockService] completed in
+			URLSession(configuration: .ephemeral)
+				.dataTask(with: URL(string: "\(mockService.baseUrl)/animals")!) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						XCTFail("Expected network request to succeed in \(#function)!")
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					completed()
+				}
+				.resume()
+		}
+	}
+
+	func testExample_ArrayOnRoot() {
+		mockService
+			.uponReceiving("a request for roles with sub-roles")
+			.given("roles have sub-rules")
+			.withRequest(method: .GET, path: "/roles")
+			.willRespondWith(
+				status: 200,
+				body:
+					Matcher.EachLike(
+						[
+							"id": Matcher.RegexLike("1234abcd-1234-abcf-12ab-abcdef1234567", term: #"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"#)
+						]
+					)
+			)
+
+		mockService.run { [mockService] completed in
+			URLSession(configuration: .ephemeral)
+				.dataTask(with: URL(string: "\(mockService.baseUrl)/roles")!) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						XCTFail("Expected network request to succeed in \(#function)!")
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					completed()
+				}
+				.resume()
+		}
+	}
+
 	func testPactContract_WritesMatchersAndGenerators() {
 		mockService
 			.uponReceiving("Request for list of users")
@@ -242,26 +343,25 @@ class PactContractTests: XCTestCase {
 
 	func testPactContract_ArrayAsRoot() {
 		mockService
-			.uponReceiving("Request for an array")
-			.given("users exist")
-			.withRequest(method: .GET, path: "/arrays")
+			.uponReceiving("Request for an explicit array")
+			.given("array exist")
+			.withRequest(method: .GET, path: "/arrays/explicit")
 			.willRespondWith(
 				status: 200,
 				body:
-					Matcher.EachLike(
+					[
 						[
-							"dob": Matcher.RegexLike("2016-17-19", term: #"\d{4}-\d{2}-\d{2}"#),
-							"id": Matcher.SomethingLike(19231421),
-							"name": Matcher.SomethingLike("ZSAICmTmiwgFFInuEuiK")
+							"id": Matcher.SomethingLike(19231421)
 						],
-						min: 3,
-						max: 7
-					)
+						[
+							"id": Matcher.SomethingLike(49817231)
+						]
+					]
 			)
 
 		mockService.run { [mockService] completed in
 			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/arrays")!) { data, response, error in
+				.dataTask(with: URL(string: "\(mockService.baseUrl)/arrays/explicit")!) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
