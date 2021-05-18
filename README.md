@@ -49,6 +49,7 @@ carthage update --use-xcframeworks
 ```
 
 **NOTE:**  
+- **Do** use the binaries. Setup and use a GitHub Personal Access Token.
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
 - See [Scripts/carthage_xcode12][carthage_xcode12]
 
