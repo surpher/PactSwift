@@ -1,10 +1,11 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.19.104 clang-1300.0.18.4)
 // swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PactSwift
 import Foundation
 @_exported import PactSwift
 import Swift
 import XCTest
+import _Concurrency
 public enum Pacticipant {
   case consumer(Swift.String)
   case provider(Swift.String)
@@ -27,7 +28,6 @@ extension Matcher {
 @objc(PFMatcherRegexLike) public class ObjcRegexLike : ObjectiveC.NSObject {
   @objc(value:term:) public init(value: Swift.String, term: Swift.String)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension Matcher {
   public struct IntegerLike {
@@ -37,7 +37,6 @@ extension Matcher {
 @objc(PFMatcherIntegerLike) public class ObjcIntegerLike : ObjectiveC.NSObject {
   @objc(value:) public init(value: Swift.Int)
   @objc deinit
-  @objc override dynamic public init()
 }
 public struct ExampleGenerator {
 }
@@ -51,7 +50,6 @@ extension ProviderState : Swift.Equatable {
 @objc(ProviderState) final public class ObjCProviderState : ObjectiveC.NSObject {
   @objc(initWithDescription:params:) public init(description: Swift.String, params: [Swift.String : Swift.String])
   @objc deinit
-  @objc override dynamic public init()
 }
 public struct Request {
 }
@@ -70,7 +68,6 @@ extension Matcher {
   @objc(value:count:) public init(value: Any, count: Swift.Int = 1)
   @objc(value:min:max:count:) public init(value: Any, min: Swift.Int, max: Swift.Int, count: Swift.Int = 1)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension ExampleGenerator {
   public struct RandomDateTime {
@@ -80,7 +77,6 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomDateTime) public class ObjcRandomDateTime : ObjectiveC.NSObject {
   @objc(format:) public init(format: Swift.String? = nil)
   @objc deinit
-  @objc override dynamic public init()
 }
 public struct Matcher {
 }
@@ -92,15 +88,14 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomInt) public class ObjcRandomInt : ObjectiveC.NSObject {
   @objc(min:max:) public init(min: Swift.Int = 0, max: Swift.Int = 2_147_483_647)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension Matcher {
   public struct IncludesLike {
     public enum IncludeCombine : Swift.String {
       case AND
       case OR
-      public typealias RawValue = Swift.String
       public init?(rawValue: Swift.String)
+      public typealias RawValue = Swift.String
       public var rawValue: Swift.String {
         get
       }
@@ -113,7 +108,6 @@ extension Matcher {
   @objc(includesAll:generate:) public init(includesAll: [Swift.String], generate: Swift.String?)
   @objc(includesAny:generate:) public init(includesAny: [Swift.String], generate: Swift.String?)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension ExampleGenerator {
   public struct RandomUUID {
@@ -132,7 +126,6 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomHexadecimal) public class ObjcRandomHexadecimal : ObjectiveC.NSObject {
   @objc(digits:) public init(digits: Swift.Int = 8)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension Matcher {
   public struct DecimalLike {
@@ -142,11 +135,10 @@ extension Matcher {
 @objc(PFMatcherDecimalLike) public class ObjcDecimalLike : ObjectiveC.NSObject {
   @objc(value:) public init(value: Foundation.Decimal)
   @objc deinit
-  @objc override dynamic public init()
 }
 @_inheritsConvenienceInitializers @objc public class Interaction : ObjectiveC.NSObject {
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 extension Interaction : Swift.Encodable {
   public func encode(to encoder: Swift.Encoder) throws
@@ -179,8 +171,8 @@ extension Matcher {
   @objc public enum TransferProtocol : Swift.Int {
     case standard
     case secure
-    public typealias RawValue = Swift.Int
     public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
     public var rawValue: Swift.Int {
       get
     }
@@ -192,13 +184,12 @@ extension Matcher {
   @objc(initWithConsumer:provider:transferProtocol:port:) convenience public init(consumer: Swift.String, provider: Swift.String, scheme: PactSwift.MockService.TransferProtocol = .standard, port: Swift.Int)
   @discardableResult
   @objc(uponReceiving:) public func uponReceiving(_ description: Swift.String) -> PactSwift.Interaction
-  public func run(_ file: PactSwift.FileString? = #file, line: Swift.UInt? = #line, waitFor timeout: Foundation.TimeInterval? = nil, testFunction: @escaping (@escaping () -> Swift.Void) throws -> Swift.Void)
+  public func run(_ file: PactSwift.FileString? = #file, line: Swift.UInt? = #line, waitFor timeout: Foundation.TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Swift.Void) throws -> Swift.Void)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension MockService {
-  @objc(run:) dynamic public func objcRun(_ testFunction: @escaping (@escaping () -> Swift.Void) -> Swift.Void)
-  @objc(run:withTimeout:) dynamic public func objcRun(_ testFunction: @escaping (@escaping () -> Swift.Void) -> Swift.Void, timeout: Foundation.TimeInterval)
+  @objc(run:) dynamic public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Swift.Void) -> Swift.Void)
+  @objc(run:withTimeout:) dynamic public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Swift.Void) -> Swift.Void, timeout: Foundation.TimeInterval)
 }
 extension ExampleGenerator {
   public struct RandomDecimal {
@@ -208,7 +199,6 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomDecimal) public class ObjcRandomDecimal : ObjectiveC.NSObject {
   @objc(digits:) public init(digits: Swift.Int = 6)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension ExampleGenerator {
   public struct RandomBool {
@@ -229,7 +219,6 @@ extension ExampleGenerator {
   @objc(size:) public init(size: Swift.Int = 20)
   @objc(regex:) public init(regex: Swift.String)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension Matcher {
   public struct SomethingLike {
@@ -239,7 +228,6 @@ extension Matcher {
 @objc(PFMatcherSomethingLike) public class ObjcSomethingLike : ObjectiveC.NSObject {
   @objc(value:) public init(value: Any)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension Matcher {
   public struct EqualTo {
@@ -249,7 +237,6 @@ extension Matcher {
 @objc(PFMatcherEqualTo) public class ObjcEqualTo : ObjectiveC.NSObject {
   @objc(value:) public init(value: Any)
   @objc deinit
-  @objc override dynamic public init()
 }
 public typealias FileString = Swift.StaticString
 public protocol ErrorReportable {
@@ -266,8 +253,8 @@ public protocol ErrorReportable {
   case TRACE
   case CONNECT
   case OPTIONS
-  public typealias RawValue = Swift.Int
   public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
   public var rawValue: Swift.Int {
     get
   }
@@ -285,7 +272,6 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomDate) public class ObjcRandomDate : ObjectiveC.NSObject {
   @objc(format:) public init(format: Swift.String? = nil)
   @objc deinit
-  @objc override dynamic public init()
 }
 extension ExampleGenerator {
   public struct RandomTime {
@@ -295,14 +281,13 @@ extension ExampleGenerator {
 @objc(PFGeneratorRandomTime) public class ObjcRandomTime : ObjectiveC.NSObject {
   @objc(format:) public init(format: Swift.String? = nil)
   @objc deinit
-  @objc override dynamic public init()
 }
-extension PactSwift.Matcher.IncludesLike.IncludeCombine : Swift.Equatable {}
-extension PactSwift.Matcher.IncludesLike.IncludeCombine : Swift.Hashable {}
-extension PactSwift.Matcher.IncludesLike.IncludeCombine : Swift.RawRepresentable {}
-extension PactSwift.MockService.TransferProtocol : Swift.Equatable {}
-extension PactSwift.MockService.TransferProtocol : Swift.Hashable {}
-extension PactSwift.MockService.TransferProtocol : Swift.RawRepresentable {}
-extension PactSwift.PactHTTPMethod : Swift.Equatable {}
-extension PactSwift.PactHTTPMethod : Swift.Hashable {}
-extension PactSwift.PactHTTPMethod : Swift.RawRepresentable {}
+extension Matcher.IncludesLike.IncludeCombine : Swift.Equatable {}
+extension Matcher.IncludesLike.IncludeCombine : Swift.Hashable {}
+extension Matcher.IncludesLike.IncludeCombine : Swift.RawRepresentable {}
+extension MockService.TransferProtocol : Swift.Equatable {}
+extension MockService.TransferProtocol : Swift.Hashable {}
+extension MockService.TransferProtocol : Swift.RawRepresentable {}
+extension PactHTTPMethod : Swift.Equatable {}
+extension PactHTTPMethod : Swift.Hashable {}
+extension PactHTTPMethod : Swift.RawRepresentable {}

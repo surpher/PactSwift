@@ -1,9 +1,10 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.19.104 clang-1300.0.18.4)
 // swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PactSwiftMockServer
 import Foundation
 @_exported import PactSwiftMockServer
 import Swift
+import _Concurrency
 public enum MockServerError : Swift.Error {
   case invalidPactJSON
   case invalidSocketAddress
@@ -49,8 +50,8 @@ public enum VerificationError : Swift.Error {
     get
   }
 }
-extension PactSwiftMockServer.MockServerError : Swift.Equatable {}
-extension PactSwiftMockServer.MockServerError : Swift.Hashable {}
-extension PactSwiftMockServer.TransferProtocol : Swift.Equatable {}
-extension PactSwiftMockServer.TransferProtocol : Swift.Hashable {}
-extension PactSwiftMockServer.TransferProtocol : Swift.RawRepresentable {}
+extension MockServerError : Swift.Equatable {}
+extension MockServerError : Swift.Hashable {}
+extension TransferProtocol : Swift.Equatable {}
+extension TransferProtocol : Swift.Hashable {}
+extension TransferProtocol : Swift.RawRepresentable {}

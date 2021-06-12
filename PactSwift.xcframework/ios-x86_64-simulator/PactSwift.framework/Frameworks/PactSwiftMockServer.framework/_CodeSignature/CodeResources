@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/PactSwiftMockServer-Swift.h</key>
 		<data>
-		WHirzDUvoZ/U+3LrhzOVPbbLcsQ=
+		/1IhVatZv12kG7fFCmj9YBRK3Vo=
 		</data>
 		<key>Headers/PactSwiftMockServer.h</key>
 		<data>
@@ -18,23 +18,23 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		AJPsaHEgMe087axgbd+r57V+SeQ=
+		4UkFvG7kZ95IRSkJZB+mb9KdQVw=
 		</data>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		0NYrm+wFUy7Rr8X4KmoI1M48sPM=
+		n3g4cToLGQZ4pWJEuuf8R1eT3YM=
 		</data>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		3STDTvioZW1gGdcrfgipHjDdf74=
+		HlQwOfqMIiMblvHXdyUfn8XIcH0=
 		</data>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64.swiftdoc</key>
 		<data>
-		0NYrm+wFUy7Rr8X4KmoI1M48sPM=
+		n3g4cToLGQZ4pWJEuuf8R1eT3YM=
 		</data>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64.swiftinterface</key>
 		<data>
-		3STDTvioZW1gGdcrfgipHjDdf74=
+		HlQwOfqMIiMblvHXdyUfn8XIcH0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -47,7 +47,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			78ggXbOd7UKIUg4XZ5JaDJp2uIqkXKS4kvxQhT50lqs=
+			5hjazd2dOOj3MYrGru6rCG7oMx7XnkM3gnOamc6dVdA=
 			</data>
 		</dict>
 		<key>Headers/PactSwiftMockServer.h</key>
@@ -68,28 +68,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zWrM3bIdIIuZw0tEWuh3s9s697r7FzpTi5DoiKO4n0c=
+			dsBsoe4lsFdf4qxr4CQRMFGeu/jInImLE0lfYHDPC7k=
 			</data>
 		</dict>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ppgqXlzVKkcsmw0gK8Rsqr3dhpG7vVdres/aBmajadM=
+			fHcJykT7nBjz91rPr2c9SGvJfHaKiJPUg3EMzQy6O3w=
 			</data>
 		</dict>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zWrM3bIdIIuZw0tEWuh3s9s697r7FzpTi5DoiKO4n0c=
+			dsBsoe4lsFdf4qxr4CQRMFGeu/jInImLE0lfYHDPC7k=
 			</data>
 		</dict>
 		<key>Modules/PactSwiftMockServer.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ppgqXlzVKkcsmw0gK8Rsqr3dhpG7vVdres/aBmajadM=
+			fHcJykT7nBjz91rPr2c9SGvJfHaKiJPUg3EMzQy6O3w=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
