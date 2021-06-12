@@ -28,7 +28,7 @@ let package = Package(
 		.binaryTarget(
 			name: "PactSwift",
 			path: "PactSwift.xcframework"
-		)
+		),
 	],
 
 	swiftLanguageVersions: [.v5]

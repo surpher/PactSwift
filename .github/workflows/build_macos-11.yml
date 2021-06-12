@@ -4,8 +4,8 @@ on: [push]
 
 jobs:
   test:
-    name: Run on macOS 11
-    runs-on: macos-11.0
+    name: Run tests on macOS 11
+    runs-on: macos-11
 
     strategy:
       fail-fast: true
@@ -37,44 +37,26 @@ jobs:
   test_carthage:
     needs: [test]
     name: Test Carthage
-    runs-on: macos-11.0
+    runs-on: macos-11
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
+
+      - name: Use Xcode 13.0
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
 
       - name: Carthage build
         run: |
           echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
           ./Scripts/carthage_xcode12 build --no-skip-current --platform "ios,macos,tvos"
 
-  test_spm:
-    name: Swift CLI build and test (SPM)
-    runs-on: macos-11.0
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Prepare Tools
-        run: |
-          Scripts/prepare_build_tools
-
-      - name: Build binary && swift test
-        run: |
-          echo "👷‍♀️ running swift build -c debug"
-          set -o pipefail && swift build -c debug | xcbeautify
-          echo "🧪 running swift test"
-          set -o pipefail && swift test -Xlinker -L${{ env.RUST_BINARY_DIR }} | xcbeautify
-
   after_success:
-    needs: [test, test_carthage, test_spm]
+    needs: [test, test_carthage]
     name: Build demo projects
-    runs-on: macos-11.0
+    runs-on: macos-11
 
     steps:
       - name: Checkout repository
@@ -84,4 +66,4 @@ jobs:
 
       - name: Build demo projects
         run: |
-          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
+          echo "⚠️ Skipping: curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
