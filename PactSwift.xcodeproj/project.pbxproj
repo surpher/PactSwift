@@ -197,12 +197,6 @@
 		AD2F407A264BE74D0027B6EC /* Request.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.spec2.swift; sourceTree = "<group>"; };
 		AD2F40DF264BEBAA0027B6EC /* Metadata.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.spec2.swift; sourceTree = "<group>"; };
 		AD2F410B264BEC1B0027B6EC /* MetadataTests.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTests.spec2.swift; sourceTree = "<group>"; };
-		AD2F414F264BEF2E0027B6EC /* Target-iOS-spec2-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-spec2-Shared.xcconfig"; sourceTree = "<group>"; };
-		AD2F4150264BEF510027B6EC /* Target-iOS-spec2-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-spec2-Debug.xcconfig"; sourceTree = "<group>"; };
-		AD2F4151264BEF630027B6EC /* Target-iOS-spec2-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-spec2-Release.xcconfig"; sourceTree = "<group>"; };
-		AD2F4152264BEF900027B6EC /* Target-macOS-spec2-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-spec2-Shared.xcconfig"; sourceTree = "<group>"; };
-		AD2F4153264BEF910027B6EC /* Target-macOS-spec2-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-spec2-Release.xcconfig"; sourceTree = "<group>"; };
-		AD2F4154264BEF910027B6EC /* Target-macOS-spec2-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-spec2-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2F42D2264BF6AF0027B6EC /* ErrorCapture.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCapture.spec2.swift; sourceTree = "<group>"; };
 		AD4B970425138F7600C37560 /* RandomDecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimalTests.swift; sourceTree = "<group>"; };
 		AD4B97092513A04800C37560 /* RandomHexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomHexadecimal.swift; sourceTree = "<group>"; };
@@ -528,18 +522,12 @@
 				AD2CB264242CC10600D991F0 /* Target-iOS-Debug.xcconfig */,
 				AD2CB265242CC10E00D991F0 /* Target-iOS-Release.xcconfig */,
 				AD4FC5DE242CC2C30039342D /* Target-iOS-Shared.xcconfig */,
-				AD2F4150264BEF510027B6EC /* Target-iOS-spec2-Debug.xcconfig */,
-				AD2F4151264BEF630027B6EC /* Target-iOS-spec2-Release.xcconfig */,
-				AD2F414F264BEF2E0027B6EC /* Target-iOS-spec2-Shared.xcconfig */,
 				AD2CB266242CC11700D991F0 /* Target-iOS-Tests-Debug.xcconfig */,
 				AD2CB267242CC12300D991F0 /* Target-iOS-Tests-Release.xcconfig */,
 				AD4FC5DF242CC2CB0039342D /* Target-iOS-Tests-Shared.xcconfig */,
 				AD8FC7D32463ADA700361854 /* Target-macOS-Debug.xcconfig */,
 				AD8FC7D42463ADB000361854 /* Target-macOS-Release.xcconfig */,
 				AD8FC7D22463AD9800361854 /* Target-macOS-Shared.xcconfig */,
-				AD2F4154264BEF910027B6EC /* Target-macOS-spec2-Debug.xcconfig */,
-				AD2F4153264BEF910027B6EC /* Target-macOS-spec2-Release.xcconfig */,
-				AD2F4152264BEF900027B6EC /* Target-macOS-spec2-Shared.xcconfig */,
 				AD8FC7D62463ADCF00361854 /* Target-macOS-Tests-Debug.xcconfig */,
 				AD8FC7D72463ADDB00361854 /* Target-macOS-Tests-Release.xcconfig */,
 				AD8FC7D52463ADC300361854 /* Target-macOS-Tests-Shared.xcconfig */,
