@@ -48,10 +48,13 @@ jobs:
       - name: Use Xcode 13.0
         run: sudo xcode-select -switch /Applications/Xcode_13.0.app
 
-      - name: Carthage build
+      - name: Skipping Carthage build
         run: |
-          echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-          ./Scripts/carthage_xcode12 build --no-skip-current --platform "ios,macos,tvos"
+          echo "⚠️ SKIPPING: \"⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323\""
+          echo "⚠️ SKIPPING: \"./Scripts/carthage_xcode12 build --no-skip-current --platform \"ios,macos,tvos\""
+          echo "⚠️ SKIPPING 'carthage build' - Xcode 13 and macOS 11 are being a real PITA. Use Swift Package Manager instead!"
+          echo "See:"
+          echo "- https://github.com/Carthage/Carthage/issues/3146"
 
   after_success:
     needs: [test, test_carthage]
@@ -64,6 +67,6 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Build demo projects
+      - name: Skipping Build demo projects
         run: |
-          echo "⚠️ Skipping: curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
+          echo "⚠️ SKIPPING: curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
