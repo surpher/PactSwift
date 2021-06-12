@@ -19,7 +19,7 @@ fi
 
 echo "🧹 Removing existing XCFramework"
 rm -fr ./PactSwift.xcframework
-echo "👍  Removed existing XCFramework"
+echo "👍 Removed existing XCFramework"
 
 echo "ℹ️  Preparing ${TMP_DIR} folder"
 mkdir -p $TMP_DIR
@@ -37,7 +37,7 @@ xcodebuild archive \
     -archivePath "${TMP_DIR}/iphoneos/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
     SKIP_INSTALL=NO | xcbeautify
-echo "👍  Framework for arm64 (iOS device) built"
+echo "👍 Framework for arm64 (iOS device) built"
 
 ###################
 # iOS - Simulator
@@ -51,7 +51,7 @@ xcodebuild archive \
     -archivePath "${TMP_DIR}/iphonesimulator/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
     SKIP_INSTALL=NO | xcbeautify
-echo "👍  Framework for iOS Simulator built for x86_64 architecture"
+echo "👍 Framework for iOS Simulator built for x86_64 architecture"
 
 # TODO: PactSwiftMockServer is still missing the arm64-apple-ios-simulator support - rust triple still in Tier3
 # xcodebuild archive \
@@ -67,7 +67,7 @@ echo "👍  Framework for iOS Simulator built for x86_64 architecture"
 # macOS
 ###################
 
-echo "🏗  Building for macOS..."
+echo "🏗 Building for macOS..."
 xcodebuild archive \
     -sdk macosx MACOSX_DEPLOYMENT_TARGET=10.12 \
     -arch x86_64 -arch arm64 \
@@ -75,20 +75,20 @@ xcodebuild archive \
     -archivePath "${TMP_DIR}/macos/${PRODUCT_NAME}.xcarchive" \
     BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
     SKIP_INSTALL=NO | xcbeautify
-echo "👍  Framework for macOS built for x86_64 and arm64 architectures"
+echo "👍 Framework for macOS built for x86_64 and arm64 architectures"
 
 ###################
 # XCFramework
 ###################
 
-echo "🏗  Building XCFramework..."
+echo "🏗 Building XCFramework..."
 xcodebuild -create-xcframework -output ./$PRODUCT_NAME.xcframework \
     -framework $TMP_DIR/iphoneos/$PRODUCT_NAME.xcarchive/Products/Library/Frameworks/$PRODUCT_NAME.framework \
     -framework $TMP_DIR/iphonesimulator/$PRODUCT_NAME.xcarchive/Products/Library/Frameworks/$PRODUCT_NAME.framework \
     -framework $TMP_DIR/macos/$PRODUCT_NAME.xcarchive/Products/Library/Frameworks/$PRODUCT_NAME.framework
 
 # Cleanup
-echo "🧹  Removing $TMP_DIR folder..."
+echo "🧹 Removing $TMP_DIR folder..."
 rm -fr $TMP_DIR
 
 echo "👍 Done!"

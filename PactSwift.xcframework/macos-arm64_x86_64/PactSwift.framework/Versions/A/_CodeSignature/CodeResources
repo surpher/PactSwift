@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		F9BeStDX3K56betoLXkjQN1ziMw=
+		7xuXZn56aTEOZoAJdyEDtPt+ba4=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,16 +15,16 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			cLcj6z/ecrhDb9spdKiRL3wH3Qo=
+			FrFibN4wRzom3L3eBJnAccLUTNk=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"70b723eb3fde72b8436fdb2974a8912f7c07dd0a" or cdhash H"ab297e3e8bceee1ee8686ece7cb10ed6271bb29d"</string>
+			<string>cdhash H"16b1626cde30473a26dcbdde0499c071c2d44cd9" or cdhash H"ddf1259b6342bece6535e3d8a1f7e4c78fc5d1aa"</string>
 		</dict>
 		<key>Headers/PactSwift-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			n/pU10oTOsohyhshGUDHnUmnsODDctcVKv3bTdyjoG4=
+			R6DC00NKkik6ecG9cOsMQthcM6cAlZcjN2wduJ4dwKc=
 			</data>
 		</dict>
 		<key>Headers/PactSwift.h</key>
@@ -38,84 +38,84 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+PjXK4AmP/YUyRIZwORrUpf74fW8elbxwlA7t8UTQ9s=
+			UpVXEj8VRh0FYUNdW+1LhTWk4YSTkVlE3sIBlebqqNs=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/arm64-apple-macos.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2sxFcnvPl9ehBoJqiniPnJcNcb6Uy9yuDDXtDkm9ONg=
+			kDPL3Z3DFCbWygad10lvb8aeO0zprFGbXr3bpjfK8rg=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/arm64-apple-macos.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0iQnquvPusavYgUkzhjFdw0TPbZMiHMY9yPqTJ4ebJM=
+			qC7IXnbLnQyQuAkBM69lRxBs5951RHsZqtSMAbfgTOw=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+PjXK4AmP/YUyRIZwORrUpf74fW8elbxwlA7t8UTQ9s=
+			UpVXEj8VRh0FYUNdW+1LhTWk4YSTkVlE3sIBlebqqNs=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/arm64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2sxFcnvPl9ehBoJqiniPnJcNcb6Uy9yuDDXtDkm9ONg=
+			kDPL3Z3DFCbWygad10lvb8aeO0zprFGbXr3bpjfK8rg=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0iQnquvPusavYgUkzhjFdw0TPbZMiHMY9yPqTJ4ebJM=
+			qC7IXnbLnQyQuAkBM69lRxBs5951RHsZqtSMAbfgTOw=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-macos.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			G9ltmAXlBjWrZHURNbJs35SHrs0SaS+IzuF3I9IXFp4=
+			5UD/s2ioIBep1t09PrdCcw9PDHr7sKMtZBxVMDD0vK4=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-macos.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qJBc7GgXDQFjx/yw/oC36eOkBQ+us+VGciOI+I3JWHw=
+			WCyKJgYerjrJfL9+NOUJynLJ1N2UqnwlQbTZEEi8RJ8=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64-apple-macos.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0ijNy9n+l+IpYJD4cGPOzJc5BVSy5Z5mOQeF62wy2j0=
+			mPPMyiPwTJJa19te3DkRVLeH0XNN8iJD5bPAEfUe9lY=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			G9ltmAXlBjWrZHURNbJs35SHrs0SaS+IzuF3I9IXFp4=
+			5UD/s2ioIBep1t09PrdCcw9PDHr7sKMtZBxVMDD0vK4=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qJBc7GgXDQFjx/yw/oC36eOkBQ+us+VGciOI+I3JWHw=
+			WCyKJgYerjrJfL9+NOUJynLJ1N2UqnwlQbTZEEi8RJ8=
 			</data>
 		</dict>
 		<key>Modules/PactSwift.swiftmodule/x86_64.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0ijNy9n+l+IpYJD4cGPOzJc5BVSy5Z5mOQeF62wy2j0=
+			mPPMyiPwTJJa19te3DkRVLeH0XNN8iJD5bPAEfUe9lY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -129,7 +129,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UzkBsjgAI3XBQpulMqlzPegjtNeT7/JltYLLiY1GqOQ=
+			EMfa6+nLVBQNCHACaxHjOly+W0jiKmOh4aodlMFpyAg=
 			</data>
 		</dict>
 	</dict>

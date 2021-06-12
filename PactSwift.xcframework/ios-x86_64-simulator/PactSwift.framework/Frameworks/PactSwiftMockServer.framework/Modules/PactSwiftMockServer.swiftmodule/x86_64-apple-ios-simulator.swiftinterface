@@ -1,10 +1,9 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.19.104 clang-1300.0.18.4)
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
 // swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PactSwiftMockServer
 import Foundation
 @_exported import PactSwiftMockServer
 import Swift
-import _Concurrency
 public enum MockServerError : Swift.Error {
   case invalidPactJSON
   case invalidSocketAddress
@@ -19,16 +18,16 @@ public enum MockServerError : Swift.Error {
     get
   }
   public static func == (a: PactSwiftMockServer.MockServerError, b: PactSwiftMockServer.MockServerError) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 @objc public enum TransferProtocol : Swift.Int {
   case standard
   case secure
-  public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
     get
   }
@@ -50,8 +49,8 @@ public enum VerificationError : Swift.Error {
     get
   }
 }
-extension MockServerError : Swift.Equatable {}
-extension MockServerError : Swift.Hashable {}
-extension TransferProtocol : Swift.Equatable {}
-extension TransferProtocol : Swift.Hashable {}
-extension TransferProtocol : Swift.RawRepresentable {}
+extension PactSwiftMockServer.MockServerError : Swift.Equatable {}
+extension PactSwiftMockServer.MockServerError : Swift.Hashable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.Equatable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.Hashable {}
+extension PactSwiftMockServer.TransferProtocol : Swift.RawRepresentable {}
