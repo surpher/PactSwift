@@ -50,7 +50,7 @@ carthage update --use-xcframeworks
 
 **NOTE:**  
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
-- See [Scripts/carthage_xcode12][carthage_xcode12]
+- See [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
 ## Generated Pact contracts
 
@@ -252,7 +252,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
 [action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
-[carthage_xcode12]: ./Scripts/carthage_xcode12
+[carthage_script]: ./Scripts/carthage
 [code-of-conduct]: ./CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./CONTRIBUTING.md
@@ -285,3 +285,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-swift-examples-workflow]: https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml
 
 [upgrading]: https://github.com/surpher/PactSwift/wiki/Upgrading
+
+[carthage-issue-3019-1]: https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323
+[carthage-issue-3019-2]: https://github.com/Carthage/Carthage/issues/3019#issuecomment-734415287
+[carthage-issue-3201]: https://github.com/Carthage/Carthage/issues/3201

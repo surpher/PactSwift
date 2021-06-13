@@ -66,8 +66,7 @@ jobs:
 
       - name: Carthage build
         run: |
-          echo "⚠️ Running 'carthage build' with a Xcode 12 workaround script - https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323"
-          ./Scripts/carthage_xcode12 build --use-xcframeworks --no-skip-current --platform "$PLATFORM"
+          ./Scripts/carthage build --use-xcframeworks --no-skip-current --platform "$PLATFORM"
 
   after_success:
     needs: [test, test_carthage]
@@ -86,4 +85,5 @@ jobs:
 
       - name: Build demo projects
         run: |
-          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
+          echo "⚠️  SKIPPING: \"curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
+          echo "Should be triggered in 'build_macos-11.yml' CI pipe configuration."
