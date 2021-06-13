@@ -37,7 +37,7 @@ fi
 # Vars
 
 CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
-VERSION_FILE="${SCRIPTS_DIR}/../Sources/Definitions/PactSwiftVersion.swift"
+VERSION_FILE="${SCRIPTS_DIR}/../Sources/Model/PactSwiftVersion.swift"
 RELEASE_NOTES="${SCRIPTS_DIR}/../CHANGELOG.md"
 REMOTE_BRANCH=main
 VERSION=$1
