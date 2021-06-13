@@ -6,12 +6,9 @@ $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Model/Metadata.swift
 $(SRCROOT)/Sources/Model/PactPathParameter.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
-$(SRCROOT)/Sources/Model/Request.spec2.swift
-$(SRCROOT)/Sources/Model/Metadata.spec2.swift
 $(SRCROOT)/Sources/Model/PactHTTPMethod.swift
 $(SRCROOT)/Sources/Model/PactSwiftVersion.swift
 $(SRCROOT)/Sources/Model/Pact.swift
-$(SRCROOT)/Sources/Model/PactBuilder.spec2.swift
 $(SRCROOT)/Sources/Model/ProviderState.swift
 $(SRCROOT)/Sources/Model/Response.swift
 $(SRCROOT)/Sources/Model/PactInteractionElement.swift
@@ -19,7 +16,6 @@ $(SRCROOT)/Sources/Model/Interaction.swift
 $(SRCROOT)/Sources/Model/Request.swift
 $(SRCROOT)/Sources/Model/EncodingError.swift
 $(SRCROOT)/Sources/Model/ExampleGeneratorExpressible.swift
-$(SRCROOT)/Sources/Model/Interaction.spec2.swift
 $(SRCROOT)/Sources/Model/ErrorReportable.swift
 $(SRCROOT)/Sources/Model/Pacticipant.swift
 $(SRCROOT)/Sources/Model/MatchingRuleExpressible.swift

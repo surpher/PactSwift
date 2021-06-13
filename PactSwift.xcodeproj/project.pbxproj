@@ -191,11 +191,7 @@
 		AD2CB265242CC10E00D991F0 /* Target-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 		AD2CB266242CC11700D991F0 /* Target-iOS-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB267242CC12300D991F0 /* Target-iOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
-		AD2F3E66264BE2DC0027B6EC /* PactBuilder.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactBuilder.spec2.swift; sourceTree = "<group>"; };
 		AD2F4002264BE5270027B6EC /* MockServiceTests.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceTests.spec2.swift; sourceTree = "<group>"; };
-		AD2F403F264BE61A0027B6EC /* Interaction.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.spec2.swift; sourceTree = "<group>"; };
-		AD2F407A264BE74D0027B6EC /* Request.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.spec2.swift; sourceTree = "<group>"; };
-		AD2F40DF264BEBAA0027B6EC /* Metadata.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.spec2.swift; sourceTree = "<group>"; };
 		AD2F410B264BEC1B0027B6EC /* MetadataTests.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTests.spec2.swift; sourceTree = "<group>"; };
 		AD2F42D2264BF6AF0027B6EC /* ErrorCapture.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCapture.spec2.swift; sourceTree = "<group>"; };
 		AD4B970425138F7600C37560 /* RandomDecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimalTests.swift; sourceTree = "<group>"; };
@@ -348,18 +344,6 @@
 			path = Matchers;
 			sourceTree = "<group>";
 		};
-		AD2F4102264BEBCD0027B6EC /* Spec2 */ = {
-			isa = PBXGroup;
-			children = (
-				AD2F403F264BE61A0027B6EC /* Interaction.spec2.swift */,
-				AD2F40DF264BEBAA0027B6EC /* Metadata.spec2.swift */,
-				AD2F3E66264BE2DC0027B6EC /* PactBuilder.spec2.swift */,
-				AD2F407A264BE74D0027B6EC /* Request.spec2.swift */,
-			);
-			name = Spec2;
-			path = Model;
-			sourceTree = "<group>";
-		};
 		AD641A362434354C00785CE1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,7 +473,6 @@
 				AD10361324468AB3002C97CA /* MockService.swift */,
 				ADB7C167243327E300A16CDE /* Model */,
 				AD8DF434243C53750062CB1A /* PactBuilder.swift */,
-				AD2F4102264BEBCD0027B6EC /* Spec2 */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
