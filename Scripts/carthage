@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # carthage workaround
-# Usage example: ./carthage_xcode13 build --platform iOS
+# Usage example: ./carthage build --platform iOS
 #
 # Source(s):
 # - https://github.com/Carthage/Carthage/issues/3201
