@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
 
+# release
+#
+# Runs the required steps to prepare and tag new version of PactSwift.
+# Usage: `./Scripts/release 1.0.0 'Bugfix Release' [-d]`
+#
+# Notes:
+# Updates PactSwift version number in PactSwiftVersion.swift file
+# Updates Marketing version number in Project-Shared.xcconfig file
+# Updates CHANGELOG.md
+# Commits the updates in the repo
+# Creates a tag on the last commit
+# Pushes the updates and tags to `remote`
+#
+
 # set -x
 set -o pipefail
 
-# Utilities
+####################
+# Utilities        #
+####################
 
 function help {
     echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
@@ -25,10 +41,12 @@ function die {
     exit 1
 }
 
-# Overridable Environment
+##############################
+# Overridable Environment   #
+##############################
 
 if [[ "$CI" == true ]] ; then
-	die "Running on CI is not supported!"
+	die "Running on CI is not supported (yet)!"
 else
 	echo "NOT CI"
 	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
@@ -45,7 +63,9 @@ RELEASE_NAME=$2
 DRY_RUN=$3
 VERSION_TAG="v$VERSION"
 
-# Setup
+####################
+# Setup            #
+####################
 
 if [ $# -lt 2 ]; then
     help
@@ -68,15 +88,14 @@ function pushNewVersion {
 	git commit -m "${RELEASE_NAME}"
 	git tag "$VERSION_TAG" -F "$RELEASE_NOTES" || die "Failed to tag version"
 
-	# git push origin || die "Failed to push version changes to origin"
-	# git push origin "$VERSION_TAG" || die "Failed to push tag '$VERSION_TAG' to origin"
-
 	git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
 }
 
-# Release flow
+####################
+# Release flow     #
+####################
 
-echo "👮‍♀️  Verifying if version tag is reasonable"
+echo "👮‍♀️  Verifying if version tag is reasonable..."
 
 echo $VERSION_TAG | grep -q "^vv"
 if [ $? -eq 0 ]; then
@@ -88,7 +107,7 @@ if [ $? -ne 0 ]; then
     die "This tag $VERSION is in an incorrect format. It should be in 'v{MAJOR}.{MINOR}.{PATCH}(-{PRERELEASE_NAME}.{PRERELEASE_VERSION})' form."
 fi
 
-echo "👮‍♀️  Verifying version ($VERSION) is unique"
+echo "👮‍♀️  Verifying version ($VERSION) is unique..."
 git describe --exact-match "$VERSION_TAG" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
     die "Tag ($VERSION) already exists! Aborting."
@@ -110,17 +129,17 @@ echo "🚢  Releasing version $VERSION (tag: $VERSION_TAG)..."
 
 echo "⛓  Ensuring no differences to origin/$REMOTE_BRANCH"
 git fetch origin || die "Failed to fetch origin"
-git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to origin/$REMOTE_BRANCH. Cannot update version safely"
+git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to origin/$REMOTE_BRANCH. Cannot update version safely."
 
-echo "🏷  Tagging release version"
+echo "🏷  Tagging release version..."
 
 if [ -z "$DRY_RUN" ]; then
-	echo "🚅  Pushing release version tag to origin"
+	echo "🚅  Pushing release version tag to origin..."
 
 	pushNewVersion
 
 	echo
-	echo "---------------- Released PactSwift version $VERSION_TAG ----------------"
+	echo "--------  🎉  Released PactSwift version $VERSION_TAG  🎉  --------"
 	echo
 
 	rm ${RELEASE_NOTES}.backup
