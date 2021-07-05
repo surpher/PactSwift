@@ -19,16 +19,26 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(name: "PactMockServer", url: "https://github.com/surpher/PactMockServer.git", from: "0.0.1-beta"),
 		.package(name: "PactSwiftMockServer", url: "https://github.com/surpher/PactSwiftMockServer.git", .branch("main")),
 		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", from: "0.1.0")
 	],
 
 	targets: [
-		.binaryTarget(
-			name: "PactSwift",
-			path: "PactSwift.xcframework"
-		),
+		.target(
+				name: "PactSwift",
+				dependencies: [
+					"PactSwiftMockServer",
+					"PactSwiftToolbox"
+				],
+				path: "./Sources"
+			),
+			.testTarget(
+				name: "PactSwiftTests",
+				dependencies: [
+					"PactSwift"
+				],
+				path: "./Tests"
+			),
 	],
 
 	swiftLanguageVersions: [.v5]
