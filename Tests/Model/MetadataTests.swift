@@ -25,19 +25,15 @@ class MetadataTests: XCTestCase {
 		XCTAssertEqual(Metadata().pactSpec.version, "3.0.0")
 	}
 
+	#if !SWIFT_PACKAGE
 	func testMetadata_SetsPactSwiftVersion() throws {
-		var runningInSwiftPackage = false
-		#if SWIFT_PACKAGE
-		runningInSwiftPackage = true
-		#endif
-		try XCTSkipIf(runningInSwiftPackage)
-
 		guard let expectedResult = bundleVersion() else {
 			XCTFail("Expexted version number")
 			return
 		}
 		XCTAssertEqual(try XCTUnwrap(Metadata().pactSwift.version), expectedResult)
 	}
+	#endif
 
 }
 
