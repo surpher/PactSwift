@@ -6,7 +6,7 @@
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
-[![Build](https://github.com/surpher/PactSwift/workflows/Build/badge.svg)][github-actions-ci]
+[![Build macOS 11.x](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml)
 
 <p align="center">
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
@@ -18,14 +18,14 @@ It implements [Pact Specification v3][pact-specification-v3] and takes advantage
 
 ## Installation
 
-Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
+Note: see [Upgrading][upgrading] for notes on upgrading from 0.4 to 0.5
 
 ### Swift Package Manager
 
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.4.2` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.5.0` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 
@@ -33,7 +33,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.3 to 0.4
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.4.2"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.5.0"))
 ]
 ```
 
@@ -41,7 +41,7 @@ dependencies: [
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.4
+github "surpher/PactSwift" ~> 0.5
 ```
 
 ```sh
@@ -133,7 +133,7 @@ class PassingTestsExample: XCTestCase {
     let apiClient = RestManager()
 
     // Run a Pact test and assert **our** API client makes the request exactly as we promised above
-    mockService.run(waitFor: 1) { [unowned self] completed in
+    mockService.run(timeout: 1) { [unowned self] completed in
 
       // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
       apiClient.baseUrl = self.mockService.baseUrl
@@ -258,8 +258,6 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [contributing]: ./CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
-
-[github-actions-ci]: https://github.com/surpher/PactSwift/actions?query=workflow%3ABuild
 
 [github-issues-52]: https://github.com/surpher/PactSwift/issues/52
 [issues]: https://github.com/surpher/PactSwift/issues
