@@ -16,7 +16,7 @@
 //
 
 import Foundation
-@_implementationOnly import PactSwiftMockServer
+import PactSwiftMockServer
 @_implementationOnly import PactSwiftToolbox
 import XCTest
 
