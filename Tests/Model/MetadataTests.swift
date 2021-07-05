@@ -26,6 +26,12 @@ class MetadataTests: XCTestCase {
 	}
 
 	func testMetadata_SetsPactSwiftVersion() throws {
+		var runningInSwiftPackage = false
+		#if SWIFT_PACKAGE
+		runningInSwiftPackage = true
+		#endif
+		try XCTSkipIf(runningInSwiftPackage)
+
 		guard let expectedResult = bundleVersion() else {
 			XCTFail("Expexted version number")
 			return
