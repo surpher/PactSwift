@@ -37,10 +37,9 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
-      - name: Run tests (CLI)
+      - name: Run tests (CLI - Swift Package)
         run: |
-          swift build
-          swift test -c release | xcbeautify
+          swift build && swift test -c debug
 
       - name: Upload code coverage
         run: |

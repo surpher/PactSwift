@@ -36,26 +36,12 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
-  test_spm:
-    name: Validate for SPM distribution
-    runs-on: macos-11
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Use Xcode 13.0
-        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
-
-      - name: Run tests (CLI)
+      - name: Run tests (CLI - Swift Package)
         run: |
           swift build
-          swift test -c release | xcbeautify
+          swift test -c release
 
   test_carthage:
-    needs: [test]
     name: Test Carthage
     runs-on: macos-11
 
@@ -73,7 +59,7 @@ jobs:
           ./Scripts/carthage build --use-xcframeworks --no-skip-current --platform "ios,macos,tvos"
 
   after_success:
-    needs: [test, test_spm, test_carthage]
+    needs: [test, test_carthage]
     name: Build demo projects
     runs-on: macos-11
 
