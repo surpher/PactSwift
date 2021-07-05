@@ -1,4 +1,4 @@
-name: Build
+name: Build macOS 11.x
 
 on: [push]
 
