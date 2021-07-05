@@ -128,11 +128,11 @@ let kTimeout: TimeInterval = 10
 	/// - Parameters:
 	///   - file: The file to report the failing test in
 	///   - line: The line on which to report the failing test
-	///   - waitFor: Give the test function `waitFor` seconds to test your interaction. Default is 10 seconds
+	///   - timeout: Time before the test times out. Default is 10 seconds
 	///   - testFunction: Your code that makes the API request
-	///   - testCompleted: Completion block notifying `MockService` the test is done
+	///   - testCompleted: Completion block notifying `MockService` the test completed
 	///
-	public func run(_ file: FileString? = #file, line: UInt? = #line, waitFor timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
 		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
@@ -184,13 +184,13 @@ extension MockService {
 	/// Runs the Pact test with default timeout
 	@objc(run:)
 	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
-		run(waitFor: kTimeout, testFunction: testFunction)
+		run(timeout: kTimeout, testFunction: testFunction)
 	}
 
 	/// Runs the Pact test with provided timeout
 	@objc(run: withTimeout:)
 	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
-		run(waitFor: timeout, testFunction: testFunction)
+		run(timeout: timeout, testFunction: testFunction)
 	}
 
 }

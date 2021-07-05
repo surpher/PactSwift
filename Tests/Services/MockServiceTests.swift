@@ -54,7 +54,7 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run(waitFor: 1) { completion in
+		mockService.run(timeout: 1) { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/elements")!) { data, response, error in
 				if let response = response as? HTTPURLResponse {
@@ -80,7 +80,7 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run(waitFor: 1) { completion in
+		mockService.run(timeout: 1) { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "http://0.0.0.0:12345/elements/on-port")!) { data, response, error in
 				if let response = response as? HTTPURLResponse {
@@ -110,7 +110,7 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run(waitFor: 1) { completion in
+		mockService.run(timeout: 1) { completion in
 			let session = URLSession.shared
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
