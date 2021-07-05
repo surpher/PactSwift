@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "PactMockServer",
-        "repositoryURL": "https://github.com/surpher/PactMockServer.git",
-        "state": {
-          "branch": null,
-          "revision": "356d30b9801c13f6609b7b328232f3e48e21ce86",
-          "version": "0.0.1-beta"
-        }
-      },
-      {
         "package": "PactSwiftMockServer",
         "repositoryURL": "https://github.com/surpher/PactSwiftMockServer.git",
         "state": {
