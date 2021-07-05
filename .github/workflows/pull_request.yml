@@ -37,6 +37,11 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
+      - name: Run tests (cli)
+        run: |
+          swift build
+          swift test -c release | xcbeautify
+
   test_carthage:
     needs: [test]
     name: Test Carthage

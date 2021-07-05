@@ -37,6 +37,11 @@ jobs:
         run: |
           set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
 
+      - name: Run tests (CLI)
+        run: |
+          swift build
+          swift test -c release | xcbeautify
+
       - name: Upload code coverage
         run: |
           bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
@@ -86,4 +91,4 @@ jobs:
       - name: Build demo projects
         run: |
           echo "⚠️  SKIPPING: \"curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
-          echo "Should be triggered in 'build_macos-11.yml' CI pipe configuration."
+          echo "Should only be triggered once. See 'build_macos-11.yml' CI pipe configuration."
