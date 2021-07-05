@@ -191,9 +191,6 @@
 		AD2CB265242CC10E00D991F0 /* Target-iOS-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Release.xcconfig"; sourceTree = "<group>"; };
 		AD2CB266242CC11700D991F0 /* Target-iOS-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB267242CC12300D991F0 /* Target-iOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
-		AD2F4002264BE5270027B6EC /* MockServiceTests.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceTests.spec2.swift; sourceTree = "<group>"; };
-		AD2F410B264BEC1B0027B6EC /* MetadataTests.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTests.spec2.swift; sourceTree = "<group>"; };
-		AD2F42D2264BF6AF0027B6EC /* ErrorCapture.spec2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCapture.spec2.swift; sourceTree = "<group>"; };
 		AD4B970425138F7600C37560 /* RandomDecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimalTests.swift; sourceTree = "<group>"; };
 		AD4B97092513A04800C37560 /* RandomHexadecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomHexadecimal.swift; sourceTree = "<group>"; };
 		AD4B970C2513A0C300C37560 /* RandomHexadecimalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomHexadecimalTests.swift; sourceTree = "<group>"; };
@@ -452,17 +449,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		ADC87834264BF74500A72A6F /* Spec2 */ = {
-			isa = PBXGroup;
-			children = (
-				AD2F410B264BEC1B0027B6EC /* MetadataTests.spec2.swift */,
-				AD2F4002264BE5270027B6EC /* MockServiceTests.spec2.swift */,
-				AD2F42D2264BF6AF0027B6EC /* ErrorCapture.spec2.swift */,
-			);
-			name = Spec2;
-			path = Model;
-			sourceTree = "<group>";
-		};
 		ADCB2560242C83670048BD18 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,7 +471,6 @@
 				AD7891B8244150FF0014BCC8 /* Matchers */,
 				AD641A362434354C00785CE1 /* Model */,
 				AD646FC72460F7ED00979AFC /* Services */,
-				ADC87834264BF74500A72A6F /* Spec2 */,
 				ADDE46FD244D0FBA00E4F7EE /* TestHelpers */,
 			);
 			path = Tests;

@@ -18,10 +18,6 @@
 import Foundation
 @_implementationOnly import PactSwiftMockServer
 
-#if SWIFT_PACKAGE
-import PactMockServer
-#endif
-
 public extension ExampleGenerator {
 
 	/// Generates a random string value of the provided size characters
