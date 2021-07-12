@@ -21,7 +21,7 @@ So that ...
 
 <!--  Provide additional notes... -->
 
-# 🎨 Design
+# 🏗 Design
 
 <!-- Provide design example, screenshot, text input/output etc -->
 
