@@ -1,5 +1,5 @@
 //
-//  Created by Marko Justinek on 27/10/20.
+//  Created by Marko Justinek on 9/7/21.
 //  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -17,5 +17,11 @@
 
 import Foundation
 
-/// A protocol defining a Type that can be used as a request's path parameter (eg: a RegexLike matcher)
-public protocol PactPathParameter { }
+extension Sequence where Iterator.Element: Hashable {
+
+	var unique: [Iterator.Element] {
+		var seen: Set<Iterator.Element> = []
+		return filter { seen.insert($0).inserted }
+	}
+
+}

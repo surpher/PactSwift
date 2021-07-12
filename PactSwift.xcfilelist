@@ -3,6 +3,7 @@ $(SRCROOT)/Sources/Extensions/Date+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/UUID+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/String+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
+$(SRCROOT)/Sources/Extensions/Sequence+PactSwift.swift
 $(SRCROOT)/Sources/Model/Metadata.swift
 $(SRCROOT)/Sources/Model/PactPathParameter.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
@@ -23,6 +24,7 @@ $(SRCROOT)/Sources/Model/ErrorReporter.swift
 $(SRCROOT)/Sources/Model/Toolbox.swift
 $(SRCROOT)/Sources/Model/AnyEncodable.swift
 $(SRCROOT)/Sources/PactBuilder.swift
+$(SRCROOT)/Sources/Matchers/OneOf.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)/Sources/Matchers/EqualTo.swift
 $(SRCROOT)/Sources/Matchers/EachLike.swift

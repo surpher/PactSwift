@@ -121,6 +121,9 @@ private extension PactBuilder {
 				generators: [:]
 			)
 
+		case let matcher as Matcher.OneOf:
+			processedElement = try processMatcher(matcher, at: node)
+
 		case let matcher as Matcher.RegexLike:
 			processedElement = try processMatcher(matcher, at: node)
 

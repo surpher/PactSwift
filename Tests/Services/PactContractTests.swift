@@ -319,7 +319,8 @@ class PactContractTests: XCTestCase {
 								]
 							)
 						]
-					)
+					),
+					"enum_value": Matcher.OneOf("night", "morning", "mid-day", "afternoon", "evening")
 				]
 			)
 

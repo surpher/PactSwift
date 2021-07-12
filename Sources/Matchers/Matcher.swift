@@ -20,6 +20,8 @@ import Foundation
 public struct Matcher {
 	// This is a namespace placeholder.
 	// Implement any matchers as `Struct`s in an Matcher extension.
+
+	// Make sure PactBuilder.swift processes the matcher.
 }
 
 // MARK: - Objective-C

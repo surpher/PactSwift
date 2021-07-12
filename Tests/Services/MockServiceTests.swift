@@ -590,6 +590,8 @@ class MockServiceTests: XCTestCase {
 					"foo": Matcher.SomethingLike("bar"),
 					"baz": Matcher.EachLike(123, min: 1, max: 5),
 					"nullable_key": Matcher.MatchNull(),
+					"one_of_string": Matcher.OneOf("white", "gray", "blue", "yellow", "green", "black"),
+					"one_of_int": Matcher.OneOf(3, 1, 2, 4)
 				]
 			)
 
@@ -604,6 +606,8 @@ class MockServiceTests: XCTestCase {
 						XCTAssertEqual(testResult.foo, "bar")
 						XCTAssertEqual(testResult.baz?.first, 123)
 						XCTAssertNil(testResult.nullable_key)
+						XCTAssertEqual(testResult.one_of_string, "white")
+						XCTAssertEqual(testResult.one_of_int, 3)
 
 						let responseData = try XCTUnwrap(String(data: data, encoding: .utf8))
 						XCTAssertTrue(responseData.contains("nullable_key"))
@@ -904,6 +908,8 @@ private extension MockServiceTests {
 		let nullable_key: String?
 		let options: [String]?
 		let regex_array: [TestRegex]?
+		let one_of_string: String?
+		let one_of_int: Int?
 	}
 
 	struct GeneratorsTestModel: Decodable {
