@@ -37,30 +37,25 @@ public extension Matcher {
 
 		// MARK: - Initializer
 
-		/// Defines a Pact matcher that validates against one of the provided `String` values.
-		/// Uses the first provided value in consumer tests and removes duplicate values.
-		init(_ values: String...) {
-			self.value = values.first as Any
-			self.term = Self.regexed(values)
+		/// Defines a Pact matcher that validates against one of the provided values.
+		///
+		/// - Parameters:
+		///   - values: List of allowed values
+		///
+		/// Uses the first provided value in consumer tests and removes duplicated values.
+		///
+		init(_ values: AnyHashable...) {
+			self.init(values: values)
 		}
 
-		/// Defines a Pact matcher that validates against one of the provided `Integer` values.
-		/// Uses the first provided value in consumer tests and removes duplicate values.
-		init(_ values: Int...) {
-			self.value = values.first as Any
-			self.term = Self.regexed(values)
-		}
-
-		/// Defines a Pact matcher that validates against one of the provided `Decimal` values.
-		/// Uses the first provided value in consumer tests and removes duplicate values.
-		init(_ values: Decimal...) {
-			self.value = values.first as Any
-			self.term = Self.regexed(values)
-		}
-
-		/// Defines a Pact matcher that validates against one of the provided `Float` values.
-		/// Uses the first provided value in consumer tests and removes duplicate values.
-		init(_ values: Float...) {
+		/// Defines a Pact matcher that validates against one of the provided values.
+		///
+		/// - Parameters:
+		///   - values: The array of allowed values
+		///
+		/// Uses the first provided value in consumer tests and removes duplicated values.
+		///
+		init(values: [AnyHashable]) {
 			self.value = values.first as Any
 			self.term = Self.regexed(values)
 		}
@@ -76,4 +71,21 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-// Not supported.
+@objc(PFMatcherOneOf)
+public class ObjcOneOf: NSObject, ObjcMatcher {
+
+	let type: MatchingRuleExpressible
+
+	/// Defines a Pact matcher that validates against one of the provided values.
+	///
+	/// - Parameters:
+	///   - values: The array of allowed values
+	///
+	/// Uses the first provided value in consumer tests and removes duplicated values.
+	///
+	@objc(oneOfFloat:)
+	public init(values: [AnyHashable]) {
+		type = Matcher.OneOf(values: values)
+	}
+
+}

@@ -61,4 +61,12 @@ class OneOfTests: XCTestCase {
 		XCTAssertNotNil(testResult.rules[0]["regex"])
 	}
 
+	func testMatcher_OneOf_InitsWithArray() throws {
+		let testResult = try XCTUnwrap(Matcher.OneOf(values: ["enabled", "disabled"]))
+		XCTAssertEqual(testResult.term, "^enabled$|^disabled$")
+		XCTAssertEqual(testResult.value as? String, "enabled")
+		XCTAssertNotNil(testResult.rules[0]["match"])
+		XCTAssertNotNil(testResult.rules[0]["regex"])
+	}
+
 }

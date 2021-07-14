@@ -107,4 +107,14 @@ class ObjCMatcherTests: XCTestCase {
 		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Int), 42)
 	}
 
+	func testObcjMatcher_InitsWith_OneOf() {
+		var testSubject = ObjcOneOf(values: [5, 1, 2, 3, 4])
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.OneOf)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Int), 5)
+
+		testSubject = ObjcOneOf(values: ["five", "one", "two", "three"])
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? String), "five")
+	}
+
 }
