@@ -1,12 +1,12 @@
 # PactSwift
 
-[![Release: pre-BETA](https://img.shields.io/badge/Release-BETA-orange)][releases]
+[![Build macOS 11.x](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml)
+[![Build macOS 10.x](https://github.com/surpher/PactSwift/actions/workflows/build.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build.yml)
+[![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]
 [![slack](http://slack.pact.io/badge.svg)][pact-slack]
 [![Twitter](https://img.shields.io/badge/twitter-@pact__up-blue.svg?style=flat)][pact-twitter]
-[![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
-[![Build macOS 11.x](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml)
 
 <p align="center">
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
@@ -14,7 +14,7 @@
 
 This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
 
-It implements [Pact Specification v3][pact-specification-v3] and takes advantage of [`libpact_mock_server_ffi`][pact-reference-rust] by running it "in process". No need to set up any specific mock services or extra tools 🎉.
+It implements [Pact Specification v3][pact-specification-v3] and runs the mock server "in-process". No need to set up any specific mock services or extra tools 🎉.
 
 ## Installation
 
@@ -25,15 +25,14 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.4 to 0.5
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.5.0` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.5.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
-
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.5.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.5.1"))
 ]
 ```
 
@@ -50,7 +49,7 @@ carthage update --use-xcframeworks
 
 **NOTE:**  
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
-- See [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
+- If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
 ## Generated Pact contracts
 
@@ -189,7 +188,7 @@ class PassingTestsExample: XCTestCase {
 
 `MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
 That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a singleton here to keep a reference to one instance of `MockService` for all the Pact tests.  
-I'm open for alternative, better ideas!
+Open for alternative ideas!
 
 References:
 
@@ -269,7 +268,7 @@ Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 [pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
 [pactswift-spec2]: https://github.com/surpher/PactSwift_spec2
 [pact-docs]: https://docs.pact.io
-[pact-reference-rust]: https://github.com/pact-foundation/pact-reference/tree/main/rust/pact_mock_server_ffi
+[pact-reference-rust]: https://github.com/pact-foundation/pact-reference
 [pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
 [pact-specification-v2]: https://github.com/pact-foundation/pact-specification/tree/version-2
