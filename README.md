@@ -1,7 +1,6 @@
 # PactSwift
 
-[![Build macOS 11.x](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build_macos-11.yml)
-[![Build macOS 10.x](https://github.com/surpher/PactSwift/actions/workflows/build.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build.yml)
+[![Build](https://github.com/surpher/PactSwift/actions/workflows/build.yml/badge.svg)](https://github.com/surpher/PactSwift/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/surpher/PactSwift/branch/main/graph/badge.svg)][codecov-io]
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)][license]
 [![PRs Welcome!](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)][contributing]

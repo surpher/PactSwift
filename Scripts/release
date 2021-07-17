@@ -13,6 +13,10 @@
 # Creates a tag on the last commit
 # Pushes the updates and tags to `remote`
 #
+# 🚨🚨🚨 WARNING 🚨🚨🚨
+# This is an extremely fragile script... because I just can't find decent time to DRY it up and set it up correctly.
+# If you end up editing it, just be ready for a world of pain. Or not. Either way, you have been warned.
+#
 
 # set -x
 set -o pipefail
@@ -41,18 +45,59 @@ function die {
     exit 1
 }
 
+function handleInput {
+if [[ ! $1 =~ ^[Yy]$ ]]
+then
+	echo "⚠️  Release aborted!"
+  exit 1
+fi
+}
+
 ##############################
 # Overridable Environment   #
 ##############################
 
 if [[ "$CI" == true ]] ; then
-	die "Running on CI is not supported (yet)!"
+	die "🚨  Running on CI is not supported! Requires user input while running the release script."
 else
-	echo "NOT CI"
+	echo "👮‍♀️  Running on local machine: 👍"
 	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
 fi
 
-# Vars
+##############################
+# Pre-release checks         #
+##############################
+
+# Get the latest release tag
+LATEST_TAG=`git describe --match "v[0-9].*" --abbrev=0 HEAD`
+
+echo "ℹ️  The last release tag number is: ${LATEST_TAG}"
+
+read -r -p "Did you provide the correctly incremented number for the new release tag? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+echo
+
+read -r -p "Have you updated all the documentation files? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+echo
+
+echo "ℹ️  The following commits will be recorded with the tag:"
+git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD
+echo
+
+read -r -p "Have you prepared a draft release on GitHub.com? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+
+read -r -p "You named the release name with something meaningful like \"Bugfix\" or \"Feature \". Right? [Y/n] " -n 1 USER_INPUT
+echo
+handleInput $USER_INPUT
+
+####################
+# Variables        #
+####################
 
 CONFIGURATION_FILE="${SCRIPTS_DIR}/../Configurations/Project-Shared.xcconfig"
 VERSION_FILE="${SCRIPTS_DIR}/../Sources/Model/PactSwiftVersion.swift"
@@ -81,14 +126,21 @@ function updateVersionFile {
 function pushNewVersion {
 	updateVersionFile "$VERSION"
 
+	echo ${RELEASE_NAME} > TAG_MESSAGE_FILE.md
+	git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> TAG_MESSAGE_FILE.md
+
 	git add $VERSION_FILE
 	git add $CONFIGURATION_FILE
 	git add $RELEASE_NOTES
 
 	git commit -m "${RELEASE_NAME}"
-	git tag "$VERSION_TAG" -F "$RELEASE_NOTES" || die "Failed to tag version"
 
+	echo "🏷  Tagging the current commit"
+	git tag "$VERSION_TAG" -F TAG_MESSAGE_FILE.md || die "Failed to tag version"
+
+	echo "🚀  Tagging the current commit"
 	git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
+
 }
 
 ####################
@@ -115,15 +167,21 @@ else
     echo "👍 Tag is unique"
 fi
 
-echo "🏗  Generating release notes to $RELEASE_NOTES"
+echo "🏗  Generating release notes into $RELEASE_NOTES"
+# backup the existing CHANGELOG.md to CHANGELOG.backup
 cp $RELEASE_NOTES ${RELEASE_NOTES}.backup
-echo "# ${VERSION} - ${RELEASE_NAME}\n" > ${RELEASE_NOTES}.next
-LATEST_TAG=`git describe --abbrev=0  --tags --match=v[0-9].[0-9].[0-9]`
-git log --pretty='* %h - %s (%an, %ad)' ${LATEST_TAG}..HEAD >> ${RELEASE_NOTES}.next
-cat $RELEASE_NOTES.next | cat - ${RELEASE_NOTES}.backup > ${RELEASE_NOTES}
-rm ${RELEASE_NOTES}.next
+
+# Prepare the title for this release
+echo "# ${VERSION} - ${RELEASE_NAME}" > ${RELEASE_NOTES}.next
+
+# Get the commits from last change
+git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> ${RELEASE_NOTES}.next
+
+# Stage the updated CHANGELOG.md
 git add $RELEASE_NOTES || { die "Failed to add ${RELEASE_NOTES} to INDEX"; }
-mv ${RELEASE_NOTES}.backup ${RELEASE_NOTES}
+
+# Read the notes for this release and append them to the old CHANGELOG.md
+cat $RELEASE_NOTES.next | cat - ${RELEASE_NOTES}.backup > ${RELEASE_NOTES}
 
 echo "🚢  Releasing version $VERSION (tag: $VERSION_TAG)..."
 
@@ -133,16 +191,30 @@ git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to ori
 
 echo "🏷  Tagging release version..."
 
+exit 1
+
 if [ -z "$DRY_RUN" ]; then
 	echo "🚅  Pushing release version tag to origin..."
 
 	pushNewVersion
 
 	echo
-	echo "--------  🎉  Released PactSwift version $VERSION_TAG  🎉  --------"
+	echo "--------  🎉  Created a new PactSwift version tag  🎉 --------------------------------"
+	echo "--------  🏷   Version:	$VERSION_TAG"
+	echo "--------  ✏️   Name: 	$RELEASE_NAME"
+	echo "--------"
+	echo "--------  🚀  Go and link you draft release for '$VERSION_TAG' with this tagged commit."
+	echo "--------  🔗  https://github.com/surpher/PactSwift/releases"
 	echo
 
-	rm ${RELEASE_NOTES}.backup
 else
 	echo "-> Dry run completed."
 fi
+
+####################
+# Cleanup          #
+####################
+
+rm ${RELEASE_NOTES}.next
+rm ${RELEASE_NOTES}.backup
+rm TAG_MESSAGE_FILE.md
