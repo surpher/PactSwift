@@ -5,9 +5,9 @@
         "package": "PactSwiftMockServer",
         "repositoryURL": "https://github.com/surpher/PactSwiftMockServer.git",
         "state": {
-          "branch": "main",
-          "revision": "ce6ce50914e9cbed1a62c3f1e34611a41e61f7d5",
-          "version": null
+          "branch": null,
+          "revision": "fb8148866bb05f49a0b1dcaae66c67bad1e7eca7",
+          "version": "0.2.0"
         }
       },
       {
