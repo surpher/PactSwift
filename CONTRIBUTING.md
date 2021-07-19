@@ -18,29 +18,11 @@ If the above doesn't help, please [submit an issue][new-issue] via GitHub.
 
 ### Finding things to do
 
-The [Core Contributors][core-contributor] usually tag issues that are ready to be worked on and easily accessible for new contributors with the [“good first issue”][good-first-issue] label. If you’ve never contributed to _PactSwift_ before, these are a great place to start!
+The [Core Contributors][core-contributor] usually tag issues that are ready to be worked on and easily accessible for new contributors with the [“good first issue”][good-first-issue] label. If you’ve never contributed to `PactSwift` before, these are a great place to start!
 
 If you want to work on something else, such as a new feature or fixing a bug, it would be helpful if you submit a new issue, so that we can have a chance to discuss it first. We might have some pointers for you on how to get started, or how to best integrate it with existing solutions.
 
 ### Prepare the tools
-
-Use Homebrew to install [Rust](https://www.rust-lang.org/) to be able to compile `libpact_mock_server` static library from Rust shared codebase set as a submodule in this project:
-
-```sh
-brew install rust
-
-# Install nightly toolchain (required until aarch64-apple-darwin is available in stable)
-rustup toolchain install nightly
-
-# Add target triples
-rustup target add aarch64-apple-ios aarch64-apple-darwin x86_64-apple-ios x86_64-apple-darwin
-
-# Helping tools
-cargo install cargo-lipo
-cargo install cbindgen
-```
-
-See this [gist][gist-rust] for a short list of Rust commands that might help with this project.
 
 Use Homebrew to install [SwiftLint](https://github.com/realm/SwiftLint):
 
@@ -58,7 +40,7 @@ Install [xcbeautify](https://github.com/thii/xcbeautify)
 
 ```sh
 brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
-brew install swiftlint xcbeautify
+brew install xcbeautify
 ```
 
 ### Checking out the Code
@@ -69,22 +51,6 @@ brew install swiftlint xcbeautify
 ```sh
 git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
 ```
-
-- Resolve any submodules:
-
-```sh
-cd PactSwift
-git submodule update --init --recursive
-```
-
-- When you first build for a specific platform, `libpact_mock_server.a` binary will be compiled and will show up in your git changes. Assume any `.a` files as unchanged in order to avoid accidentially committing them into the repository:
-
-```sh
-git update-index --assume-unchanged ./Resources/iOS/libpact_mock_server.a
-git update-index --assume-unchanged ./Resources/macOS/libpact_mock_server.a
-```
-
-or follow official [instructions](https://www.rust-lang.org/tools/install).
 
 #### Workflow
 
