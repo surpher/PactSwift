@@ -19,11 +19,11 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects a set of values.
+	/// Matches response that contains any or all expected values.
 	///
 	/// Use this matcher where you expect either all or
-	/// at least one of the provided `String` values are present
-	/// in the interaction between consumer and provider.
+	/// at least one of the provided `String` values to be present
+	/// in the response.
 	///
 	/// ```
 	/// [
@@ -53,12 +53,12 @@ public extension Matcher {
 
 		// MARK: - Initializers
 
-		/// Defines a Pact matcher that expects a `Set` of `String` values to be present.
+		/// Matches response that contains a `Set` of `String` values.
 		///
 		/// - Parameters:
-		///   - values: Set of `String` values expected to be present
-		///   - combine: Defines whether matchers are combine with logical AND or OR
-		///   - generate: The value MockServer will return
+		///   - values: The expected values to be returned
+		///   - combine: Defines whether matches are combined with logical `AND` or `OR`
+		///   - generate: The value to generate during tests
 		///
 		public init(_ values: String..., combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
@@ -66,12 +66,12 @@ public extension Matcher {
 			self.combine = combine
 		}
 
-		/// Defines a Pact matcher that expects a set of values.
+		/// Matches response that contains a `Set` of `String` values.
 		///
 		/// - Parameters:
-		///   - values: Set of `String` values expected to be present
-		///   - combine: Defines whether matchers are combine with logical AND or OR
-		///   - generate: The value MockServer will return
+		///   - values: The expected values to be returned
+		///   - combine: Defines whether matches are combined with logical `AND` or `OR`
+		///   - generate: The value to generate during tests
 		///
 		public init(_ values: [String], combine: IncludeCombine = .AND, generate: String? = nil) {
 			self.value = generate ?? values.joined(separator: " ")
@@ -89,11 +89,25 @@ public class ObjcIncludesLike: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
+	/// Matches response that contains all of the expected values.
+	///
+	/// - Parameters:
+	///   - values: The expected values to be returned
+	///   - combine: Defines whether matches are combined with logical AND or OR
+	///   - generate: The value to generate during tests
+	///
 	@objc(includesAll: generate:)
 	public init(includesAll: [String], generate: String?) {
 		type = Matcher.IncludesLike(includesAll, combine: .AND, generate: generate)
 	}
 
+	/// Matches response that contains a any of the expected values.
+	///
+	/// - Parameters:
+	///   - values: The expected values to be returned
+	///   - combine: Defines whether matches are combined with logical AND or OR
+	///   - generate: The value to generate during tests
+	///
 	@objc(includesAny: generate:)
 	public init(includesAny: [String], generate: String?) {
 		type = Matcher.IncludesLike(includesAny, combine: .OR, generate: generate)

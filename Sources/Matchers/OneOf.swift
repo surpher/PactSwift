@@ -22,6 +22,9 @@ public extension Matcher {
 
 	/// Defines a Pact matcher that validates against one of the provided values.
 	/// Uses the first provided value in consumer tests. Removes duplicate values.
+	///
+	/// Use this matcher when you're expecting API response values to fit an `enum` type.
+	///
 	struct OneOf: MatchingRuleExpressible {
 		internal let value: Any
 		internal let term: String
@@ -37,23 +40,23 @@ public extension Matcher {
 
 		// MARK: - Initializer
 
-		/// Defines a Pact matcher that validates against one of the provided values.
+		/// Matches one of the provided values.
 		///
 		/// - Parameters:
-		///   - values: List of allowed values
+		///   - values: List of possible values
 		///
-		/// Uses the first provided value in consumer tests and removes duplicated values.
+		/// Uses the first provided value in tests. Removes duplicated values.
 		///
 		init(_ values: AnyHashable...) {
 			self.init(values: values)
 		}
 
-		/// Defines a Pact matcher that validates against one of the provided values.
+		/// Matches one of the provided values.
 		///
 		/// - Parameters:
-		///   - values: The array of allowed values
+		///   - values: The array of possible values
 		///
-		/// Uses the first provided value in consumer tests and removes duplicated values.
+		/// Uses the first provided value in tests. Removes duplicated values.
 		///
 		init(values: [AnyHashable]) {
 			self.value = values.first as Any
@@ -76,12 +79,12 @@ public class ObjcOneOf: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
-	/// Defines a Pact matcher that validates against one of the provided values.
+	/// Matches one of the provided values.
 	///
 	/// - Parameters:
-	///   - values: The array of allowed values
+	///   - values: The array of possible values
 	///
-	/// Uses the first provided value in consumer tests and removes duplicated values.
+	/// Uses the first provided value in tests. Removes duplicated values.
 	///
 	@objc(oneOfFloat:)
 	public init(values: [AnyHashable]) {

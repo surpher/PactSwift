@@ -19,7 +19,7 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects `null`
+	/// Matches a `null` value.
 	struct MatchNull: MatchingRuleExpressible {
 
 		internal let value: Any
@@ -27,6 +27,7 @@ public extension Matcher {
 
 		// MARK: - Initializer
 
+		/// The value returned by API provider matches `null`.
 		public init() {
 			value = "pact_matcher_null"
 		}
@@ -41,7 +42,7 @@ public class ObjcMatchNull: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible = Matcher.MatchNull()
 
-	/// Defines a Pact matcher that expects `null`
+	/// The value returned by API provider matches `null`.
 	@objc public override init() {
 		super.init()
 	}

@@ -19,12 +19,12 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects a `Decimal` value.
+	/// Mathes a `Decimal` value.
 	///
-	/// - parameter value: The value MockService should expect or respond with
+	/// - Parameters:
+	///   - value: The value MockService should expect or respond with in your tests
 	///
-	/// Use this matcher when you care about the type being a `Decimal`
-	/// but the value itself does not matter.
+	/// Use this matcher when you expect the type being returned by the API provider is a `Decimal`.
 	///
 	/// ```
 	/// [
@@ -38,9 +38,9 @@ public extension Matcher {
 
 		// MARK: - Initializer
 
-		/// Defines a Pact matcher that expects a `Decimal` value.
+		/// Mathes a `Decimal` value.
 		///
-		/// - parameter value: The value MockService should expect or respond with
+		/// - parameter value: The value MockService should expect or respond with in your tests
 		///
 		public init(_ value: Decimal) {
 			self.value = value
@@ -51,14 +51,14 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-/// Defines a Pact matcher that expects a `Decimal` value.
+/// Mathes a `Decimal` value.
 ///
-/// Use this matcher when you care about the type being a `Decimal`
-/// but the value itself does not matter.
+/// Use this matcher when you expect the type being returned by the API provider is a `Decimal`.
 ///
 /// ```
 /// @{@"foo": [Matcher DecimalLike(1234)] }
 /// ```
+///
 /// - Parameters:
 ///   - value: The value MockService should expect or respond with
 ///
@@ -67,9 +67,10 @@ public class ObjcDecimalLike: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
-	/// Defines a Pact matcher that expects a `Decimal` value.
+	/// Mathes a `Decimal` value.
 	///
-	/// - parameter value: The value MockService should expect or respond with
+	/// - Parameters:
+	///   - value: The value MockService should expect or respond with
 	///
 	@objc(value:)
 	public init(value: Decimal) {

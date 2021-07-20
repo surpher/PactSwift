@@ -19,12 +19,14 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher for a `Set` but does not care about the actual value(s).
+	/// Matches a `Set` of enclosed elements.
 	///
-	/// Use this matcher when you expect a `Set` of values.
-	/// You can specifiy the expected minimum and maximum
+	/// Use this matcher when you expect your API provider to
+	/// reutrn a `Set` of values.
+	/// You can specifiy the expected `min` and `max`
 	/// occurrances of elements, but the actual values are
-	/// not important. Can contain other matchers.
+	/// not important. Elements inside this matcher can be other matchers
+	/// or example generators.
 	///
 	/// ```
 	/// [
@@ -54,13 +56,13 @@ public extension Matcher {
 
 		// MARK: - Initializers
 
-		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
+		/// Matches a `Set` of provided types or objects.
 		///
-		/// Defines a `Set` where its capacity is of at least `1` occurance of `value`.
+		/// Expects the API provider to return a `Set` with minimum of `1` occurance of the provided element.
 		///
 		/// - Parameters:
-		///   - value: Template to base the comparison on
-		///   - count: Number of examples to generate, defaults to `1`
+		///   - value: Expected type or object
+		///   - count: Number elements in tests
 		///
 		public init(_ value: Any, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > 1) ? count : 1)
@@ -68,14 +70,14 @@ public extension Matcher {
 			self.max = nil
 		}
 
-		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
+		/// Matches a `Set` of provided types or objects.
 		///
-		/// Defines a `Set` where its capacity is at least `min` occurances of provided `value`.
+		/// Expects the API provider to return a `Set` with at least `min` occurance of the provided element.
 		///
 		/// - Parameters:
-		///   - value: Template to base the comparison on
-		///   - min: Minimum expected number of occurances of provided `value`
-		///   - count: Number of examples to generate, defaults to `1`
+		///   - value: Expected element
+		///   - min: Minimum expected number of occurances of the provided `value`
+		///   - count: Number elements in tests
 		///
 		/// - Precondition: `min` must be a positive value and less than or equal to `count`
 		///
@@ -85,16 +87,16 @@ public extension Matcher {
 			self.max = nil
 		}
 
-		/// Defines a Pact matcher that defines a `Set` but does not care about the actual values.
+		/// Matches a `Set` of provided types or objects.
 		///
-		/// Defines a `Set` where its capacity can be of `1` to `max` of provided `value`.
+		/// Expects the API provider to return a `Set` with minimum of `1` and `max` occurances of the provided element.
 		///
 		/// - Parameters:
-		///   - value: Template to base the comparison on
+		///   - value: Expected type or object
 		///   - max: Maximum expected number of occurances of provided `value`
-		///   - count: Number of examples to generate, defaults to `1`
+		///   - count: Number elements in tests
 		///
-		/// - Precondition: `max` must be a positive value and not greater than `count`
+		/// - Precondition: `max` must be a positive value and not greater than `count`.
 		///
 		public init(_ value: Any, max: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > max) ? max : count)
@@ -102,19 +104,19 @@ public extension Matcher {
 			self.max = max
 		}
 
-		/// Defines a Pact matcher for a `Set` but does not care about the actual values.
+		/// Matches a `Set` of provided types or objects.
 		///
-		/// Defines a `Set` where its capacity can be of `min` to `max` of provided `value`.
+		/// Expects the API provider to return a `Set` with minimum of `min` and `max` occurances of the provided element.
 		///
 		/// - Parameters:
-		///   - value: Template to base the comparison on
+		///   - value: Expected type or object
 		///   - min: Minimum expected number of occurances of provided `value`
 		///   - max: Maximum expected number of occurances of provided `value`
-		///   - count: Number of examples to generate, defaults to `1`
+		///   - count: Number elements in tests
 		///
-		/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+		/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
 		///
-		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 		///
 		public init(_ value: Any, min: Int, max: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: count < min ? min : (count > max) ? max : count)
@@ -132,28 +134,28 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
-	/// Defines a Pact matcher describing a set
+	/// Matches a `Set` of provided types or objects.
 	///
 	/// - Parameters
-	///   - value: Template to base the comparison on
-	///   - count: Number of examples to generate, defaults to `1`
+	///   - value: Expected type or object
+	///   - count: Number elements in tests
 	///
 	@objc(value: count:)
 	public init(value: Any, count: Int = 1) {
 		type = Matcher.EachLike(value, count: count)
 	}
 
-	/// Defines a Pact matcher describing a set
+	/// Matches a `Set` of provided types or objects.
 	///
 	/// - Parameters:
-	///   - value: Template to base the comparison on
+	///   - value: Expected type or object
 	///   - min: Minimum expected number of occurances of provided `value`
 	///   - max: Maximum expected number of occurances of provided `value`
-	///   - count: Number of examples to generate, defaults to `1`
+	///   - count: Number elements in tests
 	///
-	/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`
+	/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
 	///
-	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples
+	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 	///
 	@objc(value: min: max: count:)
 	public init(value: Any, min: Int, max: Int, count: Int = 1) {

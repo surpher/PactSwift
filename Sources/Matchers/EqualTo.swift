@@ -19,10 +19,10 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects the provided value.
+	/// Matches the API provided value varbatim.
 	///
 	/// Use this matcher where you expect the exact type and value
-	/// in the interaction between consumer and provider.
+	/// in the interaction between your consumer and your provider.
 	///
 	/// ```
 	/// // DSL
@@ -39,9 +39,9 @@ public extension Matcher {
 
 		// MARK: - Initializers
 
-		/// Defines a Pact matcher that explicitly expects the provided value
+		/// Matches the API provided value varbatim.
 		///
-		/// - parameter value: The value to be returned by MockService
+		/// - parameter value: The exact value that is expected
 		///
 		public init(_ value: Any) {
 			self.value = value
@@ -57,9 +57,9 @@ public class ObjcEqualTo: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
-	/// Defines a Pact matcher that explicitly expects the provided value
+	/// Matches the API provided value varbatim.
 	///
-	/// - parameter value: The value to be returned by MockService
+	/// - parameter value: The exact value that is expected
 	///
 	@objc(value:)
 	public init(value: Any) {

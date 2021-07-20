@@ -19,11 +19,9 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects a value conforming to a `Regex` term.
+	/// Matches a value that fits the provided `regex` term.
 	///
-	/// Use this matcher where you expect a term defined by a regular expression term.
-	///
-	/// A request `path` also accepts this matcher.
+	/// This matcher can be used in request `path`.
 	///
 	/// ```
 	/// [
@@ -46,10 +44,11 @@ public extension Matcher {
 
 		// MARK: - Iitializer
 
-		/// Defines a Pact matcher that expectes a value conforming to a `Regex` term.
+		/// Matches a value that fits the provided `regex` term.
 		///
-		/// - parameter value: The value MockService should expect or respond with
-		/// - parameter term: The regex term that the `value` conforms to
+		/// - Parameters:
+		///   - value: The value to be used in tests
+		///   - term: The regex term that describes the `value`
 		///
 		public init(_ value: String, term: String) {
 			self.value = value
@@ -66,6 +65,12 @@ public class ObjcRegexLike: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
+	/// Matches a value that fits the provided `regex` term.
+	///
+	/// - Parameters:
+	///   - value: The value to be used in tests
+	///   - term: The regex term that describes the `value`
+	///
 	@objc(value: term:)
 	public init(value: String, term: String) {
 		type = Matcher.RegexLike(value, term: term)

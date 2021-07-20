@@ -19,11 +19,10 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that expects an `Int`.
+	/// Matches an `Int` type.
 	///
-	/// Use this matcher where you expect an `Int` to be passed in
-	/// the interaction between consumer and provider, but the
-	/// value is not important.
+	/// Use this matcher where you expect an `Int` to be returned
+	/// by your API provider.
 	///
 	struct IntegerLike: MatchingRuleExpressible {
 
@@ -32,6 +31,11 @@ public extension Matcher {
 
 		// MARK: - Initializer
 
+		/// Matches an `Int` type.
+		///
+		/// - Parameters:
+		///   - value: Value to use in tests
+		///
 		public init(_ value: Int) {
 			self.value = value
 		}
@@ -46,6 +50,11 @@ public class ObjcIntegerLike: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
+	/// Matches an `Int` type.
+	///
+	/// - Parameters:
+	///   - value: Value to use in tests
+	///
 	@objc(value:)
 	public init(value: Int) {
 		type = Matcher.IntegerLike(value)
