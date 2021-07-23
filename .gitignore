@@ -111,6 +111,3 @@ Carthage/
 ## Binaries      ##
 ###################
 *.a
-
-/Resources/iOS/libpact_mock_server.a
-/Resources/macOS/libpact_mock_server.a
