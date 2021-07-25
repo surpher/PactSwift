@@ -18,7 +18,7 @@
 import Foundation
 @_implementationOnly import PactSwiftToolbox
 
-/// Defines the interaction between consumer and provider
+/// Defines the interaction between a consumer and a provider
 @objc public class Interaction: NSObject {
 
 	var interactionDescription: String?
@@ -147,12 +147,16 @@ extension Interaction {
 	///
 	/// Example:
 	/// ```
-	/// .given([
+	/// .given(
 	///   ProviderState(
 	///     description: "user exists",
-	///     params: ["id": "1"]
+	///     params: ["id": "1", "name": "Mary"]
+	///   ),
+	///   ProviderState(
+	///     description: "user has children",
+	///     params: ["count": "2"]
 	///   )
-	/// ])
+	/// )
 	/// ```
 	///
 	/// - Parameters:
@@ -162,12 +166,9 @@ extension Interaction {
 		given(providerStates)
 	}
 
-	/// Defines the expected request for the interaction.
+	/// Defines the expected request for the interaction
 	///
-	/// At a minimum the `method` and `path` required to test an API request.
-	/// By not providing a value for `query`, `headers` or `body` it is
-	/// understood that the presence of those values in the request
-	/// is _not required_ but they can be present.
+	/// At a minimum the `method` and `path` are required to define an interaction.
 	///
 	/// `query` expects a dictionary where the value is an array conforming
 	///  to `String` or a string `Matcher`.
@@ -199,6 +200,15 @@ extension Interaction {
 		return self
 	}
 
+	/// Defines the expected request for the interaction
+	///
+	/// - Parameters:
+	///   - method: The HTTP method of the request
+	///   - path: The URL path of the request
+	///   - query: The query parameters of the request
+	///   - headers: The header parameters of the request
+	///   - body: The body of the request
+	///
 	@discardableResult
 	@objc(withRequestHTTPMethod: path: query: headers: body:)
 	public func objCWithRequest(method: PactHTTPMethod, path: String, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
