@@ -62,7 +62,7 @@ class PactContractTests: XCTestCase {
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
 				// print("\nINTERACTIONS:\n\(interactions)")
-				let numOfExpectedInteractions = 6
+				let numOfExpectedInteractions = 7
 				assert(
 					interactions.count == numOfExpectedInteractions,
 					"Expected \(numOfExpectedInteractions) interactions in Pact contract"
@@ -156,6 +156,23 @@ class PactContractTests: XCTestCase {
 					},
 					"Not all expected generators found in Pact contract file"
 				)
+
+				// MARK: - Test two of same matchers used
+
+				let twoMatchersTest = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simple object")
+				let expectedTwoMatchers = [
+					"$.identifier",
+					"$.group_identifier",
+				]
+
+				assert(expectedTwoMatchers.allSatisfy { expectedKey -> Bool in
+					twoMatchersTest.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				},
+				 "Not all expected matchers are found in Pact interaction"
+				)
+
 			} catch {
 				XCTFail(error.localizedDescription)
 			}
@@ -378,7 +395,7 @@ class PactContractTests: XCTestCase {
 			}
 	}
 
-	func testPactContract_WithMatcherInRequestBody () {
+	func testPactContract_WithMatcherInRequestBody() {
 		mockService
 			.uponReceiving("Request for list of users in state")
 			.given("users in that state exist")
@@ -397,6 +414,37 @@ class PactContractTests: XCTestCase {
 
 			session
 				.dataTask(with: request) { _, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						XCTFail("Expected network request to succeed in \(#function)!")
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					completed()
+				}
+				.resume()
+		}
+	}
+
+	func testPactContract_WithTwoMatchersOfSameType() {
+		mockService
+			.uponReceiving("Request for a simple object")
+			.given("data exists")
+			.withRequest(method: .GET, path: "/users/data")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"identifier": Matcher.SomethingLike(1),
+					"group_identifier": Matcher.SomethingLike(1)
+				]
+			)
+
+		mockService.run { [mockService] completed in
+			URLSession(configuration: .ephemeral)
+				.dataTask(with: URL(string: "\(mockService.baseUrl)/users/data")!) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200

@@ -37,7 +37,7 @@ struct PactBuilder {
 	/// and its corresponding matching rules and example generators.
 	/// It erases node object's type and casts the node and leaf values into an `Encodable`-safe type.
 	///
-	/// Transforms the following supported types into `AnyEncodable`:
+	/// Type erases the following `Type` into `AnyEncodable`:
 	/// `String`, `Int`, `Double`, `Decimal`, `Bool`, `Array<Encodable>`, `Dictionary<String, Encodable>`, `PactSwift.Matcher<>`, `PactSwift.ExampleGenerator<>`
 	///
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
@@ -55,6 +55,8 @@ struct PactBuilder {
 
 }
 
+// MARK: - Private
+
 private extension PactBuilder {
 
 	// swiftlint:disable:next cyclomatic_complexity function_body_length
@@ -65,7 +67,7 @@ private extension PactBuilder {
 
 		switch elementToProcess {
 
-		// Collections:
+		// MARK: - Process Collections:
 
 		case let array as [Any]:
 			let processedArray = try process(array, at: node, isEachLike: isEachLike)
@@ -75,7 +77,7 @@ private extension PactBuilder {
 			let processedDict = try process(dict, at: node)
 			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules, generators: processedDict.generators)
 
-		// Simple types:
+		// MARK: - Process Simple Types
 
 		case let string as String:
 			processedElement = (node: AnyEncodable(string), rules: [:], generators: [:])
@@ -92,8 +94,10 @@ private extension PactBuilder {
 		case let bool as Bool:
 			processedElement = (node: AnyEncodable(bool), rules: [:], generators: [:])
 
-		// Matchers:
+		// MARK: - Process Matchers
 
+		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol don't seem to work. Works fine on macOS 11.x
+		// That is why each Matcher type is explicitly stated in its own case statement and is not DRY.
 		case let matcher as Matcher.DecimalLike:
 			processedElement = try processMatcher(matcher, at: node)
 
@@ -130,8 +134,9 @@ private extension PactBuilder {
 		case let matcher as Matcher.SomethingLike:
 			processedElement = try processMatcher(matcher, at: node)
 
-		// Example generators:
-		// There is a bug in Swift where generics don't seem to work with improving the below.
+		// MARK: - Process Example generators
+
+		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol don't seem to work. Works fine on macOS 11.x
 		// That is why each ExampleGenerator type is explicitly stated in its own case statement and is not DRY.
 		case let exampleGenerator as ExampleGenerator.RandomBool:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
@@ -169,8 +174,12 @@ private extension PactBuilder {
 		return processedElement
 	}
 
+	// MARK: - Processing
+
+	// Processes a Matcher
 	func processMatcher(_ matcher: MatchingRuleExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedMatcherValue = try process(element: matcher.value, at: node, isEachLike: false)
+
 		return (
 			node: processedMatcherValue.node,
 			rules: [node: AnyEncodable(["matchers": AnyEncodable(matcher.rules)])],
@@ -178,13 +187,17 @@ private extension PactBuilder {
 		)
 	}
 
+	// Processes an `EachLike` matcher
 	func processEachLikeMatcher(_ matcher: Matcher.EachLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var newNode: String
 		let elementToProcess = mapPactObject(matcher.value)
+
 		switch elementToProcess {
 		case _ as [Any]:
+			// Element is an `Array`
 			newNode = node + "[*]"
 		default:
+			// Element is a `Dictionary`
 			newNode = node + "[*].*"
 		}
 
@@ -198,8 +211,10 @@ private extension PactBuilder {
 		)
 	}
 
+	// Processes an Example Generator
 	func processExampleGenerator(_ exampleGenerator: ExampleGeneratorExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedGeneratorValue = try process(element: exampleGenerator.value, at: node, isEachLike: false)
+
 		return (
 			node: processedGeneratorValue.node,
 			rules: processedGeneratorValue.rules,
@@ -207,19 +222,7 @@ private extension PactBuilder {
 		)
 	}
 
-	// Maps Objc object to a Swift object
-	func mapPactObject(_ value: Any) -> Any {
-		switch value {
-		case let matcher as ObjcMatcher:
-			return matcher.type
-		case let generator as ObjcGenerator:
-			return generator.type
-		default:
-			return value
-		}
-	}
-
-	// Processes the rules and handles the specific rule handling for Request path
+	// Processes the matcher specifically used in a `Request` path
 	func process(matchingRules: [String: AnyEncodable]) -> AnyEncodable? {
 		if interactionNode == .path, let pathRulesKey = matchingRules.keys.first, pathRulesKey.isEmpty == true {
 			return AnyEncodable(matchingRules.values.first)
@@ -228,7 +231,7 @@ private extension PactBuilder {
 		}
 	}
 
-	// Processes the array object and extracts any matchers or generators
+	// Processes an `Array` object and extracts any matchers or generators
 	func process(_ array: [Any], at node: String, isEachLike: Bool) throws -> (node: [AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableArray = [AnyEncodable]()
 		var matchingRules: [String: AnyEncodable] = [:]
@@ -249,7 +252,7 @@ private extension PactBuilder {
 		}
 	}
 
-	// Processes a dictionary object and extracts any matchers or generators
+	// Processes a `Dictionary` object and extracts any matchers or generators
 	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]
@@ -267,6 +270,20 @@ private extension PactBuilder {
 			return (node: encodableDictionary, rules: matchingRules, generators: generators)
 		} catch {
 			throw EncodingError.notEncodable(dictionary)
+		}
+	}
+
+	// MARK: - Type Mapping
+
+	// Maps ObjC object to a Swift object
+	func mapPactObject(_ value: Any) -> Any {
+		switch value {
+		case let matcher as ObjcMatcher:
+			return matcher.type
+		case let generator as ObjcGenerator:
+			return generator.type
+		default:
+			return value
 		}
 	}
 
