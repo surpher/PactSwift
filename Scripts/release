@@ -191,8 +191,6 @@ git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to ori
 
 echo "🏷  Tagging release version..."
 
-exit 1
-
 if [ -z "$DRY_RUN" ]; then
 	echo "🚅  Pushing release version tag to origin..."
 
