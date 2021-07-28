@@ -25,20 +25,20 @@ let package = Package(
 
 	targets: [
 		.target(
-				name: "PactSwift",
-				dependencies: [
-					"PactSwiftMockServer",
-					"PactSwiftToolbox"
-				],
-				path: "./Sources"
-			),
-			.testTarget(
-				name: "PactSwiftTests",
-				dependencies: [
-					"PactSwift"
-				],
-				path: "./Tests"
-			),
+			name: "PactSwift",
+			dependencies: [
+				"PactSwiftMockServer",
+				"PactSwiftToolbox"
+			],
+			path: "./Sources"
+		),
+		.testTarget(
+			name: "PactSwiftTests",
+			dependencies: [
+				"PactSwift"
+			],
+			path: "./Tests"
+		),
 	],
 
 	swiftLanguageVersions: [.v5]
