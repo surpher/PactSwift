@@ -1,6 +1,6 @@
 //
-//  Created by Marko Justinek on 1/4/20.
-//  Copyright © 2020 Marko Justinek. All rights reserved.
+//  Created by Marko Justinek on 31/7/21.
+//  Copyright © 2021 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -17,20 +17,10 @@
 
 import Foundation
 
-extension Bundle {
+/// Contains constant values used across `PactSwift`
+enum Constants {
 
-	static var pact: Bundle? {
-		#if os(iOS)
-			return Bundle(identifier: "au.com.pact-foundation.iOS.PactSwift")
-		#elseif os(macOS)
-			return Bundle(identifier: "au.com.pact-foundation.macOS.PactSwift")
-		#else
-			return nil
-		#endif
-	}
-
-	var shortVersion: String? {
-		object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-	}
+	/// The default value for timeout when running Pact tests
+	static let kTimeout: TimeInterval = 10
 
 }

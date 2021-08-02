@@ -129,6 +129,7 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFMatcherEachLike)
 public class ObjcEachLike: NSObject, ObjcMatcher {
 
@@ -163,3 +164,4 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	}
 
 }
+#endif

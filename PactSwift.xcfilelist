@@ -4,7 +4,9 @@ $(SRCROOT)/Sources/Extensions/UUID+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/String+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Sequence+PactSwift.swift
+$(SRCROOT)/Sources/Model/Constants.swift
 $(SRCROOT)/Sources/Model/Metadata.swift
+$(SRCROOT)/Sources/Model/TransferProtocol.swift
 $(SRCROOT)/Sources/Model/PactPathParameter.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
 $(SRCROOT)/Sources/Model/PactHTTPMethod.swift
@@ -34,6 +36,7 @@ $(SRCROOT)/Sources/Matchers/RegexLike.swift
 $(SRCROOT)/Sources/Matchers/IncludesLike.swift
 $(SRCROOT)/Sources/Matchers/DecimalLike.swift
 $(SRCROOT)/Sources/Matchers/MatchNull.swift
+$(SRCROOT)/Sources/PFMockService.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomBool.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomString.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift

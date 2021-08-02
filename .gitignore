@@ -87,12 +87,7 @@ playground.xcworkspace
 
 ### SwiftPackageManager ###
 
-Packages
-Package.resolved
-
-# Packages/
-# Package.pins
-# Package.resolved
+Packages/
 .build/
 
 # Add this line if you want to avoid checking in Xcode SPM integration.

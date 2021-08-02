@@ -169,6 +169,12 @@
 		ADEDDF262547E81300A45AD2 /* EncodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEDDF242547E81300A45AD2 /* EncodingError.swift */; };
 		ADEFD134253EEF230081A1B1 /* Toolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEFD133253EEF230081A1B1 /* Toolbox.swift */; };
 		ADEFD135253EEF230081A1B1 /* Toolbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADEFD133253EEF230081A1B1 /* Toolbox.swift */; };
+		ADF17CBA26B5019B008E7ECD /* PFMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CB926B5019B008E7ECD /* PFMockService.swift */; };
+		ADF17CBB26B5019B008E7ECD /* PFMockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CB926B5019B008E7ECD /* PFMockService.swift */; };
+		ADF17CBD26B50796008E7ECD /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */; };
+		ADF17CBE26B50796008E7ECD /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */; };
+		ADF17CC026B50B66008E7ECD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBF26B50B66008E7ECD /* Constants.swift */; };
+		ADF17CC126B50B66008E7ECD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBF26B50B66008E7ECD /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,6 +299,9 @@
 		ADEDDF1A2547DF3200A45AD2 /* ToolboxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolboxTests.swift; sourceTree = "<group>"; };
 		ADEDDF242547E81300A45AD2 /* EncodingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodingError.swift; sourceTree = "<group>"; };
 		ADEFD133253EEF230081A1B1 /* Toolbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbox.swift; sourceTree = "<group>"; };
+		ADF17CB926B5019B008E7ECD /* PFMockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFMockService.swift; sourceTree = "<group>"; };
+		ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
+		ADF17CBF26B50B66008E7ECD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ADF2E582267462090029507D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -457,6 +466,8 @@
 				AD646FAB2460F75B00979AFC /* Pact */,
 				AD879B9C258242AC00F85B0B /* PactSwiftVersion.swift */,
 				ADEFD133253EEF230081A1B1 /* Toolbox.swift */,
+				ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */,
+				ADF17CBF26B50B66008E7ECD /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -471,6 +482,7 @@
 				AD10361324468AB3002C97CA /* MockService.swift */,
 				ADB7C167243327E300A16CDE /* Model */,
 				AD8DF434243C53750062CB1A /* PactBuilder.swift */,
+				ADF17CB926B5019B008E7ECD /* PFMockService.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -908,6 +920,7 @@
 				AD879B9D258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				AD8DF43B243EEF390062CB1A /* MatchingRuleExpressible.swift in Sources */,
 				ADB7C16B2433283400A16CDE /* Response.swift in Sources */,
+				ADF17CBA26B5019B008E7ECD /* PFMockService.swift in Sources */,
 				AD8DF42C243BF9430062CB1A /* AnyEncodable.swift in Sources */,
 				AD641A352434345500785CE1 /* Metadata.swift in Sources */,
 				ADEDDEFD2547B6FA00A45AD2 /* String+PactSwift.swift in Sources */,
@@ -942,11 +955,13 @@
 				ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+PactSwift.swift in Sources */,
+				ADF17CBD26B50796008E7ECD /* TransferProtocol.swift in Sources */,
 				ADEDDEF72547B6B700A45AD2 /* PactPathParameter.swift in Sources */,
 				AD8DF437243EA4580062CB1A /* PactInteractionElement.swift in Sources */,
 				ADBC60DC2513639700BBE666 /* RandomDate.swift in Sources */,
 				ADC37269269825AA000DA90B /* OneOf.swift in Sources */,
 				AD8DF435243C53750062CB1A /* PactBuilder.swift in Sources */,
+				ADF17CC026B50B66008E7ECD /* Constants.swift in Sources */,
 				ADD03175251235A800C6099B /* UUID+PactSwift.swift in Sources */,
 				ADA17E4C251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);
@@ -999,6 +1014,7 @@
 				AD879B9E258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				AD8FC7E32463BB9F00361854 /* ErrorReporter.swift in Sources */,
 				AD8FC7E92463BB9F00361854 /* Pacticipant.swift in Sources */,
+				ADF17CBB26B5019B008E7ECD /* PFMockService.swift in Sources */,
 				AD8FC7E12463BB9F00361854 /* AnyEncodable.swift in Sources */,
 				AD8FC7F52463BBB800361854 /* IncludesLike.swift in Sources */,
 				ADEDDEFE2547B6FA00A45AD2 /* String+PactSwift.swift in Sources */,
@@ -1033,11 +1049,13 @@
 				AD8FC7EB2463BB9F00361854 /* ProviderState.swift in Sources */,
 				AD8FC7EC2463BB9F00361854 /* Request.swift in Sources */,
 				AD8FC7EE2463BBA400361854 /* Bundle+PactSwift.swift in Sources */,
+				ADF17CBE26B50796008E7ECD /* TransferProtocol.swift in Sources */,
 				ADEDDEF82547B6B700A45AD2 /* PactPathParameter.swift in Sources */,
 				AD8FC7E72463BB9F00361854 /* PactBuilder.swift in Sources */,
 				AD8FC7F92463BBB800361854 /* SomethingLike.swift in Sources */,
 				ADC3726A269825AA000DA90B /* OneOf.swift in Sources */,
 				ADBC60DD2513639800BBE666 /* RandomDate.swift in Sources */,
+				ADF17CC126B50B66008E7ECD /* Constants.swift in Sources */,
 				ADD03176251235A800C6099B /* UUID+PactSwift.swift in Sources */,
 				ADA17E4D251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);

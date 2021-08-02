@@ -16,28 +16,26 @@
 //
 
 import Foundation
-import PactSwiftMockServer
 @_implementationOnly import PactSwiftToolbox
 import XCTest
 
-let kTimeout: TimeInterval = 10
+#if os(Linux)
+import PactSwiftMockServerLinux
+#else
+import PactSwiftMockServer
+#endif
 
 /// Initializes a `MockService` object that handles Pact interaction testing.
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate.
 ///
-@objc open class MockService: NSObject {
-
-	@objc public enum TransferProtocol: Int {
-		case standard
-		case secure
-	}
+open class MockService {
 
 	// MARK: - Properties
 
 	/// The url of `MockService`
-	@objc public var baseUrl: String {
+	public var baseUrl: String {
 		mockServer.baseUrl
 	}
 
@@ -47,14 +45,18 @@ let kTimeout: TimeInterval = 10
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
 	private var allValidated = true
-	private var transferProtocolScheme: TransferProtocol
-
 	private let mockServer: MockServer
 	private let errorReporter: ErrorReportable
 
+	#if os(Linux)
+	private var transferProtocolScheme: PactSwiftMockServerLinux.TransferProtocol
+	#else
+	private var transferProtocolScheme: PactSwiftMockServer.TransferProtocol
+	#endif
+
 	// MARK: - Initializers
 
-	/// Initializes a `MockService` object that handles Pact interaction testing.
+	/// Initializes a `MockService` object that handles Pact interaction testing
 	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate
@@ -64,28 +66,11 @@ let kTimeout: TimeInterval = 10
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///
-	@objc(initWithConsumer: provider: transferProtocol:)
 	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
 	}
 
-	/// Initializes a `MockService` object that handles Pact interaction testing.
-	///
-	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
-	/// is a self-signed certificate
-	///
-	/// - Parameters:
-	///   - consumer: Name of the API consumer (eg: "mobile-app")
-	///   - provider: Name of the API provider (eg: "auth-service")
-	///   - scheme: HTTP scheme
-	///   - port: The port number to run the MockServer on (greater than 1200)
-	///
-	@objc(initWithConsumer: provider: transferProtocol: port:)
-	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int) {
-		self.init(consumer: consumer, provider: provider, scheme: scheme, port: port, errorReporter: ErrorReporter())
-	}
-
-	/// Initializes a `MockService` object that handles Pact interaction testing.
+	/// Initializes a `MockService` object that handles Pact interaction testing
 	///
 	/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 	/// is a self-signed certificate.
@@ -94,19 +79,18 @@ let kTimeout: TimeInterval = 10
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
-	///   - port: The port number to run the MockServer on
 	///   - errorReporter: Injectable object to intercept errors
 	///
-	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, port: Int? = nil, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
-		mockServer = MockServer(port: port)
+		mockServer = MockServer()
 		self.errorReporter = errorReporter ?? ErrorReporter()
-		self.transferProtocolScheme = scheme
+		self.transferProtocolScheme = scheme.bridge
 	}
 
 	// MARK: - Interface
 
-	/// Describes the `Interaction` between the consumer and provider.
+	/// Describes the `Interaction` between the consumer and provider
 	///
 	/// It is important that the `description` and provider state
 	/// combination is unique per consumer-provider contract.
@@ -114,14 +98,13 @@ let kTimeout: TimeInterval = 10
 	/// - parameter description: A description of the API interaction
 	///
 	@discardableResult
-	@objc(uponReceiving:)
 	public func uponReceiving(_ description: String) -> Interaction {
 		currentInteraction = Interaction().uponReceiving(description)
 		interactions.append(currentInteraction)
 		return currentInteraction
 	}
 
-	/// Runs the Pact test against the code that makes the API request with 10 second timeout.
+	/// Runs the Pact test against the code making the API request
 	///
 	/// Make sure you call the completion block at the end of your test.
 	///
@@ -129,15 +112,15 @@ let kTimeout: TimeInterval = 10
 	///   - file: The file to report the failing test in
 	///   - line: The line on which to report the failing test
 	///   - timeout: Time before the test times out. Default is 10 seconds
-	///   - testFunction: Your code that makes the API request
+	///   - testFunction: Your code making the API request
 	///   - testCompleted: Completion block notifying `MockService` the test completed
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
-		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
+		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
 			Logger.log(message: "Setting up pact test", data: pactData)
-			mockServer.setup(pact: pactData!, protocol: transferProtocolScheme.bridge) {
+			mockServer.setup(pact: pactData!, protocol: transferProtocolScheme) {
 				switch $0 {
 				case .success:
 					do {
@@ -154,7 +137,7 @@ let kTimeout: TimeInterval = 10
 			}
 		}
 
-		waitForPactTestWith(timeout: timeout ?? kTimeout, file: file, line: line) { [unowned self] completion in
+		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self] completion in
 			mockServer.verify {
 				switch $0 {
 				case .success:
@@ -177,29 +160,24 @@ let kTimeout: TimeInterval = 10
 
 }
 
-extension MockService {
-
-	// MARK: - Objective-C
-
-	/// Runs the Pact test with default timeout
-	@objc(run:)
-	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
-		run(timeout: kTimeout, testFunction: testFunction)
-	}
-
-	/// Runs the Pact test with provided timeout
-	@objc(run: withTimeout:)
-	public func objcRun(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
-		run(timeout: timeout, testFunction: testFunction)
-	}
-
-}
-
-// MARK: - Internal
+// MARK: - Internal -
 
 extension MockService {
 
-	/// Writes a Pact contract file in JSON format.
+	/// Adds a new interaction to the stack
+	///
+	/// - Parameters:
+	///   - interaction: The `Interaction` to add to the set
+	/// - Returns: The same `Interaction` added to the set
+	///
+	@discardableResult
+	func append(_ interaction: Interaction) -> Interaction {
+		currentInteraction = interaction
+		interactions.append(interaction)
+		return interaction
+	}
+
+	/// Writes a Pact contract file in JSON format
 	///
 	/// - parameter completion: Result of the writing the Pact contract to JSON
 	///
@@ -223,31 +201,6 @@ extension MockService {
 			}
 		}
 	}
-
-}
-
-extension MockService.TransferProtocol {
-
-	/// HTTP Transfer protocol
-	var `protocol`: String {
-		switch self {
-		case .standard: return "http"
-		case .secure: return "https"
-		}
-	}
-
-	var bridge: PactSwiftMockServer.TransferProtocol {
-		switch self {
-		case .standard: return .standard
-		case .secure: return .secure
-		}
-	}
-
-}
-
-// MARK: - Private -
-
-private extension MockService {
 
 	/// Waits for test to be completed and fails if timed out
 	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {

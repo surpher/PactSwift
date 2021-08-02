@@ -20,6 +20,10 @@ import XCTest
 @testable import PactSwift
 @_implementationOnly import PactSwiftToolbox
 
+#if os(Linux)
+import FoundationNetworking
+#endif
+
 private class MockServiceWrapper {
 	static let shared = MockServiceWrapper()
 
@@ -38,8 +42,14 @@ private class MockServiceWrapper {
 class PactContractTests: XCTestCase {
 
 	var mockService = MockServiceWrapper.shared.mockService
-	static var errorCapture = MockServiceWrapper.shared.errorCapture
 
+	#if os(Linux)
+	let session = URLSession.shared
+	#else
+	let session = URLSession(configuration: .ephemeral)
+	#endif
+
+	static var errorCapture = MockServiceWrapper.shared.errorCapture
 	static let pactContractFileName = "\(MockServiceWrapper.shared.consumer)-\(MockServiceWrapper.shared.provider).json"
 
 	// MARK: - Validate Pact contract at the end
@@ -214,14 +224,15 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/bugfix")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/bugfix")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -251,14 +262,15 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/animals")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/animals")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -284,14 +296,15 @@ class PactContractTests: XCTestCase {
 					)
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/roles")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/roles")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -327,7 +340,7 @@ class PactContractTests: XCTestCase {
 					"regex_array": Matcher.EachLike(
 						[
 							"regex_key": Matcher.EachLike(
-								Matcher.RegexLike("1234", term: #"\d{4}"#),
+								Matcher.RegexLike("1235", term: #"\d{4}"#),
 								min: 2
 							),
 							"regex_nested_object": Matcher.EachLike(
@@ -341,14 +354,15 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/users")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/users")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -377,14 +391,15 @@ class PactContractTests: XCTestCase {
 					]
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/arrays/explicit")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/arrays/explicit")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -404,10 +419,8 @@ class PactContractTests: XCTestCase {
 				status: 200
 			)
 
-		mockService.run { [mockService] completed in
+		mockService.run { [unowned self] completed in
 			var request = URLRequest(url: URL(string: "\(mockService.baseUrl)/users/state/nsw")!)
-			let session = URLSession(configuration: .ephemeral)
-
 			request.httpMethod = "POST"
 			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 			request.httpBody = #"{"foo": "bar"}"#.data(using: .utf8)
@@ -418,7 +431,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: request.debugDescription, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -442,14 +455,15 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [mockService] completed in
-			URLSession(configuration: .ephemeral)
-				.dataTask(with: URL(string: "\(mockService.baseUrl)/users/data")!) { data, response, error in
+		mockService.run { [unowned self] completed in
+			let url = URL(string: "\(mockService.baseUrl)/users/data")!
+			session
+				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						XCTFail("Expected network request to succeed in \(#function)!")
+						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -472,6 +486,17 @@ private extension PactContractTests {
 	enum Direction: String {
 		case request
 		case response
+	}
+
+	func fail(function: String, request: String? = nil, response: String? = nil, error: Error? = nil) {
+		XCTFail(
+		"""
+		Expected network request to succeed in \(function)!
+		Request URL: \t\(String(describing: request))
+		Response:\t\(String(describing: response))
+		Reason: \t\(String(describing: error?.localizedDescription))
+		"""
+		)
 	}
 
 	static func extract(_ type: PactNode,  in direction: Direction, interactions: [Any], description: String) throws -> [String: Any] {

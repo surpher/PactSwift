@@ -52,6 +52,7 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFMatcherEqualTo)
 public class ObjcEqualTo: NSObject, ObjcMatcher {
 
@@ -67,3 +68,4 @@ public class ObjcEqualTo: NSObject, ObjcMatcher {
 	}
 
 }
+#endif

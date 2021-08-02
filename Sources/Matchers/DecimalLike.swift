@@ -51,6 +51,7 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 /// Mathes a `Decimal` value.
 ///
 /// Use this matcher when you expect the type being returned by the API provider is a `Decimal`.
@@ -78,3 +79,4 @@ public class ObjcDecimalLike: NSObject, ObjcMatcher {
 	}
 
 }
+#endif

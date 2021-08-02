@@ -45,6 +45,7 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFMatcherIntegerLike)
 public class ObjcIntegerLike: NSObject, ObjcMatcher {
 
@@ -61,3 +62,4 @@ public class ObjcIntegerLike: NSObject, ObjcMatcher {
 	}
 
 }
+#endif

@@ -74,6 +74,7 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFMatcherOneOf)
 public class ObjcOneOf: NSObject, ObjcMatcher {
 
@@ -92,3 +93,4 @@ public class ObjcOneOf: NSObject, ObjcMatcher {
 	}
 
 }
+#endif

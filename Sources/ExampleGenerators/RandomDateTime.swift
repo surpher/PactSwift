@@ -45,6 +45,7 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFGeneratorRandomDateTime)
 public class ObjcRandomDateTime: NSObject, ObjcGenerator {
 
@@ -61,3 +62,4 @@ public class ObjcRandomDateTime: NSObject, ObjcGenerator {
 	}
 
 }
+#endif

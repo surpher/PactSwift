@@ -24,29 +24,39 @@ Note: see [Upgrading][upgrading] for notes on upgrading from 0.4 to 0.5
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.5.1` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.6.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.5.1"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.6.0"))
 ]
+```
+
+#### Linux
+
+When building and running tests you have to provide a linker flag pointing to the folder containing your `libpact_ffi.so`. Compile your own for your Linux dist from [pact-reference/rust/pact_ffi][pact-reference-rust]. See `/Scripts/build_libpact_ffi` for some inspiration.
+
+```sh
+export LD_LIBRARY_PATH=/absolute/path/to/your/rust/target/release/
+swift build -Xlinker -L/absolute/path/to/your/rust/target/release/
+swift test -Xlinker -L/absolute/path/to/your/rust/target/release/
 ```
 
 ### Carthage
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.5
+github "surpher/PactSwift" ~> 0.6
 ```
 
 ```sh
 carthage update --use-xcframeworks
 ```
 
-**NOTE:**  
+**NOTE:**
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
 - If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
@@ -187,13 +197,12 @@ class PassingTestsExample: XCTestCase {
 
 `MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
 That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a singleton here to keep a reference to one instance of `MockService` for all the Pact tests.  
-Open for alternative ideas!
+Suggestion to improve this are welcome!
 
 References:
 
 - [Issue #67](https://github.com/surpher/PactSwift/issues/67)
 - [Writing Tests](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36)
-
 
 ## Matching
 
@@ -227,6 +236,12 @@ See how you can use simple [Pact Broker Client][pact-broker-client] in your term
 ## Objective-C support
 
 PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See [Demo projects repository][demo-projects] for more examples.
+
+```swift
+_mockService = [[PFMockService alloc] initWithConsumer:@"Consumer-app" provider:@"Provider-server" transferProtocol:TransferProtocolStandard];
+```
+
+`PF` stands for Pact Foundation.
 
 ## Demo projects
 

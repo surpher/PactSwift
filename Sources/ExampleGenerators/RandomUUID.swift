@@ -33,6 +33,7 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
+#if !os(Linux)
 @objc(PFGeneratorRandomUUID)
 public class ObjcRandomUUID: NSObject, ObjcGenerator {
 
@@ -44,3 +45,4 @@ public class ObjcRandomUUID: NSObject, ObjcGenerator {
 	}
 
 }
+#endif

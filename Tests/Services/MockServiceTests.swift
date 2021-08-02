@@ -20,6 +20,10 @@ import XCTest
 @testable import PactSwift
 @_implementationOnly import PactSwiftToolbox
 
+#if os(Linux)
+import FoundationNetworking
+#endif
+
 class MockServiceTests: XCTestCase {
 
 	var mockService: MockService!
@@ -70,32 +74,6 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
-	func testMockService_SimpleGetRequest_WithExplicitPort() {
-		mockService = MockService(consumer: "Explicit-Port-Consumer", provider: "Explicit-Port-Provider", scheme: .standard, port: 12345, errorReporter: errorCapture)
-		mockService
-			.uponReceiving("Request for a list (explicit port)")
-			.given("elements exist (explicit port)")
-			.withRequest(method: .GET, path: "/elements/on-port")
-			.willRespondWith(status: 200)
-
-		let testExpectation = expectation(description: #function)
-
-		mockService.run(timeout: 1) { completion in
-			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "http://0.0.0.0:12345/elements/on-port")!) { data, response, error in
-				if let response = response as? HTTPURLResponse {
-					XCTAssertEqual(200, response.statusCode)
-					completion()
-					testExpectation.fulfill()
-				} else {
-					XCTFail("Expecting response code 200 in \(#function)")
-				}
-			}
-			task.resume()
-		}
-		waitForExpectations(timeout: 1)
-	}
-
 	func testMockService_SuccessfulGETRequest() {
 		mockService
 			.uponReceiving("Request for list of users")
@@ -132,6 +110,8 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
+	#if !os(Linux)
+	// Linux does not seem to support this and URLSessionDelegate
 	func testMockService_SuccessfulGETRequest_OverSSL() {
 		mockService = MockService(
 			consumer: "pactswift-unit-tests",
@@ -157,6 +137,7 @@ class MockServiceTests: XCTestCase {
 			self.secureProtocol = true
 			let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
 			XCTAssertTrue(self.mockService.baseUrl.contains("https://"))
+
 			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
 				if let data = data {
 					do {
@@ -177,6 +158,7 @@ class MockServiceTests: XCTestCase {
 
 		waitForExpectations(timeout: 1)
 	}
+	#endif
 
 	func testMockService_Fails_WhenRequestMissing() {
 		mockService
@@ -521,7 +503,7 @@ class MockServiceTests: XCTestCase {
 			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 			request.httpBody = #"{"name":"Joe","age":42}"#.data(using: .utf8)
 
-			let task = session.dataTask(with: request) { data, response, error in 
+			let task = session.dataTask(with: request) { data, response, error in
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(response.statusCode, 201)
 				}
@@ -893,6 +875,8 @@ class MockServiceTests: XCTestCase {
 
 }
 
+// MARK: - Fixtures
+
 private extension MockServiceTests {
 
 	func decodeResponse<D: Decodable>(data: Data) -> D? {
@@ -931,13 +915,16 @@ private extension MockServiceTests {
 
 }
 
+// MARK: - URLSessionDelegate
+
+#if !os(Linux)
 extension MockServiceTests: URLSessionDelegate {
 
 	func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
 		guard
 			secureProtocol,
 			challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-			(challenge.protectionSpace.host.contains("0.0.0.0") || challenge.protectionSpace.host.contains("localhost")),
+			(challenge.protectionSpace.host.contains("0.0.0.0") || challenge.protectionSpace.host.contains("127.0.0.1") || challenge.protectionSpace.host.contains("localhost")),
 			let serverTrust = challenge.protectionSpace.serverTrust
 		else {
 			completionHandler(.performDefaultHandling, nil)
@@ -948,7 +935,12 @@ extension MockServiceTests: URLSessionDelegate {
 		completionHandler(.useCredential, credential)
 	}
 
-	// FileManager
+}
+#endif
+
+// MARK: - FileManager
+
+extension MockServiceTests {
 
 	@discardableResult
 	func fileExists(_ filename: String) -> Bool {

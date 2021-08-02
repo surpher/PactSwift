@@ -15,6 +15,8 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+#if !os(Linux)
+
 import XCTest
 
 @testable import PactSwift
@@ -82,4 +84,7 @@ class ObjCExampleGeneratorTests: XCTestCase {
 
 		XCTAssertTrue((testSubject.type as Any) is ExampleGenerator.RandomUUID)
 	}
+
 }
+
+#endif

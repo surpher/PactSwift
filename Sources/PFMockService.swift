@@ -1,0 +1,104 @@
+//
+//  Created by Marko Justinek on 31/7/21.
+//  Copyright © 2021 PACT Foundation. All rights reserved.
+//
+//  Permission to use, copy, modify, and/or distribute this software for any
+//  purpose with or without fee is hereby granted, provided that the above
+//  copyright notice and this permission notice appear in all copies.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+//  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+//  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+//  SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+//  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+//  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+//  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+
+#if !os(Linux)
+
+import Foundation
+@_implementationOnly import PactSwiftToolbox
+import XCTest
+
+#if os(Linux)
+import PactSwiftMockServerLinux
+#else
+import PactSwiftMockServer
+#endif
+
+/// Initializes a `PFMockService` object that handles Pact interaction testing for projects written in Objective-C.
+///
+/// When initializing with `.secure` scheme, the SSL certificate on Mock Server
+/// is a self-signed certificate.
+///
+@objc open class PFMockService: NSObject {
+
+	// MARK: - Properties
+
+	/// The url of `MockService`
+	@objc public var baseUrl: String {
+		mockService.baseUrl
+	}
+
+	private let mockService: MockService
+	private var interactions: [Interaction] = []
+	private var currentInteraction: Interaction!
+
+	// MARK: - Initialization
+
+	/// Initializes a `MockService` object that handles Pact interaction testing
+	///
+	/// When initializing with `.secure` transferProtocol,
+	/// the SSL certificate on Mock Server is a self-signed certificate.
+	///
+	/// - Parameters:
+	///   - consumer: Name of the API consumer (eg: "mobile-app")
+	///   - provider: Name of the API provider (eg: "auth-service")
+	///   - transferProtocol: HTTP scheme
+	///
+	@objc(initWithConsumer: provider: transferProtocol:)
+	public convenience init(consumer: String, provider: String, transferProtocol: TransferProtocol = .standard) {
+		self.init(consumer: consumer, provider: provider, scheme: transferProtocol, errorReporter: ErrorReporter())
+	}
+
+	internal init(consumer: String, provider: String, scheme: TransferProtocol, errorReporter: ErrorReportable? = nil) {
+		mockService = MockService(consumer: consumer, provider: provider, scheme: scheme, errorReporter: errorReporter ?? ErrorReporter())
+	}
+
+	// MARK: - Interface
+
+	/// Describes the `Interaction` between the consumer and provider
+	///
+	/// It is important that the `description` and provider state
+	/// combination is unique per consumer-provider contract.
+	///
+	/// - parameter description: A description of the API interaction
+	///
+	@discardableResult
+	@objc public func uponReceiving(_ description: String) -> Interaction {
+		let currentInteraction = Interaction().uponReceiving(description)
+		return mockService.append(currentInteraction)
+	}
+
+	/// Runs the Pact test with default timeout
+	///
+	/// Make sure you call the completion block at the end of your test.
+	///
+
+	@objc public func run(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
+		mockService.run(timeout: Constants.kTimeout, testFunction: testFunction)
+	}
+
+	/// Runs the Pact test with provided timeout
+	///
+	/// Make sure you call the completion block at the end of your test.
+	///
+	@objc(run: withTimeout:)
+	public func run(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
+		mockService.run(timeout: timeout, testFunction: testFunction)
+	}
+
+}
+
+#endif

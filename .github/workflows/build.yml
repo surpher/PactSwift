@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   test:
-    name: Run tests on macOS 11
+    name: Run on macOS 11
     runs-on: macos-11
 
     strategy:
@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          submodules: recursive
 
       - name: Prepare Tools
         run: |
@@ -41,15 +39,47 @@ jobs:
           swift build
           swift test -c release
 
+  test_linux:
+    name: Run on Ubuntu
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+
+    steps:
+      - uses: fwal/setup-swift@v1
+      - name: Get swift version
+        run: swift --version
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cache Rust libs
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-rust-libs
+        with:
+          path: ~/../pact-foundation/rust/target/release
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Build and Test
+        run: |
+          Scripts/build_test_linux
+
   test_carthage:
-    name: Test Carthage
+    name: Verify for Carthage
     runs-on: macos-11
+
+    strategy:
+      fail-fast: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          submodules: recursive
 
       - name: Use Xcode 13.0
         run: sudo xcode-select -switch /Applications/Xcode_13.0.app
@@ -66,8 +96,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          submodules: recursive
 
       - name: Build demo projects
         run: |
