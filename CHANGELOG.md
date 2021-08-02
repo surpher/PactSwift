@@ -1,3 +1,16 @@
+# 0.6.1 - v0.6.1
+* a3f74ed - feat: Linux support (Marko Justinek)
+* 6b63f31 - fix: Package.swift indentation (Marko Justinek)
+* ad4ec02 - tech: Fix release script (again) (Marko Justinek)
+* c5be211 - chore: Refactor DSL processing (Marko Justinek)
+* 026d45c - chore: Improve code documentation (Marko Justinek)
+* 34e5c41 - chore: Project files cleanup (Marko Justinek)
+* f34f22d - chore: Remove Package.resolved from repo (Marko Justinek)
+* 05742c0 - chore: Improve Matchers documentation in code (Marko Justinek)
+* dcc23ed - chore: Commit Package.resolved to latest dependencies (Marko Justinek)
+* 482f02f - tech: Improve test script (Marko Justinek)
+* a0503f0 - chore: Update CONTRIBUTING.md (Marko Justinek)
+* 46cbb17 - chore: Improve the release script (Marko Justinek)
 # 0.5.0 - Release v0.5.0\n
 * 3d0c4cc - chore: Release prep (Marko Justinek, Mon Jul 5 21:40:20 2021 +1000)
 * bca1caf - fix: CI build workflows for swift package (Marko Justinek, Mon Jul 5 17:54:40 2021 +1000)
