@@ -1,6 +1,21 @@
 name: Build
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'chore/**'
+      - 'docs/**'
+      - 'feat/**'
+      - 'feature/**'
+      - 'fix/**'
+      - 'refactor/**'
+      - 'releases/**'
+      - 'style/**'
+      - 'test/**'
+      - 'tech/**'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
@@ -90,7 +105,7 @@ jobs:
           ./Scripts/carthage build --use-xcframeworks --no-skip-current
 
   after_success:
-    needs: [test, test_carthage]
+    needs: [test, test_carthage, test_linux]
     name: Build demo projects
     runs-on: macos-11
 

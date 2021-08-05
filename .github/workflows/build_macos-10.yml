@@ -1,6 +1,21 @@
 name: Build (macOS 10.x)
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'chore/**'
+      - 'docs/**'
+      - 'feat/**'
+      - 'feature/**'
+      - 'fix/**'
+      - 'refactor/**'
+      - 'releases/**'
+      - 'style/**'
+      - 'test/**'
+      - 'tech/**'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:
