@@ -35,16 +35,6 @@ dependencies: [
 ]
 ```
 
-#### Linux
-
-When building and running tests you have to provide a linker flag pointing to the folder containing your `libpact_ffi.so`. Compile your own for your Linux dist from [pact-reference/rust/pact_ffi][pact-reference-rust]. See `/Scripts/build_libpact_ffi` for some inspiration.
-
-```sh
-export LD_LIBRARY_PATH=/absolute/path/to/your/rust/target/release/
-swift build -Xlinker -L/absolute/path/to/your/rust/target/release/
-swift test -Xlinker -L/absolute/path/to/your/rust/target/release/
-```
-
 ### Carthage
 
 ```sh

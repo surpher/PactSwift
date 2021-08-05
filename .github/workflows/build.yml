@@ -40,7 +40,7 @@ jobs:
           swift test -c release
 
   test_linux:
-    name: Run on Ubuntu
+    name: (skipped) Run on Ubuntu
     runs-on: ubuntu-latest
 
     strategy:
