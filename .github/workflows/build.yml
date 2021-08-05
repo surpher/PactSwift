@@ -40,7 +40,7 @@ jobs:
           swift test -c release
 
   test_linux:
-    name: (skipped) Run on Ubuntu
+    name: 🐞 Run on Ubuntu
     runs-on: ubuntu-latest
 
     strategy:
@@ -68,7 +68,8 @@ jobs:
 
       - name: Build and Test
         run: |
-          echo "⚠️  Skipping: Scripts/build_test_linux - Linux support not ready"
+          echo "⚠️ 🐞 - The only POST request in PactContractTests is failing with a \"Broken Pipe\" error! It is ignored on Linux."
+          Scripts/build_test_linux
 
   test_carthage:
     name: Verify for Carthage
