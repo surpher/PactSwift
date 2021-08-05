@@ -13,9 +13,6 @@ on:
       - 'style/**'
       - 'test/**'
       - 'tech/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   test:

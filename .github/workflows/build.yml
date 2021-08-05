@@ -9,13 +9,9 @@ on:
       - 'feature/**'
       - 'fix/**'
       - 'refactor/**'
-      - 'releases/**'
       - 'style/**'
       - 'test/**'
       - 'tech/**'
-  pull_request:
-    branches:
-      - main
 
 jobs:
   test:
