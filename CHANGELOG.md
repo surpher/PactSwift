@@ -1,3 +1,8 @@
+# 0.6.2 - v0.6.2
+* 9796047 - fix: Dependency versions (Marko Justinek)
+* 2276fb6 - tech: Ignoring a test on Linux (Marko Justinek)
+* b77aa80 - fix: Bugfixes (Marko Justinek)
+* 9f59e3a - fix: Drop Linux testing on CI (Marko Justinek)
 # 0.6.1 - v0.6.1
 * a3f74ed - feat: Linux support (Marko Justinek)
 * 6b63f31 - fix: Package.swift indentation (Marko Justinek)
