@@ -19,9 +19,8 @@ let package = Package(
 	],
 
 	dependencies: [
-//		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.2.3")),
-		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .branch("fix/random-ports")),
-		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", from: "0.2.0"),
+		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.2.4")),
+		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", .upToNextMinor(from: "0.2.0")),
 	],
 
 	targets: [
