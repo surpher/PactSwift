@@ -9,6 +9,7 @@ on:
       - 'feature/**'
       - 'fix/**'
       - 'refactor/**'
+      - 'releases/**'
       - 'style/**'
       - 'test/**'
       - 'tech/**'

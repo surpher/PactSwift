@@ -34,11 +34,6 @@ open class MockService {
 
 	// MARK: - Properties
 
-	/// The url of `MockService`
-	public var baseUrl: String {
-		mockServer.baseUrl
-	}
-
 	// MARK: - Private properties
 
 	private var pact: Pact
@@ -115,7 +110,7 @@ open class MockService {
 	///   - testFunction: Your code making the API request
 	///   - testCompleted: Completion block notifying `MockService` the test completed
 	///
-	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ testCompleted: @escaping () -> Void) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (String, (@escaping () -> Void)) throws -> Void) {
 		pact.interactions = [currentInteraction]
 
 		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
@@ -124,7 +119,7 @@ open class MockService {
 				switch $0 {
 				case .success:
 					do {
-						try testFunction {
+						try testFunction(mockServer.baseUrl) {
 							completion()
 						}
 					} catch {

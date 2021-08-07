@@ -27,7 +27,7 @@ import PactSwiftMockServerLinux
 import PactSwiftMockServer
 #endif
 
-/// Initializes a `PFMockService` object that handles Pact interaction testing for projects written in Objective-C.
+/// Initializes a `PFMockService` object that handles Pact interaction testing for projects written in Objective-C. For Swift projects use `MockService`.
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate.
@@ -35,11 +35,6 @@ import PactSwiftMockServer
 @objc open class PFMockService: NSObject {
 
 	// MARK: - Properties
-
-	/// The url of `MockService`
-	@objc public var baseUrl: String {
-		mockService.baseUrl
-	}
 
 	private let mockService: MockService
 	private var interactions: [Interaction] = []
@@ -86,7 +81,7 @@ import PactSwiftMockServer
 	/// Make sure you call the completion block at the end of your test.
 	///
 
-	@objc public func run(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void) {
+	@objc public func objCRun(testFunction: @escaping (String, (@escaping () -> Void)) -> Void) {
 		mockService.run(timeout: Constants.kTimeout, testFunction: testFunction)
 	}
 
@@ -95,7 +90,7 @@ import PactSwiftMockServer
 	/// Make sure you call the completion block at the end of your test.
 	///
 	@objc(run: withTimeout:)
-	public func run(_ testFunction: @escaping (_ testComplete: @escaping () -> Void) -> Void, timeout: TimeInterval) {
+	public func objCRun(testFunction: @escaping (String, (@escaping () -> Void)) -> Void, timeout: TimeInterval) {
 		mockService.run(timeout: timeout, testFunction: testFunction)
 	}
 

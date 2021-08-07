@@ -91,6 +91,12 @@
 		AD8FC8072463BBD000361854 /* SomethingLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */; };
 		AD8FC8082463BBD100361854 /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
 		AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDE4700244D0FD600E4F7EE /* ErrorCapture.swift */; };
+		AD92805126BE1B60004FAA7E /* PFMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */; };
+		AD92805226BE1B60004FAA7E /* PFMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */; };
+		AD92805526BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */; };
+		AD92805626BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */; };
+		AD92805826BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
+		AD92805926BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
 		ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3E2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */; };
@@ -253,6 +259,9 @@
 		AD8FC7D52463ADC300361854 /* Target-macOS-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD8FC7D62463ADCF00361854 /* Target-macOS-Tests-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD8FC7D72463ADDB00361854 /* Target-macOS-Tests-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-macOS-Tests-Release.xcconfig"; sourceTree = "<group>"; };
+		AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFMockServiceTests.swift; sourceTree = "<group>"; };
+		AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PactSwiftTests.swift"; sourceTree = "<group>"; };
+		AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProtocolTests.swift; sourceTree = "<group>"; };
 		ADA17E3A25137716004F1A82 /* RandomDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTime.swift; sourceTree = "<group>"; };
 		ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTimeTests.swift; sourceTree = "<group>"; };
 		ADA17E40251377A4004F1A82 /* Date+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+PactSwift.swift"; sourceTree = "<group>"; };
@@ -377,6 +386,7 @@
 				AD641A3D24344FA100785CE1 /* PacticipantTests.swift */,
 				AD641A3F2434518500785CE1 /* PactTests.swift */,
 				ADEDDF1A2547DF3200A45AD2 /* ToolboxTests.swift */,
+				AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -406,6 +416,7 @@
 			children = (
 				AD103617244693A6002C97CA /* MockServiceTests.swift */,
 				AD78FB47264FD21900765BD3 /* PactContractTests.swift */,
+				AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -451,6 +462,14 @@
 				AD8FC7BF2463A06F00361854 /* PactSwiftTests_macOS.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		AD92805326BE3343004FAA7E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		ADB7C11B2432D41100A16CDE /* Extensions */ = {
@@ -500,6 +519,7 @@
 			isa = PBXGroup;
 			children = (
 				ADD031692512218500C6099B /* ExampleGenerators */,
+				AD92805326BE3343004FAA7E /* Extensions */,
 				AD7891B8244150FF0014BCC8 /* Matchers */,
 				AD641A362434354C00785CE1 /* Model */,
 				AD646FC72460F7ED00979AFC /* Services */,
@@ -981,6 +1001,7 @@
 			files = (
 				AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */,
 				AD7891C024415C710014BCC8 /* IntegerLikeTests.swift in Sources */,
+				AD92805826BE3705004FAA7E /* TransferProtocolTests.swift in Sources */,
 				AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */,
 				ADC3AA37247C8C4B0034446E /* InteractionTests.swift in Sources */,
 				ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */,
@@ -1002,6 +1023,8 @@
 				ADD0316C251221A300C6099B /* RandomBooleanTests.swift in Sources */,
 				AD641A402434518500785CE1 /* PactTests.swift in Sources */,
 				ADA40182253033C400265DF3 /* MatchNullTests.swift in Sources */,
+				AD92805126BE1B60004FAA7E /* PFMockServiceTests.swift in Sources */,
+				AD92805526BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */,
 				AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */,
 				ADD0317225122EA400C6099B /* RandomUUIDTests.swift in Sources */,
 				ADA17E3E2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */,
@@ -1075,6 +1098,7 @@
 			files = (
 				AD8FC8032463BBD000361854 /* DecimalLikeTests.swift in Sources */,
 				AD8FC7FE2463BBD000361854 /* AnyEncodableTests.swift in Sources */,
+				AD92805926BE3705004FAA7E /* TransferProtocolTests.swift in Sources */,
 				AD8FC8062463BBD000361854 /* RegexLikeTests.swift in Sources */,
 				ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */,
 				AD8FC8052463BBD000361854 /* IntegerLikeTests.swift in Sources */,
@@ -1096,6 +1120,8 @@
 				ADD0316D251221A300C6099B /* RandomBooleanTests.swift in Sources */,
 				AD8FC8072463BBD000361854 /* SomethingLikeTests.swift in Sources */,
 				ADA40183253033C400265DF3 /* MatchNullTests.swift in Sources */,
+				AD92805226BE1B60004FAA7E /* PFMockServiceTests.swift in Sources */,
+				AD92805626BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */,
 				AD8FC8002463BBD000361854 /* PactBuilderTests.swift in Sources */,
 				ADD0317325122EA400C6099B /* RandomUUIDTests.swift in Sources */,
 				ADA17E3F2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */,

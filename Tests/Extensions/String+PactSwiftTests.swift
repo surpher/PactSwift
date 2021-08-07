@@ -1,6 +1,6 @@
 //
-//  Created by Marko Justinek on 27/10/20.
-//  Copyright © 2020 Marko Justinek. All rights reserved.
+//  Created by Marko Justinek on 7/8/21.
+//  Copyright © 2021 PACT Foundation. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -15,15 +15,18 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import Foundation
+import XCTest
 
-extension String: PactPathParameter { }
+@testable import PactSwift
 
-extension String {
+class StringExtensionTests: XCTestCase {
 
-	/// Returns the `UUID` given the `String` itself represents a valid UUID
-	var uuid: UUID? {
-		UUID(uuidString: self)
+	func testConvertsSimpleUUID() {
+		XCTAssertEqual("1234abcd1234abcf12ababcdef1234567".uuid, UUID(uuidString: "1234abcd-1234-abcf-12ab-abcdef1234567"))
+	}
+
+	func testInvalidStringUUIDIsNil() {
+		XCTAssertNil("a".uuid)
 	}
 
 }

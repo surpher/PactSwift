@@ -58,9 +58,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run(timeout: 1) { completion in
+		mockService.run(timeout: 1) { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/elements")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/elements")!) { data, response, error in
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(200, response.statusCode)
 					completion()
@@ -88,9 +88,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run(timeout: 1) { completion in
+		mockService.run(timeout: 1) { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user")!) { data, response, error in
 				if let data = data {
 					do {
 						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
@@ -133,12 +133,12 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			self.secureProtocol = true
 			let session = URLSession(configuration: .ephemeral, delegate: self, delegateQueue: .main)
-			XCTAssertTrue(self.mockService.baseUrl.contains("https://"))
+			XCTAssertTrue(baseURL.contains("https://"))
 
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user")!) { data, response, error in
 				if let data = data {
 					do {
 						let testResult: TestModel  = try XCTUnwrap(self.decodeResponse(data: data))
@@ -169,7 +169,7 @@ class MockServiceTests: XCTestCase {
 				status: 200
 			)
 
-		mockService.run { $0() }
+		mockService.run { _, completion in completion() }
 
 		do {
 			let testResult = try XCTUnwrap(errorCapture.error?.message)
@@ -203,9 +203,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/invalidPath")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/invalidPath")!) { data, response, error in
 				completion()
 				testExpectation.fulfill()
 			}
@@ -241,9 +241,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user?state=VIC")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user?state=VIC")!) { data, response, error in
 				completion()
 				testExpectation.fulfill()
 			}
@@ -274,8 +274,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 
@@ -313,8 +313,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 
@@ -353,8 +353,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 			request.httpMethod = "POST"
@@ -390,9 +390,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user")!) { data, response, error in
 				testExpectation.fulfill()
 				completion()
 			}
@@ -418,9 +418,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/hello/cruel/world")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/hello/cruel/world")!) { data, response, error in
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(response.statusCode, 200)
 				}
@@ -453,8 +453,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/add")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user/add")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 
@@ -494,8 +494,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/update")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user/update")!
 			let session = URLSession.shared
 			var request = URLRequest(url: requestURL)
 
@@ -536,8 +536,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/user/options")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/user/options")!
 			let session = URLSession.shared
 
 			let task = session.dataTask(with: URLRequest(url: requestURL)) { data, response, error in
@@ -579,9 +579,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user")!) { data, response, error in
 				if let data = data {
 					do {
 						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))
@@ -623,8 +623,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/movies")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/movies")!
 			var request = URLRequest(url: requestURL)
 			let session = URLSession.shared
 
@@ -670,8 +670,8 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
-			let requestURL = URL(string: "\(self.mockService.baseUrl)/songs?page=&size=25")!
+		mockService.run { baseURL, completion in
+			let requestURL = URL(string: "\(baseURL)/songs?page=&size=25")!
 			var request = URLRequest(url: requestURL)
 			let session = URLSession.shared
 
@@ -723,9 +723,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/pet")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/pet")!) { data, response, error in
 				if let data = data {
 					do {
 						let testResult: GeneratorsTestModel = try XCTUnwrap(self.decodeResponse(data: data))
@@ -844,9 +844,9 @@ class MockServiceTests: XCTestCase {
 
 		let testExpectation = expectation(description: #function)
 
-		mockService.run { completion in
+		mockService.run { baseURL, completion in
 			let session = URLSession.shared
-			let task = session.dataTask(with: URL(string: "\(self.mockService.baseUrl)/user")!) { data, response, error in
+			let task = session.dataTask(with: URL(string: "\(baseURL)/user")!) { data, response, error in
 				if let data = data {
 					do {
 						let testResult: TestModel = try XCTUnwrap(self.decodeResponse(data: data))

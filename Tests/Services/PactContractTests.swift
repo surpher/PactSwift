@@ -228,8 +228,8 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/bugfix")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/bugfix")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard
@@ -266,8 +266,8 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/animals")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/animals")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard
@@ -300,8 +300,8 @@ class PactContractTests: XCTestCase {
 					)
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/roles")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/roles")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard
@@ -358,8 +358,8 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/users")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/users")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard
@@ -395,8 +395,8 @@ class PactContractTests: XCTestCase {
 					]
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/arrays/explicit")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/arrays/explicit")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard
@@ -414,8 +414,8 @@ class PactContractTests: XCTestCase {
 			}
 	}
 
-	// TODO: - For some reason this test is failing on Linux with `Broken Pipe`
-	// In the teardown it is not considering it...
+//	 TODO: - For some reason this test is failing on Linux with `Broken Pipe`
+//	 In the teardown it is not considering it...
 	#if !os(Linux)
 	func testPactContract_WithMatcherInRequestBody() {
 		mockService
@@ -426,8 +426,8 @@ class PactContractTests: XCTestCase {
 				status: 200
 			)
 
-		mockService.run { [unowned self] completed in
-			var request = URLRequest(url: URL(string: "\(mockService.baseUrl)/users/state/nsw")!)
+		mockService.run { [unowned self] baseURL, completed in
+			var request = URLRequest(url: URL(string: "\(baseURL)/users/state/nsw")!)
 			request.httpMethod = "POST"
 			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 			request.httpBody = #"{"foo": "bar"}"#.data(using: .utf8)
@@ -463,8 +463,8 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [unowned self] completed in
-			let url = URL(string: "\(mockService.baseUrl)/users/data")!
+		mockService.run { [unowned self] baseURL, completed in
+			let url = URL(string: "\(baseURL)/users/data")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard

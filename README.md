@@ -17,29 +17,53 @@ It implements [Pact Specification v3][pact-specification-v3] and runs the mock s
 
 ## Installation
 
-Note: see [Upgrading][upgrading] for notes on upgrading from 0.4 to 0.5
+Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 
 ### Swift Package Manager
 
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.6.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.7.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMajor(from: "0.6.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.7.0"))
 ]
 ```
+
+#### Linux
+<details><summary>Linux Installation Instructions</summary>
+
+When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust]. It is important you build the version of `libpact_ffi.so` that builds the same header files as provided by `PactMockServer`. See `PactMockServer` release notes for details.
+
+See `/Scripts/build_libpact_ffi` for some inspiration building libraries from Rust code.
+
+When building and testing your project you can either set `LD_LIBRARY_PATH` pointing to the folder containing your `libpact_ffi.so`:
+
+```sh
+export LD_LIBRARY_PATH="/absolute/path/to/your/rust/target/release/:$LD_LIBRARY_PATH"
+swift build
+swift test -Xlinker -L/absolute/path/to/your/rust/target/release/
+```
+
+or you can move your `libpact_ffi.so` into `/usr/local/lib`:
+
+```sh
+mv /path/to/target/release/libpact_ffi.so /usr/local/lib/
+swift build
+swift test -Xlinker -L/usr/local/lib/
+```
+</details>
 
 ### Carthage
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.6
+github "surpher/PactSwift" ~> 0.7
 ```
 
 ```sh
@@ -131,10 +155,10 @@ class PassingTestsExample: XCTestCase {
     let apiClient = RestManager()
 
     // Run a Pact test and assert **our** API client makes the request exactly as we promised above
-    mockService.run(timeout: 1) { [unowned self] completed in
+    mockService.run(timeout: 1) { [unowned self] baseURL, done in
 
       // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
-      apiClient.baseUrl = self.mockService.baseUrl
+      apiClient.baseUrl = baseURL
 
       // #7 - Make the API request.
       apiClient.getUsers() { users in
@@ -146,7 +170,7 @@ class PassingTestsExample: XCTestCase {
         }
 
         // #9 - Notify MockService we're done with our test, else your Pact test will time out.
-        completed()
+        done()
       }
     }
   }
@@ -176,9 +200,9 @@ class PassingTestsExample: XCTestCase {
 
    let apiClient = RestManager()
 
-    mockService.run { completed in
+    mockService.run { baseURL, done in
      // trigger your network request and assert the expectations
-     completed()
+     done()
     }
   }
   // etc.
