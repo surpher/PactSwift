@@ -1,3 +1,9 @@
+# 0.7.0 - v0.7.0
+* 18cee4f - fix: Each test runs on own mock server (Marko Justinek)
+* f31b2f4 - feat: Hides baseURL property to return it in .run() function (Marko Justinek)
+* 817b0b0 - ci: Remove pull request trigger (Marko Justinek)
+* fa39340 - ci: Add config file for Semantic PR checks (Marko Justinek)
+* 7b3fc1d - tech: Specifies on what branches to run CI (Marko Justinek)
 # 0.6.2 - v0.6.2
 * 9796047 - fix: Dependency versions (Marko Justinek)
 * 2276fb6 - tech: Ignoring a test on Linux (Marko Justinek)
