@@ -15,7 +15,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-/// An object representing an API response for a Pact test.
+/// An object representing an API response in Pact Specification Version 3.0
 public struct Response {
 
 	var statusCode: Int
@@ -35,7 +35,7 @@ extension Response: Encodable {
 		case generators
 	}
 
-	/// Creates an object representing a network `Response`.
+	/// Creates an object representing a network `Response`
 	/// - Parameters:
 	///   - statusCode: The status code of the API response
 	///   - headers: Headers of the API response

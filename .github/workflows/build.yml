@@ -3,6 +3,7 @@ name: Build
 on:
   push:
     branches:
+      - 'main'
       - 'chore/**'
       - 'docs/**'
       - 'feat/**'
@@ -52,7 +53,7 @@ jobs:
           swift test -c release
 
   test_linux:
-    name: 🐞 Run on Ubuntu
+    name: Run on Ubuntu
     runs-on: ubuntu-latest
 
     strategy:
@@ -80,7 +81,6 @@ jobs:
 
       - name: Build and Test
         run: |
-          echo "⚠️ 🐞 - The only POST request in PactContractTests is failing with a \"Broken Pipe\" error! It is ignored on Linux."
           Scripts/build_test_linux
 
   test_carthage:
@@ -104,6 +104,7 @@ jobs:
   after_success:
     needs: [test, test_carthage, test_linux]
     name: Build demo projects
+    if: github.ref == 'refs/heads/main'
     runs-on: macos-11
 
     steps:

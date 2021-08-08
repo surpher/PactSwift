@@ -3,6 +3,7 @@ name: Build (macOS 10.x)
 on:
   push:
     branches:
+      - 'main'
       - 'chore/**'
       - 'docs/**'
       - 'feat/**'
@@ -83,23 +84,3 @@ jobs:
       - name: Carthage build
         run: |
           ./Scripts/carthage build --use-xcframeworks --no-skip-current --platform "$PLATFORM"
-
-  after_success:
-    needs: [test, test_carthage]
-    if: github.ref == 'refs/heads/main'
-    name: Build demo projects
-    runs-on: macOS-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Use Xcode 12.2
-        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
-
-      - name: Build demo projects
-        run: |
-          echo "⚠️  SKIPPING: \"curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{\"event_type\":\"PactSwift - ${{ github.event.head_commit.message }}\"}'"
-          echo "Should only be triggered once. See 'build_macos-11.yml' CI pipe configuration."

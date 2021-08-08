@@ -37,8 +37,6 @@ import PactSwiftMockServer
 	// MARK: - Properties
 
 	private let mockService: MockService
-	private var interactions: [Interaction] = []
-	private var currentInteraction: Interaction!
 
 	// MARK: - Initialization
 
@@ -72,8 +70,7 @@ import PactSwiftMockServer
 	///
 	@discardableResult
 	@objc public func uponReceiving(_ description: String) -> Interaction {
-		let currentInteraction = Interaction().uponReceiving(description)
-		return mockService.append(currentInteraction)
+		mockService.uponReceiving(description)
 	}
 
 	/// Runs the Pact test with default timeout

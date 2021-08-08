@@ -71,11 +71,7 @@ class PactContractTests: XCTestCase {
 				// MARK: - Validate Interactions
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				#if os(Linux)
-				let numOfExpectedInteractions = 6
-				#else
 				let numOfExpectedInteractions = 7
-				#endif
 
 				assert(
 					interactions.count == numOfExpectedInteractions,
@@ -414,9 +410,6 @@ class PactContractTests: XCTestCase {
 			}
 	}
 
-//	 TODO: - For some reason this test is failing on Linux with `Broken Pipe`
-//	 In the teardown it is not considering it...
-	#if !os(Linux)
 	func testPactContract_WithMatcherInRequestBody() {
 		mockService
 			.uponReceiving("Request for list of users in state")
@@ -448,7 +441,6 @@ class PactContractTests: XCTestCase {
 				.resume()
 		}
 	}
-	#endif
 
 	func testPactContract_WithTwoMatchersOfSameType() {
 		mockService

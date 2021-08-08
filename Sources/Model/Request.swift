@@ -15,9 +15,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-/// An object representing an API request for a Pact test.
-///
-/// Pact version 3.0
+/// An object representing an API request in Pact Specification Version 3.0
 public struct Request {
 
 	let httpMethod: PactHTTPMethod
@@ -49,7 +47,7 @@ extension Request: Encodable {
 		case generators
 	}
 
-	/// Creates an object representing a network `Request`.
+	/// Creates an object representing a network `Request`
 	///
 	/// - Parameters:
 	///   - method: The http method of the http request
