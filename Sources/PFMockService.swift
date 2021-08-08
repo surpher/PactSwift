@@ -78,7 +78,8 @@ import PactSwiftMockServer
 	/// Make sure you call the completion block at the end of your test.
 	///
 
-	@objc public func objCRun(testFunction: @escaping (String, (@escaping () -> Void)) -> Void) {
+	@objc(run:)
+	public func objCRun(testFunction: @escaping (String, (@escaping () -> Void)) -> Void) {
 		mockService.run(timeout: Constants.kTimeout, testFunction: testFunction)
 	}
 
