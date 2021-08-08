@@ -1,3 +1,5 @@
+# 0.7.1 - v0.7.1
+* b663cdd - fix: Update Obj-C interface for PFMockService.run (Marko Justinek)
 # 0.7.0 - v0.7.0
 * 18cee4f - fix: Each test runs on own mock server (Marko Justinek)
 * f31b2f4 - feat: Hides baseURL property to return it in .run() function (Marko Justinek)
