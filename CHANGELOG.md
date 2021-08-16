@@ -1,3 +1,5 @@
+# 0.8.0 - v0.8.0
+* 934f7d1 - feat: Matching against Provider State injected value (Marko Justinek)
 # 0.7.1 - v0.7.1
 * b663cdd - fix: Update Obj-C interface for PFMockService.run (Marko Justinek)
 # 0.7.0 - v0.7.0
