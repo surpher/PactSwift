@@ -24,14 +24,14 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.7.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.8.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.7.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.8.0"))
 ]
 ```
 
@@ -63,7 +63,7 @@ swift test -Xlinker -L/usr/local/lib/
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.7
+github "surpher/PactSwift" ~> 0.8
 ```
 
 ```sh
@@ -71,14 +71,14 @@ carthage update --use-xcframeworks
 ```
 
 **NOTE:**
-- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Make sure you do not embed it in your main application target.
+- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png).
 - If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
 ## Generated Pact contracts
 
-By default, generated Pact contracts are written to `/tmp/pacts`. Edit your scheme and add `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section) with path to the directory you want your Pact contracts to be written to.
+By default, generated Pact contracts are written to `/tmp/pacts`. Define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section) with the path to directory you want your Pact contracts to be written into.
 
-Sandboxed apps (macOS) are limited in where they can write the Pact contract files. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/com.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra setting. Look at the logs in debug area for the Pact file location.
+Sandboxed apps (macOS) are limited in where they can write Pact contract files into. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra settings tweaks. Look at the logs in debug area for the Pact file location.
 
 ## Writing Pact tests
 
@@ -212,7 +212,7 @@ class PassingTestsExample: XCTestCase {
 
 `MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
 That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a singleton here to keep a reference to one instance of `MockService` for all the Pact tests.  
-Suggestion to improve this are welcome!
+Suggestions to improve this are welcome! See [contributing][contributing].
 
 References:
 
@@ -229,7 +229,7 @@ Or peek into [/Sources/Matchers/][pact-swift-matchers].
 
 ## Example Generators
 
-In addition to verbatim value matching and some helpful matchers, you can use a set of example generators that generate random values each time you run your tests.
+In addition to matching, you can use a set of example generators that generate random values each time you run your tests.
 
 In some cases, dates and times may need to be relative to the current date and time, and some things like tokens may have a very short life span.
 
@@ -253,14 +253,17 @@ See how you can use simple [Pact Broker Client][pact-broker-client] in your term
 PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See [Demo projects repository][demo-projects] for more examples.
 
 ```swift
-_mockService = [[PFMockService alloc] initWithConsumer:@"Consumer-app" provider:@"Provider-server" transferProtocol:TransferProtocolStandard];
+_mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
+                                              provider: @"Provider-server"
+                                      transferProtocol: TransferProtocolStandard];
 ```
 
 `PF` stands for Pact Foundation.
 
 ## Demo projects
 
-[![PactSwift demo projects](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)][pact-swift-examples-workflow]
+[![PactSwift demo projects](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)][pact-swift-examples-workflow] 
+[![PactSwift demo projects (macOS 11)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS11.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS11.yml)
 
 More in [pact-swift-examples][demo-projects] repo.
 
