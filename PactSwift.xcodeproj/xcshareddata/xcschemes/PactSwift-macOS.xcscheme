@@ -87,8 +87,8 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PACT_ENABLE_LOGGING"
-            value = "true"
-            isEnabled = "NO">
+            value = "all"
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>

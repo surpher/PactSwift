@@ -38,7 +38,7 @@ dependencies: [
 #### Linux
 <details><summary>Linux Installation Instructions</summary>
 
-When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust]. It is important you build the version of `libpact_ffi.so` that builds the same header files as provided by `PactMockServer`. See `PactMockServer` release notes for details.
+When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust]. It is important you build the version of `libpact_ffi.so` that builds the same header files as provided by `PactMockServer`. See [`PactMockServer`](https://github.com/surpher/PactMockServer) [release notes](https://github.com/surpher/PactMockServer/releases) for details.
 
 See `/Scripts/build_libpact_ffi` for some inspiration building libraries from Rust code.
 
@@ -184,6 +184,7 @@ class PassingTestsExample: XCTestCase {
         method: .POST,
         path: Matcher.RegexLike("/api/group/whoopeedeedoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
         body: [
+          "identifier": Matcher.FromProviderState(parameter: "userId", value: .string("123e4567-e89b-12d3-a456-426614174000")),
           "first_name": "John",
           "last_name": "Appleseed",
           "age": Matcher.SomethingLike(42),

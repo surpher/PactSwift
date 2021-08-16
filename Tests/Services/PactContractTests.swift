@@ -377,7 +377,10 @@ class PactContractTests: XCTestCase {
 		mockService
 			.uponReceiving("Request for an explicit array")
 			.given("array exist")
-			.withRequest(method: .GET, path: "/arrays/explicit")
+			.withRequest(
+				method: .GET,
+				path: Matcher.RegexLike("/arrays/explicit", term: #"^/arrays/e\w+$"#)
+			)
 			.willRespondWith(
 				status: 200,
 				body:
@@ -414,9 +417,19 @@ class PactContractTests: XCTestCase {
 		mockService
 			.uponReceiving("Request for list of users in state")
 			.given("users in that state exist")
-			.withRequest(method: .POST, path: "/users/state/nsw", body: ["foo": Matcher.SomethingLike("bar")])
+			.withRequest(
+				method: .POST,
+				path: Matcher.FromProviderState(parameter: "/users/state/${stateIdentifier}", value: .string("/users/state/nsw")),
+				body: ["foo": Matcher.SomethingLike("bar")]
+			)
 			.willRespondWith(
-				status: 200
+				status: 200,
+				body: [
+					"identifier": Matcher.FromProviderState(parameter: "userId", value: .int(100)),
+					"randomCode": Matcher.FromProviderState(parameter: "rndCode", value: .string("some-random-code")),
+					"foo": Matcher.SomethingLike("bar"),
+					"baz": Matcher.SomethingLike("qux")
+				]
 			)
 
 		mockService.run { [unowned self] baseURL, completed in

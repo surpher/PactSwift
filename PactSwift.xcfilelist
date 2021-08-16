@@ -26,6 +26,7 @@ $(SRCROOT)/Sources/Model/ErrorReporter.swift
 $(SRCROOT)/Sources/Model/Toolbox.swift
 $(SRCROOT)/Sources/Model/AnyEncodable.swift
 $(SRCROOT)/Sources/PactBuilder.swift
+$(SRCROOT)/Sources/Matchers/FromProviderState.swift
 $(SRCROOT)/Sources/Matchers/OneOf.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)/Sources/Matchers/EqualTo.swift
@@ -47,4 +48,5 @@ $(SRCROOT)/Sources/ExampleGenerators/RandomTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomUUID.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift
+$(SRCROOT)/Sources/ExampleGenerators/ProviderStateGenerator.swift
 $(SRCROOT)/Sources/MockService.swift

@@ -1,6 +1,6 @@
 //
-//  Created by Marko Justinek on 11/9/20.
-//  Copyright © 2020 Marko Justinek. All rights reserved.
+//  Created by Marko Justinek on 15/8/21.
+//  Copyright © 2021 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -17,34 +17,21 @@
 
 import Foundation
 
-public struct ExampleGenerator {
-	// This is a namespace placeholder
-	// Implement any Example Generators as `Struct`s in an extension.
-}
-
 extension ExampleGenerator {
 
-	// A list of implemented Example Generators that map to a generator in Pact Specification.
-	enum Generator: String {
-		case bool = "RandomBoolean"
-		case date = "Date"
-		case dateTime = "DateTime"
-		case decimal = "RandomDecimal"
-		case hexadecimal = "RandomHexadecimal"
-		case int = "RandomInt"
-		case providerState = "ProviderState"
-		case regex = "Regex"
-		case string = "RandomString"
-		case time = "Time"
-		case uuid = "Uuid"
+	// Works with Matcher.FromProviderState(references: value:)
+	struct ProviderStateGenerator: ExampleGeneratorExpressible {
+		let value: Any
+		let generator: ExampleGenerator.Generator = .providerState
+		var rules: [String: AnyEncodable]?
+
+		init(parameter: String, value: Any) {
+			self.value = value
+			self.rules = [
+				"expression": AnyEncodable(parameter),
+				"type": AnyEncodable(generator.rawValue),
+			]
+		}
 	}
-
-}
-
-// MARK: - Objective-C
-
-protocol ObjcGenerator {
-
-	var type: ExampleGeneratorExpressible { get }
 
 }

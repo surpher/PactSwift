@@ -28,7 +28,7 @@ public extension ExampleGenerator {
 		/// Generates a random decimal value (BigDecimal) with the provided number of digits
 		///
 		/// - Parameters:
-		///   - digits: Number of digits of the generated `Decimal` value
+		///   - digits: Number of digits of the generated `Decimal` value (max 9)
 		///
 		/// - Precondition: `digits` is a positive value
 		///

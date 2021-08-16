@@ -97,6 +97,10 @@
 		AD92805626BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */; };
 		AD92805826BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
 		AD92805926BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
+		AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */; };
+		AD9D7D8E26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */; };
+		AD9D7D9026C8B3DA00FE4137 /* FromProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9D7D8F26C8B3DA00FE4137 /* FromProviderState.swift */; };
+		AD9D7D9126C8B3DA00FE4137 /* FromProviderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9D7D8F26C8B3DA00FE4137 /* FromProviderState.swift */; };
 		ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3A25137716004F1A82 /* RandomDateTime.swift */; };
 		ADA17E3E2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */; };
@@ -181,6 +185,10 @@
 		ADF17CBE26B50796008E7ECD /* TransferProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */; };
 		ADF17CC026B50B66008E7ECD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBF26B50B66008E7ECD /* Constants.swift */; };
 		ADF17CC126B50B66008E7ECD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF17CBF26B50B66008E7ECD /* Constants.swift */; };
+		ADF959CA26C8F6EB00C35536 /* FromProviderStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */; };
+		ADF959CB26C8F6EB00C35536 /* FromProviderStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */; };
+		ADF959CD26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */; };
+		ADF959CE26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -262,6 +270,8 @@
 		AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PFMockServiceTests.swift; sourceTree = "<group>"; };
 		AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PactSwiftTests.swift"; sourceTree = "<group>"; };
 		AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProtocolTests.swift; sourceTree = "<group>"; };
+		AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderStateGenerator.swift; sourceTree = "<group>"; };
+		AD9D7D8F26C8B3DA00FE4137 /* FromProviderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromProviderState.swift; sourceTree = "<group>"; };
 		ADA17E3A25137716004F1A82 /* RandomDateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTime.swift; sourceTree = "<group>"; };
 		ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDateTimeTests.swift; sourceTree = "<group>"; };
 		ADA17E40251377A4004F1A82 /* Date+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+PactSwift.swift"; sourceTree = "<group>"; };
@@ -312,6 +322,8 @@
 		ADF17CBC26B50796008E7ECD /* TransferProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProtocol.swift; sourceTree = "<group>"; };
 		ADF17CBF26B50B66008E7ECD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ADF2E582267462090029507D /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FromProviderStateTests.swift; sourceTree = "<group>"; };
+		ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderStateGeneratorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -358,6 +370,7 @@
 				AD7891C124415E3E0014BCC8 /* DecimalLike.swift */,
 				AD8DF43E244055980062CB1A /* EachLike.swift */,
 				ADD3C27324416CDF002E73B9 /* EqualTo.swift */,
+				AD9D7D8F26C8B3DA00FE4137 /* FromProviderState.swift */,
 				ADD3C27524416DAE002E73B9 /* IncludesLike.swift */,
 				AD7891BD24415C100014BCC8 /* IntegerLike.swift */,
 				ADE9B3C6250A3C4700274672 /* Matcher.swift */,
@@ -427,6 +440,7 @@
 				AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */,
 				AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */,
 				ADE9B3C9250A435B00274672 /* EqualToTests.swift */,
+				ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */,
 				ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */,
 				AD7891BF24415C710014BCC8 /* IntegerLikeTests.swift */,
 				ADA40181253033C400265DF3 /* MatchNullTests.swift */,
@@ -567,6 +581,7 @@
 			isa = PBXGroup;
 			children = (
 				ADD03163251219B700C6099B /* ExampleGenerator.swift */,
+				AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */,
 				ADD03166251220FD00C6099B /* RandomBool.swift */,
 				AD8546F025135F4200211E28 /* RandomDate.swift */,
 				ADA17E3A25137716004F1A82 /* RandomDateTime.swift */,
@@ -584,6 +599,7 @@
 			isa = PBXGroup;
 			children = (
 				ADEDDF112547D95700A45AD2 /* ObjCExampleGeneratorTests.swift */,
+				ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */,
 				ADD0316B251221A300C6099B /* RandomBooleanTests.swift */,
 				AD8546F32513601800211E28 /* RandomDateTests.swift */,
 				ADA17E3D2513772B004F1A82 /* RandomDateTimeTests.swift */,
@@ -965,6 +981,7 @@
 				ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031782512425800C6099B /* RandomInt.swift in Sources */,
+				AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				ADD0316F25122E4B00C6099B /* RandomUUID.swift in Sources */,
 				AD4B970A2513A04800C37560 /* RandomHexadecimal.swift in Sources */,
@@ -979,6 +996,7 @@
 				ADD0315F2512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */,
 				AD4B97102513A3DB00C37560 /* RandomString.swift in Sources */,
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
+				AD9D7D9026C8B3DA00FE4137 /* FromProviderState.swift in Sources */,
 				ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */,
 				ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
@@ -1029,9 +1047,11 @@
 				ADD0317225122EA400C6099B /* RandomUUIDTests.swift in Sources */,
 				ADA17E3E2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */,
 				ADC3728226982E1E000DA90B /* OneOfTests.swift in Sources */,
+				ADF959CD26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */,
 				AD7891C424415E9F0014BCC8 /* DecimalLikeTests.swift in Sources */,
 				AD4B97132513A64700C37560 /* RandomStringTests.swift in Sources */,
 				AD8DF433243C437F0062CB1A /* AnyEncodableTests.swift in Sources */,
+				ADF959CA26C8F6EB00C35536 /* FromProviderStateTests.swift in Sources */,
 				ADE9B3CA250A435B00274672 /* EqualToTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1062,6 +1082,7 @@
 				ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031792512425800C6099B /* RandomInt.swift in Sources */,
+				AD9D7D8E26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
 				ADD0317025122E4B00C6099B /* RandomUUID.swift in Sources */,
@@ -1076,6 +1097,7 @@
 				ADD031602512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */,
 				AD4B97112513A3DB00C37560 /* RandomString.swift in Sources */,
 				AD8FC7ED2463BB9F00361854 /* Response.swift in Sources */,
+				AD9D7D9126C8B3DA00FE4137 /* FromProviderState.swift in Sources */,
 				AD8FC7F22463BBB800361854 /* DecimalLike.swift in Sources */,
 				AD8FC7EB2463BB9F00361854 /* ProviderState.swift in Sources */,
 				AD8FC7EC2463BB9F00361854 /* Request.swift in Sources */,
@@ -1126,9 +1148,11 @@
 				ADD0317325122EA400C6099B /* RandomUUIDTests.swift in Sources */,
 				ADA17E3F2513772B004F1A82 /* RandomDateTimeTests.swift in Sources */,
 				ADC3728726982E1F000DA90B /* OneOfTests.swift in Sources */,
+				ADF959CE26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */,
 				AD8FC8012463BBD000361854 /* PacticipantTests.swift in Sources */,
 				AD4B97142513A64700C37560 /* RandomStringTests.swift in Sources */,
 				AD8FC8042463BBD000361854 /* EachLikeTests.swift in Sources */,
+				ADF959CB26C8F6EB00C35536 /* FromProviderStateTests.swift in Sources */,
 				ADE9B3CB250A435B00274672 /* EqualToTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

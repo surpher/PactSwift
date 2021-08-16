@@ -696,6 +696,57 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 5)
 	}
 
+	func testMockService_Succeeds_WithMatcherFromProviderState() {
+		mockService
+			.uponReceiving("a request")
+			.given(
+				ProviderState(
+					description: "a provider state with injectable values",
+					params: [
+						"valueA": "A",
+						"valueB": "100",
+					]
+				)
+			)
+			.withRequest(
+				method: .POST,
+				path: "/values",
+				headers: ["Content-Type": "application/json"],
+				body: [
+					"name": Matcher.SomethingLike("George")
+				]
+			)
+			.willRespondWith(
+				status: 201,
+				body: [
+					"identifier": Matcher.FromProviderState(parameter: "userId", value: .int(100)),
+					"name": Matcher.SomethingLike("Mary")
+				]
+			)
+
+		let testExpectation = expectation(description: #function)
+
+		mockService.run { baseURL, done in
+			let requestURL = URL(string: "\(baseURL)/values")!
+			let session = URLSession.shared
+			var request = URLRequest(url: requestURL)
+			request.httpMethod = "POST"
+			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+			request.httpBody = Data(#"{"name":"John"}"#.utf8)
+
+			let task = session.dataTask(with: request) { data, response, error in
+				if let response = response as? HTTPURLResponse {
+					XCTAssertEqual(response.statusCode, 201)
+				}
+				testExpectation.fulfill()
+				done()
+			}
+			task.resume()
+		}
+
+		waitForExpectations(timeout: 1)
+	}
+
 	// MARK: - Using Example Generators
 
 	func testMockService_Succeeds_WithGenerators() {

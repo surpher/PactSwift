@@ -74,10 +74,12 @@ extension Request: Encodable {
 			if let query = queryValues?.node { try container.encode(query, forKey: .query) }
 			if let headers = headersValues?.node { try container.encode(headers, forKey: .headers) }
 			if let encodableBody = bodyValues?.node { try container.encode(encodableBody, forKey: .body) }
+
 			if let matchingRules = Toolbox.merge(body: bodyValues?.rules, query: queryValues?.rules, header: headersValues?.rules, path: pathValues?.rules) {
 				try container.encode(matchingRules, forKey: .matchingRules)
 			}
-			if let generators = Toolbox.merge(body: bodyValues?.generators, query: queryValues?.generators, header: headersValues?.generators) {
+
+			if let generators = Toolbox.merge(body: bodyValues?.generators, query: queryValues?.generators, header: headersValues?.generators, path: pathValues?.generators) {
 				try container.encode(generators, forKey: .generators)
 			}
 		}

@@ -44,8 +44,8 @@ struct PactBuilder {
 		do {
 			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "", isEachLike: false)
 			let node = processedType.node
-			let rules = process(matchingRules: processedType.rules)
-			let generators = processedType.generators.isEmpty ? nil : AnyEncodable(processedType.generators)
+			let rules = process(keyValues: processedType.rules)
+			let generators = process(keyValues: processedType.generators)
 
 			return (node: node, rules: rules, generators: generators)
 		} catch {
@@ -106,6 +106,23 @@ private extension PactBuilder {
 
 		case let matcher as Matcher.EqualTo:
 			processedElement = try processMatcher(matcher, at: node)
+
+		case let matcher as Matcher.FromProviderState:
+			let stateParameterGenerator = ExampleGenerator.ProviderStateGenerator(parameter: matcher.parameter, value: matcher.value)
+
+			// When processing for path, don't bother with setting the matching rule to "type", as it is always going to be a String
+			if interactionNode == .path {
+				processedElement = try processExampleGenerator(stateParameterGenerator, at: node)
+			} else {
+				// When processing for anything else then add the matching rule matching "type" along with provider state generated value
+				let processedStateParameter = try processExampleGenerator(stateParameterGenerator, at: node)
+				let processedMatcherValue = try processMatcher(matcher, at: node)
+				processedElement = (
+					node: processedMatcherValue.node,
+					rules: processedMatcherValue.rules,
+					generators: processedStateParameter.generators
+				)
+			}
 
 		case let matcher as Matcher.IncludesLike:
 			let processedMatcherValue = try process(element: matcher.value, at: node, isEachLike: isEachLike)
@@ -222,12 +239,13 @@ private extension PactBuilder {
 		)
 	}
 
-	// Processes the matcher specifically used in a `Request` path
-	func process(matchingRules: [String: AnyEncodable]) -> AnyEncodable? {
-		if interactionNode == .path, let pathRulesKey = matchingRules.keys.first, pathRulesKey.isEmpty == true {
-			return AnyEncodable(matchingRules.values.first)
+	// Processes the Matchers and Generators giving special consideration of processing `Request`.
+	// When processing for `path`, the key is "" as it does not need to conform to JSONPath the same way as body does.
+	func process(keyValues: [String: AnyEncodable]) -> AnyEncodable? {
+		if interactionNode == .path, let pathRulesKey = keyValues.keys.first, pathRulesKey.isEmpty == true {
+			return AnyEncodable(keyValues.values.first)
 		} else {
-			return matchingRules.isEmpty ? nil : AnyEncodable(matchingRules)
+			return keyValues.isEmpty ? nil : AnyEncodable(keyValues)
 		}
 	}
 
