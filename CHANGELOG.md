@@ -1,3 +1,6 @@
+# 0.8.1 - v0.8.1
+* e353841 - chore: Update PactSwiftMockServer dependency version (Marko Justinek)
+* f023414 - doco: Update README and project structure ADR (Marko Justinek)
 # 0.8.0 - v0.8.0
 * 934f7d1 - feat: Matching against Provider State injected value (Marko Justinek)
 # 0.7.1 - v0.7.1
