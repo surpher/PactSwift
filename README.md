@@ -127,22 +127,24 @@ class PassingTestsExample: XCTestCase {
       .withRequest(
         method: .GET,
         path: "/api/users",
-        headers: nil, // `nil` means we (and the API Provider) should not care about headers. If there are values there, fine, we're just not _demanding_ anything.
+        headers: nil, // `nil` means we (and the API Provider) should not care about headers.
         body: nil // same as with headers
       )
 
-      // #4 - Define what we expect `mockService`, and consequently the "real" API, to respond with for this particular API request we are testing
+      // #4 - Define what we expect `mockService`, and consequently the "real" API,
+      // to respond with for this particular API interaction we are testing
       .willRespondWith(
         status: 200,
-        headers: nil, // `nil` means we don't care what the headers returned from the API are. If there are values in the header, fine, we're just not _demanding_ anything in the header.
+        headers: nil, // `nil` means we don't care what the headers returned from the API are.
         body: [
-          "page": Matcher.SomethingLike(1), // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
+          // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
+          "page": Matcher.SomethingLike(1),
           "per_page": Matcher.SomethingLike(20),
           "total": ExampleGenerator.RandomInt(min: 20, max: 500),
           "total_pages": Matcher.SomethingLike(3),
           "data": Matcher.EachLike(
             [
-              "id": ExampleGenerator.RandomUUID(), // We can also use example generators with Pact Spec v3
+              "id": ExampleGenerator.RandomUUID(), // We can also use example generators
               "first_name": Matcher.SomethingLike("John"),
               "last_name": Matcher.SomethingLike("Tester"),
               "salary": Matcher.DecimalLike(125000.00)
@@ -184,19 +186,19 @@ class PassingTestsExample: XCTestCase {
         method: .POST,
         path: Matcher.RegexLike("/api/group/whoopeedeedoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
         body: [
-          "identifier": Matcher.FromProviderState(parameter: "userId", value: .string("123e4567-e89b-12d3-a456-426614174000")),
+          // You can use matchers and generators here too, but are an anti-pattern.
+          // You should be able to have full control of your requests.
           "first_name": "John",
-          "last_name": "Appleseed",
-          "age": Matcher.SomethingLike(42),
-          "dob": Matcher.RegexLike("15-07-2001", term: #"\d{2}-\d{2}-\d{4}"#),
-          "trivia": [
-            "favourite_words": Matcher.EachLike("foo"),
-            "bar": Matcher.IncludesLike("baz")
-          ]
+          "last_name": "Appleseed"
         ]
       )
       .willRespondWith(
-        status: 201
+        status: 201,
+        body: [
+          "identifier": Matcher.FromProviderState(parameter: "userId", value: .string("123e4567-e89b-12d3-a456-426614174000")),
+          "first_name": "John",
+          "last_name": "Appleseed"
+        ]
       )
 
    let apiClient = RestManager()
