@@ -38,6 +38,7 @@ $(SRCROOT)/Sources/Matchers/IncludesLike.swift
 $(SRCROOT)/Sources/Matchers/DecimalLike.swift
 $(SRCROOT)/Sources/Matchers/MatchNull.swift
 $(SRCROOT)/Sources/PFMockService.swift
+$(SRCROOT)/Sources/ProviderVerifier.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomBool.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomString.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift
