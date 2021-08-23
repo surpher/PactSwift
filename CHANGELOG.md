@@ -1,3 +1,6 @@
+# 0.8.2 - v0.8.2
+* bfbbd78 - fix: Makes OneOf matchers init public (Marko Justinek)
+* 98cefb7 - doco: Update examples in README.md (Marko Justinek)
 # 0.8.1 - v0.8.1
 * e353841 - chore: Update PactSwiftMockServer dependency version (Marko Justinek)
 * f023414 - doco: Update README and project structure ADR (Marko Justinek)
