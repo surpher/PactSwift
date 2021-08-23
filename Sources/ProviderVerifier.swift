@@ -49,13 +49,13 @@ public final class ProviderVerifier {
 	/// Executes provider verification test
 	///
 	/// - Parameters:
-	///   - options: Flags and options to use when verifying the provider
+	///   - options: Flags and args to use when verifying a provider
 	///   - file: The file in which to report the error in
 	///   - line: The line on which to report the error on
 	///   - completionBlock: Completion block executed at the end of verification
 	///
-	public func verify(options: VerificationOptions, file: FileString? = #file, line: UInt? = #line, completionBlock: @escaping () -> Void) {
-		if case .failure(let error) = verifier.verifyProvider(options: options) {
+	public func verify(options: Options, file: FileString? = #file, line: UInt? = #line, completionBlock: @escaping () -> Void) {
+		if case .failure(let error) = verifier.verifyProvider(options: options.args) {
 			 failWith(error.description, file: file, line: line)
 		}
 		completionBlock()

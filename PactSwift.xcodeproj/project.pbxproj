@@ -121,6 +121,14 @@
 		ADA40178253028A100265DF3 /* MatchNull.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA40176253028A100265DF3 /* MatchNull.swift */; };
 		ADA40182253033C400265DF3 /* MatchNullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA40181253033C400265DF3 /* MatchNullTests.swift */; };
 		ADA40183253033C400265DF3 /* MatchNullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA40181253033C400265DF3 /* MatchNullTests.swift */; };
+		ADA4B1DB26D31E5100A5AE88 /* ProviderVerifier+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1DA26D31E5100A5AE88 /* ProviderVerifier+Options.swift */; };
+		ADA4B1DC26D31E5100A5AE88 /* ProviderVerifier+Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1DA26D31E5100A5AE88 /* ProviderVerifier+Options.swift */; };
+		ADA4B1DE26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1DD26D31E9100A5AE88 /* ProviderVerifier+Provider.swift */; };
+		ADA4B1DF26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1DD26D31E9100A5AE88 /* ProviderVerifier+Provider.swift */; };
+		ADA4B1E126D31EB100A5AE88 /* ProviderVerifier+Broker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1E026D31EB100A5AE88 /* ProviderVerifier+Broker.swift */; };
+		ADA4B1E226D31EB100A5AE88 /* ProviderVerifier+Broker.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1E026D31EB100A5AE88 /* ProviderVerifier+Broker.swift */; };
+		ADA4B1E426D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1E326D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift */; };
+		ADA4B1E526D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA4B1E326D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift */; };
 		ADB7C11D2432D41F00A16CDE /* Dictionary+PactSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C11C2432D41E00A16CDE /* Dictionary+PactSwift.swift */; };
 		ADB7C1612433269B00A16CDE /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1602433269B00A16CDE /* Request.swift */; };
 		ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */; };
@@ -284,6 +292,10 @@
 		ADA17E5125138908004F1A82 /* RandomDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomDecimal.swift; sourceTree = "<group>"; };
 		ADA40176253028A100265DF3 /* MatchNull.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchNull.swift; sourceTree = "<group>"; };
 		ADA40181253033C400265DF3 /* MatchNullTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchNullTests.swift; sourceTree = "<group>"; };
+		ADA4B1DA26D31E5100A5AE88 /* ProviderVerifier+Options.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProviderVerifier+Options.swift"; sourceTree = "<group>"; };
+		ADA4B1DD26D31E9100A5AE88 /* ProviderVerifier+Provider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProviderVerifier+Provider.swift"; sourceTree = "<group>"; };
+		ADA4B1E026D31EB100A5AE88 /* ProviderVerifier+Broker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProviderVerifier+Broker.swift"; sourceTree = "<group>"; };
+		ADA4B1E326D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProviderVerifier+VersionSelector.swift"; sourceTree = "<group>"; };
 		ADB7C11C2432D41E00A16CDE /* Dictionary+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+PactSwift.swift"; sourceTree = "<group>"; };
 		ADB7C1602433269B00A16CDE /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		ADB7C1682433280100A16CDE /* PactHTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactHTTPMethod.swift; sourceTree = "<group>"; };
@@ -420,6 +432,7 @@
 				AD641A3B24344ED400785CE1 /* Pacticipant.swift */,
 				AD8DF436243EA4580062CB1A /* PactInteractionElement.swift */,
 				ADEDDEF62547B6B700A45AD2 /* PactPathParameter.swift */,
+				ADA4B1D926D31E2C00A5AE88 /* Provider Verification */,
 				ADE2937E2435DB14008AFBC9 /* ProviderState.swift */,
 				ADB7C1602433269B00A16CDE /* Request.swift */,
 				ADB7C16A2433283400A16CDE /* Response.swift */,
@@ -487,6 +500,17 @@
 				AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		ADA4B1D926D31E2C00A5AE88 /* Provider Verification */ = {
+			isa = PBXGroup;
+			children = (
+				ADA4B1E026D31EB100A5AE88 /* ProviderVerifier+Broker.swift */,
+				ADA4B1DA26D31E5100A5AE88 /* ProviderVerifier+Options.swift */,
+				ADA4B1DD26D31E9100A5AE88 /* ProviderVerifier+Provider.swift */,
+				ADA4B1E326D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift */,
+			);
+			name = "Provider Verification";
 			sourceTree = "<group>";
 		};
 		ADB7C11B2432D41100A16CDE /* Extensions */ = {
@@ -978,10 +1002,12 @@
 				ADC372B4269877AF000DA90B /* Sequence+PactSwift.swift in Sources */,
 				AD7891BE24415C100014BCC8 /* IntegerLike.swift in Sources */,
 				ADD03164251219B700C6099B /* ExampleGenerator.swift in Sources */,
+				ADA4B1DB26D31E5100A5AE88 /* ProviderVerifier+Options.swift in Sources */,
 				ADE2937F2435DB14008AFBC9 /* ProviderState.swift in Sources */,
 				AD641A332434331300785CE1 /* Bundle+PactSwift.swift in Sources */,
 				ADB7C1612433269B00A16CDE /* Request.swift in Sources */,
 				AD8DF43F244055980062CB1A /* EachLike.swift in Sources */,
+				ADA4B1E126D31EB100A5AE88 /* ProviderVerifier+Broker.swift in Sources */,
 				ADDE4706244D11DE00E4F7EE /* ErrorReporter.swift in Sources */,
 				ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
@@ -1003,6 +1029,7 @@
 				AD8DF439243EEBDB0062CB1A /* SomethingLike.swift in Sources */,
 				AD9D7D9026C8B3DA00FE4137 /* FromProviderState.swift in Sources */,
 				ADD3C27424416CDF002E73B9 /* EqualTo.swift in Sources */,
+				ADA4B1E426D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift in Sources */,
 				ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+PactSwift.swift in Sources */,
@@ -1013,6 +1040,7 @@
 				ADC37269269825AA000DA90B /* OneOf.swift in Sources */,
 				AD8DF435243C53750062CB1A /* PactBuilder.swift in Sources */,
 				ADF17CC026B50B66008E7ECD /* Constants.swift in Sources */,
+				ADA4B1DE26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */,
 				ADD03175251235A800C6099B /* UUID+PactSwift.swift in Sources */,
 				ADA17E4C251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);
@@ -1080,10 +1108,12 @@
 				ADC372B5269877AF000DA90B /* Sequence+PactSwift.swift in Sources */,
 				AD8FC7FA2463BBB800361854 /* MockService.swift in Sources */,
 				AD8FC7F62463BBB800361854 /* IntegerLike.swift in Sources */,
+				ADA4B1DC26D31E5100A5AE88 /* ProviderVerifier+Options.swift in Sources */,
 				ADD03165251219B700C6099B /* ExampleGenerator.swift in Sources */,
 				AD8FC7E62463BB9F00361854 /* Pact.swift in Sources */,
 				AD8FC7F42463BBB800361854 /* EqualTo.swift in Sources */,
 				AD8FC7EF2463BBA400361854 /* Dictionary+PactSwift.swift in Sources */,
+				ADA4B1E226D31EB100A5AE88 /* ProviderVerifier+Broker.swift in Sources */,
 				AD8FC7EA2463BB9F00361854 /* PactInteractionElement.swift in Sources */,
 				ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
@@ -1105,6 +1135,7 @@
 				AD8FC7ED2463BB9F00361854 /* Response.swift in Sources */,
 				AD9D7D9126C8B3DA00FE4137 /* FromProviderState.swift in Sources */,
 				AD8FC7F22463BBB800361854 /* DecimalLike.swift in Sources */,
+				ADA4B1E526D31EDA00A5AE88 /* ProviderVerifier+VersionSelector.swift in Sources */,
 				AD8FC7EB2463BB9F00361854 /* ProviderState.swift in Sources */,
 				AD8FC7EC2463BB9F00361854 /* Request.swift in Sources */,
 				AD8FC7EE2463BBA400361854 /* Bundle+PactSwift.swift in Sources */,
@@ -1115,6 +1146,7 @@
 				ADC3726A269825AA000DA90B /* OneOf.swift in Sources */,
 				ADBC60DD2513639800BBE666 /* RandomDate.swift in Sources */,
 				ADF17CC126B50B66008E7ECD /* Constants.swift in Sources */,
+				ADA4B1DF26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */,
 				ADD03176251235A800C6099B /* UUID+PactSwift.swift in Sources */,
 				ADA17E4D251383EB004F1A82 /* RandomTime.swift in Sources */,
 			);
