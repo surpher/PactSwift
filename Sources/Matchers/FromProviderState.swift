@@ -70,7 +70,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``Bool`` value to use in consumer test
+	///   - value: The `Bool` value to use in consumer test
 	///
 	@objc(parameter: withBoolValue:)
 	public init(parameter: String, value: Bool) {
@@ -81,7 +81,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``Double`` value to use in consumer test
+	///   - value: The `Double` value to use in consumer test
 	///
 	@objc(parameter: withDoubleValue:)
 	public init(parameter: String, value: Double) {
@@ -92,7 +92,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``Float`` value to use in consumer test
+	///   - value: The `Float` value to use in consumer test
 	///
 	@objc(parameter: withFloatValue:)
 	public init(parameter: String, value: Float) {
@@ -103,7 +103,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``Int`` value to use in consumer test
+	///   - value: The `Int` value to use in consumer test
 	///
 	@objc(parameter: withIntValue:)
 	public init(parameter: String, value: Int) {
@@ -114,7 +114,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``String`` value to use in consumer test
+	///   - value: The `String` value to use in consumer test
 	///
 	@objc(parameter: withStringValue:)
 	public init(parameter: String, value: String) {
@@ -125,7 +125,7 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	///
 	/// - Parameters:
 	///   - parameter: The provider state parameter name
-	///   - value: The ``Decimal`` value to use in consumer test
+	///   - value: The `Decimal` value to use in consumer test
 	///
 	@objc(parameter: withDecimalValue:)
 	public init(parameter: String, value: Decimal) {

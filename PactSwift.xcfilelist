@@ -6,6 +6,7 @@ $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Sequence+PactSwift.swift
 $(SRCROOT)/Sources/Model/Constants.swift
 $(SRCROOT)/Sources/Model/Metadata.swift
+$(SRCROOT)/Sources/Model/ProviderVerifier+Error.swift
 $(SRCROOT)/Sources/Model/TransferProtocol.swift
 $(SRCROOT)/Sources/Model/PactPathParameter.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
@@ -23,6 +24,7 @@ $(SRCROOT)/Sources/Model/Request.swift
 $(SRCROOT)/Sources/Model/EncodingError.swift
 $(SRCROOT)/Sources/Model/ExampleGeneratorExpressible.swift
 $(SRCROOT)/Sources/Model/ErrorReportable.swift
+$(SRCROOT)/Sources/Model/ProviderVerifier+PendingPacts.swift
 $(SRCROOT)/Sources/Model/Pacticipant.swift
 $(SRCROOT)/Sources/Model/MatchingRuleExpressible.swift
 $(SRCROOT)/Sources/Model/ErrorReporter.swift

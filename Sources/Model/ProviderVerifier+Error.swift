@@ -1,6 +1,6 @@
 //
-//  Created by Marko Justinek on 1/4/20.
-//  Copyright © 2020 Marko Justinek. All rights reserved.
+//  Created by Marko Justinek on 23/8/21.
+//  Copyright © 2021 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -17,32 +17,11 @@
 
 import Foundation
 
-struct Metadata {
+public extension ProviderVerifier {
 
-	let pactSpec = PactVersion("3.0.0")
-	let pactSwift = PactVersion(pactSwiftVersion)
-
-	struct PactVersion: Encodable {
-		let version: String
-
-		init(_ version: String) {
-			self.version = version
-		}
-	}
-
-}
-
-extension Metadata: Encodable {
-
-	enum CodingKeys: String, CodingKey {
-		case pactSpec = "pactSpecification"
-		case pactSwift
-	}
-
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(pactSpec, forKey: .pactSpec)
-		try container.encode(pactSwift, forKey: .pactSwift)
+	// A bridge between PactSwiftMockServer errors
+	enum VerificationError: Error {
+		case error(String)
 	}
 
 }

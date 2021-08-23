@@ -61,13 +61,17 @@ public extension ProviderVerifier {
 		public struct VerificationResults {
 			let publishResults = true
 			let providerVersion: String
+			let providerTags: [String]?
 
 			/// Initializes the VerificationResults object
+			///
 			/// - Parameters:
 			///   - providerVersion: The semantical version of the Provider API
+			///   - providerTags: Provider tags to use when publishing results
 			///
-			public init(providerVersion version: String) {
+			public init(providerVersion version: String, providerTags tags: [String]? = nil) {
 				self.providerVersion = version
+				self.providerTags = tags
 			}
 		}
 
@@ -90,22 +94,39 @@ public extension ProviderVerifier {
 		/// Required when publishing results
 		let providerVersion: String?
 
+		/// Consumer tags to verify
+		let consumerTags: [VersionSelector]?
+
+		/// Provider tags to use when publishing results
+		let providerTags: [String]?
+
+		/// Includes pending pacts in verification
+		let includePending: PendingPacts?
+
+		// MARK: - Initialization
+
 		/// Pact broker configuration
 		///
 		/// - Parameters:
 		///   - url: The URL of Pact Broker
 		///   - auth: The authentication option
 		///   - providerName: The name of provider being verified
+		///   - consumerTags: List of consumer pacts to verify
+		///   - includePending: Include pending pacts in verification
 		///   - verificationResults: When provided it submits the verification results with given provider version
 		///
-		public init(url: URL, auth: Either<SimpleAuth, APIToken>, providerName: String, publishResults verificationResults: VerificationResults? = nil) {
+		public init(url: URL, auth: Either<SimpleAuth, APIToken>, providerName: String, consumerTags: [VersionSelector]? = nil, includePending: PendingPacts? = nil, publishResults verificationResults: VerificationResults? = nil) {
 			self.url = url.absoluteString
 			self.authentication = auth
 			self.providerName = providerName
 
+			self.consumerTags = consumerTags
+			self.includePending = includePending
+
 			self.publishVerificationResult = verificationResults?.publishResults ?? false
 			// Provider version is only required when publishing verification results
 			self.providerVersion = verificationResults?.providerVersion
+			self.providerTags = verificationResults?.providerTags
 		}
 	}
 

@@ -20,7 +20,7 @@ import Foundation
 public extension ProviderVerifier {
 
 	/// Provides a way to configure which pacts the provider verifies.
-	struct VersionSelector: Decodable {
+	struct VersionSelector: Codable {
 
 		/// The name of the tag which applies to the pacticipant versions of the pacts to verify
 		let tag: String
@@ -28,7 +28,7 @@ public extension ProviderVerifier {
 		/// Whether or not to verify only the pact that belongs to the latest application version
 		let latest: Bool
 
-		/// A fallback tag if a pact for the specified ``tag`` does not exist
+		/// A fallback tag if a pact for the specified `tag` does not exist
 		let fallbackTag: String?
 
 		/// Filter pacts by the specified consumer
@@ -41,8 +41,8 @@ public extension ProviderVerifier {
 		/// Defines a version configuration for which pacts the provider verifies
 		///
 		/// - Parameters:
-		///   - tag: The version ``tag`` name of the consumer to verify
-		///   - fallbackTag: The version ``tag`` name if the specified ``tag`` does not exist
+		///   - tag: The version `tag` name of the consumer to verify
+		///   - fallbackTag: The version `tag` to use if the initial `tag` does not exist
 		///   - latest: Whether to verify only the pact belonging to the latest application version
 		///   - consumer: Filter pacts by the specified consumer
 		///
@@ -55,6 +55,18 @@ public extension ProviderVerifier {
 			self.consumer = consumer
 		}
 
+		/// Converts to JSON string
+		///
+		/// - Returns: A ``String`` representing ``ProviderVerifier`` in JSON format
+		///
+		func toJSONString() throws -> String {
+			let jsonEncoder = JSONEncoder()
+			let jsonData = try jsonEncoder.encode(self)
+			guard let jsonString = String(data: jsonData, encoding: .utf8) else {
+				throw VerificationError.error("Invalid consumer version selector specified: \(self)")
+			}
+			return jsonString
+		}
 	}
 
 }

@@ -16,6 +16,7 @@
 //
 
 import Foundation
+@_implementationOnly import PactSwiftToolbox
 
 public extension ProviderVerifier {
 
@@ -36,18 +37,34 @@ public extension ProviderVerifier {
 
 		/// The source of Pact files
 		public enum PactsSource {
+
+			/// Verify pacts on a Pact Broker
 			case broker(Broker)
+
+			/// Verify pacts in directories
 			case directories([String])
+
+			/// Verify specific pact files
 			case files([String])
+
+			/// Verify specific pacts at URLs
 			case urls([URL])
 		}
 
-		/// Provider states filter
-		public enum ProviderStates {
+		/// Filter pacts
+		public enum FilterPacts {
+
+			/// Only validate interactions that have no defined provider state
 			case noState
-			case filterStates([String])
-			case filterDescriptions([String])
-			case filterConsumers([String])
+
+			/// Only validate interactions whose provider states match this filter
+			case states([String])
+
+			/// Only validate interactions whose descriptions match this filter
+			case descriptions([String])
+
+			/// Consumer name to filter the pacts to be verified
+			case consumers([String])
 		}
 
 		// MARK: - Properties
@@ -59,17 +76,10 @@ public extension ProviderVerifier {
 		let providerURL: URL?
 
 		/// Only validated interactions that match this filter
-		let filterProviderStates: ProviderStates?
+		let filterPacts: FilterPacts?
 
 		/// Pacts source
 		let pactsSource: PactsSource
-
-		/// Includes pending pacts in verification
-		let includePending: Bool
-
-		let consumerTags: [String]?
-
-		let providerTags: [String]?
 
 		/// Sets the log level
 		let logLevel: LogLevel
@@ -81,26 +91,19 @@ public extension ProviderVerifier {
 		/// - Parameters:
 		///   - provider: The provider information
 		///   - pactsSource: The locations of pacts
-		///   - filterStates: Only validates the interactions that match the filter
-		///   - includePending: Verify pending pacts ([https://pact.io/pending](https://pact.io/pending))
+		///   - filter: Only validates the interactions that match the filter
 		///   - logLevel: Logging level
 		///
 		public init(
 			provider: Provider,
 			pactsSource: PactsSource,
-			filterStates: ProviderStates? = nil,
-			includePending: Bool = false,
-			consumerTags: [String]? = nil,
-			providerTags: [String]? = nil,
+			filter: FilterPacts? = nil,
 			logLevel: LogLevel = .warn
 		) {
 			self.providerURL = provider.url
 			self.port = provider.port
 			self.pactsSource = pactsSource
-			self.filterProviderStates = filterStates
-			self.includePending = includePending
-			self.consumerTags = consumerTags
-			self.providerTags = providerTags
+			self.filterPacts = filter
 			self.logLevel = logLevel
 		}
 	}
@@ -140,10 +143,33 @@ extension ProviderVerifier.Options {
 			// Use the pact for provider with name
 			newLineDelimitedArgs.append("--provider-name\n\(broker.providerName)")
 
-			// Publishing verification results
+			// Publishing verification results back to Broker
 			if broker.publishVerificationResult, let providerVersion = broker.providerVersion, providerVersion.isEmpty == false {
 				newLineDelimitedArgs.append("--publish")
 				newLineDelimitedArgs.append("--provider-version\n\(providerVersion)")
+
+				if let providerTags = broker.providerTags, providerTags.isEmpty == false {
+					newLineDelimitedArgs.append("--provider-tags\n\(providerTags.joined(separator: ","))")
+				}
+			}
+
+			// Consumer tags
+			broker.consumerTags?.forEach {
+				do {
+					newLineDelimitedArgs.append("--consumer-version-selectors\n\(try $0.toJSONString())")
+				} catch {
+					Logger.log(message: "Failed to convert provider version to JSON representaion: \(String(describing: broker.providerTags))")
+				}
+			}
+
+			// Pending pacts
+			if let includePending = broker.includePending {
+				newLineDelimitedArgs.append("--enable-pending\ntrue")
+				newLineDelimitedArgs.append("--include-wip-pacts-since\n\(includePending.sinceDate.iso8601short)")
+
+				if broker.publishVerificationResult == false {
+					newLineDelimitedArgs.append("--provider-version\n\(includePending.providerVersion)")
+				}
 			}
 
 		case .directories(let pactDirs) where pactDirs.isEmpty == false:
@@ -159,25 +185,20 @@ extension ProviderVerifier.Options {
 			break
 		}
 
-		// Pending pacts
-		if includePending {
-			newLineDelimitedArgs.append("--enable-pending")
-		}
-
 		// Set state filters
-		if let filterProviderStates = filterProviderStates {
+		if let filterProviderStates = filterPacts {
 			switch filterProviderStates {
 
 			case .noState:
 				newLineDelimitedArgs.append("--filter-no-state\ntrue")
 
-			case .filterStates(let states) where states.isEmpty == false:
+			case .states(let states) where states.isEmpty == false:
 				states.forEach { newLineDelimitedArgs.append("--filter-state\n\($0)") }
 
-			case .filterDescriptions(let descriptions) where descriptions.isEmpty == false:
+			case .descriptions(let descriptions) where descriptions.isEmpty == false:
 				descriptions.forEach { newLineDelimitedArgs.append("--filter-description\n\($0)") }
 
-			case .filterConsumers(let consumers) where consumers.isEmpty == false:
+			case .consumers(let consumers) where consumers.isEmpty == false:
 				consumers.forEach { newLineDelimitedArgs.append("--filter-consumer\n\($0)") }
 
 			default:
@@ -185,21 +206,22 @@ extension ProviderVerifier.Options {
 			}
 		}
 
-		// Consumer tags
-		if let consumerTags = consumerTags {
-			newLineDelimitedArgs.append("--consumer-version-tags\n\(consumerTags.joined(separator: ","))")
-		}
-
-		// Provider tags
-		if let providerTags = providerTags {
-			newLineDelimitedArgs.append("--provider-tags\n\(providerTags.joined(separator: ","))")
-		}
-
 		// Set logging level
 		newLineDelimitedArgs.append("--loglevel\n\(self.logLevel.rawValue)")
 
 		// Convert all verification arguments to a ``String`` and return it
 		return newLineDelimitedArgs.joined(separator: "\n")
+	}
+
+}
+
+private extension Date {
+
+	/// Date represented as string in short ISO8601 format (eg: "2021-08-24")
+	var iso8601short: String {
+		let formatter = DateFormatter()
+		formatter.dateFormat = "YYYY-MM-dd"
+		return formatter.string(from: self)
 	}
 
 }
