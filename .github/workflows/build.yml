@@ -105,11 +105,9 @@ jobs:
     needs: [test, test_carthage, test_linux]
     name: Build demo projects
     if: github.ref == 'refs/heads/main'
-    runs-on: macos-11
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
 
       - name: Build demo projects
         run: |
