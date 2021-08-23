@@ -58,7 +58,7 @@ public extension Matcher {
 		///
 		/// Uses the first provided value in tests. Removes duplicated values.
 		///
-		init(values: [AnyHashable]) {
+		public init(values: [AnyHashable]) {
 			self.value = values.first as Any
 			self.term = Self.regexed(values)
 		}
