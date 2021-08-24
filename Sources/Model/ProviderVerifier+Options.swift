@@ -39,7 +39,7 @@ public extension ProviderVerifier {
 		public enum PactsSource {
 
 			/// Verify pacts on a Pact Broker
-			case broker(Broker)
+			case broker(PactBroker)
 
 			/// Verify pacts in directories
 			case directories([String])
@@ -81,6 +81,9 @@ public extension ProviderVerifier {
 		/// Pacts source
 		let pactsSource: PactsSource
 
+		/// URL to post state change requests to
+		let stateChangeURL: URL?
+
 		/// Sets the log level
 		let logLevel: LogLevel
 
@@ -92,18 +95,21 @@ public extension ProviderVerifier {
 		///   - provider: The provider information
 		///   - pactsSource: The locations of pacts
 		///   - filter: Only validates the interactions that match the filter
+		///   - stateChangeURL: URL to post state change requests to
 		///   - logLevel: Logging level
 		///
 		public init(
 			provider: Provider,
 			pactsSource: PactsSource,
 			filter: FilterPacts? = nil,
+			stateChangeURL: URL? = nil,
 			logLevel: LogLevel = .warn
 		) {
 			self.providerURL = provider.url
 			self.port = provider.port
 			self.pactsSource = pactsSource
 			self.filterPacts = filter
+			self.stateChangeURL = stateChangeURL
 			self.logLevel = logLevel
 		}
 	}
@@ -158,7 +164,7 @@ extension ProviderVerifier.Options {
 				do {
 					newLineDelimitedArgs.append("--consumer-version-selectors\n\(try $0.toJSONString())")
 				} catch {
-					Logger.log(message: "Failed to convert provider version to JSON representaion: \(String(describing: broker.providerTags))")
+					Logger.log(message: "Failed to convert provider version to JSON representaion: \(String(describing: broker.consumerTags))")
 				}
 			}
 
@@ -204,6 +210,11 @@ extension ProviderVerifier.Options {
 			default:
 				break
 			}
+		}
+
+		// State change URL
+		if let stateChangeURL = stateChangeURL {
+			newLineDelimitedArgs.append("--state-change-url\n\(stateChangeURL.absoluteString)")
 		}
 
 		// Set logging level
