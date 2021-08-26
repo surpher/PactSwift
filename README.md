@@ -98,26 +98,20 @@ import PactSwift
 
 @testable import ExampleProject
 
-class MockServiceWrapper {
-  static let shared = MockServiceWrapper()
-  var mockService: MockService
-
-  private init() {
-    mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
-  }
-}
-
-// MARK: - XCTestCase
-
 class PassingTestsExample: XCTestCase {
 
-  var mockService = MockServiceWrapper.shared.mockService
+  static var mockService: MockService!
+
+  override class func setUp() {
+    super.setUp()
+    mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
+  }
 
   // MARK: - Tests
 
   func testGetUsers() {
     // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API, will behave for this specific API request we are testing here
-    mockService
+    PassingTestsExample.mockService
 
       // #2 - Define the interaction description and provider state for this specific API request that we are testing
       .uponReceiving("A request for a list of users")
@@ -157,7 +151,7 @@ class PassingTestsExample: XCTestCase {
     let apiClient = RestManager()
 
     // Run a Pact test and assert **our** API client makes the request exactly as we promised above
-    mockService.run(timeout: 1) { [unowned self] baseURL, done in
+    PassingTestsExample.mockService.run(timeout: 1) { [unowned self] mockServiceURL, done in
 
       // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
       apiClient.baseUrl = baseURL
@@ -179,7 +173,7 @@ class PassingTestsExample: XCTestCase {
 
   // More tests for other interactions and/or provider states...
   func testCreateUser() {
-    mockService
+    PassingTestsExample.mockService
       .uponReceiving("A request to create a user")
       .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
       .withRequest(
@@ -203,7 +197,7 @@ class PassingTestsExample: XCTestCase {
 
    let apiClient = RestManager()
 
-    mockService.run { baseURL, done in
+    PassingTestsExample.mockService.run { mockServiceURL, done in
      // trigger your network request and assert the expectations
      done()
     }
@@ -213,7 +207,7 @@ class PassingTestsExample: XCTestCase {
 ```
 
 `MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
-That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a singleton here to keep a reference to one instance of `MockService` for all the Pact tests.  
+That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a `static var mockService` here to keep a reference to one instance of `MockService` for all the Pact tests. Alternatively you could wrap the `mockService` into a singleton.  
 Suggestions to improve this are welcome! See [contributing][contributing].
 
 References:
@@ -264,8 +258,8 @@ _mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
 
 ## Demo projects
 
-[![PactSwift demo projects](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)][pact-swift-examples-workflow] 
-[![PactSwift demo projects (macOS 11)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS11.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS11.yml)
+[![PactSwift - Consumer](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml)
+[![PactSwift - Consumer (macOS-10.15)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml)
 
 More in [pact-swift-examples][demo-projects] repo.
 
