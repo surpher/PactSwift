@@ -27,8 +27,8 @@
 		AD4B97142513A64700C37560 /* RandomStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B97122513A64700C37560 /* RandomStringTests.swift */; };
 		AD5E9F0226D375BE0002580D /* ProviderVerifier+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */; };
 		AD5E9F0326D375BE0002580D /* ProviderVerifier+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */; };
-		AD5E9F0526D4684B0002580D /* PendingPacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0426D4684B0002580D /* PendingPacts.swift */; };
-		AD5E9F0626D4684B0002580D /* PendingPacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0426D4684B0002580D /* PendingPacts.swift */; };
+		AD5E9F0526D4684B0002580D /* WIPPacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0426D4684B0002580D /* WIPPacts.swift */; };
+		AD5E9F0626D4684B0002580D /* WIPPacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0426D4684B0002580D /* WIPPacts.swift */; };
 		AD641A332434331300785CE1 /* Bundle+PactSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A322434331300785CE1 /* Bundle+PactSwift.swift */; };
 		AD641A352434345500785CE1 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A342434345500785CE1 /* Metadata.swift */; };
 		AD641A382434355C00785CE1 /* MetadataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A372434355C00785CE1 /* MetadataTests.swift */; };
@@ -241,7 +241,7 @@
 		AD4FC5DE242CC2C30039342D /* Target-iOS-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD4FC5DF242CC2CB0039342D /* Target-iOS-Tests-Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Target-iOS-Tests-Shared.xcconfig"; sourceTree = "<group>"; };
 		AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProviderVerifier+Error.swift"; sourceTree = "<group>"; };
-		AD5E9F0426D4684B0002580D /* PendingPacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingPacts.swift; sourceTree = "<group>"; };
+		AD5E9F0426D4684B0002580D /* WIPPacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIPPacts.swift; sourceTree = "<group>"; };
 		AD641A322434331300785CE1 /* Bundle+PactSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+PactSwift.swift"; sourceTree = "<group>"; };
 		AD641A342434345500785CE1 /* Metadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metadata.swift; sourceTree = "<group>"; };
 		AD641A372434355C00785CE1 /* MetadataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataTests.swift; sourceTree = "<group>"; };
@@ -512,7 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				ADA4B1E026D31EB100A5AE88 /* PactBroker.swift */,
-				AD5E9F0426D4684B0002580D /* PendingPacts.swift */,
+				AD5E9F0426D4684B0002580D /* WIPPacts.swift */,
 				AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */,
 				ADA4B1DA26D31E5100A5AE88 /* ProviderVerifier+Options.swift */,
 				ADA4B1DD26D31E9100A5AE88 /* ProviderVerifier+Provider.swift */,
@@ -1047,7 +1047,7 @@
 				AD8DF437243EA4580062CB1A /* PactInteractionElement.swift in Sources */,
 				ADBC60DC2513639700BBE666 /* RandomDate.swift in Sources */,
 				ADC37269269825AA000DA90B /* OneOf.swift in Sources */,
-				AD5E9F0526D4684B0002580D /* PendingPacts.swift in Sources */,
+				AD5E9F0526D4684B0002580D /* WIPPacts.swift in Sources */,
 				AD8DF435243C53750062CB1A /* PactBuilder.swift in Sources */,
 				ADF17CC026B50B66008E7ECD /* Constants.swift in Sources */,
 				ADA4B1DE26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */,
@@ -1155,7 +1155,7 @@
 				AD8FC7E72463BB9F00361854 /* PactBuilder.swift in Sources */,
 				AD8FC7F92463BBB800361854 /* SomethingLike.swift in Sources */,
 				ADC3726A269825AA000DA90B /* OneOf.swift in Sources */,
-				AD5E9F0626D4684B0002580D /* PendingPacts.swift in Sources */,
+				AD5E9F0626D4684B0002580D /* WIPPacts.swift in Sources */,
 				ADBC60DD2513639800BBE666 /* RandomDate.swift in Sources */,
 				ADF17CC126B50B66008E7ECD /* Constants.swift in Sources */,
 				ADA4B1DF26D31E9100A5AE88 /* ProviderVerifier+Provider.swift in Sources */,

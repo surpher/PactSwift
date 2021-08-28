@@ -215,6 +215,95 @@ References:
 - [Issue #67](https://github.com/surpher/PactSwift/issues/67)
 - [Writing Tests](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36)
 
+## Provider verification
+
+<details><summary>Verification options</summary>
+
+</details>
+
+In your unit tests suite, prepare a Pact Provider Verification unit test:
+
+1. Start your local Provider service
+2. Optionally, instrument your API with ability to configure [provider states](https://github.com/pact-foundation/pact-provider-verifier/)
+3. Run the Provider side verification step
+
+To dynamically retrieve pacts from a Pact Broker for a provider with token authentication, instantiate a `PactBroker` object with your configuration:
+
+```swift
+// The provider being verified
+let provider = ProviderVerifier.Provider(port: 8080)
+
+// The Pact broker configuration
+let pactBroker = PactBroker(
+  url: URL(string: "https://broker.url/")!,
+  auth: .token("auth-token"),
+  providerName: "Some API Service"
+)
+
+// Verification options
+let options = ProviderVerifier.Options(
+  provider: provider,
+  pactsSource: .broker(pactBroker)
+)
+
+ProviderVerifier().verify(options: options) {
+  // do something (eg: shutdown the provider)
+}
+```
+
+To validate Pacts from local folders or specific Pact files use the desired case.
+
+<details><summary>Examples</summary>
+
+
+
+```swift
+// All Pact files from a directory example
+ProviderVerifier()
+  .verify(options: ProviderVerifier.Options(
+    provider: provider,
+    pactsSource: .directories(["/absolute/path/to/directory/containing/pact/files/"])
+  ),
+  completionBlock: {
+    // do something
+  }
+)
+```
+
+```swift
+// Only the specific Pact files
+pactSource: .files(["/absolute/path/to/file/consumerName-providerName.json"])
+```
+
+```swift
+// Only the specific Pact files at URL
+pactSource: .urls([URL(string: "https://some.base.url/location/of/pact/consumerName-providerName.json")])
+```
+
+</details>
+
+### Submitting verification results
+
+To submit the verification results, provide `PactBroker.VerificationResults()` object to `pactBroker`.
+
+<details><summary>Example</summary>
+
+Set the provider version and optional provider version tags. See [version numbers](https://docs.pact.io/pact_broker/pacticipant_version_numbers) for best practices on Pact versioning
+
+```swift
+let pactBroker = PactBroker(
+  url: URL(string: "https://broker.url/")!,
+  auth: .token("auth-token"),
+  providerName: "Some API Service",
+  publishResults: PactBroker.VerificationResults(
+    providerVersion: "v0.0.4-\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
+    providerTags: ["\(ProcessInfo.processInfo.environment["GITHUB_REF"])"]
+  )
+)
+```
+
+</details>
+
 ## Matching
 
 In addition to verbatim value matching, you can use a set of useful matching objects that can increase expressiveness and reduce brittle test cases.
@@ -260,8 +349,9 @@ _mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
 
 [![PactSwift - Consumer](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml)
 [![PactSwift - Consumer (macOS-10.15)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml)
+[![PactSwift - Provider](https://github.com/surpher/pact-swift-examples/actions/workflows/verify_provider.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/verify_provider.yml)
 
-More in [pact-swift-examples][demo-projects] repo.
+See [pact-swift-examples][demo-projects] for more examples of how to use `PactSwift`.
 
 ## Contributing
 

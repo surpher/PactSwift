@@ -10,7 +10,6 @@ $(SRCROOT)/Sources/Model/ProviderVerifier+Error.swift
 $(SRCROOT)/Sources/Model/TransferProtocol.swift
 $(SRCROOT)/Sources/Model/PactPathParameter.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
-$(SRCROOT)/Sources/Model/PendingPacts.swift
 $(SRCROOT)/Sources/Model/ProviderVerifier+Provider.swift
 $(SRCROOT)/Sources/Model/PactHTTPMethod.swift
 $(SRCROOT)/Sources/Model/PactSwiftVersion.swift
@@ -25,6 +24,7 @@ $(SRCROOT)/Sources/Model/EncodingError.swift
 $(SRCROOT)/Sources/Model/ExampleGeneratorExpressible.swift
 $(SRCROOT)/Sources/Model/PactBroker.swift
 $(SRCROOT)/Sources/Model/ErrorReportable.swift
+$(SRCROOT)/Sources/Model/WIPPacts.swift
 $(SRCROOT)/Sources/Model/Pacticipant.swift
 $(SRCROOT)/Sources/Model/MatchingRuleExpressible.swift
 $(SRCROOT)/Sources/Model/ErrorReporter.swift

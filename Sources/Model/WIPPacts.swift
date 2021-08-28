@@ -18,7 +18,7 @@
 import Foundation
 
 /// The configuration used when verifying WIP pacts
-public struct PendingPacts {
+public struct WIPPacts {
 
 	/// The date from which the changed pacts are to be included
 	let sinceDate: Date
@@ -26,7 +26,7 @@ public struct PendingPacts {
 	/// The provider
 	let providerVersion: String
 
-	/// Configuration for verifying pending pacts
+	/// Configuration for verifying WIP pacts
 	///
 	/// - Parameters:
 	///   - since: The date from which the WIP pacts are to be included in verification

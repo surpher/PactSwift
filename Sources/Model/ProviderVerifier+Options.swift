@@ -120,6 +120,7 @@ extension ProviderVerifier.Options {
 
 	/// Newline delimited provider verification arguments
 	var args: String {
+		// Verification arguments to pass to pactffi_verify()
 		var newLineDelimitedArgs = [String]()
 
 		// Set verified provider port
@@ -134,14 +135,17 @@ extension ProviderVerifier.Options {
 		switch pactsSource {
 
 		case .broker(let broker):
+			// Set broker url
 			newLineDelimitedArgs.append("--broker-url\n\(broker.url)")
 
 			// Broker authentication type
+			// Authenticate with username and password
 			switch broker.authentication {
 			case .auth(let auth):
 				newLineDelimitedArgs.append("--user\n\(auth.username)")
 				newLineDelimitedArgs.append("--password\n\(auth.password)")
 
+			// Authenticate with a Token (Pactflow)
 			case .token(let auth):
 				newLineDelimitedArgs.append("--token\n\(auth.token)")
 			}
@@ -169,21 +173,37 @@ extension ProviderVerifier.Options {
 			}
 
 			// Pending pacts
-			if let includePending = broker.includePending {
+			if broker.includePending == true {
 				newLineDelimitedArgs.append("--enable-pending\ntrue")
-				newLineDelimitedArgs.append("--include-wip-pacts-since\n\(includePending.sinceDate.iso8601short)")
+			}
 
+			// WIP pacts
+			if let includeWIP = broker.includeWIP {
+				// Enable pending pacts only if it wasn not set already!
+				let enablePendingArgs = "--enable-pending\ntrue"
+				if newLineDelimitedArgs.contains(where: { $0 == enablePendingArgs }) == false {
+					newLineDelimitedArgs.append(enablePendingArgs)
+				}
+
+				// Set the date from which to include WIP pacts
+				newLineDelimitedArgs.append("--include-wip-pacts-since\n\(includeWIP.sinceDate.iso8601short)")
+
+				// Explicitly set provider version argument but only when not publishing verification result (otherwise it would be duplicated)
+				// See [Work In Progress - Technical details](https://docs.pact.io/pact_broker/advanced_topics/wip_pacts/#technical-details) for more.
 				if broker.publishVerificationResult == false {
-					newLineDelimitedArgs.append("--provider-version\n\(includePending.providerVersion)")
+					newLineDelimitedArgs.append("--provider-version\n\(includeWIP.providerVersion)")
 				}
 			}
 
+		// Verify pacts from directories
 		case .directories(let pactDirs) where pactDirs.isEmpty == false:
 			pactDirs.forEach { newLineDelimitedArgs.append("--dir\n\($0)") }
 
+		// Verify specific pact files
 		case .files(let files) where files.isEmpty == false:
 			files.forEach { newLineDelimitedArgs.append("--file\n\($0)") }
 
+		// Verify pacts from specific URLs
 		case .urls(let pactURLs) where pactURLs.isEmpty == false:
 			pactURLs.forEach { newLineDelimitedArgs.append("--url\n\($0)") }
 
@@ -195,15 +215,19 @@ extension ProviderVerifier.Options {
 		if let filterProviderStates = filterPacts {
 			switch filterProviderStates {
 
+			// Only test interactions with no specific state defined
 			case .noState:
 				newLineDelimitedArgs.append("--filter-no-state\ntrue")
 
+			// Only test interactions with specific states
 			case .states(let states) where states.isEmpty == false:
 				states.forEach { newLineDelimitedArgs.append("--filter-state\n\($0)") }
 
+			// Only test interactions with specific descriptions
 			case .descriptions(let descriptions) where descriptions.isEmpty == false:
 				descriptions.forEach { newLineDelimitedArgs.append("--filter-description\n\($0)") }
 
+			// Only test pact contracts with specific consumers
 			case .consumers(let consumers) where consumers.isEmpty == false:
 				consumers.forEach { newLineDelimitedArgs.append("--filter-consumer\n\($0)") }
 
@@ -220,7 +244,7 @@ extension ProviderVerifier.Options {
 		// Set logging level
 		newLineDelimitedArgs.append("--loglevel\n\(self.logLevel.rawValue)")
 
-		// Convert all verification arguments to a ``String`` and return it
+		// Convert all verification arguments to a `String` and return it
 		return newLineDelimitedArgs.joined(separator: "\n")
 	}
 

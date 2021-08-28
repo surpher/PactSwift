@@ -100,7 +100,10 @@ public struct PactBroker {
 	let providerTags: [String]?
 
 	/// Includes pending pacts in verification
-	let includePending: PendingPacts?
+	let includePending: Bool?
+
+	/// Include WIP pacts in verification
+	let includeWIP: WIPPacts?
 
 	// MARK: - Initialization
 
@@ -112,15 +115,24 @@ public struct PactBroker {
 	///   - providerName: The name of provider being verified
 	///   - consumerTags: List of consumer pacts to verify
 	///   - includePending: Include pending pacts in verification
+	///   - includeWIP: Allow pacts that don't match given consumer selectors (or tags) to  be verified, without causing the overall task to fail
 	///   - verificationResults: When provided it submits the verification results with given provider version
 	///
-	public init(url: URL, auth: Either<SimpleAuth, APIToken>, providerName: String, consumerTags: [VersionSelector]? = nil, includePending: PendingPacts? = nil, publishResults verificationResults: VerificationResults? = nil) {
+	/// See [Pact broker](https://docs.pact.io/pact_broker) for more.
+	///
+	/// Pending pacts and WIP pacts features are available on [Pactflow](https://pactflow.io/) by default,
+	/// and requires [configuration](https://docs.pact.io/pact_broker/advanced_topics/wip_pacts/) if using a self-hosted broker.
+	///
+	/// - Warning: When including WIP pacts, `includePending` will be set to `true`.
+	///
+	public init(url: URL, auth: Either<SimpleAuth, APIToken>, providerName: String, consumerTags: [VersionSelector]? = nil, includePending: Bool? = nil, includeWIP: WIPPacts? = nil, publishResults verificationResults: VerificationResults? = nil) {
 		self.url = url.absoluteString
 		self.authentication = auth
 		self.providerName = providerName
 
 		self.consumerTags = consumerTags
 		self.includePending = includePending
+		self.includeWIP = includeWIP
 
 		self.publishVerificationResult = verificationResults?.publishResults ?? false
 		// Provider version is only required when publishing verification results
