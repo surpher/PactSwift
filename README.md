@@ -38,11 +38,13 @@ dependencies: [
 #### Linux
 <details><summary>Linux Installation Instructions</summary>
 
-When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust]. It is important you build the version of `libpact_ffi.so` that builds the same header files as provided by `PactMockServer`. See [`PactMockServer`](https://github.com/surpher/PactMockServer) [release notes](https://github.com/surpher/PactMockServer/releases) for details.
+When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust] or fetch a `Pact FFI Library x.y.z` from [pact-reference releases](https://github.com/pact-foundation/pact-reference/releases).
+
+It is important that the version of `libpact_ffi.so` you build or fetch is compatible with the header files provided by `PactMockServer`. See [release notes](https://github.com/surpher/PactMockServer/releases) for details.
 
 See `/Scripts/build_libpact_ffi` for some inspiration building libraries from Rust code.
 
-When building and testing your project you can either set `LD_LIBRARY_PATH` pointing to the folder containing your `libpact_ffi.so`:
+When testing your project you can either set `LD_LIBRARY_PATH` pointing to the folder containing your `libpact_ffi.so`:
 
 ```sh
 export LD_LIBRARY_PATH="/absolute/path/to/your/rust/target/release/:$LD_LIBRARY_PATH"
@@ -90,7 +92,7 @@ Sandboxed apps (macOS) are limited in where they can write Pact contract files i
 - Share the generated Pact contract file with your provider (eg: upload to a [Pact Broker][pact-broker]),
 - Run [`can-i-deploy`][can-i-deploy] (eg: on your CI/CD) to deploy with confidence.
 
-### Example Test
+### Example Consumer Tests
 
 ```swift
 import XCTest
@@ -217,10 +219,6 @@ References:
 
 ## Provider verification
 
-<details><summary>Verification options</summary>
-
-</details>
-
 In your unit tests suite, prepare a Pact Provider Verification unit test:
 
 1. Start your local Provider service
@@ -237,7 +235,7 @@ let provider = ProviderVerifier.Provider(port: 8080)
 let pactBroker = PactBroker(
   url: URL(string: "https://broker.url/")!,
   auth: .token("auth-token"),
-  providerName: "Some API Service"
+  providerName: "Your API Service Name"
 )
 
 // Verification options
@@ -254,8 +252,6 @@ ProviderVerifier().verify(options: options) {
 To validate Pacts from local folders or specific Pact files use the desired case.
 
 <details><summary>Examples</summary>
-
-
 
 ```swift
 // All Pact files from a directory example
@@ -284,7 +280,7 @@ pactSource: .urls([URL(string: "https://some.base.url/location/of/pact/consumerN
 
 ### Submitting verification results
 
-To submit the verification results, provide `PactBroker.VerificationResults()` object to `pactBroker`.
+To submit the verification results, provide `PactBroker.VerificationResults` object to `pactBroker`.
 
 <details><summary>Example</summary>
 
@@ -296,13 +292,15 @@ let pactBroker = PactBroker(
   auth: .token("auth-token"),
   providerName: "Some API Service",
   publishResults: PactBroker.VerificationResults(
-    providerVersion: "v0.0.4-\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
+    providerVersion: "v0.0.4+\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
     providerTags: ["\(ProcessInfo.processInfo.environment["GITHUB_REF"])"]
   )
 )
 ```
 
 </details>
+
+For a full working example of Provider Verification see `Pact-Linux-Provider` project in [pact-swift-examples][demo-projects] repository.
 
 ## Matching
 

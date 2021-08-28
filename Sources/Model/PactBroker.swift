@@ -115,10 +115,10 @@ public struct PactBroker {
 	///   - providerName: The name of provider being verified
 	///   - consumerTags: List of consumer pacts to verify
 	///   - includePending: Include pending pacts in verification
-	///   - includeWIP: Allow pacts that don't match given consumer selectors (or tags) to  be verified, without causing the overall task to fail
+	///   - includeWIP: Allow pacts that don't match given consumer selectors (or tags) to be verified, without causing the overall task to fail
 	///   - verificationResults: When provided it submits the verification results with given provider version
 	///
-	/// See [Pact broker](https://docs.pact.io/pact_broker) for more.
+	/// You should only submit verification results during CI builds. See [Pact broker](https://docs.pact.io/pact_broker) for more.
 	///
 	/// Pending pacts and WIP pacts features are available on [Pactflow](https://pactflow.io/) by default,
 	/// and requires [configuration](https://docs.pact.io/pact_broker/advanced_topics/wip_pacts/) if using a self-hosted broker.
