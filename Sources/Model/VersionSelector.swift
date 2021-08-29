@@ -18,7 +18,7 @@
 import Foundation
 
 /// Provides a way to configure which pacts the provider verifies.
-public struct VersionSelector: Codable {
+public struct VersionSelector: Codable, Equatable {
 
 	// MARK: - Properties
 
@@ -63,7 +63,7 @@ extension VersionSelector {
 
 	/// Converts to JSON string
 	///
-	/// - Returns: A ``String`` representing ``ProviderVerifier`` in JSON format
+	/// - Returns: A `String` representing `ProviderVerifier` in JSON format
 	///
 	func toJSONString() throws -> String {
 		let jsonEncoder = JSONEncoder()

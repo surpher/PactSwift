@@ -28,21 +28,24 @@ import PactSwiftMockServer
 /// Entry point for provider verification
 public final class ProviderVerifier {
 
-	let verifier: Verifier
+	let verifier: ProviderVerifying
 	private let errorReporter: ErrorReportable
 
-	/// Initializes a ``Verifier`` object
+	/// Initializes a `Verifier` object for provider verification
 	public convenience init() {
-		self.init(errorReporter: ErrorReporter())
+		self.init(verifier: Verifier(), errorReporter: ErrorReporter())
 	}
 
-	/// Initializes a ``Verifier`` object
+	/// Initializes a `Verifier` object
 	///
 	/// - Parameters:
-	///   - errorReporter: Injectable object to intercept errors
+	///   - verifier: The verifier object handling provider verification
+	///   - errorReporter: Error reporting or intercepting object
 	///
-	internal init(errorReporter: ErrorReportable? = nil) {
-		self.verifier = Verifier()
+	/// This initializer is marked `internal` for testing purposes!
+	///
+	internal init(verifier: ProviderVerifying, errorReporter: ErrorReportable? = nil) {
+		self.verifier = verifier
 		self.errorReporter = errorReporter ?? ErrorReporter()
 	}
 
@@ -54,17 +57,17 @@ public final class ProviderVerifier {
 	///   - line: The line on which to report the error on
 	///   - completionBlock: Completion block executed at the end of verification
 	///
-	/// - Returns: A ``Result<Bool, VerificationError>`` where error describes the failure
+	/// - Returns: A `Result<Bool, VerificationError>` where error describes the failure
 	///
 	@discardableResult
-	public func verify(options: Options, file: FileString? = #file, line: UInt? = #line, completionBlock: @escaping () -> Void) -> Result<Bool, ProviderVerifier.VerificationError> {
+	public func verify(options: Options, file: FileString? = #file, line: UInt? = #line, completionBlock: (() -> Void)? = nil) -> Result<Bool, ProviderVerifier.VerificationError> {
 		switch verifier.verifyProvider(options: options.args) {
 		case .success(let value):
-			completionBlock()
+			completionBlock?()
 			return .success(value)
 		case .failure(let error):
 			failWith(error.description, file: file, line: line)
-			completionBlock()
+			completionBlock?()
 			return .failure(VerificationError.error(error.description))
 		}
 	}
@@ -75,7 +78,7 @@ public final class ProviderVerifier {
 
 private extension ProviderVerifier {
 
-	/// Fail the test and raise the failure in ``file`` at ``line``
+	/// Fail the test and raise the failure in `file` at `line`
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
 		if let file = file, let line = line {
 			errorReporter.reportFailure(message, file: file, line: line)
