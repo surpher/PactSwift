@@ -31,7 +31,7 @@ class MetadataTests: XCTestCase {
 			#if os(Linux)
 			print("This test is irrelevant on Linux platforms")
 			#else
-			XCTFail("Expexted version number")
+			XCTFail("Expected version number")
 			#endif
 			return
 		}
