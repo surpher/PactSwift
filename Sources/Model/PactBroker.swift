@@ -51,7 +51,7 @@ public struct PactBroker {
 		/// - Parameters:
 		///   - token: The authorization token
 		///
-		public init(token: String) {
+		public init(_ token: String) {
 			self.token = token
 		}
 	}

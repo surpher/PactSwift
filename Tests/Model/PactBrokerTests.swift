@@ -24,7 +24,7 @@ class PactBrokerTests: XCTestCase {
 	func testDoesNotSetPublishVerificationResults() {
 		let testSubject = PactBroker(
 			url: URL(string: "http://test.url")!,
-			auth: .token(.init(token: "test-token")),
+			auth: .token(.init("test-token")),
 			providerName: "test provider",
 			publishResults: nil
 		)
@@ -47,7 +47,7 @@ class PactBrokerTests: XCTestCase {
 		let testTags = ["test-tags", "dev-tag"]
 		let testSubject = PactBroker(
 			url: URL(string: "http://test.url/")!,
-			auth: .token(.init(token: "test-token")),
+			auth: .token(.init("test-token")),
 			providerName: "test provider",
 			publishResults: .init(providerVersion: "unit-test-version", providerTags: testTags)
 		)
@@ -83,7 +83,7 @@ class PactBrokerTests: XCTestCase {
 
 		let testSubject = PactBroker(
 			url: URL(string: "http://test.pact.broker")!,
-			auth: .token(.init(token: "some-test-token")),
+			auth: .token(.init("some-test-token")),
 			providerName: "Test API Provider",
 			consumerTags: testTags
 		)

@@ -128,7 +128,7 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 	func testArgsWithPactBrokerUsingToken() {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
-			auth: .token(.init(token: "test-token")),
+			auth: .token(PactBroker.APIToken("test-token")),
 			providerName: "API Provider Name"
 		)
 

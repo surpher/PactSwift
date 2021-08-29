@@ -234,7 +234,7 @@ let provider = ProviderVerifier.Provider(port: 8080)
 // The Pact broker configuration
 let pactBroker = PactBroker(
   url: URL(string: "https://broker.url/")!,
-  auth: .token("auth-token"),
+  auth: auth: .token(PactBroker.APIToken("auth-token")),
   providerName: "Your API Service Name"
 )
 
