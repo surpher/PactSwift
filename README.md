@@ -11,9 +11,9 @@
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 </p>
 
-This framework provides a Swift DSL for generating [Pact][pact-docs] contracts.
+This framework provides a Swift DSL for generating [Pact][pact-docs] contracts. It provides the mechanism for [Consumer-Driven Contract Testing](https://dius.com.au/2016/02/03/pact-101-getting-started-with-pact-and-consumer-driven-contract-testing/) between dependent systems where the integration is based on HTTP. `PactSwift` allows you to test the communication boundaries between your app and services it integrates with.
 
-It implements [Pact Specification v3][pact-specification-v3] and runs the mock server "in-process". No need to set up any specific mock services or extra tools 🎉.
+`PactSwift` implements [Pact Specification v3][pact-specification-v3] and runs the mock service "in-process". No need to set up any external mock services, stubs or extra tools 🎉. It supports contract creation along with client verification. It also supports provider verification and interaction with a Pact broker.
 
 ## Installation
 
@@ -36,6 +36,7 @@ dependencies: [
 ```
 
 #### Linux
+
 <details><summary>Linux Installation Instructions</summary>
 
 When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust] or fetch a `Pact FFI Library x.y.z` from [pact-reference releases](https://github.com/pact-foundation/pact-reference/releases).
@@ -59,6 +60,7 @@ mv /path/to/target/release/libpact_ffi.so /usr/local/lib/
 swift build
 swift test -Xlinker -L/usr/local/lib/
 ```
+
 </details>
 
 ### Carthage
@@ -73,6 +75,7 @@ carthage update --use-xcframeworks
 ```
 
 **NOTE:**
+
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png).
 - If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
@@ -112,38 +115,34 @@ class PassingTestsExample: XCTestCase {
   // MARK: - Tests
 
   func testGetUsers() {
-    // #1 - Define the API contract by configuring how `mockService`, and consequently the "real" API, will behave for this specific API request we are testing here
+    // #1 - Declare the interaction's expectations
     PassingTestsExample.mockService
 
-      // #2 - Define the interaction description and provider state for this specific API request that we are testing
+      // #2 - Define the interaction description and provider state for this specific interaction
       .uponReceiving("A request for a list of users")
       .given(ProviderState(description: "users exist", params: ["first_name": "John", "last_name": "Tester"])
 
-      // #3 - Define the request we promise our API consumer will make
+      // #3 - Declare what our client's request will look like
       .withRequest(
         method: .GET,
         path: "/api/users",
-        headers: nil, // `nil` means we (and the API Provider) should not care about headers.
-        body: nil // same as with headers
       )
 
-      // #4 - Define what we expect `mockService`, and consequently the "real" API,
-      // to respond with for this particular API interaction we are testing
+      // #4 - Declare what the provider should respond with
       .willRespondWith(
         status: 200,
         headers: nil, // `nil` means we don't care what the headers returned from the API are.
         body: [
-          // We will use matchers here, as we normally care about the types and structure, not necessarily the actual value.
-          "page": Matcher.SomethingLike(1),
+          "page": Matcher.SomethingLike(1), // We expect an Int, 1 will be used in the unit test
           "per_page": Matcher.SomethingLike(20),
-          "total": ExampleGenerator.RandomInt(min: 20, max: 500),
+          "total": ExampleGenerator.RandomInt(min: 20, max: 500), // Expecting an Int between 20 and 500
           "total_pages": Matcher.SomethingLike(3),
-          "data": Matcher.EachLike(
+          "data": Matcher.EachLike( // We expect an array of objects
             [
-              "id": ExampleGenerator.RandomUUID(), // We can also use example generators
+              "id": ExampleGenerator.RandomUUID(), // We can also use random example generators
               "first_name": Matcher.SomethingLike("John"),
               "last_name": Matcher.SomethingLike("Tester"),
-              "salary": Matcher.DecimalLike(125000.00)
+              "renumeration": Matcher.DecimalLike(125_000.00)
             ]
           )
         ]
@@ -167,7 +166,8 @@ class PassingTestsExample: XCTestCase {
           XCTAssertEqual(users.first?.lastName, "Tester")
         }
 
-        // #9 - Notify MockService we're done with our test, else your Pact test will time out.
+        // #9 - Always run the callback. Run it in your successful and failing assertions!
+        // Otherwise your test will time out.
         done()
       }
     }
@@ -209,7 +209,7 @@ class PassingTestsExample: XCTestCase {
 ```
 
 `MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
-That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a `static var mockService` here to keep a reference to one instance of `MockService` for all the Pact tests. Alternatively you could wrap the `mockService` into a singleton.  
+That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a `static var mockService` here to keep a reference to one instance of `MockService` for all the Pact tests. Alternatively you could wrap your `mockService` into a singleton.  
 Suggestions to improve this are welcome! See [contributing][contributing].
 
 References:
@@ -244,6 +244,7 @@ let options = ProviderVerifier.Options(
   pactsSource: .broker(pactBroker)
 )
 
+// Run the provider verification task
 ProviderVerifier().verify(options: options) {
   // do something (eg: shutdown the provider)
 }
@@ -254,7 +255,7 @@ To validate Pacts from local folders or specific Pact files use the desired case
 <details><summary>Examples</summary>
 
 ```swift
-// All Pact files from a directory example
+// All Pact files from a directory
 ProviderVerifier()
   .verify(options: ProviderVerifier.Options(
     provider: provider,
@@ -268,12 +269,12 @@ ProviderVerifier()
 
 ```swift
 // Only the specific Pact files
-pactSource: .files(["/absolute/path/to/file/consumerName-providerName.json"])
+pactsSource: .files(["/absolute/path/to/file/consumerName-providerName.json"])
 ```
 
 ```swift
 // Only the specific Pact files at URL
-pactSource: .urls([URL(string: "https://some.base.url/location/of/pact/consumerName-providerName.json")])
+pactsSource: .urls([URL(string: "https://some.base.url/location/of/pact/consumerName-providerName.json")])
 ```
 
 </details>
@@ -284,7 +285,7 @@ To submit the verification results, provide `PactBroker.VerificationResults` obj
 
 <details><summary>Example</summary>
 
-Set the provider version and optional provider version tags. See [version numbers](https://docs.pact.io/pact_broker/pacticipant_version_numbers) for best practices on Pact versioning
+Set the provider version and optional provider version tags. See [version numbers](https://docs.pact.io/pact_broker/pacticipant_version_numbers) for best practices on Pact versioning.
 
 ```swift
 let pactBroker = PactBroker(
@@ -301,6 +302,15 @@ let pactBroker = PactBroker(
 </details>
 
 For a full working example of Provider Verification see `Pact-Linux-Provider` project in [pact-swift-examples][demo-projects] repository.
+
+## Sharing Pact contracts
+
+By default, Pact contracts are written to `/tmp/pacts`. If you set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in your nominated folder as
+`$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
+
+When running on CI run [`pact-broker`][pact-broker-client] command line tool to publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service. That way your _API-provider_ team can always retrieve them from one location, even when pacts change, tag and version your Pact contracts, etc. Normally you do this regularly in you CI step/s.
+
+See how you can use a simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
 ## Matching
 
@@ -322,18 +332,9 @@ See [Wiki page about Example Generators][example-generators] for a list of examp
 
 Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
 
-## Verifying your client against the service you are integrating with
-
-If you set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in:
-`$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
-
-Publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service, so that your _API-provider_ team can always retrieve them from one location, even when pacts change. Normally you do this regularly in you CI step/s.
-
-See how you can use simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
-
 ## Objective-C support
 
-PactSwift can be used in your Objective-C project with a couple of limitations, e.g. initializers with multiple optional arguments are limited to only one or two available initializers. See [Demo projects repository][demo-projects] for more examples.
+PactSwift can be used in your Objective-C project with a couple of limitations, (e.g. initializers with multiple optional arguments are limited to only one or two available initializers). See [Demo projects repository][demo-projects] for more examples.
 
 ```swift
 _mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
@@ -342,6 +343,8 @@ _mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
 ```
 
 `PF` stands for Pact Foundation.
+
+Please feel free to raise any [issues](https://github.com/surpher/PactSwift/issues) as you encounter them, thanks.
 
 ## Demo projects
 
