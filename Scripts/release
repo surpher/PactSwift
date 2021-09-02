@@ -26,32 +26,39 @@ set -o pipefail
 ####################
 
 function help {
-    echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
-    echo
-    echo "VERSION should be the version to release and should not include the 'v' prefix"
-    echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
-    echo
-    echo "FLAGS"
-    echo "  -d  Dry run, won't push anything"
-    echo
-    echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
-    echo
-    exit 2
+	echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
+	echo
+	echo "VERSION should be the version to release and should not include the 'v' prefix"
+	echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
+	echo
+	echo "FLAGS"
+	echo "  -d  Dry run, won't push anything"
+	echo
+	echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
+	echo
+	exit 2
 }
 
 function die {
-    echo "🚨  [ERROR] $@"
-    echo
-    exit 1
+	echo "🚨  [ERROR] $@"
+	echo
+	exit 1
 }
 
 function handleInput {
-if [[ ! $1 =~ ^[Yy]$ ]]
-then
-	echo "⚠️  Release aborted!"
-  exit 1
-fi
+	if [[ ! $1 =~ ^[Yy]$ ]]; then
+		echo "⚠️  Release aborted!"
+		exit 1
+	fi
 }
+
+#####################
+# Preliminary checks #
+#####################
+
+if [ $# -lt 2 ]; then
+    help
+fi
 
 ##############################
 # Overridable Environment   #
@@ -111,10 +118,6 @@ VERSION_TAG="v$VERSION"
 ####################
 # Setup            #
 ####################
-
-if [ $# -lt 2 ]; then
-    help
-fi
 
 function updateVersionFile {
 	sed -i '' "2s/.*/let pactSwiftVersion = \"$@\"/" $VERSION_FILE
