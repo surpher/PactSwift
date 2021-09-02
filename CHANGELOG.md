@@ -1,3 +1,17 @@
+# 0.9.0 - v0.9.0
+* d8514f9 - chore: Use depenecy version that supports provider verification (Marko Justinek)
+* d9c3c62 - doco: Update README.md (Marko Justinek)
+* e989267 - refactor: Update APIToken type initializer (Marko Justinek)
+* b6addd6 - fix: Error message and copyrights (Marko Justinek)
+* a640a09 - test: Add unit tests for provider verification interface (Marko Justinek)
+* 124fc42 - doco: Update documentation for Provider Verification (Marko Justinek)
+* c2b409e - refactor: Provider verification options (Marko Justinek)
+* 6c3ab0a - refactor: Reduce namespacing for provider verification (Marko Justinek)
+* 176d7eb - feature: Provider verification (Marko Justinek)
+* 2de9622 - feat: Type safe ProviderVerifier options (Marko Justinek)
+* 31edb21 - feature: Provider verification MVP (Marko Justinek)
+* 4e55bda - doco: Improve example test in README.md (Marko Justinek)
+* f2b6bec - tech: Run after_success CI step on ubuntu (Marko Justinek)
 # 0.8.2 - v0.8.2
 * bfbbd78 - fix: Makes OneOf matchers init public (Marko Justinek)
 * 98cefb7 - doco: Update examples in README.md (Marko Justinek)
