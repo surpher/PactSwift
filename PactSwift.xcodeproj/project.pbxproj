@@ -1384,8 +1384,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/surpher/PactSwiftMockServer";
 			requirement = {
-				branch = provider/verification;
-				kind = branch;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.3.0;
 			};
 		};
 		AD15979C2648D792007CFAA5 /* XCRemoteSwiftPackageReference "PactSwiftToolbox" */ = {
