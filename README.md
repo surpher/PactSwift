@@ -11,7 +11,7 @@
   <img src="Documentation/images/pact-swift.png" width="350" alt="PactSwift logo" />
 </p>
 
-This framework provides a Swift DSL for generating [Pact][pact-docs] contracts. It provides the mechanism for [Consumer-Driven Contract Testing](https://dius.com.au/2016/02/03/pact-101-getting-started-with-pact-and-consumer-driven-contract-testing/) between dependent systems where the integration is based on HTTP. `PactSwift` allows you to test the communication boundaries between your app and services it integrates with.
+This framework provides a Swift DSL for generating and verifying [Pact][pact-docs] contracts. It provides the mechanism for [Consumer-Driven Contract Testing](https://dius.com.au/2016/02/03/pact-101-getting-started-with-pact-and-consumer-driven-contract-testing/) between dependent systems where the integration is based on HTTP. `PactSwift` allows you to test the communication boundaries between your app and services it integrates with.
 
 `PactSwift` implements [Pact Specification v3][pact-specification-v3] and runs the mock service "in-process". No need to set up any external mock services, stubs or extra tools 🎉. It supports contract creation along with client verification. It also supports provider verification and interaction with a Pact broker.
 
@@ -24,14 +24,14 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.8.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.9.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.8.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.9.0"))
 ]
 ```
 
@@ -67,7 +67,7 @@ swift test -Xlinker -L/usr/local/lib/
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.8
+github "surpher/PactSwift" ~> 0.9
 ```
 
 ```sh
