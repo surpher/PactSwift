@@ -19,6 +19,10 @@ import XCTest
 
 @testable import PactSwift
 
+#if os(Linux)
+import FoundationNetworking
+#endif
+
 final class MockServiceWithDirectoryPathTests: XCTestCase {
 
 	static private let expectedTargetDirectory = URL(fileURLWithPath: "/tmp/pacts/custom/path", isDirectory: true)
