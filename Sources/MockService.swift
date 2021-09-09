@@ -39,6 +39,7 @@ open class MockService {
 	private var currentInteraction: Interaction!
 	private var allValidated = true
 	private let errorReporter: ErrorReportable
+	private let pactsDirectory: URL?
 
 	#if os(Linux)
 	private var transferProtocolScheme: PactSwiftMockServerLinux.TransferProtocol
@@ -57,9 +58,10 @@ open class MockService {
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
+	///   - directory: The directory where to write the contract
 	///
-	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard) {
-		self.init(consumer: consumer, provider: provider, scheme: scheme, errorReporter: ErrorReporter())
+	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, writePactsTo directory: URL? = nil) {
+		self.init(consumer: consumer, provider: provider, scheme: scheme, directory: directory, errorReporter: ErrorReporter())
 	}
 
 	/// Initializes a `MockService` object that handles Pact interaction testing
@@ -72,11 +74,13 @@ open class MockService {
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///   - errorReporter: Injectable object to intercept errors
+	///   - directory: The directory where to write the contract
 	///
-	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, errorReporter: ErrorReportable? = nil) {
+	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, directory: URL? = nil, errorReporter: ErrorReportable? = nil) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		self.errorReporter = errorReporter ?? ErrorReporter()
 		self.transferProtocolScheme = scheme.bridge
+		self.pactsDirectory = directory
 	}
 
 	// MARK: - Interface
@@ -188,15 +192,15 @@ extension MockService {
 	///
 	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 
-		// Spin up a fresh Mock Server
-		let mockServer = MockServer()
+		// Spin up a fresh Mock Server with a directory to write to
+		let mockServer = MockServer(directory: pactsDirectory)
 
 		// Gather all the interactions this MockService has received to set up and prepare Pact data with them all
 		pact.interactions = interactions
 
 		// Validate the Pact `Data` is hunky dory, and that all requests have been validated successfully
 		guard let pactData = pact.data, allValidated else {
-			completion?(.failure( .validationFaliure))
+			completion?(.failure(.validationFaliure))
 			return
 		}
 
