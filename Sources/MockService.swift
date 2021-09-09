@@ -60,7 +60,7 @@ open class MockService {
 	///   - scheme: HTTP scheme
 	///   - directory: The directory where to write the contract
 	///
-	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, writePactsTo directory: URL? = nil) {
+	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, writePactTo directory: URL? = nil) {
 		self.init(consumer: consumer, provider: provider, scheme: scheme, directory: directory, errorReporter: ErrorReporter())
 	}
 

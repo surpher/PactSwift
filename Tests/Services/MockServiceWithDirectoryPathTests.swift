@@ -35,7 +35,7 @@ final class MockServiceWithDirectoryPathTests: XCTestCase {
 	#endif
 
 	override class func setUp() {
-		mockService = MockService(consumer: "custom-dir-consumer", provider: "provider", directory: MockServiceWithDirectoryPathTests.expectedTargetDirectory)
+		mockService = MockService(consumer: "custom-dir-consumer", provider: "provider", writePactTo: MockServiceWithDirectoryPathTests.expectedTargetDirectory)
 	}
 
 	override class func tearDown() {
