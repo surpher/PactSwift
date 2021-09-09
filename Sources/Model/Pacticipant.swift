@@ -18,7 +18,7 @@
 import Foundation
 
 /// An object representing a participant in the Pact contract.
-public enum Pacticipant {
+enum Pacticipant {
 
 	case consumer(String)
 	case provider(String)
