@@ -24,14 +24,14 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.9.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.10.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.9.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.10.0"))
 ]
 ```
 
@@ -67,7 +67,7 @@ swift test -Xlinker -L/usr/local/lib/
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.9
+github "surpher/PactSwift" ~> 0.10
 ```
 
 ```sh
@@ -167,7 +167,7 @@ class PassingTestsExample: XCTestCase {
     }
   }
 
-  // More tests for other interactions and/or provider states...
+  // Another Pact test example...
   func testCreateUser() {
     PassingTestsExample.mockService
       .uponReceiving("A request to create a user")
@@ -210,6 +210,33 @@ References:
 
 - [Issue #67](https://github.com/surpher/PactSwift/issues/67)
 - [Writing Tests](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html#//apple_ref/doc/uid/TP40014132-CH4-SW36)
+
+## Generated Pact contracts
+
+By default, generated Pact contracts are written to `/tmp/pacts`. If you want to specify a directory you want your Pact contracts to be written to, you can pass a `URL` object with absolute path to the desired directory when instantiating your `MockService` (Swift only):
+
+```swift
+MockService(
+    consumer: "consumer",
+    provider: "provider",
+    writePactTo: URL(fileURLWithPath: "/absolute/path/pacts/folder", isDirectory: true)
+)
+````
+
+Alternatively you can define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section of your scheme) with the path to directory you want your Pact contracts to be written into.
+
+`PactSwift` first checks whether `URL` has been provided when initializing `MockService` object. If it is not provided it will check for `PACT_OUTPUT_DIR` environment variable. If env var is not set, it will attempt to write your Pact contract into `/tmp/pacts` directory.
+
+Note that sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
+
+## Sharing Pact contracts
+
+If your setup is correct and your tests successfully finish, you should see the generated Pact files in your nominated folder as
+`_consumer_name_-_provider_name_.json`.
+
+When running on CI use the [`pact-broker`][pact-broker-client] command line tool to publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted Pact broker service. That way your _API-provider_ team can always retrieve them from one location, set up web-hooks to trigger provider verification tasks when pacts change. Normally you do this regularly in you CI step/s.
+
+See how you can use a simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
 ## Provider verification
 
@@ -287,7 +314,7 @@ let pactBroker = PactBroker(
   auth: .token("auth-token"),
   providerName: "Some API Service",
   publishResults: PactBroker.VerificationResults(
-    providerVersion: "v0.0.4+\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
+    providerVersion: "v1.0.0+\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
     providerTags: ["\(ProcessInfo.processInfo.environment["GITHUB_REF"])"]
   )
 )
@@ -296,33 +323,6 @@ let pactBroker = PactBroker(
 </details>
 
 For a full working example of Provider Verification see `Pact-Linux-Provider` project in [pact-swift-examples][demo-projects] repository.
-
-## Generated Pact contracts
-
-By default, generated Pact contracts are written to `/tmp/pacts`. If you want to specify a directory you want your Pact contracts to be written to, you can pass a `URL` object with absolute path to the desired directory when instantiating your `MockService` (Swift only):
-
-```swift
-MockService(
-    consumer: "consumer",
-    provider: "provider",
-    writePactTo: URL(fileURLWithPath: "/absolute/path/pacts/folder", isDirectory: true)
-)
-````
-
-Alternatively you can define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section of your scheme) with the path to directory you want your Pact contracts to be written into.
-
-`PactSwift` first checks whether `URL` has been provided when initializing `MockService` object. If it is not provided it will check for `PACT_OUTPUT_DIR` environment variable. If env var is not set, it will attempt to write your Pact contract into `/tmp/pacts` directory.
-
-Note that sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
-
-## Sharing Pact contracts
-
-By default, Pact contracts are written to `/tmp/pacts`. If you defined the directory `URL` or set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in your nominated folder as
-`$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
-
-When running on CI run [`pact-broker`][pact-broker-client] command line tool to publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service. That way your _API-provider_ team can always retrieve them from one location, even when pacts change, tag and version your Pact contracts, etc. Normally you do this regularly in you CI step/s.
-
-See how you can use a simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
 ## Matching
 
