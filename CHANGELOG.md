@@ -1,3 +1,12 @@
+# 0.10.0 - v0.10.0
+* 9b0231a - doco: Update README.md (Marko Justinek)
+* a353ff1 - chore: Update dependency version (Marko Justinek)
+* 78445ac - refactor: Rename argument in MockService initialser (Marko Justinek)
+* c12e57e - fix: Failing tests on Linux (Marko Justinek)
+* 44e054b - refactor: Upgrade PactSwiftMockServer version (Marko Justinek)
+* 8ec91fc - feat: Instantiate MockService with Pact directory path (Marko Justinek)
+* efd1d7f - chore: Update README.md (Marko Justinek)
+* 7f69099 - tech: Exit release script when no version args provided (Marko Justinek)
 # 0.9.0 - v0.9.0
 * d8514f9 - chore: Use depenecy version that supports provider verification (Marko Justinek)
 * d9c3c62 - doco: Update README.md (Marko Justinek)

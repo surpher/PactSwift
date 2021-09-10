@@ -1,2 +1,2 @@
 // !!! WARNING: THIS FILE IS AUTOMATED - DO NOT CHANGE OR MOVE !!!
-let pactSwiftVersion = "0.9.0"
+let pactSwiftVersion = "0.10.0"
