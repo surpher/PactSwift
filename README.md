@@ -79,12 +79,6 @@ carthage update --use-xcframeworks
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png).
 - If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
-## Generated Pact contracts
-
-By default, generated Pact contracts are written to `/tmp/pacts`. Define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section) with the path to directory you want your Pact contracts to be written into.
-
-Sandboxed apps (macOS) are limited in where they can write Pact contract files into. The default location is the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra settings tweaks. Look at the logs in debug area for the Pact file location.
-
 ## Writing Pact tests
 
 - Instantiate a `MockService` object by defining [_pacticipants_][pacticipant],
@@ -92,8 +86,8 @@ Sandboxed apps (macOS) are limited in where they can write Pact contract files i
 - Define the expected `request` for the interaction,
 - Define the expected `response` for the interaction,
 - Run the test by making the API request using your API client and assert what you need asserted,
-- Share the generated Pact contract file with your provider (eg: upload to a [Pact Broker][pact-broker]),
-- Run [`can-i-deploy`][can-i-deploy] (eg: on your CI/CD) to deploy with confidence.
+- When running on CI share the generated Pact contract file with your provider (eg: upload to a [Pact Broker][pact-broker]),
+- When automating deployments in a CI step run [`can-i-deploy`][can-i-deploy] and if computer says OK, deploy with confidence!
 
 ### Example Consumer Tests
 
@@ -303,9 +297,27 @@ let pactBroker = PactBroker(
 
 For a full working example of Provider Verification see `Pact-Linux-Provider` project in [pact-swift-examples][demo-projects] repository.
 
+## Generated Pact contracts
+
+By default, generated Pact contracts are written to `/tmp/pacts`. If you want to specify a directory you want your Pact contracts to be written to, you can pass a `URL` object with absolute path to the desired directory when instantiating your `MockService` (Swift only):
+
+```swift
+MockService(
+    consumer: "consumer",
+    provider: "provider",
+    writePactTo: URL(fileURLWithPath: "/absolute/path/pacts/folder", isDirectory: true)
+)
+````
+
+Alternatively you can define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section of your scheme) with the path to directory you want your Pact contracts to be written into.
+
+`PactSwift` first checks whether `URL` has been provided when initializing `MockService` object. If it is not provided it will check for `PACT_OUTPUT_DIR` environment variable. If env var is not set, it will attempt to write your Pact contract into `/tmp/pacts` directory.
+
+Note that sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
+
 ## Sharing Pact contracts
 
-By default, Pact contracts are written to `/tmp/pacts`. If you set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in your nominated folder as
+By default, Pact contracts are written to `/tmp/pacts`. If you defined the directory `URL` or set the `PACT_OUTPUT_DIR` environment variable, your Xcode setup is correct and your tests successfully run, then you should see the generated Pact files in your nominated folder as
 `$(PACT_OUTPUT_DIR)/_consumer_name_-_provider_name_.json`.
 
 When running on CI run [`pact-broker`][pact-broker-client] command line tool to publish your generated Pact file(s) to your [Pact Broker][pact-broker] or a hosted service. That way your _API-provider_ team can always retrieve them from one location, even when pacts change, tag and version your Pact contracts, etc. Normally you do this regularly in you CI step/s.
