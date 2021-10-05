@@ -71,7 +71,7 @@ class PactContractTests: XCTestCase {
 				// MARK: - Validate Interactions
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				let numOfExpectedInteractions = 7
+				let numOfExpectedInteractions = 9
 
 				assert(
 					interactions.count == numOfExpectedInteractions,
@@ -278,6 +278,86 @@ class PactContractTests: XCTestCase {
 					completed()
 				}
 				.resume()
+		}
+	}
+
+	func testExample_AnimalsWithChildrenMultipleInteractionsInOneTest() {
+		let firstInteraction = mockService
+			.uponReceiving("a request for animals with children")
+			.given("animals have children")
+			.withRequest(method: .GET, path: "/animals1")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"animals": Matcher.EachLike(
+						[
+							"children": Matcher.EachLike(
+								Matcher.SomethingLike("Mary"),
+								min: 0
+							),
+						]
+					)
+				]
+			)
+
+		let secondInteraction = mockService
+			.uponReceiving("a request for animals with Children")
+			.given("animals have children")
+			.withRequest(method: .GET, path: "/animals2")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"animals": Matcher.EachLike(
+						[
+							"children": Matcher.EachLike(
+								Matcher.SomethingLike("Mary"),
+								min: 0
+							),
+						]
+					)
+				]
+			)
+
+		mockService.run(validate: [firstInteraction, secondInteraction]) { [unowned self] baseURL, completed in
+			let urlOne = URL(string: "\(baseURL)/animals1")!
+			let urlTwo = URL(string: "\(baseURL)/animals2")!
+
+			let expOne = expectation(description: "one")
+			let expTwo = expectation(description: "two")
+
+			session
+				.dataTask(with: urlOne) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					expOne.fulfill()
+				}
+				.resume()
+
+			session
+				.dataTask(with: urlTwo) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
+						return
+					}
+					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+					// This is tested in `MockServiceTests.swift`
+					expTwo.fulfill()
+				}
+				.resume()
+
+			waitForExpectations(timeout: 5) { _ in
+				completed()
+			}
 		}
 	}
 

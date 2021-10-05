@@ -104,6 +104,7 @@ open class MockService {
 	/// - Parameters:
 	///   - file: The file to report the failing test in
 	///   - line: The line on which to report the failing test
+	///   - validate: An array of specific `Interaction`s to validate. If none provided, the latest defined is used
 	///   - timeout: Time before the test times out. Default is 10 seconds
 	///   - testFunction: Your code making the API request
 	///   - testCompleted: Completion block notifying `MockService` the test completed
@@ -120,13 +121,13 @@ open class MockService {
 	/// }
 	/// ```
 	///
-	public func run(_ file: FileString? = #file, line: UInt? = #line, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@escaping () -> Void)) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, validate interactions: [Interaction]? = nil, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@escaping () -> Void)) throws -> Void) {
 
 		// Prepare a brand spanking new MockServer (Mock Provider) on its own port
 		let mockServer = MockServer()
 
-		// Use only the current interaction as the set to verify
-		pact.interactions = [currentInteraction]
+		// Use the provided set or if not provided only the current interaction
+		pact.interactions = interactions ?? [currentInteraction]
 
 		// Set the expectations so we don't wait for this async magic indefinitely
 		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
