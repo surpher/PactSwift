@@ -318,7 +318,7 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run(validate: [firstInteraction, secondInteraction]) { [unowned self] baseURL, completed in
+		mockService.run(verify: [firstInteraction, secondInteraction]) { [unowned self] baseURL, completed in
 			let urlOne = URL(string: "\(baseURL)/animals1")!
 			let urlTwo = URL(string: "\(baseURL)/animals2")!
 
