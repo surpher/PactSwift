@@ -92,6 +92,15 @@ import PactSwiftMockServer
 		mockService.run(timeout: timeout, testFunction: testFunction)
 	}
 
+	/// Runs the Pact test with provided timeout verifying the provided set of interactions
+	///
+	/// Make sure you call the completion block at the end of your test.
+	///
+	@objc(run: verifyInteractions: withTimeout:)
+	public func objCRun(testFunction: @escaping (String, (@escaping () -> Void)) -> Void, verify interactions: [Interaction], timeout: TimeInterval) {
+		mockService.run(verify: interactions, timeout: timeout, testFunction: testFunction)
+	}
+
 }
 
 #endif

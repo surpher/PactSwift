@@ -86,21 +86,74 @@ class PFMockServiceTests: XCTestCase {
 				request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 				request.httpMethod = "POST"
 
-			session.dataTask(with: request) { data, response, error in
-				if let response = response as? HTTPURLResponse {
-					XCTAssertEqual(201, response.statusCode)
-					done()
-					testExpectation.fulfill()
-				} else {
-					XCTFail("Expecting response code 200 in \(#function)")
-				}
-			}
-			.resume()
-		},
-		timeout: 2
-	)
-
+				session
+					.dataTask(with: request) { data, response, error in
+						if let response = response as? HTTPURLResponse {
+							XCTAssertEqual(201, response.statusCode)
+							done()
+							testExpectation.fulfill()
+						} else {
+							XCTFail("Expecting response code 200 in \(#function)")
+						}
+					}
+					.resume()
+			},
+			timeout: 2
+		)
 		waitForExpectations(timeout: 5)
+	}
+
+	func testTwoRequestsInOneTest() {
+		let firstExpectation = expectation(description: "first")
+		let firstInteraction = testSubject
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .POST, path: "/first", body: ["name": Matcher.SomethingLike("John")])
+			.willRespondWith(status: 201)
+
+		let secondExpectation = expectation(description: "second")
+		let secondInteraction = testSubject
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .GET, path: "/second")
+			.willRespondWith(status: 200)
+
+		testSubject.objCRun(
+			testFunction: { [unowned self] url, done in
+				let session = URLSession.shared
+				var request = URLRequest(url: URL(string: "\(url)/first")!)
+				request.httpBody = Data("{\"name\":\"George\"}".utf8)
+				request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+				request.httpMethod = "POST"
+
+				session
+					.dataTask(with: request) { data, response, error in
+						if let response = response as? HTTPURLResponse {
+							XCTAssertEqual(201, response.statusCode)
+							firstExpectation.fulfill()
+						} else {
+							XCTFail("Expecting response code 200 in \(#function)")
+						}
+					}
+					.resume()
+
+				let secondRequest = URLRequest(url: URL(string: "\(url)/second")!)
+				session
+					.dataTask(with: secondRequest) { data, response, error in
+						if let response = response as? HTTPURLResponse {
+							XCTAssertEqual(200, response.statusCode)
+							secondExpectation.fulfill()
+						} else {
+							XCTFail("Expecting response code 200 in \(#function)")
+						}
+					}
+					.resume()
+
+				self.waitForExpectations(timeout: 5) { _ in done() }
+			},
+			timeout: 2,
+			verify: [firstInteraction, secondInteraction]
+		)
 	}
 
 }
