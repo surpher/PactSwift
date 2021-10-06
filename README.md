@@ -24,14 +24,14 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.10.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Use minimum version `0.11.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.10.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.11.0"))
 ]
 ```
 
@@ -67,7 +67,7 @@ swift test -Xlinker -L/usr/local/lib/
 
 ```sh
 # Cartfile
-github "surpher/PactSwift" ~> 0.10
+github "surpher/PactSwift" ~> 0.11
 ```
 
 ```sh
