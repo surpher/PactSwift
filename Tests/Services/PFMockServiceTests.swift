@@ -151,8 +151,8 @@ class PFMockServiceTests: XCTestCase {
 
 				self.waitForExpectations(timeout: 5) { _ in done() }
 			},
-			timeout: 2,
-			verify: [firstInteraction, secondInteraction]
+			verify: [firstInteraction, secondInteraction],
+			timeout: 2
 		)
 	}
 
