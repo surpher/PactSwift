@@ -1,3 +1,10 @@
+# 0.11.0 - v0.11.0
+* ee6c1ca - fix: Failing unit tests (Marko Justinek)
+* 93286f5 - doco: Update readme for v0.11.0 (Marko Justinek)
+* ad6a51e - feature: Verify a set of interactions in Obj-C project (Marko Justinek)
+* 71e9a3c - refactor: Renames validate argument to verify (Marko Justinek)
+* f670aa4 - feature: Validate multiple interactions (Marko Justinek)
+* b9f16e0 - doco: Re-arrange README content (Marko Justinek)
 # 0.10.0 - v0.10.0
 * 9b0231a - doco: Update README.md (Marko Justinek)
 * a353ff1 - chore: Update dependency version (Marko Justinek)
