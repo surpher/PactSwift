@@ -16,28 +16,29 @@
 //
 
 import Foundation
+import XCTest
 
 public extension Matcher {
 
-	/// Matches a value that fits the provided `regex` term.
+	/// Matches a value that fits the provided `regex` pattern.
 	///
 	/// This matcher can be used in request `path`.
 	///
 	/// ```
 	/// [
-	///   "foo": Matcher.RegexLike("2020-04-27", term: "\d{4}-\d{2}-\d{2}")
+	///   "foo": Matcher.RegexLike(value: "2020-04-27", pattern: "\d{4}-\d{2}-\d{2}")
 	/// ]
 	/// ```
 	///
 	struct RegexLike: MatchingRuleExpressible, PactPathParameter {
 		internal let value: Any
-		internal let term: String
+		internal let pattern: String
 
 		internal var rules: [[String: AnyEncodable]] {
 			[
 				[
 					"match": AnyEncodable("regex"),
-					"regex": AnyEncodable(term),
+					"regex": AnyEncodable(pattern),
 				],
 			]
 		}
@@ -50,9 +51,23 @@ public extension Matcher {
 		///   - value: The value to be used in tests
 		///   - term: The regex term that describes the `value`
 		///
+		@available(*, deprecated, message: "Use `.init(value:pattern:) method instead")
 		public init(_ value: String, term: String) {
 			self.value = value
-			self.term = term
+			self.pattern = term
+		}
+
+		/// Matches a value that fits the provided `regex` pattern.
+		///
+		/// - Parameters:
+		///   - value: The value to be used in tests
+		///   - pattern: The regex term that describes the `value`
+		///
+		/// - warning: This initilizer does not verify the provided `value` against the `pattern`! Use `init(value:pattern:file:line) throws` to validate at matcher initialization.
+		///
+		public init(value: String, pattern: String) {
+			self.value = value
+			self.pattern = pattern
 		}
 	}
 
@@ -72,9 +87,21 @@ public class ObjcRegexLike: NSObject, ObjcMatcher {
 	///   - value: The value to be used in tests
 	///   - term: The regex term that describes the `value`
 	///
+	@available(*, deprecated, message: "Use `.init(_:pattern:) method instead")
 	@objc(value: term:)
 	public init(value: String, term: String) {
-		type = Matcher.RegexLike(value, term: term)
+		type = Matcher.RegexLike(value: value, pattern: term)
+	}
+
+	/// Matches a value that fits the provided `regex` pattern.
+	///
+	/// - Parameters:
+	///   - value: The value to be used in tests
+	///   - pattern: The regex term that describes the `value`
+	///
+	@objc(value: pattern:)
+	public init(value: String, pattern: String) {
+		type = Matcher.RegexLike(value: value, pattern: pattern)
 	}
 
 }

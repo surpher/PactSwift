@@ -18,13 +18,16 @@
 import Foundation
 
 enum EncodingError: Error {
-	case notEncodable(Any?)
+	case encodingFailure(Any?)
 	case unknown
 
 	var localizedDescription: String {
 		switch self {
-		case .notEncodable(let element):
-			return "Error casting '\(String(describing: (element != nil) ? element! : "provided value"))' to a JSON safe Type: String, Int, Double, Decimal, Bool, Dictionary<String, Encodable>, Array<Encodable>)" // swiftlint:disable:this line_length
+		case .encodingFailure(let message):
+			var errorMessage = ["Error preparing pact!"]
+			message.map { errorMessage.append(String(describing: $0)) }
+			return errorMessage.joined(separator: " ")
+
 		default:
 			return "Error casting unknown type into an Encodable type!"
 		}
