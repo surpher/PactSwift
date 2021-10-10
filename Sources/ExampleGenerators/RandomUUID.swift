@@ -21,12 +21,28 @@ public extension ExampleGenerator {
 
 	/// Generates a random UUID value
 	struct RandomUUID: ExampleGeneratorExpressible {
-		internal let value: Any = UUID().rfc4122String
+		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .uuid
 		internal let rules: [String: AnyEncodable]? = nil
 
 		/// Generates a random UUID value
-		public init() { }
+		public init(_ format: Format = .uppercaseDashed) {
+			let uuid = UUID()
+			self.value = {
+				switch format {
+				case .uppercaseDashed: return uuid.uuidString
+				case .dashed: return uuid.rfc4122String
+				case .simple: return uuid.uuidStringSimple
+				}
+			}()
+		}
+
+		/// The format of the UUID value
+		public enum Format {
+			case uppercaseDashed
+			case dashed
+			case simple
+		}
 	}
 
 }
