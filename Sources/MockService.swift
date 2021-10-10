@@ -122,12 +122,17 @@ open class MockService {
 	/// ```
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, verify interactions: [Interaction]? = nil, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@escaping () -> Void)) throws -> Void) {
-
 		// Prepare a brand spanking new MockServer (Mock Provider) on its own port
 		let mockServer = MockServer()
 
 		// Use the provided set or if not provided only the current interaction
 		pact.interactions = interactions ?? [currentInteraction]
+
+		pact.interactions.forEach { interaction in
+			interaction.encodingErrors.forEach {
+				failWith($0.localizedDescription, file: file, line: line)
+			}
+		}
 
 		// Set the expectations so we don't wait for this async magic indefinitely
 		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
@@ -144,6 +149,7 @@ open class MockService {
 						}
 					} catch {
 						failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
+						completion()
 					}
 				case .failure(let error):
 					// Failed to spin up a Mock Server. This could be due to bad Pact data. Most likely to Pact data.
@@ -155,19 +161,19 @@ open class MockService {
 
 		// At the same time start listening to verification that Mock Server received the expected request
 		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self] completion in
-
 			// Ask Mock Server to verify the promised request (testFunction:) has been made
 			mockServer.verify {
 				switch $0 {
 				case .success:
 					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test
-					finalize {
+					finalize(file: file, line: line) {
 						switch $0 {
 						case .success(let message):
 							Logger.log(message: message, data: pact.data)
 							completion()
 						case .failure(let error):
 							failWith(error.description, file: file, line: line)
+							completion()
 						}
 					}
 				case .failure(let error):
@@ -191,7 +197,7 @@ extension MockService {
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
 	/// Set `PACT_OUTPUT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
 	///
-	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
+	func finalize(file: FileString? = nil, line: UInt? = nil, completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 
 		// Spin up a fresh Mock Server with a directory to write to
 		let mockServer = MockServer(directory: pactsDirectory)

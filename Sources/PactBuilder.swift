@@ -41,16 +41,12 @@ struct PactBuilder {
 	/// `String`, `Int`, `Double`, `Decimal`, `Bool`, `Array<Encodable>`, `Dictionary<String, Encodable>`, `PactSwift.Matcher<>`, `PactSwift.ExampleGenerator<>`
 	///
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
-		do {
-			let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "", isEachLike: false)
-			let node = processedType.node
-			let rules = process(keyValues: processedType.rules)
-			let generators = process(keyValues: processedType.generators)
+		let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "", isEachLike: false)
+		let node = processedType.node
+		let rules = process(keyValues: processedType.rules)
+		let generators = process(keyValues: processedType.generators)
 
-			return (node: node, rules: rules, generators: generators)
-		} catch {
-			throw EncodingError.notEncodable(typeDefinition)
-		}
+		return (node: node, rules: rules, generators: generators)
 	}
 
 }
@@ -96,7 +92,8 @@ private extension PactBuilder {
 
 		// MARK: - Process Matchers
 
-		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol don't seem to work. Works fine on macOS 11.x
+		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol does not work as expected.
+		// Works fine running on macOS 11.x!
 		// That is why each Matcher type is explicitly stated in its own case statement and is not DRY.
 		case let matcher as Matcher.DecimalLike:
 			processedElement = try processMatcher(matcher, at: node)
@@ -146,6 +143,13 @@ private extension PactBuilder {
 			processedElement = try processMatcher(matcher, at: node)
 
 		case let matcher as Matcher.RegexLike:
+			guard
+				let value = matcher.value as? String,
+				value.range(of: matcher.pattern, options: .regularExpression) != nil
+			else {
+				throw EncodingError.encodingFailure("Value \"\(matcher.value)\" does not match the pattern \"\(matcher.pattern)\"")
+			}
+
 			processedElement = try processMatcher(matcher, at: node)
 
 		case let matcher as Matcher.SomethingLike:
@@ -153,7 +157,8 @@ private extension PactBuilder {
 
 		// MARK: - Process Example generators
 
-		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol don't seem to work. Works fine on macOS 11.x
+		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol does not work as expected.
+		// Works fine running on macOS 11.x!
 		// That is why each ExampleGenerator type is explicitly stated in its own case statement and is not DRY.
 		case let exampleGenerator as ExampleGenerator.RandomBool:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
@@ -184,8 +189,14 @@ private extension PactBuilder {
 
 		// Anything else is not considered safe to encode in PactSwift
 
+		case let threwError as EncodingError:
+			throw threwError
+
 		default:
-			throw EncodingError.notEncodable(element)
+			if let encodingError = (elementToProcess as? Interaction)?.encodingErrors.first {
+				throw encodingError
+			}
+			throw EncodingError.encodingFailure("A key or value in the structure does not conform to 'Encodable' protocol. The element attempted to encode: \(element)")
 		}
 
 		return processedElement
@@ -266,7 +277,7 @@ private extension PactBuilder {
 				}
 			return (node: encodableArray, rules: matchingRules, generators: generators)
 		} catch {
-			throw EncodingError.notEncodable(array)
+			throw EncodingError.encodingFailure("Failed to process array: \(array)")
 		}
 	}
 
@@ -276,19 +287,15 @@ private extension PactBuilder {
 		var matchingRules: [String: AnyEncodable] = [:]
 		var generators: [String: AnyEncodable] = [:]
 
-		do {
-			try dictionary
-				.enumerated()
-				.forEach {
-					let childElement = try process(element: $0.element.value, at: node.isEmpty ? "\($0.element.key)" : "\(node).\($0.element.key)", isEachLike: false)
-					encodableDictionary[$0.element.key] = childElement.node
-					matchingRules = merge(matchingRules, with: childElement.rules)
-					generators = merge(generators, with: childElement.generators)
-				}
-			return (node: encodableDictionary, rules: matchingRules, generators: generators)
-		} catch {
-			throw EncodingError.notEncodable(dictionary)
-		}
+		try dictionary
+			.enumerated()
+			.forEach {
+				let childElement = try process(element: $0.element.value, at: node.isEmpty ? "\($0.element.key)" : "\(node).\($0.element.key)", isEachLike: false)
+				encodableDictionary[$0.element.key] = childElement.node
+				matchingRules = merge(matchingRules, with: childElement.rules)
+				generators = merge(generators, with: childElement.generators)
+			}
+		return (node: encodableDictionary, rules: matchingRules, generators: generators)
 	}
 
 	// MARK: - Type Mapping

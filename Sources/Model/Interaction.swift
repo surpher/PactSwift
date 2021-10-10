@@ -26,6 +26,8 @@ public class Interaction: NSObject {
 	var providerStates: [ProviderState]?
 	var request: Request?
 	var response: Response?
+
+	internal var encodingErrors = [EncodingError]()
 }
 #else
 /// Defines the interaction between a consumer and a provider
@@ -35,6 +37,8 @@ public class Interaction: NSObject {
 	var providerStates: [ProviderState]?
 	var request: Request?
 	var response: Response?
+
+	internal var encodingErrors = [EncodingError]()
 }
 #endif
 
@@ -49,6 +53,8 @@ extension Interaction: Encodable {
 	}
 
 }
+
+// MARK: - Initialization
 
 extension Interaction {
 
@@ -81,6 +87,8 @@ extension Interaction {
 	}
 
 }
+
+// MARK: - Interface
 
 extension Interaction {
 
@@ -199,8 +207,9 @@ extension Interaction {
 	public func withRequest(method: PactHTTPMethod, path: PactPathParameter, query: [String: [Any]]? = nil, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		do {
 			self.request = try Request(method: method, path: path, query: query, headers: headers, body: body)
-		} catch {
-			Logger.log(message: "Can not prepare a Request with non-encodable data!")
+		} catch let requestError {
+			encodingErrors.append(requestError as! EncodingError)
+			Logger.log(message: "Can not prepare a Request with non-encodable data! \(requestError)")
 		}
 
 		return self
@@ -224,8 +233,9 @@ extension Interaction {
 	public func willRespondWith(status: Int, headers: [String: Any]? = nil, body: Any? = nil) -> Interaction {
 		do {
 			self.response = try Response(statusCode: status, headers: headers, body: body)
-		} catch {
-			Logger.log(message: "Can not prepare a Response with non-encodable data!")
+		} catch let responseError {
+			encodingErrors.append(responseError as! EncodingError)
+			Logger.log(message: "Can not prepare a Response with non-encodable data! \(responseError)")
 		}
 		return self
 	}

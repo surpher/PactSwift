@@ -212,7 +212,7 @@ class PactContractTests: XCTestCase {
 								Matcher.SomethingLike(1),
 								Matcher.IntegerLike(936),
 								Matcher.DecimalLike(123.23),
-								Matcher.RegexLike("2021-05-17", term: #"\d{4-\d{2}-\d{2}"#),
+								Matcher.RegexLike(value: "2021-05-17", pattern: #"\d{4}-\d{2}-\d{2}"#),
 								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
 							]
 						]
@@ -371,7 +371,10 @@ class PactContractTests: XCTestCase {
 				body:
 					Matcher.EachLike(
 						[
-							"id": Matcher.RegexLike("1234abcd-1234-abcf-12ab-abcdef1234567", term: #"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"#)
+							"id": Matcher.RegexLike(
+								value: "1234abcd-1234-abcf-12ab-abcdef1234567",
+								pattern: #"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"#
+							)
 						]
 					)
 			)
@@ -408,7 +411,7 @@ class PactContractTests: XCTestCase {
 					"array_of_arrays": Matcher.EachLike(
 						[
 							Matcher.SomethingLike("array_value"),
-							Matcher.RegexLike("2021-05-15", term: #"\d{4}-\d{2}-d{2}"#),
+							Matcher.RegexLike(value: "2021-05-15", pattern: #"\d{4}-\d{2}-\d{2}"#),
 							ExampleGenerator.RandomUUID(),
 							Matcher.EachLike(
 								[
@@ -420,12 +423,12 @@ class PactContractTests: XCTestCase {
 					"regex_array": Matcher.EachLike(
 						[
 							"regex_key": Matcher.EachLike(
-								Matcher.RegexLike("1235", term: #"\d{4}"#),
+								Matcher.RegexLike(value: "1235", pattern: #"\d{4}"#),
 								min: 2
 							),
 							"regex_nested_object": Matcher.EachLike(
 								[
-									"regex_nested_key": Matcher.RegexLike("12345678", term: #"\d{8}"#)
+									"regex_nested_key": Matcher.RegexLike(value: "12345678", pattern: #"\d{8}"#)
 								]
 							)
 						]
@@ -459,7 +462,7 @@ class PactContractTests: XCTestCase {
 			.given("array exist")
 			.withRequest(
 				method: .GET,
-				path: Matcher.RegexLike("/arrays/explicit", term: #"^/arrays/e\w+$"#)
+				path: Matcher.RegexLike(value: "/arrays/explicit", pattern: #"^/arrays/e\w+$"#)
 			)
 			.willRespondWith(
 				status: 200,

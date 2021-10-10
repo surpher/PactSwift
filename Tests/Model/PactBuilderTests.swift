@@ -164,7 +164,7 @@ class PactBuilderTests: XCTestCase {
 
 	func testPact_SetsMatcher_RegexLike() throws {
 		let testBody: Any = [
-			"data": Matcher.RegexLike("2020-12-31", term: "\\d{4}-\\d{2}-\\d{2}")
+			"data": Matcher.RegexLike(value: "2020-12-31", pattern: "\\d{4}-\\d{2}-\\d{2}")
 		]
 
 		let testPact = prepareTestPact(responseBody: testBody)
@@ -173,6 +173,36 @@ class PactBuilderTests: XCTestCase {
 		XCTAssertEqual(matchers.matchers.first?.match, "regex")
 		XCTAssertEqual(matchers.matchers.first?.regex, "\\d{4}-\\d{2}-\\d{2}")
 		XCTAssertNil(matchers.combine)
+	}
+
+	func testPact_FailsMatcher_InvalidRegex() {
+		let interaction = Interaction(
+			description: "test Encodable Pact",
+			providerStates: [
+				ProviderState(
+					description: "an alligator with the given name exists",
+					params: ["name": "Mary"]
+				)
+			]
+		)
+			.withRequest(method: .GET, path: "/")
+			.willRespondWith(
+				status: 200,
+				headers: ["Content-Type": "application/json; charset=UTF-8", "X-Value": "testCode"],
+				body: ["data": Matcher.RegexLike(value: "foo", pattern: #"\{3}-\w+$"#)]
+			)
+
+		do {
+			_ = try PactBuilder(with: interaction, for: .body).encoded()
+			XCTFail("Expecting to fail encoding when Regex matcher's value doesn't match the pattern")
+		} catch {
+			if case .encodingFailure(let message) = error as? EncodingError {
+				print(String(describing: message))
+				XCTAssertTrue(String(describing: message).contains(#"Value \"foo\" does not match the pattern \"\\{3}-\\w+$\""#), "Unexpected error message: \"\(String(describing: message))\"")
+			} else {
+				XCTFail("Expecting an Encoding error!")
+			}
+		}
 	}
 
 	// MARK: - IncludesLike()
@@ -348,7 +378,7 @@ class PactBuilderTests: XCTestCase {
 	// MARK: - Testing parsing for path
 
 	func testPact_ProcessesMatcher_InRequestPath() throws {
-		let path = Matcher.RegexLike("/some/1234", term: #"^/some/\{d}+$"#)
+		let path = Matcher.RegexLike(value: "/some/1234", pattern: #"^/some/\d{4}+$"#)
 		
 		let testHeaders: Any = [
 			"foo": Matcher.SomethingLike("bar"),
@@ -362,7 +392,7 @@ class PactBuilderTests: XCTestCase {
 		let testResult = try XCTUnwrap(try JSONDecoder().decode(SomethingLikeTestModel.self, from: testPact.data!).interactions.first?.request.matchingRules.path?.matchers.first)
 
 		XCTAssertEqual(testResult.match, "regex")
-		XCTAssertEqual(testResult.regex, #"^/some/\{d}+$"#)
+		XCTAssertEqual(testResult.regex, #"^/some/\d{4}+$"#)
 	}
 
 }

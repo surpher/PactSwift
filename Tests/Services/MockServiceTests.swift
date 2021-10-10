@@ -412,7 +412,7 @@ class MockServiceTests: XCTestCase {
 			.given("foos exist")
 			.withRequest(
 				method: .GET,
-				path: Matcher.RegexLike("/hello/dear/world", term: #"^/\w+/([a-z])+/world$"#)
+				path: Matcher.RegexLike(value: "/hello/dear/world", pattern: #"^/\w+/([a-z])+/world$"#)
 			)
 			.willRespondWith(status: 200)
 
@@ -613,7 +613,7 @@ class MockServiceTests: XCTestCase {
 				method: .GET,
 				path: "/movies",
 				query: nil,
-				headers: ["Authorization": Matcher.RegexLike("Bearer abcd12345", term: #"^Bearer \w+$"#)],
+				headers: ["Authorization": Matcher.RegexLike(value: "Bearer abcd12345", pattern: #"^Bearer \w+$"#)],
 				body: nil
 			)
 			.willRespondWith(status: 200, body: [
@@ -868,7 +868,7 @@ class MockServiceTests: XCTestCase {
 					"array": Matcher.EachLike(
 						[
 							Matcher.SomethingLike("array_value"),
-							Matcher.RegexLike("2021-05-15", term: #"\d{4}-\d{2}-d{2}"#),
+							Matcher.RegexLike(value: "2021-05-15", pattern: #"\d{4}-\d{2}-\d{2}"#),
 							ExampleGenerator.RandomUUID(),
 							Matcher.EachLike(
 								[
@@ -880,12 +880,12 @@ class MockServiceTests: XCTestCase {
 					"regex_array": Matcher.EachLike(
 						[
 							"regex_key": Matcher.EachLike(
-								Matcher.RegexLike("1234", term: #"\d{4}"#),
+								Matcher.RegexLike(value: "1234", pattern: #"\d{4}"#),
 								min: 2
 							),
 							"regex_nested_object": Matcher.EachLike(
 								[
-									"regex_nested_key": Matcher.RegexLike("12345678", term: #"\d{8}"#)
+									"regex_nested_key": Matcher.RegexLike(value: "12345678", pattern: #"\d{8}"#)
 								]
 							)
 						]
