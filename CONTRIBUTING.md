@@ -57,7 +57,7 @@ git clone git@github.com:<YOUR_GITHUB_USER>/PactSwift.git`
 - Create a new branch to work on with `git checkout -b <YOUR_BRANCH_NAME>`.
   - Branch names should be descriptive of what you're working on, eg: `docs/updating-contributing-guide`, `fix/create-user-crash`.
 - Use [good descriptive commit messages][commit-messages] when committing code.
-- Write [semantic commit messages][semantic-commit-messages].
+- Write [semantic commit messages][semantic-commit-messages] following this [Conventional Commits][conventional-commits] spec. This is important because the change log is automated. Following these conventions allows us to avoid the tedious non-technical tasks that come with maintaining a project.
 
 ## Testing
 
@@ -96,18 +96,19 @@ All contributions to this project are also under this license as per [GitHub's T
 > This project is open source under the MIT license, which means you have full access to the source code and can modify it to fit your own needs. You are responsible for how you use _PactSwift_.
 
 <!-- Links: -->
-[readme]: https://github.com/surpher/PactSwift#readme
-[issues]: https://github.com/surpher/PactSwift/issues
-[new-issue]: https://github.com/surpher/PactSwift/issues/new/choose
+[code-of-conduct]: CODE_OF_CONDUCT.md
+[conventional-commits]: https://www.conventionalcommits.org/en/v1.0.0/
+[commit-messages]: https://chris.beams.io/posts/git-commit/
+[core-contributor]: Documentation/CORE_CONTRIBUTOR.md
+[fork-docs]: https://help.github.com/articles/working-with-forks/
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
 [gist-rust]: https://gist.github.com/surpher/bbf88e191e9d1f01ab2e2bbb85f9b528
 [good-first-issue]: https://github.com/surpher/PactSwift/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
-[code-of-conduct]: CODE_OF_CONDUCT.md
-[core-contributor]: Documentation/CORE_CONTRIBUTOR.md
+[issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
-[repo]: https://github.com/surpher/PactSwift
-[commit-messages]: https://chris.beams.io/posts/git-commit/
-[semantic-commit-messages]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
-[fork-docs]: https://help.github.com/articles/working-with-forks/
+[new-issue]: https://github.com/surpher/PactSwift/issues/new/choose
 [pr-template]: .github/PULL_REQUEST_TEMPLATE.md
 [pr-docs]: https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/requesting-a-pull-request-review
+[readme]: https://github.com/surpher/PactSwift#readme
+[repo]: https://github.com/surpher/PactSwift
+[semantic-commit-messages]: https://gist.github.com/joshbuchea/6f47e86d2510bce28f8e7f42ae84c716
