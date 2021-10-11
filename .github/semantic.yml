@@ -1,5 +1,5 @@
-# Always validate the PR title, and ignore the commits
-titleOnly: true
+# Always validate the PR title and commits (this is important because release notes are automated and we rely on semantic commit titles)
+titleAndCommits: true
 
 # By default types specified in commitizen/conventional-commit-types is used.
 # See: https://github.com/commitizen/conventional-commit-types/blob/v3.0.0/index.json
