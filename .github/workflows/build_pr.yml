@@ -1,0 +1,104 @@
+name: Build PR
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+
+jobs:
+  test:
+    name: Run on macOS 11
+    runs-on: macos-11
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
+          - scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+          # - scheme: "PactSwift-macOS"
+          #   destination: "arch=arm64"
+
+    env:
+      SCHEME: ${{ matrix.scheme }}
+      DESTINATION: ${{ matrix.destination }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Prepare Tools
+        run: |
+          Scripts/prepare_build_tools
+
+      - name: Run tests (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+
+      - name: Run tests (CLI - Swift Package)
+        run: |
+          swift build
+          swift test -c release
+
+  test_linux:
+    name: Run on Ubuntu
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+
+    steps:
+      - uses: fwal/setup-swift@v1
+      - name: Get swift version
+        run: swift --version
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cache Rust libs
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-rust-libs
+        with:
+          path: ~/../pact-foundation/rust/target/release
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Build and Test
+        run: |
+          Scripts/build_test_linux
+
+  test_carthage:
+    name: Verify for Carthage
+    runs-on: macos-11
+
+    strategy:
+      fail-fast: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Xcode 13.0
+        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
+
+      - name: Carthage build
+        run: |
+          ./Scripts/carthage build --use-xcframeworks --no-skip-current
+
+  after_success:
+    needs: [test, test_carthage, test_linux]
+    name: Build demo projects
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Build demo projects
+        run: |
+          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
