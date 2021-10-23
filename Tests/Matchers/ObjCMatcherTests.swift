@@ -93,7 +93,7 @@ class ObjCMatcherTests: XCTestCase {
 	}
 
 	func testObjcMatcher_InitsWith_RegexLike() {
-		let testSubject = ObjcRegexLike(value: "31-01-2016", term: #"\d{2}-\d{2}-\d{4}"#)
+		let testSubject = ObjcRegexLike(value: "31-01-2016", pattern: #"\d{2}-\d{2}-\d{4}"#)
 
 		XCTAssertTrue((testSubject.type as Any) is Matcher.RegexLike)
 		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? String), "31-01-2016")

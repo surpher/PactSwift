@@ -37,7 +37,6 @@ open class MockService {
 	private var pact: Pact
 	private var interactions: [Interaction] = []
 	private var currentInteraction: Interaction!
-	private var allValidated = true
 	private let errorReporter: ErrorReportable
 	private let pactsDirectory: URL?
 
@@ -107,11 +106,11 @@ open class MockService {
 	///   - verify: An array of specific `Interaction`s to verify. If none provided, the latest defined interaction is used
 	///   - timeout: Time before the test times out. Default is 10 seconds
 	///   - testFunction: Your code making the API request
-	///   - testCompleted: Completion block notifying `MockService` the test completed
-	///   - baseURL: The URL of Mock Server expecting request being tested
-	///   - done: A signal notifying PactSwift the test has completed
 	///
-	/// You must call `done()` within your `testFunction:` completion block when your test completes otherwise your test will time out.
+	/// The `testFunction` completion block passes two values to your unit test. A `String` representing
+	/// the url of the active Mock Server and a `Void` function that you call when you are done with your unit test.
+	/// You must call this function within your `testFunction:` completion block when your test completes. It signals PactSwift
+	/// that your test finished. If you do not call it then your test will time out.
 	///
 	/// ```
 	/// mockService.run { baseURL, done in
@@ -122,65 +121,37 @@ open class MockService {
 	/// ```
 	///
 	public func run(_ file: FileString? = #file, line: UInt? = #line, verify interactions: [Interaction]? = nil, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@escaping () -> Void)) throws -> Void) {
-
-		// Prepare a brand spanking new MockServer (Mock Provider) on its own port
-		let mockServer = MockServer()
-
 		// Use the provided set or if not provided only the current interaction
 		pact.interactions = interactions ?? [currentInteraction]
 
-		// Set the expectations so we don't wait for this async magic indefinitely
-		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
-			Logger.log(message: "Setting up pact test", data: pactData)
-
-			// Set up a Mock Serer with Pact data and on desired http protocol
-			mockServer.setup(pact: pactData!, protocol: transferProtocolScheme) {
-				switch $0 {
-				case .success:
-					do {
-						// If Mock Server spun up, run the test function
-						try testFunction(mockServer.baseUrl) {
-							completion()
-						}
-					} catch {
-						failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
-					}
-				case .failure(let error):
-					// Failed to spin up a Mock Server. This could be due to bad Pact data. Most likely to Pact data.
-					failWith(error.description)
-					completion()
-				}
+		// Check there are no invalid interactions
+		var hasErrors = false
+		pact.interactions.forEach { interaction in
+			interaction.encodingErrors.forEach {
+				hasErrors = true
+				failWith($0.localizedDescription, file: file, line: line)
 			}
 		}
 
-		// At the same time start listening to verification that Mock Server received the expected request
-		waitForPactTestWith(timeout: timeout ?? Constants.kTimeout, file: file, line: line) { [unowned self] completion in
+		if hasErrors {
+			// Remove interactions with errors
+			pact.interactions.removeAll { $0.encodingErrors.isEmpty == false }
+			self.interactions.removeAll()
+		} else {
+			// Prepare a brand spanking new MockServer (Mock Provider) on its own port
+			let mockServer = MockServer()
 
-			// Ask Mock Server to verify the promised request (testFunction:) has been made
-			mockServer.verify {
-				switch $0 {
-				case .success:
-					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test
-					finalize {
-						switch $0 {
-						case .success(let message):
-							Logger.log(message: message, data: pact.data)
-							completion()
-						case .failure(let error):
-							failWith(error.description, file: file, line: line)
-						}
-					}
-				case .failure(let error):
-					failWith(error.description, file: file, line: line)
-					completion()
-				}
-			}
+			// Set the expectations so we don't wait for this async magic indefinitely
+			setupPactInteraction(timeout: timeout ?? Constants.kTimeout, file: file, line: line, mockServer: mockServer, testFunction: testFunction)
+
+			// At the same time start listening to verification that Mock Server received the expected request
+			verifyPactInteraction(timeout: timeout ?? Constants.kTimeout, file: file, line: line, mockServer: mockServer)
 		}
 	}
 
 }
 
-// MARK: - Internal -
+// MARK: - Internal
 
 extension MockService {
 
@@ -191,17 +162,17 @@ extension MockService {
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
 	/// Set `PACT_OUTPUT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
 	///
-	func finalize(completion: ((Result<String, MockServerError>) -> Void)? = nil) {
+	func finalize(file: FileString? = nil, line: UInt? = nil, completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 
 		// Spin up a fresh Mock Server with a directory to write to
 		let mockServer = MockServer(directory: pactsDirectory)
 
 		// Gather all the interactions this MockService has received to set up and prepare Pact data with them all
-		pact.interactions = interactions
+		pact.interactions = interactions.filter { $0.encodingErrors.isEmpty }
 
-		// Validate the Pact `Data` is hunky dory, and that all requests have been validated successfully
-		guard let pactData = pact.data, allValidated else {
-			completion?(.failure(.validationFaliure))
+		// Validate the Pact `Data` is hunky dory
+		guard let pactData = pact.data else {
+			completion?(.failure(.nullPointer))
 			return
 		}
 
@@ -218,7 +189,7 @@ extension MockService {
 	}
 
 	/// Waits for test to be completed and fails if timed out
-	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: @escaping (@escaping () -> Void) -> Void) {
+	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: (@escaping () -> Void) -> Void) {
 		let expectation = XCTestExpectation(description: "waitForPactTest")
 		action {
 			expectation.fulfill()
@@ -237,12 +208,67 @@ extension MockService {
 
 	/// Fail the test and raise the failure in `file` at `line`
 	func failWith(_ message: String, file: FileString? = nil, line: UInt? = nil) {
-		allValidated = false
-
 		if let file = file, let line = line {
 			errorReporter.reportFailure(message, file: file, line: line)
 		} else {
 			errorReporter.reportFailure(message)
+		}
+	}
+
+}
+
+// MARK: - Private
+
+private extension MockService {
+
+	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: (String, @escaping (() -> Void)) throws -> Void) {
+		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
+			Logger.log(message: "Setting up pact test", data: pact.data)
+
+			// Set up a Mock Server with Pact data and on desired http protocol
+			mockServer.setup(pact: pact.data!, protocol: transferProtocolScheme) {
+				switch $0 {
+				case .success:
+					do {
+						// If Mock Server spun up, run the test function
+						try testFunction(mockServer.baseUrl) {
+							completion()
+						}
+					} catch {
+						failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
+						completion()
+					}
+				case .failure(let error):
+					// Failed to spin up a Mock Server. This could be due to bad Pact data. Most likely to Pact data.
+					failWith(error.description)
+					completion()
+				}
+			}
+		}
+	}
+
+	func verifyPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer) {
+		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
+			// Ask Mock Server to verify the promised request (testFunction:) has been made
+			mockServer.verify {
+				switch $0 {
+				case .success:
+					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test
+					finalize(file: file, line: line) {
+						switch $0 {
+						case .success(let message):
+							Logger.log(message: message, data: pact.data)
+							completion()
+						case .failure(let error):
+							failWith(error.description, file: file, line: line)
+							completion()
+						}
+					}
+				case .failure(let error):
+					failWith(error.description, file: file, line: line)
+					completion()
+				}
+			}
 		}
 	}
 

@@ -118,8 +118,6 @@ class AnyEncodableTests: XCTestCase {
 
 	func testEncodableWrapper_Handles_InvalidArrayInput() {
 		let testDate = Date()
-		let testDateString = dateComponents(from: testDate)
-
 		struct FailingTestModel {
 			let failingArray: Array<Date>
 
@@ -136,19 +134,29 @@ class AnyEncodableTests: XCTestCase {
 		} catch {
 			do {
 				let testResult = try XCTUnwrap(error as? EncodingError)
-				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\(testDateString) "))
+				XCTAssertTrue(
+					testResult
+						.localizedDescription
+						.contains("Error preparing pact! Failed to process array: [\(dateComponents(from: testDate))"),
+					"Value not found in \"\(testResult.localizedDescription)\""
+				)
 			} catch {
-				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+				XCTFail("Expected an EncodableWrapper.encodingFailed to be thrown")
 			}
 		}
 	}
 
 	func testEncodableWrapper_Handles_InvalidDictInput() {
+		let testDate = Date()
 		struct FailingTestModel {
-			let failingDict = ["foo": Date()]
+			let failingDict: [String: Date]
+
+			init(testDate: Date) {
+				self.failingDict = ["foo": testDate]
+			}
 		}
 
-		let testableObject = FailingTestModel()
+		let testableObject = FailingTestModel(testDate: testDate)
 
 		do {
 			_ = try PactBuilder(with: testableObject.failingDict, for: .body).encoded().node
@@ -156,9 +164,10 @@ class AnyEncodableTests: XCTestCase {
 		} catch {
 			do {
 				let testResult = try XCTUnwrap(error as? EncodingError)
-				XCTAssertTrue(testResult.localizedDescription.contains("Error casting \'[\"foo\":"))
+				print(testResult.localizedDescription)
+				XCTAssertTrue(testResult.localizedDescription.contains("Error preparing pact! A key or value in the structure does not conform to 'Encodable' protocol. The element attempted to encode: \(dateComponents(from: testDate))"), "Unexpected localizedDescription: \(testResult.localizedDescription)")
 			} catch {
-				XCTFail("Expected an EncodableWrapper.EncodingError to be thrown")
+				XCTFail("Expected an EncodableWrapper.encodingFailed to be thrown")
 			}
 		}
 	}

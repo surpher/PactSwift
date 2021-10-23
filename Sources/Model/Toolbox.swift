@@ -58,7 +58,7 @@ enum Toolbox {
 				let encodedElement = try PactBuilder(with: element, for: interactionElement).encoded()
 				return (node: encodedElement.node, rules: encodedElement.rules, generators: encodedElement.generators)
 			} catch {
-				throw EncodingError.notEncodable("Can not process \(interactionElement.rawValue) with non-encodable (non-JSON safe) values")
+				throw error
 			}
 		}
 
