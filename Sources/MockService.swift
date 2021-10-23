@@ -106,11 +106,11 @@ open class MockService {
 	///   - verify: An array of specific `Interaction`s to verify. If none provided, the latest defined interaction is used
 	///   - timeout: Time before the test times out. Default is 10 seconds
 	///   - testFunction: Your code making the API request
-	///   - baseURL: The URL of Mock Server expecting request being tested
-	///   - done: A signal notifying PactSwift the test has completed
 	///
-	/// You must call `done()` within your `testFunction:` completion block when your test completes to signal your
-	/// test finished with assertions otherwise your test will time out.
+	/// The `testFunction` completion block passes two values to your unit test. A `String` representing
+	/// the url of the active Mock Server and a `Void` function that you call when you are done with your unit test.
+	/// You must call this function within your `testFunction:` completion block when your test completes. It signals PactSwift
+	/// that your test finished. If you do not call it then your test will time out.
 	///
 	/// ```
 	/// mockService.run { baseURL, done in
@@ -151,7 +151,7 @@ open class MockService {
 
 }
 
-// MARK: - Internal -
+// MARK: - Internal
 
 extension MockService {
 

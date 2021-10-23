@@ -20,7 +20,7 @@ import XCTest
 
 public extension Matcher {
 
-	/// Matches a value that fits the provided `regex` pattern.
+	/// Matches a value that fits the provided `regex` pattern
 	///
 	/// This matcher can be used in request `path`.
 	///
@@ -45,25 +45,27 @@ public extension Matcher {
 
 		// MARK: - Iitializer
 
-		/// Matches a value that fits the provided `regex` term.
+		/// Matches a value that fits the provided `regex` term
 		///
 		/// - Parameters:
 		///   - value: The value to be used in tests
 		///   - term: The regex term that describes the `value`
 		///
-		@available(*, deprecated, message: "Use `.init(value:pattern:) method instead")
+		/// This matcher can be used in request `path`.
+		///
+		@available(*, deprecated, message: "Use `.init(value:pattern:) instead")
 		public init(_ value: String, term: String) {
 			self.value = value
 			self.pattern = term
 		}
 
-		/// Matches a value that fits the provided `regex` pattern.
+		/// Matches a value that fits the provided `regex` pattern
 		///
 		/// - Parameters:
 		///   - value: The value to be used in tests
 		///   - pattern: The regex term that describes the `value`
 		///
-		/// - warning: This initilizer does not verify the provided `value` against the `pattern`! Use `init(value:pattern:file:line) throws` to validate at matcher initialization.
+		/// This matcher can be used in request `path`.
 		///
 		public init(value: String, pattern: String) {
 			self.value = value
@@ -87,17 +89,21 @@ public class ObjcRegexLike: NSObject, ObjcMatcher {
 	///   - value: The value to be used in tests
 	///   - term: The regex term that describes the `value`
 	///
-	@available(*, deprecated, message: "Use `.init(_:pattern:) method instead")
+	/// This matcher can be used in request `path`.
+	///
+	@available(*, deprecated, message: "Use `.init(value:pattern:) instead")
 	@objc(value: term:)
 	public init(value: String, term: String) {
 		type = Matcher.RegexLike(value: value, pattern: term)
 	}
 
-	/// Matches a value that fits the provided `regex` pattern.
+	/// Matches a value that fits the provided `regex` pattern
 	///
 	/// - Parameters:
 	///   - value: The value to be used in tests
 	///   - pattern: The regex term that describes the `value`
+	///
+	/// This matcher can be used in request `path`.
 	///
 	@objc(value: pattern:)
 	public init(value: String, pattern: String) {
