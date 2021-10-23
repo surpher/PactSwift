@@ -132,6 +132,8 @@ open class MockService {
 			interaction.encodingErrors.forEach {
 				failWith($0.localizedDescription, file: file, line: line)
 			}
+			// Bail the rest of interaction with the PactFFI MockServer
+			return
 		}
 
 		// Set the expectations so we don't wait for this async magic indefinitely
