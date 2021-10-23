@@ -26,7 +26,7 @@ public extension ExampleGenerator {
 		internal let rules: [String: AnyEncodable]? = nil
 
 		/// Generates a random UUID value
-		public init(_ format: Format = .uppercaseDashed) {
+		public init(format: Format = .uppercaseDashed) {
 			let uuid = UUID()
 			self.value = {
 				switch format {
