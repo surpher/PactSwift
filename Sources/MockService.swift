@@ -222,11 +222,11 @@ extension MockService {
 private extension MockService {
 
 	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: (String, @escaping (() -> Void)) throws -> Void) {
-		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self, pactData = pact.data] completion in
-			Logger.log(message: "Setting up pact test", data: pactData)
+		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
+			Logger.log(message: "Setting up pact test", data: pact.data)
 
 			// Set up a Mock Server with Pact data and on desired http protocol
-			mockServer.setup(pact: pactData!, protocol: transferProtocolScheme) {
+			mockServer.setup(pact: pact.data!, protocol: transferProtocolScheme) {
 				switch $0 {
 				case .success:
 					do {
