@@ -26,22 +26,31 @@ public extension ExampleGenerator {
 		internal let rules: [String: AnyEncodable]? = nil
 
 		/// Generates a random UUID value
-		public init(format: Format = .uppercaseDashed) {
+		public init(format: Format = .uppercaseHyphenated) {
 			let uuid = UUID()
 			self.value = {
 				switch format {
-				case .uppercaseDashed: return uuid.uuidString
-				case .dashed: return uuid.rfc4122String
 				case .simple: return uuid.uuidStringSimple
+				case .lowercaseHyphenated: return uuid.rfc4122String
+				case .uppercaseHyphenated: return uuid.uuidString
+				case .urn: return "urn:uuid:\(uuid.rfc4122String)"
 				}
 			}()
 		}
 
 		/// The format of the UUID value
-		public enum Format {
-			case uppercaseDashed
-			case dashed
+		public enum Format: String {
+			/// Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
 			case simple
+
+			/// Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
+			case lowercaseHyphenated = "lower-case-hyphenated"
+
+			/// Uppercase hyphenated format (eg: 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
+			case uppercaseHyphenated = "upper-case-hyphenated"
+
+			/// URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
+			case urn = "URN"
 		}
 	}
 
