@@ -29,10 +29,57 @@ class RandomUUIDTests: XCTestCase {
 		XCTAssertNil(sut.rules)
 	}
 
+	func testSimpleRandomUUIDExampleGenerator() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .simple)
+
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 32)
+		XCTAssert(uuid.allSatisfy {
+			$0.isNumber || $0.isASCIILetter
+		})
+	}
+
+	func testLowercaseHyphenatedRandomUUIDExampleGenerator() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .lowercaseHyphenated)
+
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 36)
+		XCTAssert(uuid.allSatisfy {
+			$0 == "-" || $0.isNumber || $0.isASCIILetter && $0.isLowercase
+		})
+	}
+
+	func testUppercaseHyphenatedRandomUUIDExampleGenerator() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .uppercaseHyphenated)
+
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 36)
+		XCTAssert(uuid.allSatisfy {
+			$0 == "-" || $0.isNumber || $0.isASCIILetter && $0.isUppercase
+		})
+	}
+
+	func testURNRandomUUIDExampleGenerator() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .urn)
+
+		let urn = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(urn.prefix(9), "urn:uuid:")
+		let uuid = urn.dropFirst(9)
+		XCTAssertEqual(uuid.count, 36)
+		XCTAssert(uuid.allSatisfy {
+			$0 == "-" || $0.isNumber || $0.isASCIILetter && $0.isLowercase
+		})
+	}
+
 	func testSimpleUUID() {
 		let sut = UUID()
 		XCTAssertEqual(sut.uuidString.count, 36)
 		XCTAssertEqual(sut.uuidStringSimple.count, 32)
 	}
+}
 
+private extension Character {
+	var isASCIILetter: Bool {
+		isASCII && isLetter
+	}
 }
