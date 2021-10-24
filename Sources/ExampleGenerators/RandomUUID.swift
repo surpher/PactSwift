@@ -23,10 +23,31 @@ public extension ExampleGenerator {
 	struct RandomUUID: ExampleGeneratorExpressible {
 		internal let value: Any = UUID().rfc4122String
 		internal let generator: ExampleGenerator.Generator = .uuid
-		internal let rules: [String: AnyEncodable]? = nil
+		internal let rules: [String: AnyEncodable]?
 
 		/// Generates a random UUID value
-		public init() { }
+		///
+		/// - Parameters:
+		///   - format: The format of UUID to generate
+		///
+		public init(format: Format = .uppercaseHyphenated) {
+			self.rules = ["format": AnyEncodable(format.rawValue)]
+		}
+
+		/// The format of the UUID value
+		public enum Format: String {
+			/// Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
+			case simple
+
+			/// Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
+			case lowercaseHyphenated = "lower-case-hyphenated"
+
+			/// Uppercase hyphenated format (eg: 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
+			case uppercaseHyphenated = "upper-case-hyphenated"
+
+			/// URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
+			case urn = "URN"
+		}
 	}
 
 }
@@ -37,11 +58,49 @@ public extension ExampleGenerator {
 @objc(PFGeneratorRandomUUID)
 public class ObjcRandomUUID: NSObject, ObjcGenerator {
 
-	let type: ExampleGeneratorExpressible = ExampleGenerator.RandomUUID()
+	let type: ExampleGeneratorExpressible
 
 	/// Generates a random UUID value
+	///
+	/// Uses default lower-case-hyphenated format
 	public override init() {
+		type = ExampleGenerator.RandomUUID()
+
 		super.init()
+	}
+
+	/// Generates a random UUID value in desired format
+	///
+	///     // 1 : Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
+	///     // 2 : Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
+	///     // 3 : Uppercase hyphenated format (eg: 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
+	///     // 4 : URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
+	///
+	///     PFGeneratorRandomUUID *randomUUID = [[PFGeneratorRandomUUID alloc] initWithFormat: 3];
+	///
+	@objc(initWithFormat:)
+	public init(format: ObjcUUIDFormat) {
+		type = ExampleGenerator.RandomUUID(format: format.bridged)
+
+		super.init()
+	}
+
+	/// The format of the UUID value
+	@objc public enum ObjcUUIDFormat: Int {
+		case simple = 0
+		case lowercaseHyphenated = 1
+		case uppercaseHyphenated = 2
+		case urn = 3
+
+		// Bridges the ObjC.RandomUUID.Format to Swift.RandomUUID.Format
+		fileprivate var bridged: ExampleGenerator.RandomUUID.Format {
+			switch self {
+			case .simple: return .simple
+			case .lowercaseHyphenated: return .lowercaseHyphenated
+			case .uppercaseHyphenated: return .uppercaseHyphenated
+			case .urn: return .urn
+			}
+		}
 	}
 
 }
