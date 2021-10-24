@@ -71,12 +71,15 @@ public class ObjcRandomUUID: NSObject, ObjcGenerator {
 
 	/// Generates a random UUID value in desired format
 	///
-	///     // 1 : Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
-	///     // 2 : Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
-	///     // 3 : Uppercase hyphenated format (eg: 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
-	///     // 4 : URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
+	///     // 0 - Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
+	///     // 1 - Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
+	///     // 2 - Uppercase hyphenated format (eg: 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
+	///     // 3 - URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
 	///
-	///     PFGeneratorRandomUUID *randomUUID = [[PFGeneratorRandomUUID alloc] initWithFormat: 3];
+	///     // Using with enum Int id:
+	///     PFGeneratorRandomUUID *randomUUID = [[PFGeneratorRandomUUID alloc] initWithFormat: 2];
+	///     // or using enum case:
+	///     PFGeneratorRandomUUID *randomUUID = [[PFGeneratorRandomUUID alloc] initWithFormat: ObjcUUIDFormatUppercaseHyphenated];
 	///
 	@objc(initWithFormat:)
 	public init(format: ObjcUUIDFormat) {
