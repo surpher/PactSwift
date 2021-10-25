@@ -31,56 +31,37 @@ class RandomUUIDTests: XCTestCase {
 
 	func testRandomUUIDDefaultFormat() throws {
 		let sut = ExampleGenerator.RandomUUID()
-		let result = try encodeDecode(sut.rules!)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
 		XCTAssertEqual(result.format, "upper-case-hyphenated")
 	}
 
 	func testRandomUUIDUpperCaseHyphenatedFormat() throws {
 		let sut = ExampleGenerator.RandomUUID()
-		let result = try encodeDecode(sut.rules!)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
 		XCTAssertEqual(result.format, "upper-case-hyphenated")
 	}
 
 	func testRandomUUIDSimpleFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .simple)
-		let result = try encodeDecode(sut.rules!)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
 		XCTAssertEqual(result.format, "simple")
 	}
 
 	func testRandomUUIDLowerCaseHyphenatedFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .lowercaseHyphenated)
-		let result = try encodeDecode(sut.rules!)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
 		XCTAssertEqual(result.format, "lower-case-hyphenated")
 	}
 
 	func testRandomUUIDURNFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .urn)
-		let result = try encodeDecode(sut.rules!)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
 		XCTAssertEqual(result.format, "URN")
-	}
-
-}
-
-// MARK: - Test Utilities
-
-private extension RandomUUIDTests {
-
-	struct EncodableModel: Encodable {
-		var params: [String: AnyEncodable]
-	}
-
-	struct DecodableModel: Decodable {
-		var format: String
-	}
-
-	func encodeDecode(_ model: [String: AnyEncodable]) throws -> DecodableModel {
-		let data = try JSONEncoder().encode(EncodableModel(params: model).params)
-		return try JSONDecoder().decode(DecodableModel.self, from: data)
 	}
 
 }
