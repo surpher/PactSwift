@@ -56,4 +56,19 @@ class RandomStringTests: XCTestCase {
 		XCTAssertEqual(sut.generator, .regex)
 	}
 
+	func testRandomString_SetsSizeRules() throws {
+		let sut = ExampleGenerator.RandomString(size: 20)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.size, 20)
+	}
+
+	func testRandomString_SetsRegexRules() throws {
+		let regex = #"\d{1,2}/\d{1,2}"#
+		let sut = ExampleGenerator.RandomString(regex: regex)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.regex, regex)
+	}
+
 }

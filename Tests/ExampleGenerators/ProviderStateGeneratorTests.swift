@@ -44,4 +44,11 @@ class ProviderStateGeneratorTests: XCTestCase {
 		})
 	}
 
+	func testProviderGenerator_SetsRules() throws {
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.type, "ProviderState")
+		XCTAssertEqual(result.expression, "test-parameter")
+	}
+
 }

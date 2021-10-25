@@ -52,4 +52,14 @@ class IncludesLikeTests: XCTestCase {
 		XCTAssertEqual(try XCTUnwrap((testResult.value as Any) as? String), "I'm a big Teapot")
 	}
 
+	func testMatcher_IncludesLike_SetsRules() throws {
+		let sut = Matcher.IncludesLike("Teapot", "I'm", combine: .AND, generate: "I'm a big Teapot")
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.allSatisfy { $0.match == "include" })
+		XCTAssertTrue(result.allSatisfy { encodedModel in
+			["Teapot", "I'm"].contains(encodedModel.value)
+		})
+	}
+
 }

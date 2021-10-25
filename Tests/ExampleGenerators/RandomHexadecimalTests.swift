@@ -49,4 +49,12 @@ class RandomHexadecimalTests: XCTestCase {
 		XCTAssertEqual(hexValue.count, 16)
 	}
 
+	func testRandomHexadecimal_SetsRules() throws {
+		let sut = ExampleGenerator.RandomHexadecimal(digits: 16)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		// Expecting a key `digits` with value 16
+		XCTAssertEqual(result.digits, 16)
+	}
+
 }

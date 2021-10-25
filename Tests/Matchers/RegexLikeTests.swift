@@ -26,4 +26,12 @@ class RegexLikeTests: XCTestCase {
 		XCTAssertEqual(testResult, "2020-11-04")
 	}
 
+	func testMatcher_RegexLike_SetsRules() throws {
+		let sut = Matcher.RegexLike(value: "2020-11-04", pattern: "\\d{4}-\\d{2}-\\d{2}")
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "regex")
+		XCTAssertEqual(result.first?.regex, #"\d{4}-\d{2}-\d{2}"#)
+	}
+
 }

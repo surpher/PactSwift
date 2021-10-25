@@ -47,5 +47,13 @@ class RandomDecimalTests: XCTestCase {
 		XCTAssertEqual(String(describing: decimalValue).count, 9)
 	}
 
+	func testRandomDecimal_SetsRules() throws {
+		let sut = ExampleGenerator.RandomDecimal(digits: 12)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		// Expecting a key `digits` with value 9
+		XCTAssertEqual(result.digits, 9)
+	}
+
 }
 

@@ -20,53 +20,53 @@ import Foundation
 
 public extension Matcher {
 
-	/// Defines a Pact matcher that validates against one of the provided values.
-	/// Uses the first provided value in consumer tests. Removes duplicate values.
+	/// Defines a Pact matcher that validates against one of the provided values
 	///
+	/// Case sensitive. Uses the first provided value in consumer tests. Removes duplicate values.
 	/// Use this matcher when you're expecting API response values to fit an `enum` type.
 	///
 	struct OneOf: MatchingRuleExpressible {
 		internal let value: Any
-		internal let term: String
+		internal let pattern: String
 
 		internal var rules: [[String: AnyEncodable]] {
 			[
 				[
 					"match": AnyEncodable("regex"),
-					"regex": AnyEncodable(term),
+					"regex": AnyEncodable(pattern),
 				],
 			]
 		}
 
 		// MARK: - Initializer
 
-		/// Matches one of the provided values.
+		/// Matches one of the provided values
 		///
 		/// - Parameters:
 		///   - values: List of possible values
 		///
-		/// Uses the first provided value in tests. Removes duplicated values.
+		/// Case sensitive. Uses the first provided value in the consumer test. Removes duplicated values.
 		///
 		init(_ values: AnyHashable...) {
 			self.init(values: values)
 		}
 
-		/// Matches one of the provided values.
+		/// Matches one of the provided values
 		///
 		/// - Parameters:
 		///   - values: The array of possible values
 		///
-		/// Uses the first provided value in tests. Removes duplicated values.
+		/// Case sensitive. Uses the first provided value in the consumer test. Removes duplicated values.
 		///
 		public init(values: [AnyHashable]) {
 			self.value = values.first as Any
-			self.term = Self.regexed(values)
+			self.pattern = Self.regexed(values)
 		}
 
 		// MARK: - Private
 
 		private static func regexed(_ values: [AnyHashable]) -> String {
-			values.unique.map { "^\($0)$" }.joined(separator: "|")
+			"^(\(values.unique.map { "\($0)" }.joined(separator: "|")))$"
 		}
 	}
 
@@ -80,12 +80,12 @@ public class ObjcOneOf: NSObject, ObjcMatcher {
 
 	let type: MatchingRuleExpressible
 
-	/// Matches one of the provided values.
+	/// Matches one of the provided values
 	///
 	/// - Parameters:
 	///   - values: The array of possible values
 	///
-	/// Uses the first provided value in tests. Removes duplicated values.
+	/// Case sensitive. Uses the first provided value in the consumer test. Removes duplicated values.
 	///
 	@objc(oneOfFloat:)
 	public init(values: [AnyHashable]) {

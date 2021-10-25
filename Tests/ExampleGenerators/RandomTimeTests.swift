@@ -42,4 +42,12 @@ class RandomTimeTests: XCTestCase {
 		XCTAssertNotNil(DateHelper.dateFrom(string: try XCTUnwrap(sut.value as? String), format: testFormat))
 	}
 
+	func testRandomTime_SetsRules() throws {
+		let testFormat = "HH:mm"
+		let sut = ExampleGenerator.RandomTime(format: testFormat)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, testFormat)
+	}
+
 }

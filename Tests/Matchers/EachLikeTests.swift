@@ -70,4 +70,44 @@ class EachLikeTests: XCTestCase {
 		XCTAssertEqual(testResult.count, 3)
 	}
 
+	func testMatcher_EachLike_SetsMinMaxRules() throws {
+		let sut = Matcher.EachLike("test", min: 0, max: 666, count: 123)
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.contains {
+			$0.match == "type" && $0.min == 0 && $0.max == 666
+		})
+	}
+
+	func testMatcher_EachLike_SetsDefaultMinParametersRules() throws {
+		let sut = Matcher.EachLike("test")
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.contains { $0.match == "type" && $0.min == 1})
+		XCTAssertFalse(result.first(where: { $0.max != nil }) != nil)
+	}
+
+	func testMatcher_EachLike_OmitsMaxParametersRules() throws {
+		let sut = Matcher.EachLike("test", min: 5)
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.contains { $0.match == "type" && $0.min == 5})
+		XCTAssertFalse(result.first(where: { $0.max != nil }) != nil)
+	}
+
+	func testMatcher_EachLike_OmitsDefaultMinParametersRules() throws {
+		let sut = Matcher.EachLike("test", max: 10)
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.contains { $0.match == "type" && $0.max == 10})
+		XCTAssertFalse(result.first(where: { $0.min != nil }) != nil)
+	}
+
+	func testMatcher_EachLike_HandlesBogusMinMax() throws {
+		let sut = Matcher.EachLike("test", min: 5, max: 3)
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertTrue(result.contains { $0.match == "type" && $0.min == 3 && $0.max == 5 })
+	}
+
 }

@@ -22,4 +22,11 @@ class MatchNullTests: XCTestCase {
 		})
 	}
 
+	func testMatcher_MatchNull_SetsRules() throws {
+		let sut = Matcher.MatchNull()
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "null")
+	}
+
 }

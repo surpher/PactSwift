@@ -26,4 +26,11 @@ class IntegerLikeTests: XCTestCase {
 		XCTAssertEqual(testResult, 1234)
 	}
 
+	func testMatcher_IntegerLike_SetsRules() throws {
+		let sut = Matcher.IntegerLike(123)
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "integer")
+	}
+
 }

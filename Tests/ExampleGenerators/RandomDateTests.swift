@@ -41,4 +41,12 @@ class RandomDateTests: XCTestCase {
 		XCTAssertNotNil(DateHelper.dateFrom(string: try XCTUnwrap(sut.value as? String), format: testFormat))
 	}
 
+	func testRandomDate_SetsRules() throws {
+		let testFormat = "dd-MM-yyyy"
+		let sut = ExampleGenerator.RandomDate(format: testFormat)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, testFormat)
+	}
+
 }

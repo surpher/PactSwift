@@ -35,4 +35,11 @@ class SomethingLikeTests: XCTestCase {
 		XCTAssertTrue(arrayResult.allSatisfy { testArray.contains($0) })
 	}
 
+	func testMatcher_SomethingLike_SetsRules() throws {
+		let sut = Matcher.SomethingLike("test")
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "type")
+	}
+
 }

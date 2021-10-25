@@ -32,6 +32,12 @@ class RandomIntTests: XCTestCase {
 		XCTAssertTrue((-4231...64210).contains(sut.value as! Int))
 	}
 
-}
+	func testRandomInt_SetsRules() throws {
+		let sut = ExampleGenerator.RandomInt(min: -4231, max: 2147483647)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
-import Foundation
+		XCTAssertEqual(result.min, -4231)
+		XCTAssertEqual(result.max, 2147483647)
+	}
+
+}

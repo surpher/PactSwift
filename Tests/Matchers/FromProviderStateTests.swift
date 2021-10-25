@@ -40,4 +40,11 @@ class FromProviderStateTests: XCTestCase {
 		XCTAssertEqual(testParameterResult, "testParameter")
 	}
 
+	func testMatcher_FromProviderState_SetsRules() throws {
+		let sut = Matcher.FromProviderState(parameter: "test", value: .string("value"))
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "type")
+	}
+
 }

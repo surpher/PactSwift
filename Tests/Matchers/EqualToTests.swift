@@ -41,4 +41,11 @@ class EqualToTests: XCTestCase {
 		XCTAssertEqual(try XCTUnwrap(Matcher.EqualTo(Decimal(123.45)).value as? Decimal), Decimal(123.45))
 	}
 
+	func testMatcher_EqualTo_SetsRules() throws {
+		let sut = Matcher.EqualTo("test")
+		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+
+		XCTAssertEqual(result.first?.match, "equality")
+	}
+
 }

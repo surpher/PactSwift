@@ -1,5 +1,5 @@
 //
-//  Created by Marko Justinek on 11/4/20.
+//  Created by Marko Justinek on 25/10/21.
 //  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -15,25 +15,27 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
-
+import Foundation
 @testable import PactSwift
 
-class DecimalLikeTests: XCTestCase {
+enum MatcherTestHelpers {
 
-	func testMatcher_DecimalLike_InitsWithValue() throws {
-		let testResult = try XCTUnwrap((Matcher.DecimalLike(1234).value as Any) as? Decimal)
-		XCTAssertEqual(testResult, 1234)
-
-		let testDecimalResult = try XCTUnwrap((Matcher.DecimalLike(1234.56).value as Any) as? Decimal)
-		XCTAssertEqual(testDecimalResult, 1234.56)
+	/// Encodes a model containing `AnyEncodable` type and decodes the value into String type
+	static func encodeDecode(_ model: [[String: AnyEncodable]]) throws -> [DecodableModel] {
+		let data = try JSONEncoder().encode(EncodableModel(params: model).params)
+		return try JSONDecoder().decode([DecodableModel].self, from: data)
 	}
 
-	func testMatcher_DecimalLike_SetsRules() throws {
-		let sut = Matcher.DecimalLike(Decimal(1234))
-		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
+	struct EncodableModel: Encodable {
+			let params: [[String: AnyEncodable]]
+		}
 
-		XCTAssertEqual(result.first?.match, "decimal")
+	struct DecodableModel: Decodable {
+		let match: String
+		let min: Int?
+		let max: Int?
+		let regex: String?
+		let value: String?
 	}
 
 }
