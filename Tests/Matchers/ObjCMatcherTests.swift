@@ -109,7 +109,7 @@ class ObjCMatcherTests: XCTestCase {
 		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Int), 42)
 	}
 
-	func testObcjMatcher_InitsWith_OneOf() {
+	func testObjcMatcher_InitsWith_OneOf() {
 		var testSubject = ObjcOneOf(values: [5, 1, 2, 3, 4])
 
 		XCTAssertTrue((testSubject.type as Any) is Matcher.OneOf)
@@ -117,6 +117,48 @@ class ObjCMatcherTests: XCTestCase {
 
 		testSubject = ObjcOneOf(values: ["five", "one", "two", "three"])
 		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? String), "five")
+	}
+
+	func testObjcMatcher_FromProviderState_String() {
+		let testSubject = ObjcFromProviderState(parameter: "testString", value: "string")
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? String), "string")
+	}
+
+	func testObjcMatcher_FromProviderState_Int() {
+		let testSubject = ObjcFromProviderState(parameter: "testInt", value: 666)
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Int), 666)
+	}
+
+	func testObjcMatcher_FromProviderState_Bool() {
+		let testSubject = ObjcFromProviderState(parameter: "testBool", value: false)
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertFalse(try XCTUnwrap(testSubject.type.value as? Bool))
+	}
+
+	func testObjcMatcher_FromProviderState_Decimal() {
+		let testSubject = ObjcFromProviderState(parameter: "testDecimal", value: Decimal(1234.56))
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Decimal), Decimal(1234.56))
+	}
+
+	func testObjcMatcher_FromProviderState_Float() {
+		let testSubject = ObjcFromProviderState(parameter: "testFloat", value: Float(123.45))
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Float), 123.45, accuracy: 0.0001)
+	}
+
+	func testObjcMatcher_FromProviderState_Double() {
+		let testSubject = ObjcFromProviderState(parameter: "testDouble", value: Double(123.45))
+
+		XCTAssertTrue((testSubject.type as Any) is Matcher.FromProviderState)
+		XCTAssertEqual(try XCTUnwrap(testSubject.type.value as? Double), 123.45)
 	}
 
 }
