@@ -43,7 +43,7 @@ When using `PactSwift` on a Linux platform you will need to compile your own `li
 
 It is important that the version of `libpact_ffi.so` you build or fetch is compatible with the header files provided by `PactMockServer`. See [release notes](https://github.com/surpher/PactMockServer/releases) for details.
 
-See `/Scripts/build_libpact_ffi` for some inspiration building libraries from Rust code.
+See [`/Scripts/build_libpact_ffi`](https://github.com/surpher/PactSwiftMockServer/blob/main/Support/build_rust_dependencies) for some inspiration building libraries from Rust code. You can also go into [pact-swift-examples](https://github.com/surpher/pact-swift-examples) and look into the Linux example projects. There is one for consumer tests and one for provider verification. They contain the GitHub Workflows where building a pact_ffi `.so` binary and running Pact tests is automated with scripts.
 
 When testing your project you can either set `LD_LIBRARY_PATH` pointing to the folder containing your `libpact_ffi.so`:
 
