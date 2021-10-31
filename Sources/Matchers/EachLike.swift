@@ -112,7 +112,7 @@ public extension Matcher {
 		///   - max: Maximum expected number of occurances of provided `value`
 		///   - count: Number of elements to generate for consumer tests
 		///
-		/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
+		/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be used as `min` and greater of the two will be used as `max`.
 		///
 		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 		///
@@ -152,7 +152,7 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	///   - max: Maximum expected number of occurances of provided `value`
 	///   - count: Number of elements to generate for consumer tests
 	///
-	/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
+	/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be used as `min` and greater of the two will be used as `max`.
 	///
 	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 	///
