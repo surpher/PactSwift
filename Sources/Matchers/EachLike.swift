@@ -21,12 +21,10 @@ public extension Matcher {
 
 	/// Matches a `Set` of enclosed elements.
 	///
-	/// Use this matcher when you expect your API provider to
-	/// reutrn a `Set` of values.
-	/// You can specifiy the expected `min` and `max`
-	/// occurrances of elements, but the actual values are
-	/// not important. Elements inside this matcher can be other matchers
-	/// or example generators.
+	/// Use this matcher when you expect your API provider to return a `Set` of values.
+	/// You can specify the expected `min` and `max` occurrances of elements, 
+	/// but the actual values are not important. 
+	/// Elements inside this matcher can be other matchers or example generators.
 	///
 	/// ```
 	/// [
@@ -62,7 +60,7 @@ public extension Matcher {
 		///
 		/// - Parameters:
 		///   - value: Expected type or object
-		///   - count: Number elements in tests
+		///   - count: Number of elements to generate for consumer tests
 		///
 		public init(_ value: Any, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > 1) ? count : 1)
@@ -77,9 +75,9 @@ public extension Matcher {
 		/// - Parameters:
 		///   - value: Expected element
 		///   - min: Minimum expected number of occurances of the provided `value`
-		///   - count: Number elements in tests
+		///   - count: Number of elements to generate for consumer tests
 		///
-		/// - Precondition: `min` must be a positive value and less than or equal to `count`
+		/// - Precondition: `min` must either be a zero or a positive value and less than or equal to `count`
 		///
 		public init(_ value: Any, min: Int, count: Int = 1) {
 			self.value = Array(repeating: value, count: (count > min) ? count : min)
@@ -94,7 +92,7 @@ public extension Matcher {
 		/// - Parameters:
 		///   - value: Expected type or object
 		///   - max: Maximum expected number of occurances of provided `value`
-		///   - count: Number elements in tests
+		///   - count: Number of elements to generate for consumer tests
 		///
 		/// - Precondition: `max` must be a positive value and not greater than `count`.
 		///
@@ -112,9 +110,9 @@ public extension Matcher {
 		///   - value: Expected type or object
 		///   - min: Minimum expected number of occurances of provided `value`
 		///   - max: Maximum expected number of occurances of provided `value`
-		///   - count: Number elements in tests
+		///   - count: Number of elements to generate for consumer tests
 		///
-		/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
+		/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
 		///
 		/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 		///
@@ -139,7 +137,7 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	///
 	/// - Parameters
 	///   - value: Expected type or object
-	///   - count: Number elements in tests
+	///   - count: Number of elements to generate for consumer tests
 	///
 	@objc(value: count:)
 	public init(value: Any, count: Int = 1) {
@@ -152,9 +150,9 @@ public class ObjcEachLike: NSObject, ObjcMatcher {
 	///   - value: Expected type or object
 	///   - min: Minimum expected number of occurances of provided `value`
 	///   - max: Maximum expected number of occurances of provided `value`
-	///   - count: Number elements in tests
+	///   - count: Number of elements to generate for consumer tests
 	///
-	/// - Precondition: `min` and `max` must each be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
+	/// - Precondition: `min` must either be 0 or a positive value. `max` must be a positive value. Lesser of the two values will be considered as `min` and greater of the two will be considered as `max`.
 	///
 	/// - Precondition: `count` must be a value between `min` and `max`, else either `min` or `max` is used to generate the number of examples.
 	///
