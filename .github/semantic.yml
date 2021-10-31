@@ -9,6 +9,7 @@ types:
   - feature
   - fix
   - docs
+  - doco
   - style
   - refactor
   - perf
