@@ -1,3 +1,7 @@
+# 0.11.2 - v0.11.2
+* 0d6d9b9 - test: Add basic tests for random UUID (Marko Justinek)
+* 0b10fbf - docs: Wrap inline documentation comments (Marko Justinek)
+* f41a291 - fix: Sets randomUUID value with format (Marko Justinek)
 # 0.11.1 - v0.11.1
 * b134e29 - feat: Enhance random UUID example generator (Marko Justinek)
 * 812cc4e - fix: Silencing SwiftLint error (Marko Justinek)
