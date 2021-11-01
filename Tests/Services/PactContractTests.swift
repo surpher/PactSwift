@@ -153,15 +153,19 @@ class PactContractTests: XCTestCase {
 				// MARK: - Validate Generators
 
 				let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")
-				let expectedGenerators = [
-					"$.array_of_arrays[*][2]": "Uuid"
+				let expectedGeneratorsType = [
+					"$.array_of_arrays[*][2]": [
+						"type": "Uuid",
+						"format": "upper-case-hyphenated"
+					]
 				]
 
 				assert(
-					expectedGenerators.allSatisfy { expectedKey, expectedValue -> Bool in
+					expectedGeneratorsType.allSatisfy { expectedKey, expectedValue -> Bool in
 						responseGenerators.contains { generatedKey, generatedValue -> Bool in
 							expectedKey == generatedKey
-							&& expectedValue == (generatedValue as? [String: String])?["type"]
+							&& expectedValue["type"] == (generatedValue as? [String: String])?["type"]
+							&& expectedValue["format"] == (generatedValue as? [String: String])?["format"]
 						}
 					},
 					"Not all expected generators found in Pact contract file"
@@ -412,7 +416,7 @@ class PactContractTests: XCTestCase {
 						[
 							Matcher.SomethingLike("array_value"),
 							Matcher.RegexLike(value: "2021-05-15", pattern: #"\d{4}-\d{2}-\d{2}"#),
-							ExampleGenerator.RandomUUID(),
+							ExampleGenerator.RandomUUID(format: .uppercaseHyphenated),
 							Matcher.EachLike(
 								[
 									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369), count: 2)

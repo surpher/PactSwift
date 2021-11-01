@@ -26,13 +26,42 @@ class RandomUUIDTests: XCTestCase {
 
 		XCTAssertNotNil(UUID(uuidString: try XCTUnwrap(sut.value as? String)))
 		XCTAssertEqual(sut.generator, .uuid)
-		XCTAssertNil(sut.rules)
+		XCTAssertNotNil(sut.rules)
 	}
 
-	func testSimpleUUID() {
-		let sut = UUID()
-		XCTAssertEqual(sut.uuidString.count, 36)
-		XCTAssertEqual(sut.uuidStringSimple.count, 32)
+	func testRandomUUIDDefaultFormat() throws {
+		let sut = ExampleGenerator.RandomUUID()
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, "upper-case-hyphenated")
+	}
+
+	func testRandomUUIDUpperCaseHyphenatedFormat() throws {
+		let sut = ExampleGenerator.RandomUUID()
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, "upper-case-hyphenated")
+	}
+
+	func testRandomUUIDSimpleFormat() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .simple)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, "simple")
+	}
+
+	func testRandomUUIDLowerCaseHyphenatedFormat() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .lowercaseHyphenated)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, "lower-case-hyphenated")
+	}
+
+	func testRandomUUIDURNFormat() throws {
+		let sut = ExampleGenerator.RandomUUID(format: .urn)
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(result.format, "URN")
 	}
 
 }

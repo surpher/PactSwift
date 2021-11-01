@@ -85,6 +85,12 @@ class ObjCExampleGeneratorTests: XCTestCase {
 		XCTAssertTrue((testSubject.type as Any) is ExampleGenerator.RandomUUID)
 	}
 
+	func testObjCExampleGenerators_InitsWith_RandomUUIDFormat() {
+		let testSubject = ObjcRandomUUID(format: .uppercaseHyphenated)
+
+		XCTAssertTrue((testSubject.type as Any) is ExampleGenerator.RandomUUID)
+	}
+
 }
 
 #endif
