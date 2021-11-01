@@ -37,7 +37,7 @@ public extension ExampleGenerator {
 
 		/// The format of the UUID value
 		public enum Format: String {
-			/// Simple UUID format (eg: 936DA01f9abd4d9d80c702af85c822a8)
+			/// Simple UUID format (eg: 936da01f9abd4d9d80c702af85c822a8)
 			case simple
 
 			/// Lowercase hyphenated format (eg: 936da01f-9abd-4d9d-80c7-02af85c822a8)
