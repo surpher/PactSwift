@@ -21,7 +21,7 @@ public extension ExampleGenerator {
 
 	/// Generates a random UUID value
 	struct RandomUUID: ExampleGeneratorExpressible {
-		internal let value: Any = UUID().rfc4122String
+		internal let value: Any
 		internal let generator: ExampleGenerator.Generator = .uuid
 		internal let rules: [String: AnyEncodable]?
 
@@ -31,6 +31,7 @@ public extension ExampleGenerator {
 		///   - format: The format of UUID to generate
 		///
 		public init(format: Format = .uppercaseHyphenated) {
+			self.value = format.value
 			self.rules = ["format": AnyEncodable(format.rawValue)]
 		}
 
@@ -47,6 +48,19 @@ public extension ExampleGenerator {
 
 			/// URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
 			case urn = "URN"
+
+			internal var value: String {
+				switch self {
+				case .simple:
+					return UUID().uuidStringSimple
+				case .lowercaseHyphenated:
+					return UUID().rfc4122String
+				case .uppercaseHyphenated:
+					return UUID().uuidString
+				case .urn:
+					return "urn:uuid:\(UUID().rfc4122String)"
+				}
+			}
 		}
 	}
 
