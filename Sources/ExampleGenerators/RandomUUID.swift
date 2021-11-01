@@ -49,6 +49,7 @@ public extension ExampleGenerator {
 			/// URN format (eg: urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
 			case urn = "URN"
 
+			/// Random UUID value in current format
 			internal var value: String {
 				switch self {
 				case .simple:

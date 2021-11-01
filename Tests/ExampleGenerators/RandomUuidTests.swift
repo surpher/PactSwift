@@ -31,36 +31,51 @@ class RandomUUIDTests: XCTestCase {
 
 	func testRandomUUIDDefaultFormat() throws {
 		let sut = ExampleGenerator.RandomUUID()
-		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 36)
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 		XCTAssertEqual(result.format, "upper-case-hyphenated")
 	}
 
 	func testRandomUUIDUpperCaseHyphenatedFormat() throws {
-		let sut = ExampleGenerator.RandomUUID()
-		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+		let sut = ExampleGenerator.RandomUUID(format: .uppercaseHyphenated)
 
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 36)
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 		XCTAssertEqual(result.format, "upper-case-hyphenated")
 	}
 
 	func testRandomUUIDSimpleFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .simple)
-		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 32)
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 		XCTAssertEqual(result.format, "simple")
 	}
 
 	func testRandomUUIDLowerCaseHyphenatedFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .lowercaseHyphenated)
-		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.count, 36)
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 		XCTAssertEqual(result.format, "lower-case-hyphenated")
 	}
 
 	func testRandomUUIDURNFormat() throws {
 		let sut = ExampleGenerator.RandomUUID(format: .urn)
-		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 
+		let uuid = try XCTUnwrap(sut.value as? String)
+		XCTAssertEqual(uuid.prefix(9), "urn:uuid:")
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
 		XCTAssertEqual(result.format, "URN")
 	}
 
