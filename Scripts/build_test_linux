@@ -84,9 +84,6 @@ fi
 # Build libpact_ffi libraries                #
 ##############################################
 
-# TODO: - Reset to specific pact_ffi commit until GitHub Actions uses cargo 1.55. Latest pact_ffi requires cargo 1.56
-git reset --hard f2c675ccaa8db7e22de30c28e49bb763f53c57db
-
 # Using debug build flag (or not providing it), otherwise libpact_ffi.so must be moved into /usr/local/lib/
 echo "🏗  Building libpact_ffi for current platform (debug build)"
 cargo build
