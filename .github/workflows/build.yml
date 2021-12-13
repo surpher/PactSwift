@@ -39,6 +39,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Use Xcode 13.2
+        run: sudo xcode-select -switch /Applications/Xcode_13.2.app
+
       - name: Prepare Tools
         run: |
           Scripts/prepare_build_tools
@@ -94,8 +97,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.0
-        run: sudo xcode-select -switch /Applications/Xcode_13.0.app
+      - name: Use Xcode 13.2
+        run: sudo xcode-select -switch /Applications/Xcode_13.2.app
 
       - name: Carthage build
         run: |
@@ -108,7 +111,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Build demo projects
         run: |
           curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
