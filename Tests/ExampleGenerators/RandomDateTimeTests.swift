@@ -49,4 +49,21 @@ class RandomDateTimeTests: XCTestCase {
 		XCTAssertEqual(result.format, testFormat)
 	}
 
+	func testDateTimeExpression_SetsRules() throws {
+		let testFormat = "yyyy/MM/dd - HH:mm:ss.S"
+		let testExpression = "today +1 day"
+		let testDate = Date()
+		let sut = ExampleGenerator.DateTimeExpression(
+			format: testFormat,
+			expression: testExpression,
+			use: testDate
+		)
+
+		let result = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
+
+		XCTAssertEqual(sut.generator, .dateTime)
+		XCTAssertEqual(result.format, testFormat)
+		XCTAssertEqual(result.expression, testExpression)
+	}
+
 }
