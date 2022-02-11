@@ -18,7 +18,7 @@ on:
 jobs:
   test:
     name: Run tests
-    runs-on: macOS-latest
+    runs-on: macos-10.15
 
     strategy:
       fail-fast: true
@@ -60,7 +60,7 @@ jobs:
 
   test_carthage:
     name: Test Carthage compatibility
-    runs-on: macOS-latest
+    runs-on: macos-10.15
 
     strategy:
       fail-fast: true
