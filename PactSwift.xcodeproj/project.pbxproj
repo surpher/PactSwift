@@ -43,6 +43,10 @@
 		AD641A3E24344FA100785CE1 /* PacticipantTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A3D24344FA100785CE1 /* PacticipantTests.swift */; };
 		AD641A402434518500785CE1 /* PactTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A3F2434518500785CE1 /* PactTests.swift */; };
 		AD641A422434588200785CE1 /* Interaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD641A412434588200785CE1 /* Interaction.swift */; };
+		AD72E54027B89CB900C7453F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD72E53F27B89CB900C7453F /* DateTime.swift */; };
+		AD72E54127B89CB900C7453F /* DateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD72E53F27B89CB900C7453F /* DateTime.swift */; };
+		AD72E54527B8A03000C7453F /* DateTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD72E54227B8A02200C7453F /* DateTimeTests.swift */; };
+		AD72E54627B8A03100C7453F /* DateTimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD72E54227B8A02200C7453F /* DateTimeTests.swift */; };
 		AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B624414D500014BCC8 /* PactBuilderTests.swift */; };
 		AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */; };
 		AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */; };
@@ -271,6 +275,8 @@
 		AD641A3D24344FA100785CE1 /* PacticipantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacticipantTests.swift; sourceTree = "<group>"; };
 		AD641A3F2434518500785CE1 /* PactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactTests.swift; sourceTree = "<group>"; };
 		AD641A412434588200785CE1 /* Interaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interaction.swift; sourceTree = "<group>"; };
+		AD72E53F27B89CB900C7453F /* DateTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTime.swift; sourceTree = "<group>"; };
+		AD72E54227B8A02200C7453F /* DateTimeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeTests.swift; sourceTree = "<group>"; };
 		AD7891B624414D500014BCC8 /* PactBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactBuilderTests.swift; sourceTree = "<group>"; };
 		AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomethingLikeTests.swift; sourceTree = "<group>"; };
 		AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachLikeTests.swift; sourceTree = "<group>"; };
@@ -650,6 +656,7 @@
 		ADD031622512199500C6099B /* ExampleGenerators */ = {
 			isa = PBXGroup;
 			children = (
+				AD72E53F27B89CB900C7453F /* DateTime.swift */,
 				ADD03163251219B700C6099B /* ExampleGenerator.swift */,
 				AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */,
 				ADD03166251220FD00C6099B /* RandomBool.swift */,
@@ -668,6 +675,7 @@
 		ADD031692512218500C6099B /* ExampleGenerators */ = {
 			isa = PBXGroup;
 			children = (
+				AD72E54227B8A02200C7453F /* DateTimeTests.swift */,
 				ADEDDF112547D95700A45AD2 /* ObjCExampleGeneratorTests.swift */,
 				ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */,
 				ADD0316B251221A300C6099B /* RandomBooleanTests.swift */,
@@ -1057,6 +1065,7 @@
 				ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031782512425800C6099B /* RandomInt.swift in Sources */,
+				AD72E54027B89CB900C7453F /* DateTime.swift in Sources */,
 				AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				ADD0316F25122E4B00C6099B /* RandomUUID.swift in Sources */,
@@ -1114,6 +1123,7 @@
 				AD4B970825138FCF00C37560 /* RandomDecimalTests.swift in Sources */,
 				ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				ADEDDF122547D95700A45AD2 /* ObjCExampleGeneratorTests.swift in Sources */,
+				AD72E54527B8A03000C7453F /* DateTimeTests.swift in Sources */,
 				AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */,
 				ADA17E492513808B004F1A82 /* DateHelper.swift in Sources */,
 				AD23310C26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift in Sources */,
@@ -1174,6 +1184,7 @@
 				ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031792512425800C6099B /* RandomInt.swift in Sources */,
+				AD72E54127B89CB900C7453F /* DateTime.swift in Sources */,
 				AD9D7D8E26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
@@ -1231,6 +1242,7 @@
 				AD4B970725138FCE00C37560 /* RandomDecimalTests.swift in Sources */,
 				ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				ADEDDF132547D95700A45AD2 /* ObjCExampleGeneratorTests.swift in Sources */,
+				AD72E54627B8A03100C7453F /* DateTimeTests.swift in Sources */,
 				AD8FC7FF2463BBD000361854 /* MetadataTests.swift in Sources */,
 				ADA17E4A2513808B004F1A82 /* DateHelper.swift in Sources */,
 				AD23310D26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift in Sources */,

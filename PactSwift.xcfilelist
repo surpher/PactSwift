@@ -56,4 +56,5 @@ $(SRCROOT)/Sources/ExampleGenerators/RandomUUID.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift
 $(SRCROOT)/Sources/ExampleGenerators/ProviderStateGenerator.swift
+$(SRCROOT)/Sources/ExampleGenerators/DateTime.swift
 $(SRCROOT)/Sources/MockService.swift

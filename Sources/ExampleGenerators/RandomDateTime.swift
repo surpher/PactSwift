@@ -41,42 +41,6 @@ public extension ExampleGenerator {
 		}
 	}
 
-	/// Generates a generator for DateTime using an expression
-	///
-	/// Warning:
-	/// Not all Pact impelmentations support this type of example generator!
-	struct DateTimeExpression: ExampleGeneratorExpressible {
-		internal let value: Any
-		internal let generator: ExampleGenerator.Generator = .dateTime
-		internal var rules: [String: AnyEncodable]?
-
-		/// Generates an example generator for DateTime using an expression
-		///
-		/// It uses Swift's `DateFormatter` to cast the provided `Date` object into `String` with the provided `format`.
-		/// This `String` is used as the value for consumer tests.
-		///
-		/// When defining an expression like `"today +1 day @ 6 o'clock pm"`,
-		/// it is your responsibility to create and pass the `Date` object that fits the expression for the needs of your tests.
-		///
-		/// - Parameters:
-		///   - format: The date time format
-		///   - expression: The expression provider should use when verifying
-		///   - use: The `Date` object for the consumer test. It uses the value of `format` to prepare the value the Mock Server will return.
-		///
-		/// - Warning: Not all Pact implementations support this type of example generator!
-		///
-		public init(format: String, expression: String, use date: Date) {
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = format
-
-			self.value = dateFormatter.string(from: date)
-			self.rules = [
-				"format": AnyEncodable(format),
-				"expression": AnyEncodable(expression),
-			]
-		}
-	}
-
 }
 
 // MARK: - Objective-C

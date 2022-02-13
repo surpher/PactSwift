@@ -36,15 +36,23 @@ extension Date {
 		}
 	}
 
-	static func formattedDate(format: String?, isoFormat: ISOFormat) -> String {
-		guard format != nil else {
-			let formatter = ISO8601DateFormatter()
-			formatter.formatOptions = isoFormat.formatOptions
-			return formatter.string(from: Date())
-		}
+	// MARK: - Instance interface
 
+	func formatted(_ format: String) -> String {
 		let formatter = DateFormatter()
 		formatter.dateFormat = format
+		return formatter.string(from: self)
+	}
+
+	// MARK: - Static interface
+
+	static func formattedDate(format: String?, isoFormat: ISOFormat) -> String {
+		if let format = format {
+			return Date().formatted(format)
+		}
+
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = isoFormat.formatOptions
 		return formatter.string(from: Date())
 	}
 
