@@ -34,7 +34,7 @@ extension ExampleGenerator {
 		///
 		/// - Warning: Not all Pact implementations support this type of example generator!
 		///
-		public init(format: String, expression: String, use date: Date) {
+		public init(expression: String, format: String, use date: Date) {
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = format
 
@@ -72,8 +72,8 @@ public class OjbcDateTimeExpression: NSObject, ObjcGenerator {
 	/// - Warning: Not all Pact implementations support this type of example generator!
 	///
 	@objc(format: expression: date:)
-	public init(format: String, expression: String, use date: Date) {
-		type = ExampleGenerator.DateTimeExpression(format: format, expression: expression, use: date)
+	public init(expression: String, format: String, use date: Date) {
+		type = ExampleGenerator.DateTimeExpression(expression: expression, format: format, use: date)
 	}
 
 }

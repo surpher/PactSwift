@@ -220,8 +220,8 @@ class PactContractTests: XCTestCase {
 								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
 							],
 							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(
-								format: "yyyy-MM-dd",
 								expression: "today +1 day",
+								format: "yyyy-MM-dd",
 								use: Date()
 							)
 						]
