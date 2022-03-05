@@ -433,7 +433,11 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
-	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() {
+	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() throws {
+		let now = Date()
+		let modifiedDate = try XCTUnwrap(Calendar.current.date(byAdding: .hour, value: 1, to: now))
+		let dateFormat = "yyyy-MM-dd HH:mm"
+
 		mockService
 			.uponReceiving("Request to create a new user")
 			.given("user does not exist")
@@ -448,7 +452,10 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 			.willRespondWith(
-				status: 201
+				status: 201,
+				body: [
+					"start": ExampleGenerator.DateTimeExpression(format: dateFormat, expression: "@ next hour", use: Date())
+				]
 			)
 
 		let testExpectation = expectation(description: #function)
@@ -466,6 +473,12 @@ class MockServiceTests: XCTestCase {
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(response.statusCode, 201)
 				}
+				guard let data = data, let resultBody = String(data: data, encoding: .utf8) else {
+					XCTFail("Failed to cast response data into String")
+					return
+				}
+				// This is an approximation and a fragile test - MockServer (pact-rust) generates the date based on expression and can be milisecond to seconds difference
+				XCTAssertEqual(resultBody, "{\"start\":\"\(DateHelper.stringFrom(date: modifiedDate, format: dateFormat))\"}")
 				testExpectation.fulfill()
 				completion()
 			}
@@ -772,7 +785,7 @@ class MockServiceTests: XCTestCase {
 					"randomDate": ExampleGenerator.RandomDate(format: "yyyy/MM"),
 					"randomTime": ExampleGenerator.RandomTime(format: "HH:mm - ss"),
 					"randomDateTime": ExampleGenerator.RandomDateTime(format: "HH:mm - dd.MM.yy"),
-					"specificDateTime": ExampleGenerator.DateTime(testDateTime, format: testDateTimeFormat),
+					"specificDateTime": ExampleGenerator.DateTime(format: testDateTimeFormat, use: testDateTime),
 				]
 			)
 

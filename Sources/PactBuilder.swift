@@ -190,6 +190,9 @@ private extension PactBuilder {
 		case let exampleGenerator as ExampleGenerator.RandomUUID:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
 
+		case let exampleGenerator as ExampleGenerator.DateTimeExpression:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
 		// Anything else is not considered safe to encode in PactSwift
 
 		case let threwError as EncodingError:

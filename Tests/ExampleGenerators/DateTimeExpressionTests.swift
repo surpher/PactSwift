@@ -1,8 +1,8 @@
 //
-//  DateTimeTests.swift
+//  DateTimeExpressionTests.swift
 //  PactSwift
 //
-//  Created by Marko Justinek on 13/2/22.
+//  Created by Marko Justinek on 5/3/22.
 //  Copyright © 2022 Marko Justinek. All rights reserved.
 //
 
@@ -10,18 +10,19 @@ import XCTest
 
 @testable import PactSwift
 
-class DateTimeTests: XCTestCase {
+class DateTimeExpressionTests: XCTestCase {
 
-	func testDateTimeExampleGenerator() throws {
+	func testDateTimeExpressionExampleGenerator() throws {
 		let testDate = Date()
-		let testFormat = "YYYY-MM-DD HH:mm"
-		let sut = ExampleGenerator.DateTime(format: testFormat, use: testDate)
+		let testFormat = "dd.MM.yyyy HH:mm:ss"
+		let testExpression = "tomorrow 5pm"
+		let sut = ExampleGenerator.DateTimeExpression(format: testFormat, expression: testExpression, use: testDate)
 
 		XCTAssertEqual(sut.generator, .dateTime)
 
 		let resultValue = try XCTUnwrap(sut.value as? String)
 		let resultDate = try XCTUnwrap(DateHelper.dateFrom(string: resultValue, format: testFormat))
-		// Assert using the same format due to loss of accuracy using a limited datetime format
+
 		XCTAssertEqual(testDate.formatted(testFormat), resultDate.formatted(testFormat))
 
 		let attributes = try XCTUnwrap(sut.rules)
@@ -29,8 +30,9 @@ class DateTimeTests: XCTestCase {
 			key == "format"
 		})
 
-		let resultFormat = try ExampleGeneratorTestHelpers.encodeDecode(sut.rules!)
-		XCTAssertEqual(resultFormat.format, testFormat)
+		XCTAssertTrue(attributes.contains(where: { key, _ in
+			key == "expression"
+		}))
 	}
 
 }

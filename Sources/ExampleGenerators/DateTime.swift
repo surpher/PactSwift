@@ -3,7 +3,7 @@
 //  PactSwift
 //
 //  Created by Marko Justinek on 13/2/22.
-//  Copyright © 2022 PACT Foundation. All rights reserved.
+//  Copyright © 2022 Marko Justinek. All rights reserved.
 //
 
 import Foundation
@@ -19,10 +19,10 @@ public extension ExampleGenerator {
 		/// Generates an example value for DateTime using a specific `Date` for consumer tests
 		///
 		/// - Parameters:
-		///   - date: The `Date` object to use in consumer tests
 		///   - format: The format used for datetime
+		///   - use: The `Date` object used in consumer tests
 		///
-		public init(_ date: Date, format: String) {
+		public init(format: String, use date: Date) {
 			self.value = date.formatted(format)
 			self.rules = [
 				"format": AnyEncodable(format),
@@ -43,12 +43,12 @@ public class ObjcDateTime: NSObject, ObjcGenerator {
 	/// Generates an example value for DateTime using a specific `Date` for consumer tests
 	///
 	/// - Parameters:
-	///   - use: The `Date` object used in consumer tests
 	///   - format: The format used for datetime
+	///   - use: The `Date` object used in consumer tests
 	///
 	@objc(date: format:)
-	public init(use date: Date, format: String) {
-		type = ExampleGenerator.DateTime(date, format: format)
+	public init(format: String, use date: Date) {
+		type = ExampleGenerator.DateTime(format: format, use: date)
 	}
 
 }
