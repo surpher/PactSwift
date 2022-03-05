@@ -16,7 +16,7 @@ class DateTimeExpressionTests: XCTestCase {
 		let testDate = Date()
 		let testFormat = "dd.MM.yyyy HH:mm:ss"
 		let testExpression = "tomorrow 5pm"
-		let sut = ExampleGenerator.DateTimeExpression(expression: testExpression, format: testFormat, use: testDate)
+		let sut = ExampleGenerator.DateTimeExpression(expression: testExpression, format: testFormat)
 
 		XCTAssertEqual(sut.generator, .dateTime)
 

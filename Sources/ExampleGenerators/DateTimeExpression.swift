@@ -21,20 +21,14 @@ extension ExampleGenerator {
 
 		/// Generates an example generator for DateTime using an expression
 		///
-		/// It uses Swift's `DateFormatter` to cast the provided `Date` object into `String` with the provided `format`.
-		/// This `String` is used as the value for consumer tests.
-		///
-		/// When defining an expression like `"today +1 day @ 6 o'clock pm"`,
-		/// it is your responsibility to create and pass the `Date` object that fits the expression for the needs of your tests.
-		///
 		/// - Parameters:
-		///   - format: The date time format
 		///   - expression: The expression provider should use when verifying
-		///   - use: The `Date` object for the consumer test. It uses the value of `format` in Mock Server's response.
+		///   - format: The date time format
 		///
 		/// - Warning: Not all Pact implementations support this type of example generator!
 		///
-		public init(expression: String, format: String, use date: Date) {
+		public init(expression: String, format: String) {
+			let date = Date()
 			let dateFormatter = DateFormatter()
 			dateFormatter.dateFormat = format
 
@@ -58,22 +52,15 @@ public class OjbcDateTimeExpression: NSObject, ObjcGenerator {
 
 	/// Generates an example generator for DateTime using an expression
 	///
-	/// It uses Swift's `DateFormatter` to cast the provided `Date` object into `String` with the provided `format`.
-	/// This `String` is used as the value for consumer tests.
-	///
-	/// When defining an expression like `"today +1 day @ 6 o'clock pm"`,
-	/// it is your responsibility to create and pass the `Date` object that fits the expression for the needs of your tests.
-	///
 	/// - Parameters:
-	///   - format: The date time format
 	///   - expression: The expression provider should use when verifying
-	///   - use: The `Date` object for the consumer test. It uses the value of `format` in Mock Server's response.
+	///   - format: The date time format
 	///
 	/// - Warning: Not all Pact implementations support this type of example generator!
 	///
-	@objc(format: expression: date:)
-	public init(expression: String, format: String, use date: Date) {
-		type = ExampleGenerator.DateTimeExpression(expression: expression, format: format, use: date)
+	@objc(expression: format:)
+	public init(expression: String, format: String) {
+		type = ExampleGenerator.DateTimeExpression(expression: expression, format: format)
 	}
 
 }

@@ -219,11 +219,7 @@ class PactContractTests: XCTestCase {
 								Matcher.RegexLike(value: "2021-05-17", pattern: #"\d{4}-\d{2}-\d{2}"#),
 								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
 							],
-							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(
-								expression: "today +1 day",
-								format: "yyyy-MM-dd",
-								use: Date()
-							)
+							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(expression: "today +1 day", format: "yyyy-MM-dd")
 						]
 					),
 					"array_of_strings": Matcher.EachLike(
