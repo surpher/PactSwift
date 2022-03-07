@@ -20,13 +20,13 @@ class DateTimeExpressionTests: XCTestCase {
 		XCTAssertEqual(sut.generator, .dateTime)
 
 		let attributes = try XCTUnwrap(sut.rules)
-		XCTAssertTrue(attributes.contains { key, _ in
-			key == "format"
-		})
-
-		XCTAssertTrue(attributes.contains(where: { key, _ in
-			key == "expression"
-		}))
+		XCTAssertTrue(
+			["format", "expression"].allSatisfy { keyValue in
+				attributes.contains { key, _ in
+					key == keyValue
+				}
+			}
+		)
 	}
 
 }
