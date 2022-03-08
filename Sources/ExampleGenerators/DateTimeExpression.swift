@@ -29,11 +29,7 @@ extension ExampleGenerator {
 		/// - Warning: Not all Pact implementations support this type of example generator!
 		///
 		public init(expression: String, format: String) {
-			let date = Date()
-			let dateFormatter = DateFormatter()
-			dateFormatter.dateFormat = format
-
-			self.value = dateFormatter.string(from: date)
+			self.value = Date().formatted(format)
 			self.rules = [
 				"format": AnyEncodable(format),
 				"expression": AnyEncodable(expression),
