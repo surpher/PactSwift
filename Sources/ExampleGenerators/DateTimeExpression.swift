@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ExampleGenerator {
+public extension ExampleGenerator {
 
 	/// Generates a generator for DateTime using an expression
 	///
