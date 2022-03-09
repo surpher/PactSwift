@@ -229,7 +229,7 @@ class PactContractTests: XCTestCase {
 				]
 			)
 
-		mockService.run { [self] baseURL, completed in
+		mockService.run { [unowned self] baseURL, completed in
 			let url = URL(string: "\(baseURL)/bugfix")!
 			self.session
 				.dataTask(with: url) { data, response, error in
