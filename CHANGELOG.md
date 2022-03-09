@@ -1,3 +1,9 @@
+# 0.12.0 - v0.12.0
+* 6611b13 - feat: Add support for datetime expressions (#84) (Marko Justinek)
+* 02807e6 - fix: CI build environment for legacy platform (Marko Justinek)
+* ba34db8 - tech: Remove pact_ffi commit pinning due cargo version (Marko Justinek)
+* 2e745b2 - tech: Configures GitHub actions to use Xcode 13.2 (Marko Justinek)
+* 33612da - docs: Update example in inline documentation (Marko Justinek)
 # 0.11.2 - v0.11.2
 * 0d6d9b9 - test: Add basic tests for random UUID (Marko Justinek)
 * 0b10fbf - docs: Wrap inline documentation comments (Marko Justinek)
