@@ -3,7 +3,7 @@
 //  PactSwift
 //
 //  Created by Marko Justinek on 9/10/20.
-//  Copyright © 2020 PACT Foundation. All rights reserved.
+//  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 
 import XCTest

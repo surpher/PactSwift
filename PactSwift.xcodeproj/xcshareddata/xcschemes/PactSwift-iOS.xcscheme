@@ -99,7 +99,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "PACT_ENABLE_LOGGING"
-            value = "true"
+            value = "all"
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>

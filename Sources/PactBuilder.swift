@@ -160,6 +160,9 @@ private extension PactBuilder {
 		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol does not work as expected.
 		// Works fine running on macOS 11.x!
 		// That is why each ExampleGenerator type is explicitly stated in its own case statement and is not DRY.
+		case let exampleGenerator as ExampleGenerator.DateTime:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
 		case let exampleGenerator as ExampleGenerator.RandomBool:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
 
@@ -185,6 +188,9 @@ private extension PactBuilder {
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
 
 		case let exampleGenerator as ExampleGenerator.RandomUUID:
+			processedElement = try processExampleGenerator(exampleGenerator, at: node)
+
+		case let exampleGenerator as ExampleGenerator.DateTimeExpression:
 			processedElement = try processExampleGenerator(exampleGenerator, at: node)
 
 		// Anything else is not considered safe to encode in PactSwift

@@ -51,9 +51,11 @@ $(SRCROOT)/Sources/ExampleGenerators/RandomDateTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDecimal.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomHexadecimal.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomInt.swift
+$(SRCROOT)/Sources/ExampleGenerators/DateTimeExpression.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomTime.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomUUID.swift
 $(SRCROOT)/Sources/ExampleGenerators/ExampleGenerator.swift
 $(SRCROOT)/Sources/ExampleGenerators/RandomDate.swift
 $(SRCROOT)/Sources/ExampleGenerators/ProviderStateGenerator.swift
+$(SRCROOT)/Sources/ExampleGenerators/DateTime.swift
 $(SRCROOT)/Sources/MockService.swift

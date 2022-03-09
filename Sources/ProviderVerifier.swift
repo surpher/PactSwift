@@ -1,6 +1,6 @@
 //
 //  Created by Marko Justinek on 20/8/21.
-//  Copyright © 2021 PACT Foundation. All rights reserved.
+//  Copyright © 2021 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above

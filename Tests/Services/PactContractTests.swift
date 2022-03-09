@@ -218,7 +218,8 @@ class PactContractTests: XCTestCase {
 								Matcher.DecimalLike(123.23),
 								Matcher.RegexLike(value: "2021-05-17", pattern: #"\d{4}-\d{2}-\d{2}"#),
 								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
-							]
+							],
+							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(expression: "today +1 day", format: "yyyy-MM-dd")
 						]
 					),
 					"array_of_strings": Matcher.EachLike(
@@ -230,13 +231,13 @@ class PactContractTests: XCTestCase {
 
 		mockService.run { [unowned self] baseURL, completed in
 			let url = URL(string: "\(baseURL)/bugfix")!
-			session
+			self.session
 				.dataTask(with: url) { data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test

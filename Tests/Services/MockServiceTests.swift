@@ -433,7 +433,11 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
-	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() {
+	func testMockService_Succeeds_ForPOSTRequestWithMatchersInRequestBody() throws {
+		let now = Date()
+		let modifiedDate = try XCTUnwrap(Calendar.current.date(byAdding: .hour, value: 1, to: now))
+		let dateFormat = "yyyy-MM-dd HH:mm"
+
 		mockService
 			.uponReceiving("Request to create a new user")
 			.given("user does not exist")
@@ -448,7 +452,10 @@ class MockServiceTests: XCTestCase {
 				]
 			)
 			.willRespondWith(
-				status: 201
+				status: 201,
+				body: [
+					"start": ExampleGenerator.DateTimeExpression(expression: "@ next hour", format: dateFormat)
+				]
 			)
 
 		let testExpectation = expectation(description: #function)
@@ -466,6 +473,12 @@ class MockServiceTests: XCTestCase {
 				if let response = response as? HTTPURLResponse {
 					XCTAssertEqual(response.statusCode, 201)
 				}
+				guard let data = data, let resultBody = String(data: data, encoding: .utf8) else {
+					XCTFail("Failed to cast response data into String")
+					return
+				}
+				// This is an approximation and a fragile test - MockServer (pact-rust) generates the date based on expression and can be milisecond to seconds difference
+				XCTAssertEqual(resultBody, "{\"start\":\"\(DateHelper.stringFrom(date: modifiedDate, format: dateFormat))\"}")
 				testExpectation.fulfill()
 				completion()
 			}
@@ -751,6 +764,9 @@ class MockServiceTests: XCTestCase {
 
 	func testMockService_Succeeds_WithGenerators() {
 		let testRegex = #"\d{3}/\d{4,8}"#
+		let testDateTime = Date()
+		let testDateTimeFormat = #"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"#
+		let testResultFormat = #"YYYY-MM-DD HH:mm"#
 
 		mockService
 			.uponReceiving("Request for list of pets")
@@ -769,6 +785,7 @@ class MockServiceTests: XCTestCase {
 					"randomDate": ExampleGenerator.RandomDate(format: "yyyy/MM"),
 					"randomTime": ExampleGenerator.RandomTime(format: "HH:mm - ss"),
 					"randomDateTime": ExampleGenerator.RandomDateTime(format: "HH:mm - dd.MM.yy"),
+					"specificDateTime": ExampleGenerator.DateTime(format: testDateTimeFormat, use: testDateTime),
 				]
 			)
 
@@ -834,6 +851,12 @@ class MockServiceTests: XCTestCase {
 						let dateTimeRegex = try! NSRegularExpression(pattern: #"\d{2}:\d{2} - \d{2}.\d{2}.\d{2}"#)
 						let dateTimeRange = NSRange(location: 0, length: dateTimeValue.utf16.count)
 						XCTAssertNotNil(dateTimeRegex.firstMatch(in: dateTimeValue, options: [], range: dateTimeRange))
+
+						// Verify specific datetime generator
+						let specificDateTimeValue = try XCTUnwrap(testResult.specificDateTime)
+						let specificDateTimeResult = DateHelper.dateFrom(string: specificDateTimeValue, format: testDateTimeFormat)
+						// Asserting with reduced accuracy of provided format
+						XCTAssertEqual(testDateTime.formatted(testResultFormat), specificDateTimeResult?.formatted(testResultFormat))
 					} catch {
 						XCTFail("Expecting GeneratorsTestModel in \(#function)")
 					}
@@ -958,6 +981,7 @@ private extension MockServiceTests {
 		let randomDate: String
 		let randomTime: String
 		let randomDateTime: String
+		let specificDateTime: String
 	}
 
 	struct EmbeddedMatcherTestModel: Decodable {
