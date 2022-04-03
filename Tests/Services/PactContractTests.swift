@@ -71,7 +71,7 @@ class PactContractTests: XCTestCase {
 				// MARK: - Validate Interactions
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				let numOfExpectedInteractions = 9
+				let numOfExpectedInteractions = 10
 
 				assert(
 					interactions.count == numOfExpectedInteractions,
@@ -570,6 +570,57 @@ class PactContractTests: XCTestCase {
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
 					// This is tested in `MockServiceTests.swift`
 					completed()
+				}
+				.resume()
+		}
+	}
+
+	func testPactContract_WithEachKeyLikeMatcher() {
+		mockService
+			.uponReceiving("Request for an object with wildcard matchers")
+			.given("keys in response itself are ignored")
+			.withRequest(method: .GET, path: "/articles/variants")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"articles": Matcher.EachLike(
+						[
+							"variants":
+								Matcher.EachKeyLike(
+									"001",
+									value: [
+										"bundles":
+											Matcher.EachKeyLike(
+												"001-A",
+												value: [
+													"description": Matcher.SomethingLike("someDescription"),
+													"referencedArticles": Matcher.EachLike(
+														[
+															"bundleId": Matcher.SomethingLike("someId")
+														]
+													)
+												]
+											)
+									]
+								)
+						]
+					)
+				]
+			)
+
+		mockService.run { [unowned self] baseURL, done in
+			let url = URL(string: "\(baseURL)/articles/variants")!
+			session
+				.dataTask(with: url) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						return
+					}
+					print(String(data: data!, encoding: .utf8)!)
+					done()
 				}
 				.resume()
 		}

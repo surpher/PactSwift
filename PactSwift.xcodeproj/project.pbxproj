@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD07404027F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
+		AD07404127F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
+		AD07404327F93BD5000C498C /* EachKeyLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07404227F93BD5000C498C /* EachKeyLike.swift */; };
+		AD07404427F93BD5000C498C /* EachKeyLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07404227F93BD5000C498C /* EachKeyLike.swift */; };
 		AD0AF278272634A300848FB7 /* MatcherTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0AF277272634A300848FB7 /* MatcherTestHelpers.swift */; };
 		AD0AF279272634A300848FB7 /* MatcherTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0AF277272634A300848FB7 /* MatcherTestHelpers.swift */; };
 		AD0AF27B272644E800848FB7 /* ExampleGeneratorTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0AF27A272644E800848FB7 /* ExampleGeneratorTestHelpers.swift */; };
@@ -249,6 +253,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLikeTests.swift; sourceTree = "<group>"; };
+		AD07404227F93BD5000C498C /* EachKeyLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLike.swift; sourceTree = "<group>"; };
 		AD0AF277272634A300848FB7 /* MatcherTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatcherTestHelpers.swift; sourceTree = "<group>"; };
 		AD0AF27A272644E800848FB7 /* ExampleGeneratorTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleGeneratorTestHelpers.swift; sourceTree = "<group>"; };
 		AD10361324468AB3002C97CA /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
@@ -428,6 +434,7 @@
 			isa = PBXGroup;
 			children = (
 				AD7891C124415E3E0014BCC8 /* DecimalLike.swift */,
+				AD07404227F93BD5000C498C /* EachKeyLike.swift */,
 				AD8DF43E244055980062CB1A /* EachLike.swift */,
 				ADD3C27324416CDF002E73B9 /* EqualTo.swift */,
 				AD9D7D8F26C8B3DA00FE4137 /* FromProviderState.swift */,
@@ -506,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				AD7891C324415E9F0014BCC8 /* DecimalLikeTests.swift */,
+				AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */,
 				AD7891BB244156FC0014BCC8 /* EachLikeTests.swift */,
 				ADE9B3C9250A435B00274672 /* EqualToTests.swift */,
 				ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */,
@@ -1095,6 +1103,7 @@
 				ADA4B1E426D31EDA00A5AE88 /* VersionSelector.swift in Sources */,
 				ADDE4704244D101700E4F7EE /* ErrorReportable.swift in Sources */,
 				ADB7C1692433280100A16CDE /* PactHTTPMethod.swift in Sources */,
+				AD07404327F93BD5000C498C /* EachKeyLike.swift in Sources */,
 				ADB7C11D2432D41F00A16CDE /* Dictionary+PactSwift.swift in Sources */,
 				ADF17CBD26B50796008E7ECD /* TransferProtocol.swift in Sources */,
 				ADEDDEF72547B6B700A45AD2 /* PactPathParameter.swift in Sources */,
@@ -1133,6 +1142,7 @@
 				AD4B970825138FCF00C37560 /* RandomDecimalTests.swift in Sources */,
 				ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				ADEDDF122547D95700A45AD2 /* ObjCExampleGeneratorTests.swift in Sources */,
+				AD07404027F93BC1000C498C /* EachKeyLikeTests.swift in Sources */,
 				AD72E54527B8A03000C7453F /* DateTimeTests.swift in Sources */,
 				AD7891BC244156FC0014BCC8 /* EachLikeTests.swift in Sources */,
 				ADA17E492513808B004F1A82 /* DateHelper.swift in Sources */,
@@ -1216,6 +1226,7 @@
 				ADA4B1E526D31EDA00A5AE88 /* VersionSelector.swift in Sources */,
 				AD8FC7EB2463BB9F00361854 /* ProviderState.swift in Sources */,
 				AD8FC7EC2463BB9F00361854 /* Request.swift in Sources */,
+				AD07404427F93BD5000C498C /* EachKeyLike.swift in Sources */,
 				AD8FC7EE2463BBA400361854 /* Bundle+PactSwift.swift in Sources */,
 				ADF17CBE26B50796008E7ECD /* TransferProtocol.swift in Sources */,
 				ADEDDEF82547B6B700A45AD2 /* PactPathParameter.swift in Sources */,
@@ -1254,6 +1265,7 @@
 				AD4B970725138FCE00C37560 /* RandomDecimalTests.swift in Sources */,
 				ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */,
 				ADEDDF132547D95700A45AD2 /* ObjCExampleGeneratorTests.swift in Sources */,
+				AD07404127F93BC1000C498C /* EachKeyLikeTests.swift in Sources */,
 				AD72E54627B8A03100C7453F /* DateTimeTests.swift in Sources */,
 				AD8FC7FF2463BBD000361854 /* MetadataTests.swift in Sources */,
 				ADA17E4A2513808B004F1A82 /* DateHelper.swift in Sources */,

@@ -37,6 +37,7 @@ $(SRCROOT)/Sources/Matchers/OneOf.swift
 $(SRCROOT)/Sources/Matchers/SomethingLike.swift
 $(SRCROOT)/Sources/Matchers/EqualTo.swift
 $(SRCROOT)/Sources/Matchers/EachLike.swift
+$(SRCROOT)/Sources/Matchers/EachKeyLike.swift
 $(SRCROOT)/Sources/Matchers/IntegerLike.swift
 $(SRCROOT)/Sources/Matchers/Matcher.swift
 $(SRCROOT)/Sources/Matchers/RegexLike.swift
