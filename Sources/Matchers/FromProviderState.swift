@@ -33,7 +33,7 @@ public extension Matcher {
 		}
 
 		internal var value: Any
-		internal var parameter: String
+		internal let parameter: String
 		internal let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("type")]]
 
 		/// Matches the value provided by the provider state
