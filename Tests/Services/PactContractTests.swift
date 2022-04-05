@@ -150,6 +150,27 @@ class PactContractTests: XCTestCase {
 					, "Not all expected generators found in Pact contract file"
 				)
 
+				// Validate eachKeyLike matcher from interaction "bug example"
+				let eachKeyLikeInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an object with wildcard matchers")
+				// print("\nMATCHERS:\n\(matchersOne)")
+				let expectedEachKeyLikePaths = [
+					"$.articles",
+					"$.articles[*].variants",
+					"$.articles[*].variants.*.bundles",
+					"$.articles[*].variants.*.bundles.*.description",
+					"$.articles[*].variants.*.bundles.*.referencedArticles",
+					"$.articles[*].variants.*.bundles.*.referencedArticles",
+					"$.articles[*].variants.*.bundles.*.referencedArticles[*].bundleId",
+				]
+				assert(
+					expectedEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
+						eachKeyLikeInteraction.contains { generatedKey, _ -> Bool in
+							expectedKey == generatedKey
+						}
+					},
+					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
+				)
+
 				// MARK: - Validate Generators
 
 				let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")

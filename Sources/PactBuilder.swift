@@ -41,7 +41,7 @@ struct PactBuilder {
 	/// `String`, `Int`, `Double`, `Decimal`, `Bool`, `Array<Encodable>`, `Dictionary<String, Encodable>`, `PactSwift.Matcher<>`, `PactSwift.ExampleGenerator<>`
 	///
 	func encoded() throws -> (node: AnyEncodable?, rules: AnyEncodable?, generators: AnyEncodable?) {
-		let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "", isEachLike: false)
+		let processedType = try process(element: typeDefinition, at: interactionNode == .body ? "$" : "")
 		let node = processedType.node
 		let rules = process(keyValues: processedType.rules)
 		let generators = process(keyValues: processedType.generators)
@@ -56,7 +56,12 @@ struct PactBuilder {
 private extension PactBuilder {
 
 	// swiftlint:disable:next cyclomatic_complexity function_body_length
-	func process(element: Any, at node: String, isEachLike: Bool) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func process(
+		element: Any,
+		at node: String,
+		isEachLike: Bool = false,
+		isEachKeyLike: Bool = false
+	) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
 		let elementToProcess = mapPactObject(element)
@@ -70,7 +75,7 @@ private extension PactBuilder {
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
 
 		case let dict as [String: Any]:
-			let processedDict = try process(dict, at: node)
+			let processedDict = try process(dict, at: node, isEachKeyLike: isEachKeyLike)
 			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules, generators: processedDict.generators)
 
 		// MARK: - Process Simple Types
@@ -250,9 +255,8 @@ private extension PactBuilder {
 
 	// Processes an `EachKeyLike` matcher
 	func processEachKeyLikeMatcher(_ matcher: Matcher.EachKeyLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
-		let keyLikeNode = node + ".*"
-		var processedMatcherValue = try process(element: [matcher.key: matcher.value], at: keyLikeNode, isEachLike: false)
-		processedMatcherValue.rules[keyLikeNode] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
+		var processedMatcherValue = try process(element: [matcher.key: matcher.value], at: node, isEachKeyLike: true)
+		processedMatcherValue.rules[node] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
 
 		return (
 			node: processedMatcherValue.node,
@@ -263,7 +267,7 @@ private extension PactBuilder {
 
 	// Processes an Example Generator
 	func processExampleGenerator(_ exampleGenerator: ExampleGeneratorExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
-		let processedGeneratorValue = try process(element: exampleGenerator.value, at: node, isEachLike: false)
+		let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
 
 		return (
 			node: processedGeneratorValue.node,
@@ -304,7 +308,7 @@ private extension PactBuilder {
 	}
 
 	// Processes a `Dictionary` object and extracts any matchers or generators
-	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func process(_ dictionary: [String: Any], at node: String, isEachKeyLike: Bool = false) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]
 		var generators: [String: AnyEncodable] = [:]
@@ -312,7 +316,9 @@ private extension PactBuilder {
 		try dictionary
 			.enumerated()
 			.forEach {
-				let childElement = try process(element: $0.element.value, at: node.isEmpty ? "\($0.element.key)" : "\(node).\($0.element.key)", isEachLike: false)
+				let nodeKey = isEachKeyLike ? "*" : $0.element.key
+				let _node = node.isEmpty ? "\(nodeKey)" : "\(node).\(nodeKey)"
+				let childElement = try process(element: $0.element.value, at: _node)
 				encodableDictionary[$0.element.key] = childElement.node
 				matchingRules = merge(matchingRules, with: childElement.rules)
 				generators = merge(generators, with: childElement.generators)
