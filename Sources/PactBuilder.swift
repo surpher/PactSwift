@@ -19,6 +19,8 @@ import Foundation
 
 struct PactBuilder {
 
+	typealias ProcessingResult = (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
+
 	let typeDefinition: Any
 	let interactionNode: PactInteractionNode
 
@@ -56,12 +58,7 @@ struct PactBuilder {
 private extension PactBuilder {
 
 	// swiftlint:disable:next cyclomatic_complexity function_body_length
-	func process(
-		element: Any,
-		at node: String,
-		isEachLike: Bool = false,
-		isEachKeyLike: Bool = false
-	) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func process(element: Any, at node: String, isEachLike: Bool = false) throws -> ProcessingResult {
 		let processedElement: (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable])
 
 		let elementToProcess = mapPactObject(element)
@@ -219,7 +216,7 @@ private extension PactBuilder {
 	// MARK: - Processing
 
 	// Processes a Matcher
-	func processMatcher(_ matcher: MatchingRuleExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func processMatcher(_ matcher: MatchingRuleExpressible, at node: String) throws -> ProcessingResult {
 		let processedMatcherValue = try process(element: matcher.value, at: node, isEachLike: false)
 
 		return (
@@ -230,7 +227,7 @@ private extension PactBuilder {
 	}
 
 	// Processes an `EachLike` matcher
-	func processEachLikeMatcher(_ matcher: Matcher.EachLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func processEachLikeMatcher(_ matcher: Matcher.EachLike, at node: String) throws -> ProcessingResult {
 		var newNode: String
 		let elementToProcess = mapPactObject(matcher.value)
 
@@ -253,8 +250,8 @@ private extension PactBuilder {
 		)
 	}
 
-//	// Processes an `EachKeyLike` matcher
-	func processEachKeyLikeMatcher(_ matcher: Matcher.EachKeyLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	// Processes an `EachKeyLike` matcher
+	func processEachKeyLikeMatcher(_ matcher: Matcher.EachKeyLike, at node: String) throws -> ProcessingResult {
 		var processedMatcherValue = try process(element: matcher.value, at: node)
 		processedMatcherValue.rules[node] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
 
@@ -266,7 +263,7 @@ private extension PactBuilder {
 	}
 
 	// Processes an Example Generator
-	func processExampleGenerator(_ exampleGenerator: ExampleGeneratorExpressible, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func processExampleGenerator(_ exampleGenerator: ExampleGeneratorExpressible, at node: String) throws -> ProcessingResult {
 		let processedGeneratorValue = try process(element: exampleGenerator.value, at: node)
 
 		return (
