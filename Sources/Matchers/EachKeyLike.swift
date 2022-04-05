@@ -57,6 +57,9 @@ public extension Matcher {
 		/// }
 		/// ```
 		///
+		/// - Warning: Note that using a different matchers at the same level might
+		/// yield conflicting matching rules when validating the provider.
+		///
 		public init(_ value: Any) {
 			self.value = value
 		}
@@ -79,6 +82,9 @@ public class ObjcEachKeyLike: NSObject, ObjcMatcher {
 	///
 	/// Use this matcher in situations when the `key` is not known in advance but the actual value structure and type
 	/// must match. You may use other `Matcher`s and `ExampleGenerator`s for its value.
+	///
+	/// - Warning: Note that using a different matchers at the same level might
+	/// yield conflicting matching rules when validating the provider.
 	///
 	@objc(value:)
 	public init(value: Any) {

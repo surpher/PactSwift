@@ -171,7 +171,7 @@ class PactContractTests: XCTestCase {
 				)
 
 				// Validate eachKeyLike matcher from interaction
-				let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an simpler object with wildcard matchers")
+				let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simpler object with wildcard matchers")
 				// print("\nMATCHERS:\n\(matchersOne)")
 				let expectedSimplerEachKeyLikePaths = [
 					"$.*",
