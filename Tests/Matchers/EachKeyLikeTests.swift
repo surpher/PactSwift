@@ -22,12 +22,12 @@ import XCTest
 class EachKeyLikeTests: XCTestCase {
 
 	func testMatcher_EachKeyLike_InitsWithKey() throws {
-		let sut = try XCTUnwrap(Matcher.EachKeyLike("foo", value: "bar")).key
-		XCTAssertEqual(sut, "foo")
+		let sut = try XCTUnwrap(Matcher.EachKeyLike("bar").value as? String)
+		XCTAssertEqual(sut, "bar")
 	}
 
 	func testMatcher_EachKeyLike_InitsWithValue() throws {
-		let sut = try XCTUnwrap(Matcher.EachKeyLike("foo", value: 123).value as? Int)
+		let sut = try XCTUnwrap(Matcher.EachKeyLike(123).value as? Int)
 		XCTAssertEqual(sut, 123)
 	}
 

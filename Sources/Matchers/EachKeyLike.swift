@@ -21,7 +21,6 @@ public extension Matcher {
 
 	struct EachKeyLike: MatchingRuleExpressible {
 
-		let key: String
 		let value: Any
 		let rules: [[String: AnyEncodable]] = [["match": AnyEncodable("type")]]
 
@@ -30,7 +29,6 @@ public extension Matcher {
 		/// Object where the key itself is ignored, but the value template must match
 		///
 		/// - Parameters:
-		///   - key: The key to ignore
 		///   - value: The value template to use in consumer test
 		///
 		/// Use this matcher in situations when the `key` is not known in advance but the actual value structure and type
@@ -41,32 +39,25 @@ public extension Matcher {
 		/// .willRespondWith(
 		///   status: 200,
 		///   body: [
-		///     "articles": Matcher.EachLike(
-		///       [
-		///         "variants": Matcher.EachKeyLike(
-		///           "001", value: ["created_on": ExampleGenerator.RandomDate]
-		///         )
-		///       ]
-		///     )
+		///     "abc": Matcher.EachKeyLike([
+		///       "field1": Matcher.SomethingLike("value1"),
+		///       "field2": Matcher.IntegerLike(123)
+		///     ]),
+		///     "xyz": Matcher.EachKeyLike([
+		///       "field1": Matcher.SomethingLike("value2"),
+		///       "field2": Matcher.IntegerLike(456)
+		///     ])
 		///   ]
 		/// )
 		///
 		/// // will generate JSON:
 		/// {
-		///   "articles": [
-		///     {
-		///       "variants": {
-		///         "001": {
-		///           "created_on": "2022-03-23"
-		///         }
-		///       }
-		///     }
-		///   ]
+		///   "abc": { "field1": "value1", "field2": 123 },
+		///   "xyz": { "field1": "value2", "field2": 456 },
 		/// }
 		/// ```
 		///
-		public init(_ key: String, value: Any) {
-			self.key = key
+		public init(_ value: Any) {
 			self.value = value
 		}
 	}
@@ -84,15 +75,14 @@ public class ObjcEachKeyLike: NSObject, ObjcMatcher {
 	/// Object where the key itself is ignored, but the value template must match
 	///
 	/// - Parameters:
-	///   - key: The key to ignore
 	///   - value: The value template to use in consumer test
 	///
 	/// Use this matcher in situations when the `key` is not known in advance but the actual value structure and type
 	/// must match. You may use other `Matcher`s and `ExampleGenerator`s for its value.
 	///
-	@objc(key: value:)
-	public init(key: String, value: Any) {
-		type = Matcher.EachKeyLike(key, value: value)
+	@objc(value:)
+	public init(value: Any) {
+		type = Matcher.EachKeyLike(value)
 	}
 
 }

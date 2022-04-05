@@ -71,7 +71,7 @@ class PactContractTests: XCTestCase {
 				// MARK: - Validate Interactions
 
 				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				let numOfExpectedInteractions = 10
+				let numOfExpectedInteractions = 11
 
 				assert(
 					interactions.count == numOfExpectedInteractions,
@@ -150,21 +150,37 @@ class PactContractTests: XCTestCase {
 					, "Not all expected generators found in Pact contract file"
 				)
 
-				// Validate eachKeyLike matcher from interaction "bug example"
+				// Validate eachKeyLike matcher from interaction
 				let eachKeyLikeInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an object with wildcard matchers")
 				// print("\nMATCHERS:\n\(matchersOne)")
 				let expectedEachKeyLikePaths = [
 					"$.articles",
-					"$.articles[*].variants",
-					"$.articles[*].variants.*.bundles",
+					"$.articles[*].variants.*",
+					"$.articles[*].variants.*.bundles.*",
 					"$.articles[*].variants.*.bundles.*.description",
-					"$.articles[*].variants.*.bundles.*.referencedArticles",
 					"$.articles[*].variants.*.bundles.*.referencedArticles",
 					"$.articles[*].variants.*.bundles.*.referencedArticles[*].bundleId",
 				]
 				assert(
 					expectedEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
 						eachKeyLikeInteraction.contains { generatedKey, _ -> Bool in
+							expectedKey == generatedKey
+						}
+					},
+					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
+				)
+
+				// Validate eachKeyLike matcher from interaction
+				let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an simpler object with wildcard matchers")
+				// print("\nMATCHERS:\n\(matchersOne)")
+				let expectedSimplerEachKeyLikePaths = [
+					"$.*",
+					"$.*.field1",
+					"$.*.field2",
+				]
+				assert(
+					expectedSimplerEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
+						eachKeyLikeSimplerInteraction.contains { generatedKey, _ -> Bool in
 							expectedKey == generatedKey
 						}
 					},
@@ -600,37 +616,68 @@ class PactContractTests: XCTestCase {
 		mockService
 			.uponReceiving("Request for an object with wildcard matchers")
 			.given("keys in response itself are ignored")
-			.withRequest(method: .GET, path: "/articles/variants")
+			.withRequest(method: .GET, path: "/articles/nested/keyLikeMatcher")
 			.willRespondWith(
 				status: 200,
 				body: [
 					"articles": Matcher.EachLike(
 						[
-							"variants":
-								Matcher.EachKeyLike(
-									"001",
-									value: [
-										"bundles":
-											Matcher.EachKeyLike(
-												"001-A",
-												value: [
-													"description": Matcher.SomethingLike("someDescription"),
-													"referencedArticles": Matcher.EachLike(
-														[
-															"bundleId": Matcher.SomethingLike("someId")
-														]
-													)
-												]
-											)
+							"variants": [
+								"001": Matcher.EachKeyLike([
+									"bundles": [
+										"001-A": Matcher.EachKeyLike([
+											"description": Matcher.SomethingLike("someDescription"),
+											"referencedArticles": Matcher.EachLike([
+													"bundleId": Matcher.SomethingLike("someId")
+												])
+										])
 									]
-								)
+								])
+							]
 						]
 					)
 				]
 			)
 
 		mockService.run { [unowned self] baseURL, done in
-			let url = URL(string: "\(baseURL)/articles/variants")!
+			let url = URL(string: "\(baseURL)/articles/nested/keyLikeMatcher")!
+			session
+				.dataTask(with: url) { data, response, error in
+					guard
+						error == nil,
+						(response as? HTTPURLResponse)?.statusCode == 200
+					else {
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						return
+					}
+					print(String(data: data!, encoding: .utf8)!)
+					done()
+				}
+				.resume()
+		}
+	}
+
+	func testPactContract_WithSimplerEachKeyLikeMatcher() {
+		mockService
+			.uponReceiving("Request for a simpler object with wildcard matchers")
+			.given("keys in response itself are ignored")
+			.withRequest(method: .GET, path: "/articles/simpler/keyLikeMatcher")
+			.willRespondWith(
+				status: 200,
+				body: [
+					"abc": Matcher.EachKeyLike([
+						"field1": Matcher.SomethingLike("value1"),
+						"field2": Matcher.IntegerLike(123)
+					]),
+					"xyz": Matcher.EachKeyLike([
+						"field1": Matcher.SomethingLike("value2"),
+						"field2": Matcher.IntegerLike(456)
+					])
+				]
+			)
+
+		mockService.run { [unowned self] baseURL, done in
+			let url = URL(string: "\(baseURL)/articles/simpler/keyLikeMatcher")!
 			session
 				.dataTask(with: url) { data, response, error in
 					guard

@@ -53,13 +53,10 @@ class ObjCMatcherTests: XCTestCase {
 	}
 
 	func testObjcMatcher_EachKeyLike() throws {
-		var testSubject = ObjcEachKeyLike(key: "foo", value: "bar")
-
-		XCTAssertEqual(try XCTUnwrap((testSubject.type as? Matcher.EachKeyLike)?.key), "foo")
+		var testSubject = ObjcEachKeyLike(value: "bar")
 		XCTAssertEqual(try XCTUnwrap((testSubject.type as? Matcher.EachKeyLike)?.value as? String), "bar")
 
-		testSubject = ObjcEachKeyLike(key: "baz", value: ["bar": 123])
-		XCTAssertEqual(try XCTUnwrap((testSubject.type as? Matcher.EachKeyLike)?.key), "baz")
+		testSubject = ObjcEachKeyLike(value: ["bar": 123])
 		XCTAssertEqual(try XCTUnwrap((testSubject.type as? Matcher.EachKeyLike)?.value as? [String: Int]), ["bar": 123])
 	}
 

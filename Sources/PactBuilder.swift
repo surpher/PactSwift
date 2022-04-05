@@ -75,7 +75,7 @@ private extension PactBuilder {
 			processedElement = (node: AnyEncodable(processedArray.node), rules: processedArray.rules, generators: processedArray.generators)
 
 		case let dict as [String: Any]:
-			let processedDict = try process(dict, at: node, isEachKeyLike: isEachKeyLike)
+			let processedDict = try process(dict, at: node)
 			processedElement = (node: AnyEncodable(processedDict.node), rules: processedDict.rules, generators: processedDict.generators)
 
 		// MARK: - Process Simple Types
@@ -253,9 +253,9 @@ private extension PactBuilder {
 		)
 	}
 
-	// Processes an `EachKeyLike` matcher
+//	// Processes an `EachKeyLike` matcher
 	func processEachKeyLikeMatcher(_ matcher: Matcher.EachKeyLike, at node: String) throws -> (node: AnyEncodable, rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
-		var processedMatcherValue = try process(element: [matcher.key: matcher.value], at: node, isEachKeyLike: true)
+		var processedMatcherValue = try process(element: matcher.value, at: node)
 		processedMatcherValue.rules[node] = AnyEncodable(["matchers": AnyEncodable(matcher.rules)])
 
 		return (
@@ -308,7 +308,7 @@ private extension PactBuilder {
 	}
 
 	// Processes a `Dictionary` object and extracts any matchers or generators
-	func process(_ dictionary: [String: Any], at node: String, isEachKeyLike: Bool = false) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
+	func process(_ dictionary: [String: Any], at node: String) throws -> (node: [String: AnyEncodable], rules: [String: AnyEncodable], generators: [String: AnyEncodable]) {
 		var encodableDictionary: [String: AnyEncodable] = [:]
 		var matchingRules: [String: AnyEncodable] = [:]
 		var generators: [String: AnyEncodable] = [:]
@@ -316,7 +316,7 @@ private extension PactBuilder {
 		try dictionary
 			.enumerated()
 			.forEach {
-				let nodeKey = isEachKeyLike ? "*" : $0.element.key
+				let nodeKey = (($0.element.value as? Matcher.EachKeyLike) != nil) ? "*" : $0.element.key
 				let _node = node.isEmpty ? "\(nodeKey)" : "\(node).\(nodeKey)"
 				let childElement = try process(element: $0.element.value, at: _node)
 				encodableDictionary[$0.element.key] = childElement.node
