@@ -24,7 +24,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 #### Xcode
 
 1. Enter `https://github.com/surpher/PactSwift` in [Choose Package Repository](./Documentation/images/08_xcode_spm_search.png) search bar
-2. Use minimum version `0.11.x` when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
+2. Optionally set a minimum version when [Choosing Package Options](./Documentation/images/09_xcode_spm_options.png)
 3. Add `PactSwift` to your [test](./Documentation/images/10_xcode_spm_add_package.png) target. Do not embed it in your application target.
 
 #### Package.swift
@@ -149,7 +149,7 @@ class PassingTestsExample: XCTestCase {
     PassingTestsExample.mockService.run(timeout: 1) { [unowned self] mockServiceURL, done in
 
       // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
-      apiClient.baseUrl = baseURL
+      apiClient.baseUrl = mockServiceURL
 
       // #7 - Make the API request.
       apiClient.getUsers() { users in
@@ -158,7 +158,6 @@ class PassingTestsExample: XCTestCase {
           XCTAssertEqual(users.count, 20)
           XCTAssertEqual(users.first?.firstName, "John")
           XCTAssertEqual(users.first?.lastName, "Tester")
-        }
 
         // #9 - Always run the callback. Run it in your successful and failing assertions!
         // Otherwise your test will time out.
