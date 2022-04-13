@@ -99,12 +99,7 @@ import PactSwift
 
 class PassingTestsExample: XCTestCase {
 
-  static var mockService: MockService!
-
-  override class func setUp() {
-    super.setUp()
-    mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
-  }
+  static var mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
 
   // MARK: - Tests
 
