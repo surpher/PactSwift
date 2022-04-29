@@ -65,9 +65,13 @@ swift test -Xlinker -L/usr/local/lib/
 
 ### Carthage
 
+----
+
 ⚠️ There seems to be an issue with linking transient dependencies building `XCFramework`s using `Carthage`. This only affects sytems using command line tools provided by Xcode 13.2 and later! Please consider using SPM or create your own `XCFramework` out of this project and link it in your project. 
 
 Tracking this issue at https://github.com/Carthage/Carthage/issues/3270.
+
+----
 
 ```sh
 # Cartfile
