@@ -68,12 +68,12 @@ final class MockServiceWithDirectoryPathTests: XCTestCase {
 		MockServiceWithDirectoryPathTests.mockService.run { [unowned self] baseURL, completed in
 			let url = URL(string: "\(baseURL)/animals")!
 			session
-				.dataTask(with: url) { data, response, error in
+				.dataTask(with: url) { [unowned self] data, response, error in
 					guard
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test

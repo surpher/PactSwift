@@ -275,7 +275,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -336,7 +336,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -351,7 +351,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -392,7 +392,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -450,7 +450,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -490,7 +490,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -532,7 +532,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: request.debugDescription, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: request.debugDescription, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
@@ -564,7 +564,7 @@ class PactContractTests: XCTestCase {
 						error == nil,
 						(response as? HTTPURLResponse)?.statusCode == 200
 					else {
-						fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
+						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
 					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
