@@ -197,7 +197,6 @@ class PactBuilderTests: XCTestCase {
 			XCTFail("Expecting to fail encoding when Regex matcher's value doesn't match the pattern")
 		} catch {
 			if case .encodingFailure(let message) = error as? EncodingError {
-				print(String(describing: message))
 				XCTAssertTrue(String(describing: message).contains(#"Value \"foo\" does not match the pattern \"\\{3}-\\w+$\""#), "Unexpected error message: \"\(String(describing: message))\"")
 			} else {
 				XCTFail("Expecting an Encoding error!")
