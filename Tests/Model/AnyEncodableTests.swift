@@ -164,7 +164,6 @@ class AnyEncodableTests: XCTestCase {
 		} catch {
 			do {
 				let testResult = try XCTUnwrap(error as? EncodingError)
-				print(testResult.localizedDescription)
 				XCTAssertTrue(testResult.localizedDescription.contains("Error preparing pact! A key or value in the structure does not conform to 'Encodable' protocol. The element attempted to encode: \(dateComponents(from: testDate))"), "Unexpected localizedDescription: \(testResult.localizedDescription)")
 			} catch {
 				XCTFail("Expected an EncodableWrapper.encodingFailed to be thrown")
