@@ -22,7 +22,7 @@ import XCTest
 #if os(Linux)
 import PactSwiftMockServerLinux
 #else
-import PactSwiftMockServer
+@_implementationOnly import PactSwiftMockServer
 #endif
 
 /// Entry point for provider verification

@@ -20,7 +20,7 @@ import Foundation
 #if os(Linux)
 import PactSwiftMockServerLinux
 #else
-import PactSwiftMockServer
+@_implementationOnly import PactSwiftMockServer
 #endif
 
 public extension ExampleGenerator {

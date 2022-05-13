@@ -36,7 +36,7 @@ public enum TransferProtocol {
 
 #else
 
-import PactSwiftMockServer
+@_implementationOnly import PactSwiftMockServer
 
 /// Defines the transfer protocol on which `MockService` runs.
 @objc public enum TransferProtocol: Int {
