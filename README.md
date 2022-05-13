@@ -65,17 +65,14 @@ swift test -Xlinker -L/usr/local/lib/
 
 ### Carthage
 
-```sh
-# Cartfile when using Xcode 13.2 and later
-github "surpher/PactSwift" ~> 0.13
+----
 
-# Carfile when using Xcode up to 13.1 
-github "surpher/PactSwift" == 0.12
-```
+⚠️ There seems to be an issue with linking transient dependencies building `XCFramework`s and building them using `carthage`.   
+Please consider using SPM or create your own `XCFramework` and link it in your project appropriately. 
 
-```sh
-carthage update --use-xcframeworks
-```
+Tracking this issue at https://github.com/Carthage/Carthage/issues/3270.
+
+----
 
 **NOTE:**
 
