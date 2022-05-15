@@ -254,7 +254,7 @@ private extension MockService {
 				switch $0 {
 				case .success:
 					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test
-					finalize(file: file, line: line) { [unowned self] in
+					finalize(file: file, line: line) {
 						switch $0 {
 						case .success(let message):
 							Logger.log(message: message, data: self.pact.data)
