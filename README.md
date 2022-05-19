@@ -67,7 +67,7 @@ swift test -Xlinker -L/usr/local/lib/
 
 ----
 
-⚠️ There seems to be an issue with linking transient dependencies building `XCFramework`s and building them using `carthage`.   
+⚠️ There seems to be an issue with linking transient dependencies when building `XCFramework`s and when building the framework using `carthage`. It affects builds using Xcode 13.3+.   
 Please consider using SPM or create your own `XCFramework` and link it in your project appropriately. 
 
 ----
