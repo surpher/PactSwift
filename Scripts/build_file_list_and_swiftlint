@@ -19,6 +19,9 @@
 
 set -eu
 
+# Adds support for Apple Silicon brew directory
+export PATH="$PATH:/opt/homebrew/bin"
+
 SRCROOT=${SRCROOT:-"."}
 DERIVED_FILE_DIR=${DERIVED_FILE_DIR:-"."}
 
