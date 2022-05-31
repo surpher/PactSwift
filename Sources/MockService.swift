@@ -163,7 +163,6 @@ extension MockService {
 	/// Set `PACT_OUTPUT_DIR` to `$(PATH)/to/desired/dir/` in `Build` phase of your `Scheme` to change the location.
 	///
 	func finalize(file: FileString? = nil, line: UInt? = nil, completion: ((Result<String, MockServerError>) -> Void)? = nil) {
-
 		// Spin up a fresh Mock Server with a directory to write to
 		let mockServer = MockServer(directory: pactsDirectory)
 
@@ -253,7 +252,11 @@ private extension MockService {
 			mockServer.verify {
 				switch $0 {
 				case .success:
-					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test
+					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test.
+					// Only finalize when running in simulator, maOS or Linux. Running on a physical iOS device makes little sense due to
+					// writing a pact file to device's disk. `libpact_ffi` does the actual file writing it writes it onto the
+					// disk of the device it is being run on.
+					#if targetEnvironment(simulator) || os(macOS) || os(Linux)
 					finalize(file: file, line: line) {
 						switch $0 {
 						case .success(let message):
@@ -264,6 +267,11 @@ private extension MockService {
 							completion()
 						}
 					}
+					#else
+					print("[INFO]: Running on an iOS device. Writing Pact interaction into a contract skipped.")
+					completion()
+					#endif
+
 				case .failure(let error):
 					failWith(error.description, file: file, line: line)
 					completion()
