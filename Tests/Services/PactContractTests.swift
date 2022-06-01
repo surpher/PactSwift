@@ -34,7 +34,7 @@ private class MockServiceWrapper {
 	var mockService: MockService
 
 	init() {
-		mockService = MockService(consumer: consumer, provider: provider, errorReporter: errorCapture)
+		mockService = MockService(consumer: consumer, provider: provider, merge: false, errorReporter: errorCapture)
 	}
 
 }
