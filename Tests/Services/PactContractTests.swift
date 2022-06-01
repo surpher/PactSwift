@@ -687,7 +687,6 @@ class PactContractTests: XCTestCase {
 						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
 						return
 					}
-					print(String(data: data!, encoding: .utf8)!)
 					done()
 				}
 				.resume()
