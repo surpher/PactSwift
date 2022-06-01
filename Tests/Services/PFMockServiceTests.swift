@@ -149,10 +149,10 @@ class PFMockServiceTests: XCTestCase {
 					}
 					.resume()
 
-				self.waitForExpectations(timeout: 5) { _ in done() }
+				self.waitForExpectations(timeout: 10) { _ in done() }
 			},
 			verify: [firstInteraction, secondInteraction],
-			timeout: 2
+			timeout: 10
 		)
 	}
 
