@@ -1,3 +1,16 @@
+# 0.13.1 - v0.13.1
+* a4ce230 - tech: Re-introduces CI workflow on macOS 10.15 (surpher)
+* a376128 - fix: Adds compiler check for _implementationOnly imports (surpher)
+* 89af3d7 - bugfix: Fixes Obj-C interface for merge feature (surpher)
+* d4376cf - tech: Sets minimum version for dependency (surpher)
+* f3703ed - chore: Fix dependency version (surpher)
+* 795f409 - fix: Attempt to fix unit tests on CI (surpher)
+* 977ecb4 - chore: Removing another print statement in unit test (surpher)
+* 2cb7187 - fix: Tests with merge flag (surpher)
+* c5d3d54 - fix: Disable logging in Xcode scheme (surpher)
+* 8d415a9 - test: Increase timeout for test making multiple requests (surpher)
+* 27fe3b7 - fix: Remove print statement from unit test (surpher)
+* 0181b46 - chore: Adds project-level copyright template (surpher)
 # 0.13.0 - v0.13.0
 * 2bbb90f - chore: Clean up in-code documentation (surpher)
 * 80667bd - fix: Fixes type-os in inline documentation (Marko Justinek)
