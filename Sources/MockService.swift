@@ -59,7 +59,7 @@ open class MockService {
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///   - writePactTo: The directory where to write the contract
-	///   - merge: Set to ``true`` to merge interactions with an existing Pact contract
+	///   - merge: Whether to merge interactions with an existing Pact contract
 	///
 	public convenience init(
 		consumer: String,
@@ -81,7 +81,7 @@ open class MockService {
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
 	///   - directory: The directory where to write the contract
-	///   - merge: Set to ``true`` to merge interactions with an existing Pact contract
+	///   - merge: Whether to merge interactions with an existing Pact contract
 	///   - errorReporter: Injectable object to intercept errors
 	///
 	internal init(

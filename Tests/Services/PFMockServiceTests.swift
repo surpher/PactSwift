@@ -31,7 +31,12 @@ class PFMockServiceTests: XCTestCase {
 		try super.setUpWithError()
 
 		errorCapture = ErrorCapture()
-		testSubject = PFMockService(consumer: "pfpactswift-consumer", provider: "pfpactswift-provider", scheme: .standard)
+		testSubject = PFMockService(
+			consumer: "pfpactswift-consumer",
+			provider: "pfpactswift-provider",
+			scheme: .standard,
+			merge: false
+		)
 	}
 
 	override func tearDownWithError() throws {

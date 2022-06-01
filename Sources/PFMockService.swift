@@ -49,14 +49,26 @@ import PactSwiftMockServerLinux
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - transferProtocol: HTTP scheme
+	///   - merge: Whether to merge interactions with an existing Pact contract
 	///
-	@objc(initWithConsumer: provider: transferProtocol:)
-	public convenience init(consumer: String, provider: String, transferProtocol: TransferProtocol = .standard) {
-		self.init(consumer: consumer, provider: provider, scheme: transferProtocol, errorReporter: ErrorReporter())
+	@objc(initWithConsumer: provider: transferProtocol: merge:)
+	public convenience init(
+		consumer: String,
+		provider: String,
+		transferProtocol: TransferProtocol = .standard,
+		merge: Bool = true
+	) {
+		self.init(consumer: consumer, provider: provider, scheme: transferProtocol, errorReporter: ErrorReporter(), merge: merge)
 	}
 
-	internal init(consumer: String, provider: String, scheme: TransferProtocol, errorReporter: ErrorReportable? = nil) {
-		mockService = MockService(consumer: consumer, provider: provider, scheme: scheme, errorReporter: errorReporter ?? ErrorReporter())
+	internal init(
+		consumer: String,
+		provider: String,
+		scheme: TransferProtocol,
+		errorReporter: ErrorReportable? = nil,
+		merge: Bool
+	) {
+		mockService = MockService(consumer: consumer, provider: provider, scheme: scheme, merge: merge, errorReporter: errorReporter ?? ErrorReporter())
 	}
 
 	// MARK: - Interface
