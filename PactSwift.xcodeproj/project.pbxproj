@@ -1435,7 +1435,7 @@
 			repositoryURL = "https://github.com/surpher/PactSwiftMockServer";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.3.2;
+				minimumVersion = 0.3.6;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
