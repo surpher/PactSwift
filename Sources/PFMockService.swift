@@ -23,8 +23,10 @@ import XCTest
 
 #if os(Linux)
 import PactSwiftMockServerLinux
-#else
+#elseif compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
+#else
+import PactSwiftMockServer
 #endif
 
 /// Initializes a `PFMockService` object that handles Pact interaction testing for projects written in Objective-C. For Swift projects use `MockService`.

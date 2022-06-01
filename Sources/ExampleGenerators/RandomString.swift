@@ -19,8 +19,10 @@ import Foundation
 
 #if os(Linux)
 import PactSwiftMockServerLinux
-#else
+#elseif compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
+#else
+import PactSwiftMockServer
 #endif
 
 public extension ExampleGenerator {

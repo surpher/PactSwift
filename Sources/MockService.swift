@@ -21,8 +21,10 @@ import XCTest
 
 #if os(Linux)
 import PactSwiftMockServerLinux
-#else
+#elseif compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
+#else
+import PactSwiftMockServer
 #endif
 
 /// Initializes a `MockService` object that handles Pact interaction testing.
