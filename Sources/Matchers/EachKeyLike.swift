@@ -19,6 +19,66 @@ import Foundation
 
 public extension Matcher {
 
+	/// Object where the key itself is ignored, but the value template must match
+	///
+	/// - Parameters:
+	///   - value: The value template to use in consumer test
+	///
+	/// Use this matcher in situations when the `key` is not known in advance but the actual value structure and type
+	/// must match. You may use other `Matcher`s and `ExampleGenerator`s for its value.
+	///
+	/// An example pact test set up:
+	///
+	/// ```
+	/// .willRespondWith(
+	///   status: 200,
+	///   body: [
+	///     "abc": Matcher.EachKeyLike([
+	///       "field1": Matcher.SomethingLike("value1"),
+	///       "field2": Matcher.IntegerLike(123)
+	///     ]),
+	///     "xyz": Matcher.EachKeyLike([
+	///       "field1": Matcher.SomethingLike("value2"),
+	///       "field2": Matcher.IntegerLike(456)
+	///     ])
+	///   ]
+	/// )
+	/// ```
+	///
+	///	Will generate the response JSON:
+	///
+	/// ```
+	/// {
+	///   "abc": { "field1": "value1", "field2": 123 },
+	///   "xyz": { "field1": "value2", "field2": 456 },
+	/// }
+	/// ```
+	///
+	/// And the matching rules will be set to match any key:
+	///
+	/// ```
+	/// "matchingRules": {
+	///    "body": {
+	///      "$.*": {
+	///        "combine": "AND",
+	///        "matchers": [{"match": "type"}]
+	///      },
+	///      "$.*.field1": {
+	///        "combine": "AND",
+	///        "matchers": [{"match": "type"}]
+	///      },
+	///      "$.*.field2": {
+	///        "combine": "AND",
+	///        "matchers": [{"match": "integer"}]
+	///      }
+	///    }
+	///  },
+	///  ...
+	/// ```
+	///
+	/// - Warning: Note that using a different matcher at the same level might
+	/// yield conflicting matching rules when validating the provider.
+	///
 	struct EachKeyLike: MatchingRuleExpressible {
 
 		let value: Any
@@ -34,8 +94,9 @@ public extension Matcher {
 		/// Use this matcher in situations when the `key` is not known in advance but the actual value structure and type
 		/// must match. You may use other `Matcher`s and `ExampleGenerator`s for its value.
 		///
+		/// An example pact test set up:
+		///
 		/// ```
-		/// // DSL
 		/// .willRespondWith(
 		///   status: 200,
 		///   body: [
@@ -49,12 +110,37 @@ public extension Matcher {
 		///     ])
 		///   ]
 		/// )
+		/// ```
 		///
-		/// // will generate JSON:
+		///	Will generate the response JSON:
+		///
+		/// ```
 		/// {
 		///   "abc": { "field1": "value1", "field2": 123 },
 		///   "xyz": { "field1": "value2", "field2": 456 },
 		/// }
+		/// ```
+		///
+		/// And the matching rules will be set to match any key:
+		///
+		/// ```
+		/// "matchingRules": {
+		///    "body": {
+		///      "$.*": {
+		///        "combine": "AND",
+		///        "matchers": [{"match": "type"}]
+		///      },
+		///      "$.*.field1": {
+		///        "combine": "AND",
+		///        "matchers": [{"match": "type"}]
+		///      },
+		///      "$.*.field2": {
+		///        "combine": "AND",
+		///        "matchers": [{"match": "integer"}]
+		///      }
+		///    }
+		///  },
+		///  ...
 		/// ```
 		///
 		/// - Warning: Note that using a different matcher at the same level might
