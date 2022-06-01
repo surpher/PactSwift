@@ -1,3 +1,12 @@
+# 0.13.0 - v0.13.0
+* 2bbb90f - chore: Clean up in-code documentation (surpher)
+* 80667bd - fix: Fixes type-os in inline documentation (Marko Justinek)
+* 4856bd1 - refactor: Using typealias for code readability (Marko Justinek)
+* ceb08db - docs: Update inline documentation for eachKeyLike (Marko Justinek)
+* aac0236 - refactor: Makes eachKeyLike matcher API similar to existing matchers (Marko Justinek)
+* 9565d9c - fix: Invalid processing of eachKeyLike matcher (Marko Justinek)
+* 4d98eb5 - refactor: Making internal parameter a non-mutating property (Marko Justinek)
+* 197e5b0 - feature: Adds EachKeyLike matcher (Marko Justinek)
 # 0.12.1 - v0.12.1
 * f992c7c - tech: Updates to unit tests script (Marko Justinek)
 * 28a3d76 - chore: Lock in mock service dependency version (Marko Justinek)
