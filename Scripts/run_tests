@@ -22,8 +22,15 @@ else
 fi
 
 # Build and test for SPM
-echo "📦  Building swift (SPM)"
+echo "📦  Verifying it works using Swift Package Manager"
+
+echo "ℹ️ Resolving package dependencies"
+xcodebuild -resolvePackageDependencies
+
+echo "🏗 Building"
 swift build
+
+echo "🤖 Running tests"
 swift test
 
 # Run iOS tests
