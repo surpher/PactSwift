@@ -39,6 +39,7 @@ open class MockService {
 	private var currentInteraction: Interaction!
 	private let errorReporter: ErrorReportable
 	private let pactsDirectory: URL?
+	private let merge: Bool
 
 	#if os(Linux)
 	private var transferProtocolScheme: PactSwiftMockServerLinux.TransferProtocol
@@ -57,10 +58,17 @@ open class MockService {
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
-	///   - directory: The directory where to write the contract
+	///   - writePactTo: The directory where to write the contract
+	///   - merge: Set to ``true`` to merge interactions with an existing Pact contract
 	///
-	public convenience init(consumer: String, provider: String, scheme: TransferProtocol = .standard, writePactTo directory: URL? = nil) {
-		self.init(consumer: consumer, provider: provider, scheme: scheme, directory: directory, errorReporter: ErrorReporter())
+	public convenience init(
+		consumer: String,
+		provider: String,
+		scheme: TransferProtocol = .standard,
+		writePactTo directory: URL? = nil,
+		merge: Bool = true
+	) {
+		self.init(consumer: consumer, provider: provider, scheme: scheme, directory: directory, merge: merge, errorReporter: ErrorReporter())
 	}
 
 	/// Initializes a `MockService` object that handles Pact interaction testing
@@ -72,14 +80,23 @@ open class MockService {
 	///   - consumer: Name of the API consumer (eg: "mobile-app")
 	///   - provider: Name of the API provider (eg: "auth-service")
 	///   - scheme: HTTP scheme
-	///   - errorReporter: Injectable object to intercept errors
 	///   - directory: The directory where to write the contract
+	///   - merge: Set to ``true`` to merge interactions with an existing Pact contract
+	///   - errorReporter: Injectable object to intercept errors
 	///
-	internal init(consumer: String, provider: String, scheme: TransferProtocol = .standard, directory: URL? = nil, errorReporter: ErrorReportable? = nil) {
+	internal init(
+		consumer: String,
+		provider: String,
+		scheme: TransferProtocol = .standard,
+		directory: URL? = nil,
+		merge: Bool = true,
+		errorReporter: ErrorReportable? = nil
+	) {
 		pact = Pact(consumer: Pacticipant.consumer(consumer), provider: Pacticipant.provider(provider))
 		self.errorReporter = errorReporter ?? ErrorReporter()
 		self.transferProtocolScheme = scheme.bridge
 		self.pactsDirectory = directory
+		self.merge = merge
 	}
 
 	// MARK: - Interface
@@ -164,7 +181,7 @@ extension MockService {
 	///
 	func finalize(file: FileString? = nil, line: UInt? = nil, completion: ((Result<String, MockServerError>) -> Void)? = nil) {
 		// Spin up a fresh Mock Server with a directory to write to
-		let mockServer = MockServer(directory: pactsDirectory)
+		let mockServer = MockServer(directory: pactsDirectory, merge: self.merge)
 
 		// Gather all the interactions this MockService has received to set up and prepare Pact data with them all
 		pact.interactions = interactions.filter { $0.encodingErrors.isEmpty }
