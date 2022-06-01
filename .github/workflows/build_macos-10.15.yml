@@ -1,0 +1,86 @@
+name: Build (macOS 10.x)
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'chore/**'
+      - 'docs/**'
+      - 'feat/**'
+      - 'feature/**'
+      - 'fix/**'
+      - 'refactor/**'
+      - 'releases/**'
+      - 'style/**'
+      - 'test/**'
+      - 'tech/**'
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: macos-10.15
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
+          - scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+
+    env:
+      SCHEME: ${{ matrix.scheme }}
+      DESTINATION: ${{ matrix.destination }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 12.4
+        run: sudo xcode-select -switch /Applications/Xcode_12.4.app
+
+      - name: Prepare Tools
+        run: |
+          Scripts/prepare_build_tools
+
+      - name: Run tests (Xcode)
+        run: |
+          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+
+      - name: Run tests (CLI - Swift Package)
+        run: |
+          swift build && swift test -c debug
+
+      - name: Upload code coverage
+        run: |
+          bash <(curl -s https://codecov.io/bash) -J 'PactSwift'
+
+  test_carthage:
+    name: Test Carthage compatibility
+    runs-on: macos-10.15
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - platform: "ios"
+          - platform: "macos"
+
+    env:
+      PLATFORM: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Use Xcode 12.2
+        run: sudo xcode-select -switch /Applications/Xcode_12.2.app
+
+      - name: Carthage build
+        run: |
+          ./Scripts/carthage build --use-xcframeworks --no-skip-current --platform "$PLATFORM"
