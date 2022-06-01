@@ -66,7 +66,7 @@ class PFMockServiceTests: XCTestCase {
 			.resume()
 		}
 
-		waitForExpectations(timeout: 1)
+		waitForExpectations(timeout: 10)
 	}
 
 	func testSimplePOSTRequestWithTimeout() {
