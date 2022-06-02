@@ -28,15 +28,15 @@ public extension Matcher {
 	///
 	/// ```
 	/// [
-	///   "related_ids": Matcher.EachLike(1, min: 2), // Set of 0-2 ints
-	///   "names": Matcher.EachLike("John", min: 1, max: 3), // Set of 1-3 strings
+	///   "related_ids": Matcher.EachLike(1, min: 2),
+	///   "names": Matcher.EachLike("John", min: 1, max: 3),
 	///   "elements": Matcher.EachLike(
 	///     [
 	///       "foo": "bar",
 	///       "bar": Matcher.SomethingLike(5)
 	///     ],
 	///     max: 10
-	///   ) // Set of 0 - 10 objects.
+	///   )
 	/// ```
 	///
 	struct EachLike: MatchingRuleExpressible {
