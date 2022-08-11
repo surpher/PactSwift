@@ -57,17 +57,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Cache Rust libs
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-rust-libs
+      - name: "♼ Cache rust binaries"
+        uses: actions/cache@v3
         with:
-          path: ~/../pact-foundation/rust/target/release
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/Package.resolved') }}
+          path: |
+            ${{ env.RUST_TARGET_PATH }}
+            ${{ env.BINARIES_PATH }}
+          key: build-${{ runner.os }}-rust-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            build-${{ runner.os }}-rust-
 
       - name: Build and Test
         run: |
@@ -75,7 +73,7 @@ jobs:
 
   test_carthage:
     name: Verify for Carthage
-    runs-on: macos-11
+    runs-on: macos-12
 
     strategy:
       fail-fast: true
@@ -84,12 +82,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.3
-        run: sudo xcode-select -switch /Applications/Xcode_13.3.app
+      - name: Use Xcode 13.4.1
+        run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app
 
       - name: Carthage build
         run: |
-          ./Scripts/carthage build --use-xcframeworks --no-skip-current
+          carthage build --use-xcframeworks --no-skip-current
 
   after_success:
     needs: [test, test_carthage, test_linux]

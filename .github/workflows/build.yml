@@ -15,6 +15,9 @@ on:
       - 'test/**'
       - 'tech/**'
 
+env:
+  RUST_TARGET_PATH: pact-reference/rust/target
+
 jobs:
   test:
     name: Run on macOS 11
@@ -35,12 +38,16 @@ jobs:
       SCHEME: ${{ matrix.scheme }}
       DESTINATION: ${{ matrix.destination }}
 
+    concurrency:
+      group: test-${{ matrix.scheme }}-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.2
-        run: sudo xcode-select -switch /Applications/Xcode_13.2.app
+      - name: Use Xcode 13.2.1
+        run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
 
       - name: Prepare Tools
         run: |
@@ -62,6 +69,10 @@ jobs:
     strategy:
       fail-fast: true
 
+    concurrency:
+      group: test-linux-${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
       - uses: fwal/setup-swift@v1
       - name: Get swift version
@@ -69,6 +80,14 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: "♼ Cache rust binaries"
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.RUST_TARGET_PATH }}
+          key: build-${{ runner.os }}-rust-${{ hashFiles('**/lPackage.resolved') }}
+          restore-keys: |
+            build-${{ runner.os }}-rust-
 
       - name: Cache Rust libs
         uses: actions/cache@v2
@@ -88,17 +107,21 @@ jobs:
 
   test_carthage:
     name: Verify for Carthage
-    runs-on: macos-11
+    runs-on: macos-12
 
     strategy:
       fail-fast: true
+
+    concurrency:
+      group: test-carthage-${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.2
-        run: sudo xcode-select -switch /Applications/Xcode_13.2.app
+      - name: Use Xcode 13.4.1
+        run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app
 
       - name: Carthage build
         run: |

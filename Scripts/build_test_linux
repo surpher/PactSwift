@@ -23,8 +23,9 @@ set -euo pipefail
 
 PRODUCT_NAME="PactSwift"
 WORKSPACE=${GITHUB_WORKSPACE:-$PWD}
-LIBPACT_FFI_DIR="${WORKSPACE}/../pact-reference/rust/pact_ffi"
-LIBPACT_PRODUCT_DIR="${WORKSPACE}/../pact-reference/rust/target/debug"
+LIBPACT_FFI_VERSION_TAG="libpact_ffi-v0.3.5"
+LIBPACT_FFI_DIR="${WORKSPACE}/pact-reference/rust/pact_ffi"
+LIBPACT_PRODUCT_DIR="${WORKSPACE}/pact-reference/rust/target/debug"
 CI=${CI:-"false"}
 PACT_FOUNDATION_REPO="https://github.com/pact-foundation/pact-reference.git"
 
@@ -39,29 +40,16 @@ then
 	exit 1
 fi
 
-#######################
-# If CI               #
-#######################
-
-echo "👮‍♀️  Verifying project and dependencies' folder setup..."
-
-if [[ "$CI" == true ]]; then
-	cd ..
-	echo "ℹ️ Cloning ${PACT_FOUNDATION_REPO}"
-	git clone $PACT_FOUNDATION_REPO
-
-	export LD_LIBRARY_PATH="$LIBPACT_PRODUCT_DIR"
-
-elif [ ! -d "$PWD/../pact-reference" ]; then
-	echo "🚨 Missing pact-foundation/pact-reference repo."
-	echo "⚠️  Make sure you 'git clone ${PACT_FOUNDATION_REPO}' at the same folder level as your $PRODUCT_NAME."
-	exit 1
-else
-	echo "👍  Project setup seems to be in order."
-fi
+echo "ℹ️ Cloning ${PACT_FOUNDATION_REPO}"
+git submodule add $PACT_FOUNDATION_REPO
+git submodule update --init
 
 echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
 cd $LIBPACT_FFI_DIR
+
+echo "ℹ️  Checking out ${LIBPACT_FFI_VERSION_TAG}"
+git fetch --all --tags
+git checkout tags/$LIBPACT_FFI_VERSION_TAG
 
 #######################
 # Setup               #
@@ -80,6 +68,11 @@ else
  	exit 1
 fi
 
+# Set the nightly toolchain
+echo "⚠️  Installing a nightly toolchain..."
+rustup install nightly
+rustup toolchain install nightly
+
 ##############################################
 # Build libpact_ffi libraries                #
 ##############################################
@@ -90,7 +83,7 @@ cargo build
 echo "✅  libpact_ffi built"
 
 echo "ℹ️  Setting LD_LIBRARY_PATH to include $LIBPACT_PRODUCT_DIR"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBPACT_PRODUCT_DIR
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH-}:$LIBPACT_PRODUCT_DIR"
 
 #######################
 # Cleanup             #
