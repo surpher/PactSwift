@@ -106,4 +106,3 @@ Carthage/
 ## Binaries      ##
 ###################
 *.a
-/Package.resolved
