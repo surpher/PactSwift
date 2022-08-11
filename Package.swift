@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .upToNextMinor(from: "0.3.8")),
+		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.3.8")),
 		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", .upToNextMinor(from: "0.2.0")),
 	],
 
