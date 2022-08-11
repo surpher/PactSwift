@@ -16,7 +16,9 @@
 //
 
 import Foundation
+#if !os(Linux)
 import os.log
+#endif
 
 enum Logger {
 
