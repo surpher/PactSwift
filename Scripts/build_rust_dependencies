@@ -1,25 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-# ### Pre-requisites:
-#
-# `pact-reference` repo and `PactSwift` repo are on the same folder level
-#
-# ### Usage:
-# ./Support/build_rust_dependencies
-#
-# In order to minimise the built binary size update $LIBPACT_FFI_DI/Cargo.toml and append the following:
-#
-# [lib]
-# crate-type = ["staticlib"]
-#
-# [profile.release]
-# opt-level = 'z'
-# lto = true
-# panic = 'abort'
-#
-#######################
+set -e pipefail
 
 PRODUCT_NAME="PactSwift"
 WORKSPACE=${GITHUB_WORKSPACE:-$PWD}
@@ -46,22 +27,21 @@ fi
 echo "👮‍♀️  Verifying project and dependencies' folder setup..."
 
 if [[ "$CI" == true ]]; then
-	cd ..
-	echo "ℹ️ Cloning ${PACT_FOUNDATION_REPO}"
-	git clone $PACT_FOUNDATION_REPO
-
-	export LD_LIBRARY_PATH="$LIBPACT_PRODUCT_DIR"
-
+	echo "ℹ️ Adding submodule ${PACT_FOUNDATION_REPO}"
+	if [ ! -d "$PWD/pact-reference"]; then
+		git submodule add $PACT_FOUNDATION_REPO
+	fi
+	git submodule update --init
+	cd pact-reference/rust/pact_ffi
 elif [ ! -d "$PWD/../pact-reference" ]; then
 	echo "🚨 Missing pact-foundation/pact-reference repo."
 	echo "⚠️  Make sure you 'git clone ${PACT_FOUNDATION_REPO}' at the same folder level as your $PRODUCT_NAME."
 	exit 1
 else
 	echo "👍  Project setup seems to be in order."
+	echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
+	cd $LIBPACT_FFI_DIR
 fi
-
-echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
-cd $LIBPACT_FFI_DIR
 
 #######################
 # Setup               #
@@ -90,7 +70,11 @@ cargo build
 echo "✅  libpact_ffi built"
 
 echo "ℹ️  Setting LD_LIBRARY_PATH to include $LIBPACT_PRODUCT_DIR"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBPACT_PRODUCT_DIR
+if [[ "$CI" == true ]]; then
+	export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${WORKSPACE}/pact-reference/rust/target/debug"
+else
+	export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${LIBPACT_PRODUCT_DIR}"
+fi
 
 #######################
 # Cleanup             #
@@ -108,4 +92,10 @@ echo "ℹ️  Running swift build:"
 swift build -Xlinker -L$LIBPACT_PRODUCT_DIR
 
 echo "ℹ️  Running swift test with -Xlinker -L$LIBPACT_PRODUCT_DIR"
-swift test -Xlinker -L$LIBPACT_PRODUCT_DIR
+
+if [[ "$CI" == true ]]; then
+	BIN_PATH="${WORKSPACE}/pact-reference/rust/target/debug"
+	swift test -Xlinker -L$BIN_PATH
+else
+	swift test -Xlinker -L$LIBPACT_PRODUCT_DIR
+fi

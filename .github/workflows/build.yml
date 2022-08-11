@@ -16,7 +16,7 @@ on:
       - 'tech/**'
 
 env:
-  RUST_TARGET_PATH: pact-reference/rust/target
+  RUST_TARGET_PATH: Resources
 
 jobs:
   test:
@@ -78,35 +78,18 @@ jobs:
       - name: Get swift version
         run: swift --version
 
-      - name: Checkout repository
+      - name: "⬇️  Checkout repository"
         uses: actions/checkout@v2
 
-      - name: "♼ Cache rust binaries"
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.RUST_TARGET_PATH }}
-          key: build-${{ runner.os }}-rust-${{ hashFiles('**/lPackage.resolved') }}
-          restore-keys: |
-            build-${{ runner.os }}-rust-
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
 
-      - name: Cache Rust libs
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-rust-libs
-        with:
-          path: ~/../pact-foundation/rust/target/release
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Build and Test
+      - name: "⚗️  Build and Test"
         run: |
           Scripts/build_test_linux
 
   test_carthage:
-    name: Verify for Carthage
+    name: "Verify for Carthage"
     runs-on: macos-12
 
     strategy:
@@ -125,7 +108,7 @@ jobs:
 
       - name: Carthage build
         run: |
-          ./Scripts/carthage build --use-xcframeworks --no-skip-current
+          carthage build --use-xcframeworks --no-skip-current
 
   after_success:
     needs: [test, test_carthage, test_linux]
