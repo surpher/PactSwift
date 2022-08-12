@@ -63,15 +63,6 @@ swift test -Xlinker -L/usr/local/lib/
 
 </details>
 
-### Carthage
-
-----
-
-⚠️ There seems to be an issue with linking transient dependencies when building `XCFramework`s and when building the framework using `carthage`. It affects builds using Xcode 13.3+.   
-Please consider using SPM or create your own `XCFramework` and link it in your project appropriately. 
-
-----
-
 **NOTE:**
 
 - `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png).

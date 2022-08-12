@@ -23,8 +23,8 @@ set -euo pipefail
 
 PRODUCT_NAME="PactSwift"
 WORKSPACE=${GITHUB_WORKSPACE:-$PWD}
-LIBPACT_FFI_DIR="${WORKSPACE}/../pact-reference/rust/pact_ffi"
-LIBPACT_PRODUCT_DIR="${WORKSPACE}/../pact-reference/rust/target/debug"
+LIBPACT_FFI_DIR="${WORKSPACE}/pact-reference/rust/pact_ffi"
+LIBPACT_PRODUCT_DIR="${WORKSPACE}/pact-reference/rust/target/debug"
 CI=${CI:-"false"}
 PACT_FOUNDATION_REPO="https://github.com/pact-foundation/pact-reference.git"
 
@@ -46,13 +46,21 @@ fi
 echo "👮‍♀️  Verifying project and dependencies' folder setup..."
 
 if [[ "$CI" == true ]]; then
-	cd ..
-	echo "ℹ️ Cloning ${PACT_FOUNDATION_REPO}"
-	git clone $PACT_FOUNDATION_REPO
+	echo "ℹ️ Adding submodule ${PACT_FOUNDATION_REPO}"
+	if [ ! -d "$PWD/pact-reference" ]; then
+		git submodule add $PACT_FOUNDATION_REPO
+		git submodule update --init
 
-	export LD_LIBRARY_PATH="$LIBPACT_PRODUCT_DIR"
+		echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
+		cd $LIBPACT_FFI_DIR
+		git fetch --all --tags
+		git checkout tags/libpact_ffi-v0.3.5
+	fi
+
+	export LD_LIBRARY_PATH="/usr/local/lib"
 
 elif [ ! -d "$PWD/../pact-reference" ]; then
+	# TODO: fix this for running locally
 	echo "🚨 Missing pact-foundation/pact-reference repo."
 	echo "⚠️  Make sure you 'git clone ${PACT_FOUNDATION_REPO}' at the same folder level as your $PRODUCT_NAME."
 	exit 1
