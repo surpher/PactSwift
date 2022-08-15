@@ -19,8 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.3.8")),
-		.package(name: "PactSwiftToolbox", url: "https://github.com/surpher/PactSwiftToolbox.git", .upToNextMinor(from: "0.2.0")),
+		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .upToNextMinor(from: "0.3.8"))
 	],
 
 	targets: [
@@ -30,8 +29,7 @@ let package = Package(
 			name: "PactSwift",
 			dependencies: [
 				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
-				.product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux])),
-				"PactSwiftToolbox"
+				.product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux]))
 			],
 			path: "./Sources"
 		),

@@ -4,6 +4,8 @@ $(SRCROOT)/Sources/Extensions/UUID+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/String+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Sequence+PactSwift.swift
+$(SRCROOT)/Sources/Toolbox/Logger.swift
+$(SRCROOT)/Sources/Toolbox/PactFileManager.swift
 $(SRCROOT)/Sources/Model/Constants.swift
 $(SRCROOT)/Sources/Model/Metadata.swift
 $(SRCROOT)/Sources/Model/ProviderVerifier+Error.swift

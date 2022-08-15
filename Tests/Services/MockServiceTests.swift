@@ -18,7 +18,6 @@
 import XCTest
 
 @testable import PactSwift
-@_implementationOnly import PactSwiftToolbox
 
 #if os(Linux)
 import FoundationNetworking

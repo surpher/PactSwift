@@ -16,7 +16,6 @@
 //
 
 import Foundation
-@_implementationOnly import PactSwiftToolbox
 
 #if os(Linux)
 /// Defines the interaction between a consumer and a provider

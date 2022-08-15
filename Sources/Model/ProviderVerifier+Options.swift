@@ -16,7 +16,6 @@
 //
 
 import Foundation
-@_implementationOnly import PactSwiftToolbox
 
 public extension ProviderVerifier {
 

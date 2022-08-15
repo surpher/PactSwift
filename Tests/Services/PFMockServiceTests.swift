@@ -20,7 +20,6 @@
 import XCTest
 
 @testable import PactSwift
-@_implementationOnly import PactSwiftToolbox
 
 class PFMockServiceTests: XCTestCase {
 

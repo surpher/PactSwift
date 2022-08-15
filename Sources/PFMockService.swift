@@ -18,7 +18,6 @@
 #if !os(Linux)
 
 import Foundation
-@_implementationOnly import PactSwiftToolbox
 import XCTest
 
 #if os(Linux)
