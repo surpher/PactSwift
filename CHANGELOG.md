@@ -1,3 +1,14 @@
+# 1.0.0 - v1.0.0
+* d8d2e51 - docs: Update build status badge in README (Marko Justinek)
+* 12d25bd - chore: Bump mock server version (Marko Justinek)
+* 9950c02 - ci: Refactor CI workflow for Linux (Marko Justinek)
+* a1713ae - fix: Resolve unsupported import for Linux (Marko Justinek)
+* 2b28836 - tech: Updates to CI workflows (Marko Justinek)
+* c8f7e40 - tech: Update gitignore (Marko Justinek)
+* 2ed2c48 - tech: Removes toolbox package dependency (Marko Justinek)
+* a7195b4 - chore: Bumping up minimum macOSX deployment target (Marko Justinek)
+* dc616b9 - chore: Setting exact version for mock server dependency (Marko Justinek)
+* a56db23 - docs: Updates EachLike example in-code docs (Marko Justinek)
 # 0.13.1 - v0.13.1
 * a4ce230 - tech: Re-introduces CI workflow on macOS 10.15 (surpher)
 * a376128 - fix: Adds compiler check for _implementationOnly imports (surpher)
