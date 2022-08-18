@@ -344,7 +344,6 @@ Please feel free to raise any [issues](https://github.com/surpher/PactSwift/issu
 ## Demo projects
 
 [![PactSwift - Consumer](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml)
-[![PactSwift - Consumer (macOS-10.15)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects-macOS10_15.yml)
 [![PactSwift - Provider](https://github.com/surpher/pact-swift-examples/actions/workflows/verify_provider.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/verify_provider.yml)
 
 See [pact-swift-examples][demo-projects] for more examples of how to use `PactSwift`.
