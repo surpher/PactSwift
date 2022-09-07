@@ -158,7 +158,28 @@ private extension PactBuilder {
 			processedElement = try processMatcher(matcher, at: node)
 
 		case let matcher as Matcher.SomethingLike:
-			processedElement = try processMatcher(matcher, at: node)
+			// Process the root node
+			let processedNode = try processMatcher(matcher, at: node)
+
+			// Merge any matchers and example generators found in the node's value
+			switch matcher.value {
+			case let dict as [String: Any]:
+				let processedDict = try process(dict, at: node)
+				processedElement = (
+					node: AnyEncodable(processedDict.node),
+					rules: merge(processedNode.rules, with: processedDict.rules),
+					generators: merge(processedNode.generators, with: processedDict.generators)
+				)
+			case let array as [Any]:
+				let processedArray = try process(array, at: node, isEachLike: false)
+				processedElement = (
+					node: AnyEncodable(processedArray.node),
+					rules: merge(processedNode.rules, with: processedArray.rules),
+					generators: merge(processedNode.generators, with: processedArray.generators)
+				)
+			default:
+				processedElement = processedNode
+			}
 
 		// MARK: - Process Example generators
 

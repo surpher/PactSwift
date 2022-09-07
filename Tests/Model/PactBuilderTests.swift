@@ -47,6 +47,39 @@ class PactBuilderTests: XCTestCase {
 		XCTAssertEqual(testResult.match, "type")
 	}
 
+	func testPact_SetsNestedMatchers_in_SomethingLike() throws {
+		let testBody: Any = [
+			"body": Matcher.SomethingLike(
+				[
+					"refresh_token": Matcher.SomethingLike("xxxxxx"),
+					"user": Matcher.SomethingLike(
+						[
+							"id": Matcher.SomethingLike("xxxxxx-xxxx-xxxx-xxxx-xxxxxxx"),
+							"email": Matcher.RegexLike(value: "admin@xxxxx.au", pattern: #"^([-\.\w]+@[-\w]+\.)+[\w-]{2,4}$"#)
+						]
+					)
+				]
+			)
+		]
+
+		let testPact = prepareTestPact(responseBody: testBody)
+		let result = try XCTUnwrap(
+			try JSONDecoder()
+				.decode(NestedSomethingLikeTestModel.self, from: testPact.data!)
+				.interactions
+				.first?
+				.response
+				.matchingRules
+				.body
+		)
+
+		XCTAssertEqual(try XCTUnwrap(result.body.matchers.first).match, "type")
+		XCTAssertEqual(try XCTUnwrap(result.bodyUser.matchers.first).match, "type")
+		XCTAssertEqual(try XCTUnwrap(result.bodyUserID.matchers.first).match, "type")
+		XCTAssertEqual(try XCTUnwrap(result.bodyUserEmail.matchers.first).match, "regex")
+		XCTAssertEqual(try XCTUnwrap(result.bodyUserEmail.matchers.first).regex, #"^([-\.\w]+@[-\w]+\.)+[\w-]{2,4}$"#)
+	}
+
 	// MARK: - EachLike()
 
 	func testPact_SetsDefaultMin_EachLikeMatcher() throws {
@@ -399,6 +432,39 @@ class PactBuilderTests: XCTestCase {
 // MARK: - Private Utils -
 
 private extension PactBuilderTests {
+
+	struct NestedSomethingLikeTestModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let response: TestResponseModel
+			struct TestResponseModel: Decodable {
+				let matchingRules: TestMatchingRulesModel
+				struct TestMatchingRulesModel: Decodable {
+					let body: TestNodeModel
+					struct TestNodeModel: Decodable {
+						let body: TestMatchersModel
+						let bodyUser: TestMatchersModel
+						let bodyUserID: TestMatchersModel
+						let bodyUserEmail: TestMatchersModel
+						enum CodingKeys: String, CodingKey {
+							case body = "$.body"
+							case bodyUser = "$.body.user"
+							case bodyUserID = "$.body.user.id"
+							case bodyUserEmail = "$.body.user.email"
+						}
+						struct TestMatchersModel: Decodable {
+							let matchers: [TestTypeModel]
+							let combine: String?
+							struct TestTypeModel: Decodable {
+								let match: String
+								let regex: String?
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
 	// This test model is tightly coupled with the SomethingLike Matcher for the purpouse of these tests
 	struct GenericLikeTestModel: Decodable {
