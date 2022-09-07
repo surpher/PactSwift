@@ -5,6 +5,9 @@ on:
     branches:
       - 'main'
 
+env:
+  RUST_TARGET_PATH: pact-reference
+
 jobs:
   test:
     name: Run on macOS 11
@@ -57,17 +60,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install Protoc
+        uses: arduino/setup-protoc@v1
+
       - name: "♼ Cache rust binaries"
         uses: actions/cache@v3
         with:
           path: |
             ${{ env.RUST_TARGET_PATH }}
-            ${{ env.BINARIES_PATH }}
-          key: build-${{ runner.os }}-rust-${{ hashFiles('**/Package.resolved') }}
+          key: build-${{ runner.os }}-rust-pactswift-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
+            build-${{ runner.os }}-rust-pactswift
             build-${{ runner.os }}-rust-
 
-      - name: Build and Test
+      - name: "⚗️  Build and Test"
         run: |
           Scripts/build_test_linux
 
