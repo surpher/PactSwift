@@ -83,6 +83,9 @@ public extension ProviderVerifier {
 		/// URL to post state change requests to
 		let stateChangeURL: URL?
 
+		/// Custom header being passed to verifier
+		let customHeader: [String: String]?
+
 		/// Sets the log level
 		let logLevel: LogLevel
 
@@ -95,6 +98,7 @@ public extension ProviderVerifier {
 		///   - pactsSource: The locations of pacts
 		///   - filter: Only validates the interactions that match the filter
 		///   - stateChangeURL: URL to post state change requests to
+		///   - customHeader: A dictionary for header values where KEY and VALUE contain ASCII characters (32-127) only
 		///   - logLevel: Logging level
 		///
 		public init(
@@ -102,6 +106,7 @@ public extension ProviderVerifier {
 			pactsSource: PactsSource,
 			filter: FilterPacts? = nil,
 			stateChangeURL: URL? = nil,
+			customHeader: [String: String]? = nil,
 			logLevel: LogLevel = .warn
 		) {
 			self.providerURL = provider.url
@@ -109,6 +114,7 @@ public extension ProviderVerifier {
 			self.pactsSource = pactsSource
 			self.filterPacts = filter
 			self.stateChangeURL = stateChangeURL
+			self.customHeader = customHeader
 			self.logLevel = logLevel
 		}
 	}
@@ -240,11 +246,37 @@ extension ProviderVerifier.Options {
 			newLineDelimitedArgs.append("--state-change-url\n\(stateChangeURL.absoluteString)")
 		}
 
+		// Custom headers
+		if let customHeader = customHeader, customHeader.isEmpty == false {
+			customHeader.forEach { key, value in
+				guard validate(key + value) else {
+					Logger.log(message: "Skipping a header key-value pair \"\(key)=\(value)\" containing nonallowed characters.")
+					return
+				}
+				newLineDelimitedArgs.append("--header\n\(key)=\(value)")
+			}
+		}
+
 		// Set logging level
 		newLineDelimitedArgs.append("--loglevel\n\(self.logLevel.rawValue)")
 
 		// Convert all verification arguments to a `String` and return it
 		return newLineDelimitedArgs.joined(separator: "\n")
+	}
+
+}
+
+// MARK: - Private extensions
+
+private extension ProviderVerifier.Options {
+
+	/// Validates input against ASCII (32-127) characters
+	///
+	/// - parameter input: A string value to validate
+	///
+	/// Returns `true` if string contains ASCII characters (32-127) only.
+	func validate(_ input: String) -> Bool {
+		input.unicodeScalars.allSatisfy { CharacterSet.headerASCIIAllowed.contains($0) }
 	}
 
 }

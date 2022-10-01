@@ -289,6 +289,29 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 		XCTAssertTrue(testSubject.args.contains("--provider-version\nv1.2.3"))
 	}
 
+	func testArgsWithValidCustomHeader() {
+		let asciiCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%&'()*+,-./:;<=>?@"
+		let testSubject = ProviderVerifier.Options(
+			provider: .init(port: 8080),
+			pactsSource: .directories(["/tmp/pacts"]),
+			customHeader: ["Foo": asciiCharacters, "Bar": "BAZ"]
+		)
+
+		XCTAssertTrue(["--header\nFoo=\(asciiCharacters)", "--header\nBar=BAZ"].allSatisfy { testSubject.args.contains($0) })
+	}
+
+	func testArgsWithInvalidCustomHeader() {
+		let invalidCharacters = "çüé abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !\"#$%&'()*+,-./:;<=>?@"
+		let testSubject = ProviderVerifier.Options(
+			provider: .init(port: 8080),
+			pactsSource: .directories(["/tmp/pacts"]),
+			customHeader: ["Foo": invalidCharacters, "Bar": "BAZ"]
+		)
+
+		XCTAssertTrue(testSubject.args.contains("--header\nBar=BAZ"))
+		XCTAssertFalse(testSubject.args.contains("--header\nFoo=\(invalidCharacters)"))
+	}
+
 }
 
 private extension ProviderVerifierOptionsTests {
