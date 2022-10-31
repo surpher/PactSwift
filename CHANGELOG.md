@@ -1,3 +1,5 @@
+# 1.0.2 - v1.0.2
+* d511cc4 - chore: Bumps dependency version number (Marko Justinek)
 # 1.0.1 - v1.0.1
 * c3aed20 - chore: Bumps mock server version to v0.4.2 (Marko Justinek)
 * 2404e83 - fix: Resolves SomethingLike matcher ignoring nested matchers (#93) (#94) (Marko Justinek)
