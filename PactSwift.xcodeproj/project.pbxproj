@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55E8E3522936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
+		55E8E3532936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
 		AD07404027F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
 		AD07404127F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
 		AD07404327F93BD5000C498C /* EachKeyLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07404227F93BD5000C498C /* EachKeyLike.swift */; };
@@ -255,6 +257,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncMockServiceTests.swift; sourceTree = "<group>"; };
 		AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLikeTests.swift; sourceTree = "<group>"; };
 		AD07404227F93BD5000C498C /* EachKeyLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLike.swift; sourceTree = "<group>"; };
 		AD08FA3D28A23DD40059884F /* PactFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactFileManager.swift; sourceTree = "<group>"; };
@@ -507,6 +510,7 @@
 				AD78FB47264FD21900765BD3 /* PactContractTests.swift */,
 				AD92805026BE1B60004FAA7E /* PFMockServiceTests.swift */,
 				ADBC3E5B26DB4846006908E0 /* ProviderVerifierTests.swift */,
+				55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1150,6 +1154,7 @@
 				ADBC3E5626DB36A8006908E0 /* WIPPactsTests.swift in Sources */,
 				ADD0317B2512439500C6099B /* RandomIntTests.swift in Sources */,
 				ADEDDF092547CFC200A45AD2 /* ObjCMatcherTests.swift in Sources */,
+				55E8E3522936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */,
 				ADEDDF1B2547DF3200A45AD2 /* ToolboxTests.swift in Sources */,
 				AD7891BA2441512E0014BCC8 /* SomethingLikeTests.swift in Sources */,
 				AD54436127D3316600D4C464 /* DateTimeExpressionTests.swift in Sources */,
@@ -1275,6 +1280,7 @@
 				ADBC3E5726DB36A8006908E0 /* WIPPactsTests.swift in Sources */,
 				ADD0317C2512439500C6099B /* RandomIntTests.swift in Sources */,
 				ADEDDF0A2547CFC200A45AD2 /* ObjCMatcherTests.swift in Sources */,
+				55E8E3532936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */,
 				ADEDDF1C2547DF3200A45AD2 /* ToolboxTests.swift in Sources */,
 				AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */,
 				AD54436227D3316600D4C464 /* DateTimeExpressionTests.swift in Sources */,

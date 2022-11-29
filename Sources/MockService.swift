@@ -138,7 +138,7 @@ open class MockService {
 	/// }
 	/// ```
 	///
-	public func run(_ file: FileString? = #file, line: UInt? = #line, verify interactions: [Interaction]? = nil, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@escaping () -> Void)) throws -> Void) {
+	public func run(_ file: FileString? = #file, line: UInt? = #line, verify interactions: [Interaction]? = nil, timeout: TimeInterval? = nil, testFunction: @escaping (_ baseURL: String, _ done: (@Sendable @escaping () -> Void)) throws -> Void) {
 		// Use the provided set or if not provided only the current interaction
 		pact.interactions = interactions ?? [currentInteraction]
 
@@ -238,7 +238,7 @@ extension MockService {
 
 private extension MockService {
 
-	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: (String, @escaping (() -> Void)) throws -> Void) {
+	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: (String, @escaping (@Sendable () -> Void)) throws -> Void) {
 		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
 			Logger.log(message: "Setting up pact test", data: pact.data)
 
