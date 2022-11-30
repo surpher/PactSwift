@@ -1,3 +1,6 @@
+# 1.1.0 - v1.1.0
+* 8a30412 - Merge pull request #97 from huwr/huwr/sendable-done-function (Marko Justinek)
+* 34c8056 - Make the `done` function Sendable (Huw Rowlands)
 # 1.0.2 - v1.0.2
 * d511cc4 - chore: Bumps dependency version number (Marko Justinek)
 # 1.0.1 - v1.0.1
