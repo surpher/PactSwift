@@ -15,15 +15,10 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import Foundation
+#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
+import Foundation
 @_implementationOnly import PactSwiftMockServer
-#else
-import PactSwiftMockServer
-#endif
 
 extension MockServer {
 	
@@ -73,3 +68,5 @@ extension MockServer {
 	}
 
 }
+
+#endif
