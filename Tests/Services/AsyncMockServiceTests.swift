@@ -57,17 +57,62 @@ final class MockServiceAsyncTests: XCTestCase {
 			Task {
 				let (_, response) = try await session.data(from: URL(string: "\(baseURL)/elements")!)
 
-				if let response = response as? HTTPURLResponse {
-					XCTAssertEqual(200, response.statusCode)
-					completion()
-					testExpectation.fulfill()
-				} else {
-					XCTFail("Expecting response code 200 in \(#function)")
+				guard let response = response as? HTTPURLResponse else {
+					XCTFail("Expecting HTTPURLResponse")
+					return
 				}
+				
+				XCTAssertEqual(200, response.statusCode)
+				completion()
+				testExpectation.fulfill()
 			}
 		}
 		waitForExpectations(timeout: 1)
 	}
 
+	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+	func testMockService_SimpleGetRequest_RunAsync() async throws {
+		mockService
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .GET, path: "/elements")
+			.willRespondWith(status: 200)
+
+		try await mockService.run(timeout: 1) { baseURL in
+			let session = URLSession.shared
+			
+			let (_, response) = try await session.data(from: URL(string: "\(baseURL)/elements")!)
+			
+			guard let response = response as? HTTPURLResponse else {
+				XCTFail("Expecting HTTPURLResponse")
+				return
+			}
+			
+			XCTAssertEqual(200, response.statusCode)
+		}
+	}
+	
+	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+	func testMockService_SimpleGetRequest_RunAsyncTimesOut() async {
+		mockService
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .GET, path: "/elements")
+			.willRespondWith(status: 200)
+
+		do {
+			try await self.mockService.run(timeout: 1) { baseURL in
+				let session = URLSession.shared
+				
+				_ = try await session.data(from: URL(string: "\(baseURL)/elements")!)
+				
+				try await Task.sleep(nanoseconds: 10 * NSEC_PER_SEC)
+			}
+			XCTFail("Expected timeout")
+		} catch {
+			XCTAssertTrue(error is TimeoutError)
+		}
+	}
+	
 }
 #endif

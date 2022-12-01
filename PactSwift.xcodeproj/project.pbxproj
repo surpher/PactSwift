@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		55E8E3522936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
 		55E8E3532936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
+		A782763E29372E35003809F9 /* MockServer+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782763D29372E35003809F9 /* MockServer+Async.swift */; };
+		A782763F29372E35003809F9 /* MockServer+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782763D29372E35003809F9 /* MockServer+Async.swift */; };
+		A7AF63D029387BE900A7FD42 /* Task+Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AF63CF29387BE900A7FD42 /* Task+Timeout.swift */; };
+		A7AF63D129387BE900A7FD42 /* Task+Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AF63CF29387BE900A7FD42 /* Task+Timeout.swift */; };
 		AD07404027F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
 		AD07404127F93BC1000C498C /* EachKeyLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */; };
 		AD07404327F93BD5000C498C /* EachKeyLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD07404227F93BD5000C498C /* EachKeyLike.swift */; };
@@ -258,6 +262,8 @@
 
 /* Begin PBXFileReference section */
 		55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncMockServiceTests.swift; sourceTree = "<group>"; };
+		A782763D29372E35003809F9 /* MockServer+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServer+Async.swift"; sourceTree = "<group>"; };
+		A7AF63CF29387BE900A7FD42 /* Task+Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Timeout.swift"; sourceTree = "<group>"; };
 		AD07403F27F93BC1000C498C /* EachKeyLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLikeTests.swift; sourceTree = "<group>"; };
 		AD07404227F93BD5000C498C /* EachKeyLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EachKeyLike.swift; sourceTree = "<group>"; };
 		AD08FA3D28A23DD40059884F /* PactFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactFileManager.swift; sourceTree = "<group>"; };
@@ -599,6 +605,8 @@
 				ADC372B3269877AF000DA90B /* Sequence+PactSwift.swift */,
 				ADEDDEFC2547B6FA00A45AD2 /* String+PactSwift.swift */,
 				ADD03174251235A800C6099B /* UUID+PactSwift.swift */,
+				A782763D29372E35003809F9 /* MockServer+Async.swift */,
+				A7AF63CF29387BE900A7FD42 /* Task+Timeout.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1100,6 +1108,7 @@
 				ADA17E3B25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C7250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031782512425800C6099B /* RandomInt.swift in Sources */,
+				A782763E29372E35003809F9 /* MockServer+Async.swift in Sources */,
 				AD72E54027B89CB900C7453F /* DateTime.swift in Sources */,
 				AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
@@ -1111,6 +1120,7 @@
 				ADEFD134253EEF230081A1B1 /* Toolbox.swift in Sources */,
 				AD641A3A24344D9500785CE1 /* Pact.swift in Sources */,
 				ADA40177253028A100265DF3 /* MatchNull.swift in Sources */,
+				A7AF63D029387BE900A7FD42 /* Task+Timeout.swift in Sources */,
 				AD10361424468AB3002C97CA /* MockService.swift in Sources */,
 				ADA17E5225138908004F1A82 /* RandomDecimal.swift in Sources */,
 				ADD03167251220FD00C6099B /* RandomBool.swift in Sources */,
@@ -1226,6 +1236,7 @@
 				ADA17E3C25137716004F1A82 /* RandomDateTime.swift in Sources */,
 				ADE9B3C8250A3C4700274672 /* Matcher.swift in Sources */,
 				ADD031792512425800C6099B /* RandomInt.swift in Sources */,
+				A782763F29372E35003809F9 /* MockServer+Async.swift in Sources */,
 				AD72E54127B89CB900C7453F /* DateTime.swift in Sources */,
 				AD9D7D8E26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
@@ -1237,6 +1248,7 @@
 				ADEFD135253EEF230081A1B1 /* Toolbox.swift in Sources */,
 				ADA40178253028A100265DF3 /* MatchNull.swift in Sources */,
 				AD8FC7F82463BBB800361854 /* RegexLike.swift in Sources */,
+				A7AF63D129387BE900A7FD42 /* Task+Timeout.swift in Sources */,
 				AD8FC7F32463BBB800361854 /* EachLike.swift in Sources */,
 				ADA17E5325138908004F1A82 /* RandomDecimal.swift in Sources */,
 				ADD03168251220FD00C6099B /* RandomBool.swift in Sources */,
