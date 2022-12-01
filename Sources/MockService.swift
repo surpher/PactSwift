@@ -197,7 +197,6 @@ open class MockService {
 		}
 	}
 
-
 	/// Check there are no invalid interactions
 	private func checkForInvalidInteractions(_ interactions: [Interaction], file: FileString? = nil, line: UInt? = nil) -> Bool {
 		let errors = interactions.flatMap(\.encodingErrors)
