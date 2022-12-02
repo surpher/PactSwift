@@ -20,17 +20,25 @@ env:
 
 jobs:
   test:
-    name: Run on macOS 11
-    runs-on: macos-11
-
+    name: Run ${{ matrix.platform }} on ${{ matrix.host }}
+    runs-on: ${{ matrix.host }}
+  
     strategy:
       fail-fast: true
       matrix:
+        host: [macos-11, macos-12]
+        platform: [ios, macos]
         include:
-          - scheme: "PactSwift-iOS"
+          - platform: ios
+            scheme: "PactSwift-iOS"
             destination: "platform=iOS Simulator,name=iPhone 12 Pro"
-          - scheme: "PactSwift-macOS"
+          - platform: macos
+            scheme: "PactSwift-macOS"
             destination: "arch=x86_64"
+          - host: macos-11
+            xcode: 13.2.1
+          - host: macos-12
+            xcode: 14.0.1
 
     env:
       SCHEME: ${{ matrix.scheme }}
@@ -44,8 +52,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.2.1
-        run: sudo xcode-select -switch /Applications/Xcode_13.2.1.app
+      - name: Use Xcode ${{ matrix.xcode }}
+        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
 
       - name: Prepare Tools
         run: |
