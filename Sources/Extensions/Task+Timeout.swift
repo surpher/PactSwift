@@ -15,6 +15,8 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+
 import Foundation
 
 @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
@@ -45,3 +47,5 @@ struct TimeoutError: LocalizedError {
 	var interval: TimeInterval
 	var errorDescription: String? { "Task timed out after \(interval) seconds" }
 }
+
+#endif
