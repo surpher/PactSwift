@@ -45,7 +45,7 @@ jobs:
       DESTINATION: ${{ matrix.destination }}
 
     concurrency:
-      group: test-${{ matrix.scheme }}-${{ github.ref }}
+      group: test_${{ matrix.host }}_${{ matrix.scheme }}_${{ github.ref }}
       cancel-in-progress: true
 
     steps:
