@@ -110,7 +110,36 @@ final class MockServiceAsyncTests: XCTestCase {
 			}
 			XCTFail("Expected timeout")
 		} catch {
+			XCTAssertEqual(errorCapture.error?.message, "Task timed out after 1.0 seconds")
 			XCTAssertTrue(error is TimeoutError)
+		}
+	}
+	
+	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
+	func testMockService_SimpleGetRequest_RunAsyncThrows() async {
+		
+		struct TestError: LocalizedError {
+			var failureReason: String? { "Test Failure" }
+		}
+		
+		mockService
+			.uponReceiving("Request for a list")
+			.given("elements exist")
+			.withRequest(method: .GET, path: "/elements")
+			.willRespondWith(status: 200)
+
+		do {
+			try await self.mockService.run(timeout: 1) { baseURL in
+				let session = URLSession.shared
+				
+				_ = try await session.data(from: URL(string: "\(baseURL)/elements")!)
+				
+				throw TestError()
+			}
+			XCTFail("Should not be reached")
+		} catch {
+			XCTAssertTrue(error is TestError)
+			XCTAssertEqual(errorCapture.error?.message, TestError().localizedDescription)
 		}
 	}
 	
