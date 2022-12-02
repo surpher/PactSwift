@@ -157,7 +157,8 @@ open class MockService {
 			verifyPactInteraction(timeout: timeout ?? Constants.kTimeout, file: file, line: line, mockServer: mockServer)
 		}
 	}
-		
+
+	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	/// Runs the Pact test against the code making the API request
 	///
 	/// - Parameters:
@@ -196,7 +197,8 @@ open class MockService {
 			try await verifyPactInteraction(timeout: timeout ?? Constants.kTimeout, file: file, line: line, mockServer: mockServer)
 		}
 	}
-
+	#endif
+	
 	/// Check there are no invalid interactions
 	private func checkForInvalidInteractions(_ interactions: [Interaction], file: FileString? = nil, line: UInt? = nil) -> Bool {
 		let errors = interactions.flatMap(\.encodingErrors)
@@ -244,6 +246,7 @@ extension MockService {
 		}
 	}
 	
+	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	/// Writes a Pact contract file in JSON format
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
@@ -270,6 +273,7 @@ extension MockService {
 			throw error
 		}
 	}
+	#endif
 
 	/// Waits for test to be completed and fails if timed out
 	func waitForPactTestWith(timeout: TimeInterval, file: FileString?, line: UInt?, action: (@escaping () -> Void) -> Void) {
@@ -329,7 +333,8 @@ private extension MockService {
 			}
 		}
 	}
-
+	
+	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: @escaping (String) async throws -> Void) async throws {
 		Logger.log(message: "Setting up pact test", data: pact.data)
@@ -379,6 +384,7 @@ private extension MockService {
 			throw error
 		}
 	}
+	#endif
 	
 	func verifyPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer) {
 		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
