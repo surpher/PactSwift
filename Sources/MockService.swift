@@ -339,12 +339,7 @@ private extension MockService {
 			
 			// If Mock Server spun up, run the test function
 			let task = Task(timeout: timeout) {
-				do {
-					try await testFunction(mockServer.baseUrl)
-				} catch {
-					self.failWith("🚨 Error thrown in test function: \(error.localizedDescription)", file: file, line: line)
-					throw error
-				}
+				try await testFunction(mockServer.baseUrl)
 			}
 			// await task completion (value is Void)
 			try await task.value
