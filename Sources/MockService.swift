@@ -336,12 +336,12 @@ private extension MockService {
 	
 	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
-	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: @escaping (String) async throws -> Void) async throws {
+	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: @escaping @Sendable (String) async throws -> Void) async throws {
 		Logger.log(message: "Setting up pact test", data: pact.data)
 		do {
 			// Set up a Mock Server with Pact data and on desired http protocol
 			try await mockServer.setup(pact: pact.data!, protocol: transferProtocolScheme)
-			
+
 			// If Mock Server spun up, run the test function
 			let task = Task(timeout: timeout) {
 				try await testFunction(mockServer.baseUrl)
