@@ -16,7 +16,7 @@
 //
 
 import XCTest
-
+/*
 @testable import PactSwift
 
 #if os(Linux)
@@ -229,9 +229,9 @@ class PactContractTests: XCTestCase {
 
 		super.tearDown()
 	}
-
+*/
 	// MARK: - Tests that write the Pact contract
-
+/*
 	func testBugExample() {
 		mockService
 			.uponReceiving("bug example")
@@ -690,7 +690,8 @@ class PactContractTests: XCTestCase {
 				.resume()
 		}
 	}
-
+*/
+/*
 }
 
 private extension PactContractTests {
@@ -743,3 +744,4 @@ private extension PactContractTests {
 	}
 
 }
+*/

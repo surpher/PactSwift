@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -16,11 +16,28 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
+class MatcherTestCase: XCTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+	var encoder: JSONEncoder!
+	
+	override func setUpWithError() throws {
+		try super.setUpWithError()
+		
+		encoder = JSONEncoder()
+		encoder.outputFormatting = [.sortedKeys, .prettyPrinted, .withoutEscapingSlashes]
 	}
+	
+	override func tearDownWithError() throws {
+		encoder = nil
+		try super.tearDownWithError()
+	}
+	
+	func jsonString(for matcher: AnyMatcher) throws -> String {
+		let data = try encoder.encode(matcher)
+		return try XCTUnwrap(String(data: data, encoding: .utf8))
+	}
+	
 }

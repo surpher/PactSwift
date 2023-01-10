@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -16,11 +16,22 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
+class MatcherSemverTests: MatcherTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+	func testMatcher_MatchSemver() throws {
+		let json = try jsonString(for: .semver("1.2.3"))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "pact:matcher:type" : "semver",
+			  "value" : "1.2.3"
+			}
+			"""#
+		)
 	}
 }

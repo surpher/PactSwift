@@ -6,9 +6,9 @@ let package = Package(
 	name: "PactSwift",
 
 	platforms: [
-		.macOS(.v10_12),
-		.iOS(.v12),
-		.tvOS(.v12)
+		.macOS(.v13),
+		.iOS(.v16),
+		.tvOS(.v16)
 	],
 
 	products: [
@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.4.3"))
+        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "tech/actors")
 	],
 
 	targets: [

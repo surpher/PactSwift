@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -16,11 +16,26 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
+class MatcherValuesTests: MatcherTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+	func testMatcher_Values_SerializesToJSON() throws {
+		let json = try jsonString(for: .values(["a": "b", "c": "d"]))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "pact:matcher:type" : "values",
+			  "value" : {
+			    "a" : "b",
+			    "c" : "d"
+			  }
+			}
+			"""#
+		)
 	}
+
 }

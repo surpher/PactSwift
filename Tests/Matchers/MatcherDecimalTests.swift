@@ -1,6 +1,6 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
-//  Copyright © 2023 Oliver Jones. All rights reserved.
+//  Created by Marko Justinek on 11/4/20.
+//  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -16,11 +16,36 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
-
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+class MatcherDecimalTests: MatcherTestCase {
+	
+	func testMatcher_DecimalNoFraction_SerializesToJSON() throws {
+		let json = try jsonString(for: .decimal(1234))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "pact:matcher:type" : "decimal",
+			  "value" : 1234
+			}
+			"""#
+		)
+	}
+	
+	func testMatcher_Decimal_SerializesToJSON() throws {
+		let json = try jsonString(for: .decimal(1234.78))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "pact:matcher:type" : "decimal",
+			  "value" : 1234.78
+			}
+			"""#
+		)
 	}
 }

@@ -1,6 +1,6 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
-//  Copyright © 2023 Oliver Jones. All rights reserved.
+//  Created by Marko Justinek on 11/4/20.
+//  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -16,11 +16,24 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
+class MatcherRegexTests: MatcherTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+	func testMatcher_Regex() throws {
+		let json = try jsonString(for: .regex(#"\d{4}-\d{2}-\d{2}"#, example: "2020-11-04"))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "pact:matcher:type" : "regex",
+			  "regex" : "\\d{4}-\\d{2}-\\d{2}",
+			  "value" : "2020-11-04"
+			}
+			"""#
+		)
 	}
+
 }

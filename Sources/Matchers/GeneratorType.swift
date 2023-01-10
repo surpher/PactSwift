@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -15,12 +15,19 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
-@testable import PactSwift
+import Foundation
 
-final class PactTests: XCTestCase {
-
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
-	}
+enum GeneratorType: String, Encodable {
+	case randomInt = "RandomInt"
+	case uuid = "Uuid"
+	case randomDecimal = "RandomDecimal"
+	case randomHex = "RandomHexadecimal"
+	case randomString = "RandomString"
+	case regex = "Regex"
+	case date = "Date"
+	case time = "Time"
+	case dateTime = "DateTime"
+	case randomBoolean = "RandomBoolean"
+	case providerState = "ProviderState"
+	case mockServerUrl = "MockServerURL"
 }

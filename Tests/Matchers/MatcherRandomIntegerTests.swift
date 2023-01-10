@@ -1,6 +1,6 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
-//  Copyright © 2023 Oliver Jones. All rights reserved.
+//  Created by Marko Justinek on 18/9/20.
+//  Copyright © 2020 Marko Justinek. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
 //  purpose with or without fee is hereby granted, provided that the above
@@ -16,11 +16,25 @@
 //
 
 import XCTest
+
 @testable import PactSwift
 
-final class PactTests: XCTestCase {
+class MatcherRandomIntegerTests: MatcherTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+	func testRandomInteger_SerializesToJSON() throws {
+		let json = try jsonString(for: .randomInteger(like: 23, range: 20...30))
+		
+		XCTAssertEqual(
+			json,
+			#"""
+			{
+			  "max" : 30,
+			  "min" : 20,
+			  "pact:generator:type" : "RandomInt",
+			  "pact:matcher:type" : "type",
+			  "value" : 23
+			}
+			"""#
+		)
 	}
 }

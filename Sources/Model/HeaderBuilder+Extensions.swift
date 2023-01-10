@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -15,12 +15,24 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
-@testable import PactSwift
+import Foundation
+import PactSwiftMockServer
 
-final class PactTests: XCTestCase {
-
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+public extension HeaderBuilder {
+	/// Set the `Content-Type` header.
+	@discardableResult
+	func contentType(_ contentType: String) throws -> Self {
+		try header("Content-Type", value: contentType)
+	}
+		
+	@discardableResult
+	func header(_ name: String, value: String) throws -> Self {
+	   try header(name, values: [value])
+	}
+	
+	@discardableResult
+	func header(_ name: String, matching: AnyMatcher) throws -> Self {
+	   let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!
+	   return try header(name, values: [valueString])
 	}
 }

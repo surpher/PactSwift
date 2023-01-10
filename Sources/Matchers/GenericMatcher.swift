@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -15,12 +15,32 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
-@testable import PactSwift
+import Foundation
 
-final class PactTests: XCTestCase {
-
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
+/// A generic ``Matcher`` for serialising simple matchers to JSON.
+struct GenericMatcher<ValueType: Encodable>: Matcher {
+	  
+	var type: String
+	var value: ValueType
+	var generator: GeneratorType? = nil
+	var min: Int? = nil
+	var max: Int? = nil
+	var size: Int? = nil
+	var digits: Int? = nil
+	var format: String? = nil
+	var expression: String? = nil
+	var regex: String? = nil
+	
+	enum CodingKeys: String, CodingKey {
+		case type = "pact:matcher:type"
+		case generator = "pact:generator:type"
+		case value
+		case min
+		case max
+		case size
+		case digits
+		case format
+		case expression
+		case regex
 	}
 }

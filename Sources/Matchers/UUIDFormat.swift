@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 10/1/2023.
+//  Created by Oliver Jones on 9/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -15,12 +15,18 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-import XCTest
-@testable import PactSwift
+import Foundation
 
-final class PactTests: XCTestCase {
-
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.3.15")
-	}
+public enum UUIDFormat: String {
+	/// Simple UUID (e.g 936DA01f9abd4d9d80c702af85c822a8)
+	case simple = "simple"
+	
+	/// lower-case hyphenated (e.g 936da01f-9abd-4d9d-80c7-02af85c822a8)
+	case lowerCaseHyphenated = "lower-case-hyphenated"
+	
+	/// Upper-case hyphenated (e.g 936DA01F-9ABD-4D9D-80C7-02AF85C822A8)
+	case upperCaseHyphenated = "upper-case-hyphenated"
+ 
+	/// URN (e.g. urn:uuid:936da01f-9abd-4d9d-80c7-02af85c822a8)
+	case urn = "URN"
 }
