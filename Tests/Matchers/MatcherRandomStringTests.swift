@@ -22,7 +22,7 @@ import XCTest
 class MatcherRandomStringTests: MatcherTestCase {
 
 	func testRandomString_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomString("example", size: 20))
+		let json = try jsonString(for: .randomString(like: "example", size: 20))
 		
 		XCTAssertEqual(
 			json,

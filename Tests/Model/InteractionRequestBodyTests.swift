@@ -26,7 +26,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"like",
 			body: .like([
-				"key" : "value"
+				"key": "value"
 			])
 		)
 
@@ -41,7 +41,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"like",
 			body: .like([
-				"key" : "value"
+				"key": "value"
 			])
 		)
 
@@ -58,7 +58,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"oneOf",
 			body: .like([
-				"key" : .oneOf(["one", "two"])
+				"key": .oneOf(["one", "two"])
 			])
 		)
 
@@ -76,7 +76,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"oneOf",
 			body: .like([
-				"key" : .oneOf(["one", "two"])
+				"key": .oneOf(["one", "two"])
 			])
 		)
 
@@ -96,7 +96,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"like",
 			body: .like([
-				"key" : .like("value")
+				"key": .like("value")
 			])
 		)
 
@@ -111,7 +111,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"like",
 			body: .like([
-				"key" : .like("value")
+				"key": .like("value")
 			])
 		)
 
@@ -124,11 +124,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		}
 	}
 
-	func testRequest_BodyMatchingLikeMin() async throws {
+	func testRequest_BodyMatchingEachLikeMin() async throws {
 		try buildRequest(
-			"likeMin",
+			"eachLikeMin",
 			body: .like([
-				"key" : .like(["value"], min: 2)
+				"key": .eachLike("value", min: 2)
 			])
 		)
 
@@ -139,11 +139,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try await verify(body: Body(key: ["not value but a string", "another value"]), expectedStatus: 200)
 	}
 
-	func testRequest_BodyMatchingLikeMin_Negative() async throws {
+	func testRequest_BodyMatchingEachLikeMin_Negative() async throws {
 		try buildRequest(
-			"likeMin",
+			"eachLikeMin",
 			body: .like([
-				"key" : .like(["value", "value2"], min: 2)
+				"key": .eachLike("value", min: 2)
 			])
 		)
 
@@ -156,11 +156,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		}
 	}
 
-	func testRequest_BodyMatchingLikeMax() async throws {
+	func testRequest_BodyMatchingEachLikeMax() async throws {
 		try buildRequest(
-			"likeMax",
+			"eachLikeMax",
 			body: .like([
-				"key" : .like(["value"], max: 1)
+				"key": .eachLike("value", max: 1)
 			])
 		)
 
@@ -171,11 +171,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try await verify(body: Body(key: ["not value but a string"]), expectedStatus: 200)
 	}
 
-	func testRequest_BodyMatchingLikeMax_Negative() async throws {
+	func testRequest_BodyMatchingEachLikeMax_Negative() async throws {
 		try buildRequest(
-			"likeMax",
+			"eachLikeMax",
 			body: .like([
-				"key" : .like(["value"], max: 1)
+				"key": .eachLike("value", max: 1)
 			])
 		)
 
@@ -188,11 +188,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		}
 	}
 
-	func testRequest_BodyMatchingLikeMinMax() async throws {
+	func testRequest_BodyMatchingEachLikeMinMax() async throws {
 		try buildRequest(
-			"likeMinMax",
+			"eachLikeMinMax",
 			body: .like([
-				"key" : .like(["value"], min: 1, max: 2)
+				"key": .eachLike("value", min: 1, max: 2)
 			])
 		)
 
@@ -203,11 +203,11 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try await verify(body: Body(key: ["1", "2"]), expectedStatus: 200)
 	}
 
-	func testRequest_BodyMatchingLikeMinMax_Negative() async throws {
+	func testRequest_BodyMatchingEachLikeMinMax_Negative() async throws {
 		try buildRequest(
-			"likeMinMax",
+			"eachLikeMinMax",
 			body: .like([
-				"key" : .like(["value"], min: 1, max: 2)
+				"key": .eachLike("value", min: 1, max: 2)
 			])
 		)
 
@@ -228,9 +228,9 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"equals",
 			body: .like([
-				"key1" : .equals(234),
-				"key2" : .equals("string"),
-				"key3" : .equals([1,2,3])
+				"key1": .equals(234),
+				"key2": .equals("string"),
+				"key3": .equals([1,2,3])
 			])
 		)
 
@@ -247,9 +247,9 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"equals",
 			body: .like([
-				"key1" : .equals(234),
-				"key2" : .equals("string"),
-				"key3" : .equals([1,2,3])
+				"key1": .equals(234),
+				"key2": .equals("string"),
+				"key3": .equals([1,2,3])
 			])
 		)
 
@@ -268,7 +268,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"includes",
 			body: .like([
-				"key" : .includes("sub")
+				"key": .includes("sub")
 			])
 		)
 
@@ -283,7 +283,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"includes",
 			body: .like([
-				"key" : .includes("sub")
+				"key": .includes("sub")
 			])
 		)
 
@@ -300,35 +300,54 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"regex",
 			body: .like([
-				"key1" : .regex(#"\d+"#, example: "1234"),
-				"key2" : .regex(#"\S+"#, example: "non-white-space")
+				"key1": .regex(#"\d+"#, example: "1234"),
+				"key2": .regex(#"\S+"#, example: "non-white-space"),
+				"ip4": .ip4Address(),
+				"ip6": .ip6Address(),
+				"hex": .hexadecimal(),
+				"base64": .base64()
 			])
 		)
 
 		struct Body: Encodable {
 			var key1: Int
 			var key2: String
+			var ip4: String
+			var ip6: String
+			var hex: String
+			var base64: String
 		}
 
-		try await verify(body: Body(key1: 1234, key2: "stuff-but-no-spaces"), expectedStatus: 200)
+		let body = Body(key1: 1234, key2: "stuff-but-no-spaces", ip4: "192.168.1.1", ip6: "fdda:5cc1:23:4::1f", hex: "DEADBEEF", base64: "dGVzdCB2YWwK")
+		try await verify(body: body, expectedStatus: 200)
 	}
 
 	func testRequest_BodyMatchingRegex_Negative() async throws {
 		try buildRequest(
 			"regex",
 			body: .like([
-				"key1" : .regex(#"\d+"#, example: "1234"),
-				"key2" : .regex(#"\S+"#, example: "non-white-space")
+				"key1": .regex(#"\d+"#, example: "1234"),
+				"key2": .regex(#"\S+"#, example: "non-white-space"),
+				"ip4": .ip4Address(),
+				"ip6": .ip6Address(),
+				"hex": .hexadecimal(),
+				"base64": .base64()
 			])
 		)
 
 		struct Body: Encodable {
 			var key1: Int
 			var key2: String
+			var ip4: String
+			var ip6: String
+			var hex: String
+			var base64: String
 		}
 
+		let body = Body(key1: 1234, key2: "no-spaces", ip4: "192.8.600.1", ip6: "not ip6", hex: "not hex", base64: "not base 64")
+
 		try await suppressingPactFailure {
-			try await verify(body: Body(key1: 321, key2: "spaces in this text"), expectedStatus: 500)
+			try await verify(body: body, expectedStatus: 500)
 		}
 	}
 
@@ -336,7 +355,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"integer",
 			body: .like([
-				"key" : .integer(1)
+				"key": .integer(1)
 			])
 		)
 
@@ -351,7 +370,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"integer",
 			body: .like([
-				"key" : .integer(1)
+				"key": .integer(1)
 			])
 		)
 
@@ -368,7 +387,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"decimal",
 			body: .like([
-				"key" : .decimal(123.1)
+				"key": .decimal(123.1)
 			])
 		)
 
@@ -383,7 +402,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"decimal",
 			body: .like([
-				"key" : .decimal(123)
+				"key": .decimal(123)
 			])
 		)
 
@@ -400,8 +419,8 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"number",
 			body: .like([
-				"key1" : .number(123.1),
-				"key2" : .number(321)
+				"key1": .number(123.1),
+				"key2": .number(321)
 			])
 		)
 
@@ -417,8 +436,8 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"number",
 			body: .like([
-				"key1" : .number(123.1),
-				"key2" : .number(321)
+				"key1": .number(123.1),
+				"key2": .number(321)
 			])
 		)
 
@@ -436,7 +455,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"datetime",
 			body: .like([
-				"key" : .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
+				"key": .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
 			])
 		)
 
@@ -451,7 +470,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"datetime",
 			body: .like([
-				"key" : .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
+				"key": .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
 			])
 		)
 
@@ -468,7 +487,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"date",
 			body: .like([
-				"key" : .date("2022-01-01", format: "yyyy-MM-dd")
+				"key": .date("2022-01-01", format: "yyyy-MM-dd")
 			])
 		)
 
@@ -483,7 +502,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"date",
 			body: .like([
-				"key" : .date("2022-01-01", format: "yyyy-MM-dd")
+				"key": .date("2022-01-01", format: "yyyy-MM-dd")
 			])
 		)
 
@@ -500,7 +519,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"time",
 			body: .like([
-				"key" : .time("12:33:22", format: "HH:mm:ss")
+				"key": .time("12:33:22", format: "HH:mm:ss")
 			])
 		)
 
@@ -515,7 +534,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"time",
 			body: .like([
-				"key" : .time("12:33:22", format: "HH:mm:ss")
+				"key": .time("12:33:22", format: "HH:mm:ss")
 			])
 		)
 
@@ -532,7 +551,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"null",
 			body: .like([
-				"key" : .null()
+				"key": .null()
 			])
 		)
 
@@ -547,7 +566,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"null",
 			body: .like([
-				"key" : .null()
+				"key": .null()
 			])
 		)
 
@@ -564,9 +583,9 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"bool",
 			body: .like([
-				"key1" : .bool(true),
-				"key2" : .bool(false),
-				"key3" : .like(true)
+				"key1": .bool(true),
+				"key2": .bool(false),
+				"key3": .like(true)
 			])
 		)
 
@@ -583,9 +602,9 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		try buildRequest(
 			"bool",
 			body: .like([
-				"key1" : .bool(true),
-				"key2" : .bool(false),
-				"key3" : .like(true)
+				"key1": .bool(true),
+				"key2": .bool(false),
+				"key3": .like(true)
 			])
 		)
 
@@ -597,6 +616,78 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 		try await verify(body: Body(key1: "not a bool", key2: "false", key3: false), expectedStatus: 500)
+		}
+	}
+
+	func testRequest_BodyMatchingNotEmpty() async throws {
+		try buildRequest(
+			"notEmpty",
+			body: .like([
+				"key1": .notEmpty(),
+				"key2": .notEmpty()
+			])
+		)
+
+		struct Body: Encodable {
+			@NullEncodable var key1: String?
+			var key2: String
+		}
+
+		try await verify(body: Body(key1: "not empty", key2: "not empty"), expectedStatus: 200)
+	}
+
+	func testRequest_BodyMatchingNotEmpty_Negative() async throws {
+		try buildRequest(
+			"notEmpty",
+			body: .like([
+				"key1": .notEmpty(),
+				"key2": .notEmpty()
+			])
+		)
+
+		struct Body: Encodable {
+			@NullEncodable var key1: String?
+			var key2: String
+		}
+
+		try await suppressingPactFailure {
+			try await verify(body: Body(key1: nil, key2: "not empty"), expectedStatus: 500)
+		}
+
+		try await suppressingPactFailure {
+			try await verify(body: Body(key1: "not empty", key2: ""), expectedStatus: 500)
+		}
+	}
+
+	func testRequest_BodyMatchingSemVer() async throws {
+		try buildRequest(
+			"semVer",
+			body: .like([
+				"key": .semver("1.0.0")
+			])
+		)
+
+		struct Body: Encodable {
+			var key: String
+		}
+
+		try await verify(body: Body(key: "1.0.0-beta1"), expectedStatus: 200)
+	}
+
+	func testRequest_BodyMatchingSemVer_Negative() async throws {
+		try buildRequest(
+			"semVer",
+			body: .like([
+				"key": .semver("1.0.0")
+			])
+		)
+
+		struct Body: Encodable {
+			var key: String
+		}
+
+		try await suppressingPactFailure {
+			try await verify(body: Body(key: "not semver"), expectedStatus: 500)
 		}
 	}
 

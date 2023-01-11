@@ -23,7 +23,7 @@ class MatcherRandomUUIDTests: MatcherTestCase {
 
 	func testRandomUUID_SerializesToJSON() throws {
 		let uuid = UUID()
-		let json = try jsonString(for: .randomUUID(uuid))
+		let json = try jsonString(for: .randomUUID(like: uuid))
 		
 		XCTAssertEqual(
 			json,
@@ -39,7 +39,7 @@ class MatcherRandomUUIDTests: MatcherTestCase {
 	}
 	
 	func testRandomUUIDWithFormat_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomUUID("936DA01f9abd4d9d80c702af85c822a8", format: .simple))
+		let json = try jsonString(for: .randomUUID(like: "936DA01f9abd4d9d80c702af85c822a8", format: .simple))
 		
 		XCTAssertEqual(
 			json,

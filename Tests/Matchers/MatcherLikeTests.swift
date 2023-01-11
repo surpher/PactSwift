@@ -53,7 +53,7 @@ class MatcherLikeTests: MatcherTestCase {
 	}
 	
 	func testMatcher_LikeArrayEncodableMin_SerializesToJSON() throws {
-		let json = try jsonString(for: .like([1234, 5678], min: 1))
+		let json = try jsonString(for: .eachLike(1234, min: 1))
 		
 		XCTAssertEqual(
 			json,
@@ -62,8 +62,7 @@ class MatcherLikeTests: MatcherTestCase {
 			  "min" : 1,
 			  "pact:matcher:type" : "type",
 			  "value" : [
-			    1234,
-			    5678
+			    1234
 			  ]
 			}
 			"""#
@@ -71,7 +70,7 @@ class MatcherLikeTests: MatcherTestCase {
 	}
 	
 	func testMatcher_LikeArrayEncodableMax_SerializesToJSON() throws {
-		let json = try jsonString(for: .like([1234, 5678], max: 2))
+		let json = try jsonString(for: .eachLike(1234, max: 2))
 		
 		XCTAssertEqual(
 			json,
@@ -80,8 +79,7 @@ class MatcherLikeTests: MatcherTestCase {
 			  "max" : 2,
 			  "pact:matcher:type" : "type",
 			  "value" : [
-			    1234,
-			    5678
+			    1234
 			  ]
 			}
 			"""#
@@ -89,7 +87,7 @@ class MatcherLikeTests: MatcherTestCase {
 	}
 	
 	func testMatcher_LikeArrayEncodableMinMax_SerializesToJSON() throws {
-		let json = try jsonString(for: .like([1234, 5678], min: 1, max: 2))
+		let json = try jsonString(for: .eachLike(1234, min: 1, max: 2))
 		
 		XCTAssertEqual(
 			json,
@@ -99,8 +97,7 @@ class MatcherLikeTests: MatcherTestCase {
 			  "min" : 1,
 			  "pact:matcher:type" : "type",
 			  "value" : [
-			    1234,
-			    5678
+			    1234
 			  ]
 			}
 			"""#

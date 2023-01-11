@@ -19,19 +19,20 @@ import XCTest
 
 @testable import PactSwift
 
-class MatcherRandomHexadecimalTests: MatcherTestCase {
+class MatcherGeneratedMockServerUrlTests: MatcherTestCase {
 
-	func testRandomHexadecimal_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomHexadecimal(like: "DEADBEEF", digits: 8))
-		
+	func testGeneratedMockServerUrl_SerializesToJSON() throws {
+		let json = try jsonString(for: .generatedMockServerUrl(example: "https://example.com/orders/1234", regex: #".*(/orders/\d+)$"#))
+
 		XCTAssertEqual(
 			json,
 			#"""
 			{
-			  "digits" : 8,
-			  "pact:generator:type" : "RandomHexadecimal",
+			  "example" : "https://example.com/orders/1234",
+			  "pact:generator:type" : "MockServerURL",
 			  "pact:matcher:type" : "type",
-			  "value" : "DEADBEEF"
+			  "regex" : ".*(/orders/\\d+)$",
+			  "value" : "https://example.com/orders/1234"
 			}
 			"""#
 		)

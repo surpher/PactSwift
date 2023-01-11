@@ -104,12 +104,12 @@ final class InteractionTests: InteractionTestCase {
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
 					.like([
-						"id": .randomUUID("urn:uuid:\(UUID())", format: .urn),
+						"id": .randomUUID(like: "urn:uuid:\(UUID())", format: .urn),
 						"age": .randomInteger(like: 1, range: 1...100),
-						"name": .randomString("An name", size: 50),
-						"postcodes": .like([AnyMatcher.integer(1234)], max: 2),
+						"name": .randomString(like: "An name", size: 50),
+						"postcodes": .eachLike(AnyMatcher.integer(1234), max: 2),
 						"something": .regex(#"\d{4}"#, example: "1234"),
-						"hex": .randomHexadecimal("DEADBEEF", digits: 8),
+						"hex": .randomHexadecimal(like: "DEADBEEF", digits: 8),
 						"birthday": .generatedDate("2022-12-11", format: "yyyy-MM-dd", expression: "+ 1 day")
 					])
 				)

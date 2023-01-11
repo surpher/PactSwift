@@ -29,7 +29,7 @@ class MatcherNotEmptyTests: MatcherTestCase {
 			#"""
 			{
 			  "pact:matcher:type" : "notEmpty",
-			  "value" : null
+			  "value" : "non-empty"
 			}
 			"""#
 		)

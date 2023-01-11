@@ -78,6 +78,42 @@ public extension Matcher {
 		GenericMatcher(type: "regex", value: example, regex: regex).asAny()
 	}
 
+	/// A matcher that executes a regular expression match against the string representation of an IP4 address.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: An IPv4 address to use as an example. Defaults to `127.0.0.13`
+	static func ip4Address(_ example: String = "127.0.0.13") -> AnyMatcher {
+		.regex(#"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"#, example: example)
+	}
+
+	/// A matcher that executes a regular expression match against the string representation of an IP6 address.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: An IPv6 address to use as an example. Defaults to `::ffff:192.0.2.128`
+	static func ip6Address(_ example: String = "::ffff:192.0.2.128") -> AnyMatcher {
+		.regex("^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$", example: example)
+	}
+
+	/// A matcher that executes a regular expression match against the string representation of a hexadecimal value (optionally with `0x` prefix).
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: An hexadecimal string to use as an example. Defaults to `3F`
+	static func hexadecimal(_ example: String = "3F") -> AnyMatcher {
+		.regex(#"^(?:0x)?[0-9a-fA-F]+$"#, example: example)
+	}
+
+	/// A matcher that executes a regular expression match against the string representation of a base64 encoded value (assumes no line breaks).
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: An base64 encoded string to use as an example. Defaults to `ZXhhbXBsZQo=` which is `"example"` encoded in base64.
+	static func base64(_ example: String = "ZXhhbXBsZQo=") -> AnyMatcher {
+		.regex(#"^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"#, example: example)
+	}
+
 	/// A matcher that executes a type based match against the value, that is, they are equal if they are the same type.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -107,8 +143,8 @@ public extension Matcher {
 	///   - values: The example values.
 	///   - min: The minimum length of the array of values.
 	///
-	static func like<T: Encodable>(_ values: [T], min: Int) -> AnyMatcher {
-		GenericMatcher(type: "type", value: values, min: min).asAny()
+	static func eachLike<T: Encodable>(_ value: T, min: Int) -> AnyMatcher {
+		GenericMatcher(type: "type", value: [value], min: min).asAny()
 	}
 
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -120,8 +156,8 @@ public extension Matcher {
 	///   - values: The example values.
 	///   - max: The maximum length of the array of values.
 	///
-	static func like<T: Encodable>(_ values: [T], max: Int) -> AnyMatcher {
-		GenericMatcher(type: "type", value: values, max: max).asAny()
+	static func eachLike<T: Encodable>(_ value: T, max: Int) -> AnyMatcher {
+		GenericMatcher(type: "type", value: [value], max: max).asAny()
 	}
 
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -134,8 +170,9 @@ public extension Matcher {
 	///   - min: The minimum length of the array of values.
 	///   - max: The maximum length of the array of values.
 	///
-	static func like<T: Encodable>(_ values: [T], min: Int, max: Int) -> AnyMatcher {
-		GenericMatcher(type: "type", value: values, min: min, max: max).asAny()
+	static func eachLike<T: Encodable>(_ value: T, min: Int, max: Int) -> AnyMatcher {
+		precondition(min <= max, "min must be <= max")
+		return GenericMatcher(type: "type", value: [value], min: min, max: max).asAny()
 	}
 
 	// MARK: - Pact Specification v3 matchers
@@ -222,6 +259,8 @@ public extension Matcher {
 		GenericMatcher(type: "boolean", value: value).asAny()
 	}
 
+	/* TODO: Disabled some matchers that I'm unsure how to use at the moment. 🤔
+
 	/// A matcher that matches binary data by its content type (magic file check).
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -243,6 +282,8 @@ public extension Matcher {
 	static func values<T: Encodable>(_ value: [String: T]) -> AnyMatcher {
 		GenericMatcher(type: "values", value: value).asAny()
 	}
+
+	*/
 
 	// MARK: - Pact Specification v4 matchers
 
@@ -278,7 +319,7 @@ public extension Matcher {
 	/// - Note: Requires `Pact.Specification.v4`.
 	///
 	static func notEmpty() -> AnyMatcher {
-		GenericMatcher(type: "notEmpty", value: nil as String?).asAny()
+		GenericMatcher(type: "notEmpty", value: "non-empty").asAny()
 	}
 
 	/// A matcher that matches a value that must be valid based on the `semver` specification.
@@ -298,39 +339,67 @@ public extension Matcher {
 
 	//case regex = "Regex"
 	//case providerState = "ProviderState"
-	//case mockServerUrl = "MockServerURL"
 
-	static func randomString(_ value: String, size: Int? = nil) -> AnyMatcher {
-		GenericMatcher(type: "type", value: value, generator: .randomString, size: size).asAny()
+	/// Generate a MockServer URL.
+	///
+	/// - Parameters:
+	///   - example: An example URL eg `"http://localhost:8080/orders/1234"`
+	///   - regex: A regex to extract the relevant part of the example, eg: `"^.*(/orders/\\d+)$"` that will be combine with the mock server URL. **Note** this regex *must* include a single capture group!
+	static func generatedMockServerUrl(example: String, regex: String) -> AnyMatcher {
+		GenericMatcher(type: "type", value: example, generator: .mockServerUrl, regex: regex, example: example).asAny()
+	}
+
+	/// Generate a random string value.
+	///
+	/// - Parameters:
+	///   - value: The example value.
+	///   - size: The size of string to generate (uses the length of the example `value` by default).
+	///
+	static func randomString(like value: String, size: Int? = nil) -> AnyMatcher {
+		GenericMatcher(type: "type", value: value, generator: .randomString, size: size ?? value.count).asAny()
 	}
 
 	static func randomInteger<T: BinaryInteger & Encodable>(like value: T, range: ClosedRange<Int>? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomInt, min: range?.lowerBound, max: range?.upperBound).asAny()
 	}
 
+	/// Generate a random `Int` within the specified `range`.
+	///
+	/// - Parameters:
+	///   - range: The range of values that the generated number should be within.
+	///
+	static func randomInteger(_ range: ClosedRange<Int>) -> AnyMatcher {
+		GenericMatcher(type: "type", value: range.randomElement(), generator: .randomInt, min: range.lowerBound, max: range.upperBound).asAny()
+	}
+
 	static func randomDecimal<T: FloatingPoint & Encodable>(like value: T, digits: Int? = nil ) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomDecimal, digits: digits).asAny()
 	}
 
-	static func randomBoolean(_ value: Bool) -> AnyMatcher {
-		GenericMatcher(type: "type", value: value, generator: .randomBoolean).asAny()
+	static func randomBoolean() -> AnyMatcher {
+		GenericMatcher(type: "type", value: true, generator: .randomBoolean).asAny()
 	}
 
-	static func randomUUID(_ value: String, format: UUIDFormat = .simple) -> AnyMatcher {
+	static func randomUUID(like value: String, format: UUIDFormat = .simple) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .uuid, format: format.rawValue).asAny()
 	}
 
-	static func randomUUID(_ value: UUID) -> AnyMatcher {
+	static func randomUUID(like value: UUID) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value.uuidString, generator: .uuid, format: UUIDFormat.upperCaseHyphenated.rawValue).asAny()
 	}
 
-	static func randomHexadecimal(_ value: String, digits: Int? = nil) -> AnyMatcher {
-		GenericMatcher(type: "type", value: value, generator: .randomHex, digits: digits).asAny()
+	/// Generate a random hexadecimal value.
+	///
+	/// - Parameters:
+	///   - value: The example value.
+	///   - digits: The number of digits to generate (uses the length of the example `value` by default).
+	///
+	static func randomHexadecimal(like value: String, digits: Int? = nil) -> AnyMatcher {
+		GenericMatcher(type: "type", value: value, generator: .randomHex, digits: digits ?? value.count).asAny()
 	}
 
 	/// Generate a random date.
 	///
-	/// The base date is normally the current system clock.  Given the base date-time of 2000-01-01T10:00Z, then the following will resolve to:
 	/// - Parameters:
 	///   - value: Example value.
 	///   - format: The date format (eg, yyyy-MM-dd)
@@ -374,7 +443,7 @@ public extension Matcher {
 	/// `"@ next hour"` | `"2000-01-01T11:00Z"`
 	/// `"@ last minute"` | `"2000-01-01T09:59Z"`
 	/// `"@ now + 2 hours - 4 minutes"` | `"2000-01-01T11:56Z"`
-	/// `"@  + 2 hours - 4 minutes"` | `"2000-01-01T11:56Z"`
+	/// `"@ + 2 hours - 4 minutes"` | `"2000-01-01T11:56Z"`
 	/// `"today @ 1 o'clock"` | `"2000-01-01T13:00Z"`
 	/// `"yesterday @ midnight"` | `"1999-12-31T00:00Z"`
 	/// `"yesterday @ midnight - 1 hour"` | `"1999-12-30T23:00Z"`

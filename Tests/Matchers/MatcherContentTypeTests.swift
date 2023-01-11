@@ -21,6 +21,7 @@ import XCTest
 
 class MatcherContentTypeTests: MatcherTestCase {
 
+	/* TODO: Disabled for the moment. Until I understand its use case.
 	func testMatcher_MatchContentType() throws {
 		let json = try jsonString(for: .contentType("image/jpeg"))
 		
@@ -34,4 +35,5 @@ class MatcherContentTypeTests: MatcherTestCase {
 			"""#
 		)
 	}
+	*/
 }

@@ -19,9 +19,9 @@ import XCTest
 
 @testable import PactSwift
 
-class MatcherRandomDateTimeTests: MatcherTestCase {
+class MatcherGeneratedDateTimeTests: MatcherTestCase {
 
-	func testRandomDate_SerializesToJSON() throws {
+	func testGeneratedDate_SerializesToJSON() throws {
 		let json = try jsonString(for: .generatedDate("2023-01-09", format: "yyyy-MM-dd", expression: "today"))
 		
 		XCTAssertEqual(
@@ -38,16 +38,16 @@ class MatcherRandomDateTimeTests: MatcherTestCase {
 		)
 	}
 	
-	func testRandomTime_SerializesToJSON() throws {
-		let json = try jsonString(for: .generatedDate("14:34:12", format: "HH:mm:ss", expression: "today"))
+	func testGeneratedTime_SerializesToJSON() throws {
+		let json = try jsonString(for: .generatedTime("14:34:12", format: "HH:mm:ss", expression: "noon"))
 		
 		XCTAssertEqual(
 			json,
 			#"""
 			{
-			  "expression" : "today",
+			  "expression" : "noon",
 			  "format" : "HH:mm:ss",
-			  "pact:generator:type" : "Date",
+			  "pact:generator:type" : "Time",
 			  "pact:matcher:type" : "type",
 			  "value" : "14:34:12"
 			}
@@ -55,7 +55,7 @@ class MatcherRandomDateTimeTests: MatcherTestCase {
 		)
 	}
 	
-	func testRandomDatetime_SerializesToJSON() throws {
+	func testGeneratedDatetime_SerializesToJSON() throws {
 		let json = try jsonString(for: .generatedDatetime("2023-01-09 14:34:12", format: "yyyy-MM-dd HH:mm:ss", expression: "today"))
 		
 		XCTAssertEqual(

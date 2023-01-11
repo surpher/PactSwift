@@ -64,7 +64,7 @@ final class InteractionHeaderTests: InteractionTestCase {
 			.uponReceiving("an interaction with header value")
 			.withRequest(path: "/interaction")
 			.willRespond(with: 200) { response in
-				try response.header("x-header", matching: .randomString("something", size: 20))
+				try response.header("x-header", matching: .randomString(like: "something", size: 20))
 			}
 		
 		try await builder.verify { ctx in

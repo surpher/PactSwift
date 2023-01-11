@@ -30,6 +30,7 @@ struct GenericMatcher<ValueType: Encodable>: Matcher {
 	var format: String? = nil
 	var expression: String? = nil
 	var regex: String? = nil
+	var example: String? = nil
 
 	enum CodingKeys: String, CodingKey {
 		case type = "pact:matcher:type"
@@ -42,5 +43,6 @@ struct GenericMatcher<ValueType: Encodable>: Matcher {
 		case format
 		case expression
 		case regex
+		case example
 	}
 }
