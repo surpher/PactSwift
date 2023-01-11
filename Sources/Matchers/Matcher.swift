@@ -386,15 +386,15 @@ public extension Matcher {
 	/// `"tomorrow + 4 years @ 3 o'clock + 40 milliseconds"` | `"2004-01-02T15:00:00.040Z"`
 	/// `"next week @ next hour"` | `"2000-01-08T11:00Z"`
 	/// `"last month @ last hour"` | `"1999-12-01T09:00Z"`
-	static func randomDate(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
+	static func generatedDate(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .date, format: format, expression: expression).asAny()
 	}
-	
-	static func randomDatetime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
+
+	static func generatedDatetime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .dateTime, format: format, expression: expression).asAny()
 	}
-	
-	static func randomTime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
+
+	static func generatedTime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .time, format: format, expression: expression).asAny()
 	}
 

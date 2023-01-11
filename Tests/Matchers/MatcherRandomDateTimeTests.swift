@@ -22,7 +22,7 @@ import XCTest
 class MatcherRandomDateTimeTests: MatcherTestCase {
 
 	func testRandomDate_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomDate("2023-01-09", format: "yyyy-MM-dd", expression: "today"))
+		let json = try jsonString(for: .generatedDate("2023-01-09", format: "yyyy-MM-dd", expression: "today"))
 		
 		XCTAssertEqual(
 			json,
@@ -39,7 +39,7 @@ class MatcherRandomDateTimeTests: MatcherTestCase {
 	}
 	
 	func testRandomTime_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomDate("14:34:12", format: "HH:mm:ss", expression: "today"))
+		let json = try jsonString(for: .generatedDate("14:34:12", format: "HH:mm:ss", expression: "today"))
 		
 		XCTAssertEqual(
 			json,
@@ -56,7 +56,7 @@ class MatcherRandomDateTimeTests: MatcherTestCase {
 	}
 	
 	func testRandomDatetime_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomDatetime("2023-01-09 14:34:12", format: "yyyy-MM-dd HH:mm:ss", expression: "today"))
+		let json = try jsonString(for: .generatedDatetime("2023-01-09 14:34:12", format: "yyyy-MM-dd HH:mm:ss", expression: "today"))
 		
 		XCTAssertEqual(
 			json,

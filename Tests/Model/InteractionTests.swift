@@ -111,7 +111,7 @@ final class InteractionTests: InteractionTestCase {
 						"postcodes": .like([AnyMatcher.integer(1234)], max: 2),
 						"something": .regex(#"\d{4}"#, example: "1234"),
 						"hex": .randomHexadecimal("DEADBEEF", digits: 8),
-						"birthday": .randomDate("2022-12-11", format: "yyyy-MM-dd", expression: "+ 1 day")
+						"birthday": .generatedDate("2022-12-11", format: "yyyy-MM-dd", expression: "+ 1 day")
 					])
 				)
 			}
