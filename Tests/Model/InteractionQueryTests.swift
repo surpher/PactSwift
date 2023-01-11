@@ -24,7 +24,7 @@ final class InteractionQueryTests: InteractionTestCase {
 		try builder
 			.uponReceiving("an interaction with item value")
 			.withRequest(path: "/interaction") { request in
-				try request.queryParam(name: "item", value: "value")
+				try request.queryParam("item", value: "value")
 			}
 			.willRespond(with: 200)
 

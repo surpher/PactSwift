@@ -21,7 +21,7 @@ import PactSwiftMockServer
 public extension QueryBuilder {
 	
 	@discardableResult
-	func queryParam(name: String, matching: AnyMatcher) throws -> Self {
+	func queryParam(_ name: String, matching: AnyMatcher) throws -> Self {
 		let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!
 		return try queryParam(name: name, values: [valueString])
 	}
@@ -33,7 +33,7 @@ public extension QueryBuilder {
 	///  - name: The query parameter name.
 	///  - value: The query parameter value.
 	@discardableResult
-	func queryParam(name: String, value: String) throws -> Self {
+	func queryParam(_ name: String, value: String) throws -> Self {
 		try queryParam(name: name, values: [value])
 	}
 	
@@ -50,7 +50,7 @@ public extension QueryBuilder {
 				continue
 			}
 			
-			try queryParam(name: item.name, value: value)
+			try queryParam(item.name, value: value)
 		}
 		
 		return self

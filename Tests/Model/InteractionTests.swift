@@ -27,9 +27,9 @@ final class InteractionTests: InteractionTestCase {
 			.given("There are events")
 			.withRequest(path: "/events") { request in
 				try request
-					.queryParam(name: "something", value: "orOther")
-					.queryParam(name: "limit", matching: .decimal(100))
-					.queryParam(name: "includeOthers", matching: .bool(false))
+					.queryParam("something", value: "orOther")
+					.queryParam("limit", matching: .decimal(100))
+					.queryParam("includeOthers", matching: .bool(false))
 			}
 			.willRespond(with: 200) { response in
 				try response.htmlBody()
@@ -98,7 +98,7 @@ final class InteractionTests: InteractionTestCase {
 			.given("There are events")
 			.withRequest(method: .GET, regex: #"/events/\d+"#, example: "/events/100") { request in
 				try request
-					.queryParam(name: "sorted", matching: .bool(true))
+					.queryParam("sorted", matching: .bool(true))
 					.header("Accept", value: "application/json")
 					.header("X-Version", matching: .integer(1))
 			}
