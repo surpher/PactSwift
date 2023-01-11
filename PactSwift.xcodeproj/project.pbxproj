@@ -69,6 +69,10 @@
 		A7F1858E296CD1A3003AE3F2 /* InteractionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1858C296CD1A3003AE3F2 /* InteractionTestCase.swift */; };
 		A7F18593296CD813003AE3F2 /* InteractionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F18592296CD813003AE3F2 /* InteractionRequestTests.swift */; };
 		A7F18594296CD813003AE3F2 /* InteractionRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F18592296CD813003AE3F2 /* InteractionRequestTests.swift */; };
+		A7F1859A296D1DB7003AE3F2 /* InteractionHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F18599296D1DB7003AE3F2 /* InteractionHeaderTests.swift */; };
+		A7F1859B296D1DB7003AE3F2 /* InteractionHeaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F18599296D1DB7003AE3F2 /* InteractionHeaderTests.swift */; };
+		A7F1859D296D37EA003AE3F2 /* InteractionRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1859C296D37EA003AE3F2 /* InteractionRequestBodyTests.swift */; };
+		A7F1859E296D37EA003AE3F2 /* InteractionRequestBodyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1859C296D37EA003AE3F2 /* InteractionRequestBodyTests.swift */; };
 		AD08FA3E28A23DD40059884F /* PactFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD08FA3D28A23DD40059884F /* PactFileManager.swift */; };
 		AD08FA3F28A23DD40059884F /* PactFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD08FA3D28A23DD40059884F /* PactFileManager.swift */; };
 		AD48EC5826CF90B40017E071 /* ProviderVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD48EC5726CF90B40017E071 /* ProviderVerifier.swift */; };
@@ -180,6 +184,8 @@
 		A7F18589296CD170003AE3F2 /* PactTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactTests.swift; sourceTree = "<group>"; };
 		A7F1858C296CD1A3003AE3F2 /* InteractionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionTestCase.swift; sourceTree = "<group>"; };
 		A7F18592296CD813003AE3F2 /* InteractionRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionRequestTests.swift; sourceTree = "<group>"; };
+		A7F18599296D1DB7003AE3F2 /* InteractionHeaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionHeaderTests.swift; sourceTree = "<group>"; };
+		A7F1859C296D37EA003AE3F2 /* InteractionRequestBodyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractionRequestBodyTests.swift; sourceTree = "<group>"; };
 		AD08FA3D28A23DD40059884F /* PactFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactFileManager.swift; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB263242CC0B900D991F0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
@@ -294,15 +300,17 @@
 		AD641A362434354C00785CE1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A7F18599296D1DB7003AE3F2 /* InteractionHeaderTests.swift */,
+				A7F18586296CD154003AE3F2 /* InteractionQueryTests.swift */,
+				A7F1859C296D37EA003AE3F2 /* InteractionRequestBodyTests.swift */,
+				A7F18592296CD813003AE3F2 /* InteractionRequestTests.swift */,
+				A7F1858C296CD1A3003AE3F2 /* InteractionTestCase.swift */,
+				A7F1857E296BE28F003AE3F2 /* InteractionTests.swift */,
 				ADBC3E4F26DB2887006908E0 /* PactBrokerTests.swift */,
+				A7F18589296CD170003AE3F2 /* PactTests.swift */,
 				ADBC3E5826DB386B006908E0 /* ProviderVerifier+OptionsTests.swift */,
 				ADBC3E5226DB322C006908E0 /* VersionSelectorTests.swift */,
 				ADBC3E5526DB36A8006908E0 /* WIPPactsTests.swift */,
-				A7F1857E296BE28F003AE3F2 /* InteractionTests.swift */,
-				A7F18586296CD154003AE3F2 /* InteractionQueryTests.swift */,
-				A7F18589296CD170003AE3F2 /* PactTests.swift */,
-				A7F1858C296CD1A3003AE3F2 /* InteractionTestCase.swift */,
-				A7F18592296CD813003AE3F2 /* InteractionRequestTests.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -854,6 +862,7 @@
 				A7F18587296CD154003AE3F2 /* InteractionQueryTests.swift in Sources */,
 				A7F1855D296BDBD5003AE3F2 /* MatcherRandomHexadecimalTests.swift in Sources */,
 				A7F18593296CD813003AE3F2 /* InteractionRequestTests.swift in Sources */,
+				A7F1859A296D1DB7003AE3F2 /* InteractionHeaderTests.swift in Sources */,
 				AD08FA3E28A23DD40059884F /* PactFileManager.swift in Sources */,
 				ADC3AA3D247CBB550034446E /* MatcherIncludesTests.swift in Sources */,
 				A7F1857F296BE28F003AE3F2 /* InteractionTests.swift in Sources */,
@@ -877,6 +886,7 @@
 				AD7891C424415E9F0014BCC8 /* MatcherDecimalTests.swift in Sources */,
 				A7F18548296BD2B6003AE3F2 /* MatcherStatusCodeTests.swift in Sources */,
 				A7F18536296BCCF3003AE3F2 /* MatcherLikeTests.swift in Sources */,
+				A7F1859D296D37EA003AE3F2 /* InteractionRequestBodyTests.swift in Sources */,
 				A7F18551296BDAED003AE3F2 /* MatcherRandomIntegerTests.swift in Sources */,
 				A7F18533296BC970003AE3F2 /* MatcherEqualityTests.swift in Sources */,
 				AD4B97132513A64700C37560 /* MatcherRandomStringTests.swift in Sources */,
@@ -928,6 +938,7 @@
 				A7F18588296CD154003AE3F2 /* InteractionQueryTests.swift in Sources */,
 				ADBC3E5726DB36A8006908E0 /* WIPPactsTests.swift in Sources */,
 				A7F18594296CD813003AE3F2 /* InteractionRequestTests.swift in Sources */,
+				A7F1859B296D1DB7003AE3F2 /* InteractionHeaderTests.swift in Sources */,
 				A7F1855E296BDBD5003AE3F2 /* MatcherRandomHexadecimalTests.swift in Sources */,
 				AD8FC80A2463BBD100361854 /* ErrorCapture.swift in Sources */,
 				A7F18580296BE28F003AE3F2 /* InteractionTests.swift in Sources */,
@@ -951,6 +962,7 @@
 				ADC3728726982E1F000DA90B /* MatcherOneOfTests.swift in Sources */,
 				A7F18549296BD2B6003AE3F2 /* MatcherStatusCodeTests.swift in Sources */,
 				A7F18552296BDAED003AE3F2 /* MatcherRandomIntegerTests.swift in Sources */,
+				A7F1859E296D37EA003AE3F2 /* InteractionRequestBodyTests.swift in Sources */,
 				A7F18537296BCCF3003AE3F2 /* MatcherLikeTests.swift in Sources */,
 				A7F18534296BC970003AE3F2 /* MatcherEqualityTests.swift in Sources */,
 				AD4B97142513A64700C37560 /* MatcherRandomStringTests.swift in Sources */,

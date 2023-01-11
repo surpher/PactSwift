@@ -30,6 +30,7 @@ public extension HeaderBuilder {
 	   try header(name, values: [value])
 	}
 
+	/// - Note: This doesn't seem to currently work reliably for Request headers as of Pact FFI v0.3.15. I've opened an issue: https://github.com/pact-foundation/pact-reference/issues/248
 	@discardableResult
 	func header(_ name: String, matching: AnyMatcher) throws -> Self {
 	   let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!

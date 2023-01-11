@@ -100,7 +100,6 @@ final class InteractionTests: InteractionTestCase {
 				try request
 					.queryParam("sorted", matching: .bool(true))
 					.header("Accept", value: "application/json")
-					.header("X-Version", matching: .integer(1))
 			}
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
