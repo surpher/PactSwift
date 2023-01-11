@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "tech/actors")
+        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main")
 	],
 
 	targets: [

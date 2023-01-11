@@ -1132,7 +1132,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ittybittyapps/PactSwiftMockServer";
 			requirement = {
-				branch = tech/actors;
+				branch = main;
 				kind = branch;
 			};
 		};
