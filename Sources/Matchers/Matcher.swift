@@ -24,24 +24,24 @@ public protocol Matcher: Encodable {
 /// Type erasing wraper around `any Matcher`.
 public struct AnyMatcher: Matcher {
 	var matcher: any Matcher
- 
+
 	public init(_ matcher: any Matcher) {
 		self.matcher = matcher
 	}
-	
+
 	public func encode(to encoder: Encoder) throws {
 		try matcher.encode(to: encoder)
 	}
 }
 
 public extension Matcher {
-	
+
 	private func asAny() -> AnyMatcher {
 		AnyMatcher(self)
 	}
-	
+
 	// MARK: - Matchers
-	
+
 	/// A matcher that validates against one of the provided values.
 	///
 	/// Use this matcher when you're expecting API response values to fit an `enum` type.
@@ -52,9 +52,9 @@ public extension Matcher {
 		let descriptions = values.map(\.description).sorted()
 		return regex("^(\(descriptions.joined(separator: "|")))$", example: descriptions.first ?? "")
 	}
-	
+
 	// MARK: - Pact Specification v1 matchers
-	
+
 	/// A matcher that checks that the values are equal.
 	///
 	/// - Note: Requires `Pact.Specification.v1`.
@@ -64,9 +64,9 @@ public extension Matcher {
 	static func equals<T: Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "equality", value: value).asAny()
 	}
-	
+
 	// MARK: - Pact Specification v2 matchers
-	
+
 	/// A matcher that executes a regular expression match against the string representation of a value.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -77,7 +77,7 @@ public extension Matcher {
 	static func regex(_ regex: String, example: String) -> AnyMatcher {
 		GenericMatcher(type: "regex", value: example, regex: regex).asAny()
 	}
-	
+
 	/// A matcher that executes a type based match against the value, that is, they are equal if they are the same type.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -87,7 +87,7 @@ public extension Matcher {
 	static func like<T: Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value).asAny()
 	}
-	
+
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -97,7 +97,7 @@ public extension Matcher {
 	static func like(_ value: [String: AnyMatcher]) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value).asAny()
 	}
-	
+
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
 	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum.
@@ -110,7 +110,7 @@ public extension Matcher {
 	static func like<T: Encodable>(_ values: [T], min: Int) -> AnyMatcher {
 		GenericMatcher(type: "type", value: values, min: min).asAny()
 	}
-	
+
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
 	/// In addition, if the values represent a collection, the length of the actual value is compared against the maximum.
@@ -123,7 +123,7 @@ public extension Matcher {
 	static func like<T: Encodable>(_ values: [T], max: Int) -> AnyMatcher {
 		GenericMatcher(type: "type", value: values, max: max).asAny()
 	}
-	   
+
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
 	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum and maximum.
@@ -137,9 +137,9 @@ public extension Matcher {
 	static func like<T: Encodable>(_ values: [T], min: Int, max: Int) -> AnyMatcher {
 		GenericMatcher(type: "type", value: values, min: min, max: max).asAny()
 	}
-	
+
 	// MARK: - Pact Specification v3 matchers
-	
+
 	/// A matcher that checks if the string representation of a value contains the substring.
 	///
 	/// - Parameters:
@@ -148,7 +148,7 @@ public extension Matcher {
 	static func includes<T: StringProtocol & Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "include", value: value).asAny()
 	}
-		
+
 	/// A matcher that checks if the type of the value is an integer.
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -164,7 +164,7 @@ public extension Matcher {
 	static func decimal<T: FloatingPoint & Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "decimal", value: value).asAny()
 	}
-	
+
 	/// A matcher that checks if the type of the value is an number.
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -172,7 +172,7 @@ public extension Matcher {
 	static func number<T: Numeric & Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "number", value: value).asAny()
 	}
-	
+
 	/// A matcher that matches the string representation of a value against the datetime format.
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -183,7 +183,7 @@ public extension Matcher {
 	static func datetime(_ value: String, format: String) -> AnyMatcher {
 		GenericMatcher(type: "timestamp", value: value, format: format).asAny()
 	}
-	
+
 	/// A matcher that matches the string representation of a value against the time format.
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -194,7 +194,7 @@ public extension Matcher {
 	static func time(_ value: String, format: String) -> AnyMatcher {
 		GenericMatcher(type: "time", value: value, format: format).asAny()
 	}
-	
+
 	/// A matcher that matches the string representation of a value against the date format.
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -205,7 +205,7 @@ public extension Matcher {
 	static func date(_ value: String, format: String) -> AnyMatcher {
 		GenericMatcher(type: "date", value: value, format: format).asAny()
 	}
-	
+
 	/// A matcher that matches if the value is a null value (this is content specific, for JSON will match a JSON null).
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -213,7 +213,7 @@ public extension Matcher {
 	static func null() -> AnyMatcher {
 		GenericMatcher(type: "null", value: nil as String?).asAny()
 	}
- 
+
 	/// A matcher that matches if the value is a boolean value (booleans and the string values `"true"` and `"false"`).
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -221,7 +221,7 @@ public extension Matcher {
 	static func bool(_ value: Bool) -> AnyMatcher {
 		GenericMatcher(type: "boolean", value: value).asAny()
 	}
-	
+
 	/// A matcher that matches binary data by its content type (magic file check).
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -232,7 +232,7 @@ public extension Matcher {
 	static func contentType(_ value: String) -> AnyMatcher {
 		GenericMatcher(type: "contentType", value: value).asAny()
 	}
-	
+
 	/// A matcher that matches the values in a map/dictionary, ignoring the keys
 	///
 	/// - Note: Requires `Pact.Specification.v3`.
@@ -243,11 +243,11 @@ public extension Matcher {
 	static func values<T: Encodable>(_ value: [String: T]) -> AnyMatcher {
 		GenericMatcher(type: "values", value: value).asAny()
 	}
-	
+
 	// MARK: - Pact Specification v4 matchers
-	
+
 	// TODO: "arrayContains"
-	
+
 	/// A matcher that matches the response status code.
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
@@ -272,7 +272,7 @@ public extension Matcher {
 			return GenericMatcher(type: "statusCode", value: codes).asAny()
 		}
 	}
-	
+
 	/// A matcher that matches a value that must be present and not empty (not null or the empty string).
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
@@ -280,7 +280,7 @@ public extension Matcher {
 	static func notEmpty() -> AnyMatcher {
 		GenericMatcher(type: "notEmpty", value: nil as String?).asAny()
 	}
-	
+
 	/// A matcher that matches a value that must be valid based on the `semver` specification.
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
@@ -291,19 +291,19 @@ public extension Matcher {
 	static func semver(_ value: String) -> AnyMatcher {
 		GenericMatcher(type: "semver", value: value).asAny()
 	}
-	
+
 	// TODO: "eachKey", "eachValue"
-	
+
 	// MARK: - Generators
-	
+
 	//case regex = "Regex"
 	//case providerState = "ProviderState"
 	//case mockServerUrl = "MockServerURL"
-	
+
 	static func randomString(_ value: String, size: Int? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomString, size: size).asAny()
 	}
-	
+
 	static func randomInteger<T: BinaryInteger & Encodable>(like value: T, range: ClosedRange<Int>? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomInt, min: range?.lowerBound, max: range?.upperBound).asAny()
 	}
@@ -311,19 +311,19 @@ public extension Matcher {
 	static func randomDecimal<T: FloatingPoint & Encodable>(like value: T, digits: Int? = nil ) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomDecimal, digits: digits).asAny()
 	}
-	
+
 	static func randomBoolean(_ value: Bool) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomBoolean).asAny()
 	}
-	
+
 	static func randomUUID(_ value: String, format: UUIDFormat = .simple) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .uuid, format: format.rawValue).asAny()
 	}
-	
+
 	static func randomUUID(_ value: UUID) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value.uuidString, generator: .uuid, format: UUIDFormat.upperCaseHyphenated.rawValue).asAny()
 	}
-	
+
 	static func randomHexadecimal(_ value: String, digits: Int? = nil) -> AnyMatcher {
 		GenericMatcher(type: "type", value: value, generator: .randomHex, digits: digits).asAny()
 	}

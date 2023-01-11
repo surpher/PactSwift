@@ -34,7 +34,7 @@ final class InteractionTests: InteractionTestCase {
 			.willRespond(with: 200) { response in
 				try response.htmlBody()
 			}
-		
+
 		try await builder.verify { ctx in
 			var components = try XCTUnwrap(URLComponents(url: ctx.mockServerURL, resolvingAgainstBaseURL: false))
 			components.path = "/events"
@@ -43,9 +43,9 @@ final class InteractionTests: InteractionTestCase {
 				URLQueryItem(name: "limit", value: "100"),
 				URLQueryItem(name: "includeOthers", value: "false")
 			]
-			
+
 			let (data, response) = try await session.data(from: try XCTUnwrap(components.url))
-			
+
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
 			XCTAssertEqual(httpResponse.value(forHTTPHeaderField: "Content-Type"), "text/html")
@@ -63,26 +63,26 @@ final class InteractionTests: InteractionTestCase {
 			.willRespond(with: 201) { response in
 				try response.htmlBody("OK")
 			}
-		
+
 		try await builder.verify { ctx in
 			var components = try XCTUnwrap(URLComponents(url: ctx.mockServerURL, resolvingAgainstBaseURL: false))
 			components.path = "/events"
-			
+
 			var request = URLRequest(url: try XCTUnwrap(components.url))
 			request.httpMethod = "POST"
 			request.setValue("application/json", forHTTPHeaderField: "Accept")
-						
+
 			let (data, response) = try await session.data(for: request)
-			
+
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 201)
 			XCTAssertEqual(httpResponse.value(forHTTPHeaderField: "Content-Type"), "text/html")
 			XCTAssertEqual(data, "OK".data(using: .utf8))
 		}
 	}
-	
+
 	func testGetEvent() async throws {
-		
+
 		struct Response: Decodable {
 			var id: String
 			var age: Int
@@ -92,7 +92,7 @@ final class InteractionTests: InteractionTestCase {
 			var hex: String
 			var birthday: String
 		}
-		
+
 		try builder
 			.uponReceiving("a request for an event with no authorization")
 			.given("There are events")
@@ -115,24 +115,24 @@ final class InteractionTests: InteractionTestCase {
 					])
 				)
 			}
-		
+
 		try await builder.verify { ctx in
 			var components = try XCTUnwrap(URLComponents(url: ctx.mockServerURL, resolvingAgainstBaseURL: false))
 			components.path = "/events/23"
 			components.queryItems = [URLQueryItem(name: "sorted", value: "true")]
-			
+
 			var request = URLRequest(url: try XCTUnwrap(components.url))
 			request.setValue("application/json", forHTTPHeaderField: "Accept")
 			request.setValue("1", forHTTPHeaderField: "X-Version")
-						
+
 			let (data, response) = try await session.data(for: request)
-			
+
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
 			XCTAssertEqual(httpResponse.value(forHTTPHeaderField: "Content-Type"), "application/json")
-			
+
 			let body = try JSONDecoder().decode(Response.self, from: data)
-			
+
 			XCTAssertEqual(body.id.prefix(9), "urn:uuid:")
 			XCTAssertGreaterThanOrEqual(body.age, 1)
 			XCTAssertLessThanOrEqual(body.age, 100)
@@ -145,5 +145,3 @@ final class InteractionTests: InteractionTestCase {
 	}
 
 }
-
-

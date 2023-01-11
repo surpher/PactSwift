@@ -24,12 +24,12 @@ public extension HeaderBuilder {
 	func contentType(_ contentType: String) throws -> Self {
 		try header("Content-Type", value: contentType)
 	}
-		
+
 	@discardableResult
 	func header(_ name: String, value: String) throws -> Self {
 	   try header(name, values: [value])
 	}
-	
+
 	@discardableResult
 	func header(_ name: String, matching: AnyMatcher) throws -> Self {
 	   let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!

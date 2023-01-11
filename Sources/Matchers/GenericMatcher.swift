@@ -19,7 +19,7 @@ import Foundation
 
 /// A generic ``Matcher`` for serialising simple matchers to JSON.
 struct GenericMatcher<ValueType: Encodable>: Matcher {
-	  
+
 	var type: String
 	var value: ValueType
 	var generator: GeneratorType? = nil
@@ -30,7 +30,7 @@ struct GenericMatcher<ValueType: Encodable>: Matcher {
 	var format: String? = nil
 	var expression: String? = nil
 	var regex: String? = nil
-	
+
 	enum CodingKeys: String, CodingKey {
 		case type = "pact:matcher:type"
 		case generator = "pact:generator:type"
