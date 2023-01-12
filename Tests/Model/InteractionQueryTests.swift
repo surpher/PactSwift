@@ -78,39 +78,26 @@ final class InteractionQueryTests: InteractionTestCase {
 	}
 
 	func testQueryParamMatchingBoolean() async throws {
-		try XCTSkipIf(true, "bool matcher is not yet supported")
 		try await performMatcherTest(named: "bool(true)", matcher: .bool(true), value: "true")
 	}
 
 	func testQueryParamMatchingBoolean_Negative() async throws {
-		try XCTSkipIf(true, "bool matcher is not yet supported")
 		try await performMatcherNegativeTest(named: "bool(true)", matcher: .bool(true), value: "not a bool")
 	}
 
-	func testQueryParamMatchingBooleanFalse() async throws {
-		try XCTSkipIf(true, "bool matcher is not yet supported")
-		try await performMatcherTest(named: "bool(false)", matcher: .bool(false), value: "false")
-	}
-
-	func testQueryParamMatchingBooleanFalse_Negative() async throws {
-		try XCTSkipIf(true, "bool matcher is not yet supported")
-		try await performMatcherNegativeTest(named: "bool(false)", matcher: .bool(false), value: "true")
-	}
-
-	/*
-	 Disabled because it doesn't work in the way I'd expect it to.
 	func testQueryParamMatchingNotEmpty() async throws {
 		try await performMatcherTest(named: "notEmpty", matcher: .notEmpty(), value: "not-empty")
 	}
-	*/
+
+	func testQueryParamMatchingNotEmpty_Negative() async throws {
+		try await performMatcherNegativeTest(named: "notEmpty", matcher: .notEmpty(), value: "")
+	}
 
 	func testQueryParamMatchingSemVer() async throws {
-		try XCTSkipIf(true, "semver matcher is not yet supported")
-		try await performMatcherTest(named: "semver", matcher: .semver("1.2.3"), value: "1.2.3")
+		try await performMatcherTest(named: "semver", matcher: .semver("1.2.3"), value: "1.2.3-beta1")
 	}
 
 	func testQueryParamMatchingSemVer_Negative() async throws {
-		try XCTSkipIf(true, "semver matcher is not yet supported")
 		try await performMatcherNegativeTest(named: "semver", matcher: .semver("1.2.3"), value: "not semver")
 	}
 

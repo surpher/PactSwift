@@ -1,5 +1,5 @@
 //
-//  Created by Oliver Jones on 9/1/2023.
+//  Created by Oliver Jones on 12/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
 //  Permission to use, copy, modify, and/or distribute this software for any
@@ -16,23 +16,22 @@
 //
 
 import Foundation
-import PactSwiftMockServer
 
-public extension HeaderBuilder {
-	/// Set the `Content-Type` header.
-	@discardableResult
-	func contentType(_ contentType: String) throws -> Self {
-		try header("Content-Type", value: contentType)
+/// Type erasing wraper around `any Matcher`.
+public struct AnyMatcher: Matcher {
+	var matcher: any Matcher
+
+	public init(_ matcher: any Matcher) {
+		self.matcher = matcher
 	}
 
-	@discardableResult
-	func header(_ name: String, value: String) throws -> Self {
-	   try header(name, values: [value])
+	public func encode(to encoder: Encoder) throws {
+		try matcher.encode(to: encoder)
 	}
+}
 
-	@discardableResult
-	func header(_ name: String, matching: AnyMatcher) throws -> Self {
-	   let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!
-	   return try header(name, values: [valueString])
+extension Matcher {
+	func asAny() -> AnyMatcher {
+		AnyMatcher(self)
 	}
 }

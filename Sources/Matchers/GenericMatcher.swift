@@ -22,15 +22,15 @@ struct GenericMatcher<ValueType: Encodable>: Matcher {
 
 	var type: String
 	var value: ValueType
-	var generator: GeneratorType? = nil
-	var min: Int? = nil
-	var max: Int? = nil
-	var size: Int? = nil
-	var digits: Int? = nil
-	var format: String? = nil
-	var expression: String? = nil
-	var regex: String? = nil
-	var example: String? = nil
+	var generator: GeneratorType?
+	var min: Int?
+	var max: Int?
+	var size: Int?
+	var digits: Int?
+	var format: String?
+	var expression: String?
+	var regex: String?
+	var example: String?
 
 	enum CodingKeys: String, CodingKey {
 		case type = "pact:matcher:type"
