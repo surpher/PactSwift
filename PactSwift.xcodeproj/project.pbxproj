@@ -210,6 +210,9 @@
 		A7F185AE296FDD86003AE3F2 /* Matcher+V3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Matcher+V3.swift"; sourceTree = "<group>"; };
 		A7F185B1296FDDD2003AE3F2 /* Matcher+V4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Matcher+V4.swift"; sourceTree = "<group>"; };
 		A7F185B4296FDE0E003AE3F2 /* Matcher+Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Matcher+Generator.swift"; sourceTree = "<group>"; };
+		A7F185B7296FDFA9003AE3F2 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		A7F185B8296FDFA9003AE3F2 /* CODE_OF_CONDUCT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CODE_OF_CONDUCT.md; sourceTree = "<group>"; };
+		A7F185B9296FDFA9003AE3F2 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		AD08FA3D28A23DD40059884F /* PactFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PactFileManager.swift; sourceTree = "<group>"; };
 		AD2CB262242CC0A000D991F0 /* Project-Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Debug.xcconfig"; sourceTree = "<group>"; };
 		AD2CB263242CC0B900D991F0 /* Project-Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Project-Release.xcconfig"; sourceTree = "<group>"; };
@@ -391,6 +394,9 @@
 		AD8817F4242C715A00BF510D = {
 			isa = PBXGroup;
 			children = (
+				A7F185B8296FDFA9003AE3F2 /* CODE_OF_CONDUCT.md */,
+				A7F185B7296FDFA9003AE3F2 /* LICENSE.md */,
+				A7F185B9296FDFA9003AE3F2 /* README.md */,
 				ADD6993D242C861600C5C2C2 /* .swiftlint.yml */,
 				ADCB2562242C83E20048BD18 /* Configurations */,
 				ADC6FAE024302BA800026714 /* Documentation */,
