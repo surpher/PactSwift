@@ -25,22 +25,17 @@ class InteractionTestCase: XCTestCase {
 	var builder: PactBuilder!
 
 	private var pactDirectory: String {
-		NSTemporaryDirectory().appending("pacts/")
+		ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"]!
 	}
 
 	override func setUpWithError() throws {
 		try super.setUpWithError()
-
-		guard builder == nil else {
-			return
-		}
-
 		builder = try createBuilder()
 	}
 
 	private func createBuilder() throws -> PactBuilder {
 		try Pact.initialize(logSinks: [.init(.standardError, filter: .trace)])
-		let pact = try Pact(consumer: "\(name)-Consumer", provider: "\(name)-Provider")
+		let pact = try Pact(consumer: "Consumer", provider: "Provider")
 			.withSpecification(.v4)
 			.withMetadata(namespace: "namespace1", name: "name1", value: "value1")
 			.withMetadata(namespace: "namespace2", name: "name2", value: "value2")
