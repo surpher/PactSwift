@@ -13,7 +13,7 @@
 
 This framework provides a Swift DSL for generating and verifying [Pact][pact-docs] contracts. It provides the mechanism for [Consumer-Driven Contract Testing](https://dius.com.au/2016/02/03/pact-101-getting-started-with-pact-and-consumer-driven-contract-testing/) between dependent systems where the integration is based on HTTP. `PactSwift` allows you to test the communication boundaries between your app and services it integrates with.
 
-`PactSwift` implements [Pact Specification v3][pact-specification-v3] and runs the mock service "in-process". No need to set up any external mock services, stubs or extra tools 🎉. It supports contract creation along with client verification. It also supports provider verification and interaction with a Pact broker.
+`PactSwift` implements (most of) [Pact Specification v4][pact-specification-v4] and runs the mock service "in-process". No need to set up any external mock services, stubs or extra tools 🎉. It supports contract creation along with client verification. It also supports provider verification and interaction with a Pact broker.
 
 ## Installation
 
@@ -31,7 +31,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.11.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "2.0.0"))
 ]
 ```
 
@@ -70,7 +70,8 @@ swift test -Xlinker -L/usr/local/lib/
 
 ## Writing Pact tests
 
-- Instantiate a `MockService` object by defining [_pacticipants_][pacticipant],
+- Instantiate a `Pact` object by defining [_pacticipants_][pacticipant],
+- Instantiate a `PactBuilder` object, 
 - Define the state of the provider for an interaction (one Pact test),
 - Define the expected `request` for the interaction,
 - Define the expected `response` for the interaction,
@@ -88,105 +89,108 @@ import PactSwift
 
 class PassingTestsExample: XCTestCase {
 
-  static var mockService = MockService(consumer: "Example-iOS-app", provider: "some-api-service")
+  var builder: PactBuilder!
+
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+
+    guard builder == nil else {
+      return
+    }
+
+    let pact = try Pact(consumer: "Consumer", provider: "Provider")
+      .withSpecification(.v4)
+
+    let config = PactBuilder.Config(pactDirectory: ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"])
+    builder = PactBuilder(pact: pact, config: config)
+  }
 
   // MARK: - Tests
 
   func testGetUsers() {
-    // #1 - Declare the interaction's expectations
-    PassingTestsExample.mockService
-
-      // #2 - Define the interaction description and provider state for this specific interaction
+    try builder.
       .uponReceiving("A request for a list of users")
       .given(ProviderState(description: "users exist", params: ["first_name": "John", "last_name": "Tester"])
-
-      // #3 - Declare what our client's request will look like
       .withRequest(
         method: .GET,
         path: "/api/users",
-      )
-
-      // #4 - Declare what the provider should respond with
-      .willRespondWith(
-        status: 200,
-        headers: nil, // `nil` means we don't care what the headers returned from the API are.
-        body: [
-          "page": Matcher.SomethingLike(1), // We expect an Int, 1 will be used in the unit test
-          "per_page": Matcher.SomethingLike(20),
-          "total": ExampleGenerator.RandomInt(min: 20, max: 500), // Expecting an Int between 20 and 500
-          "total_pages": Matcher.SomethingLike(3),
-          "data": Matcher.EachLike( // We expect an array of objects
+      )      
+      .willRespond(with: 200) { response in 
+        try response.jsonBody(
+          .like(
             [
-              "id": ExampleGenerator.RandomUUID(), // We can also use random example generators
-              "first_name": Matcher.SomethingLike("John"),
-              "last_name": Matcher.SomethingLike("Tester"),
-              "renumeration": Matcher.DecimalLike(125_000.00)
+              "page": .like(1),
+              "per_page": .like(20),
+              "total": .randomInteger(20...500),
+              "total_pages": .like(3),
+              "data": .eachLike( 
+                [
+                  "id": .randomUUID(like: UUID()),
+                  "first_name": .like("John"),
+                  "last_name": .like("Tester"),
+                  "renumeration": .decimal(125_000.00)
+                ]
+              )
             ]
           )
-        ]
-      )
-
-    // #5 - Fire up our API client
-    let apiClient = RestManager()
-
-    // Run a Pact test and assert **our** API client makes the request exactly as we promised above
-    PassingTestsExample.mockService.run(timeout: 1) { [unowned self] mockServiceURL, done in
-
-      // #6 - _Redirect_ your API calls to the address MockService runs on - replace base URL, but path should be the same
-      apiClient.baseUrl = mockServiceURL
-
-      // #7 - Make the API request.
-      apiClient.getUsers() { users in
-
-          // #8 - Test that **our** API client handles the response as expected. (eg: `getUsers() -> [User]`)
-          XCTAssertEqual(users.count, 20)
-          XCTAssertEqual(users.first?.firstName, "John")
-          XCTAssertEqual(users.first?.lastName, "Tester")
-
-        // #9 - Always run the callback. Run it in your successful and failing assertions!
-        // Otherwise your test will time out.
-        done()
+        )
+      }
+      
+      try await builder.verify { ctx in 
+        let apiClient = RestManager(baseUrl: ctx.mockServerURL)
+        let users = try await apiClient.getUsers()
+                
+        XCTAssertEqual(users.first?.firstName, "John")
+        XCTAssertEqual(users.first?.lastName, "Tester")
+        XCTAssertEqual(users.first?.renumeration, 125_000.00)
       }
     }
   }
 
   // Another Pact test example...
   func testCreateUser() {
-    PassingTestsExample.mockService
+    try builder.
       .uponReceiving("A request to create a user")
       .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
-      .withRequest(
-        method: .POST,
-        path: Matcher.RegexLike("/api/group/whoopeedeedoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
-        body: [
-          // You can use matchers and generators here too, but are an anti-pattern.
-          // You should be able to have full control of your requests.
-          "first_name": "John",
-          "last_name": "Appleseed"
-        ]
-      )
-      .willRespondWith(
-        status: 201,
-        body: [
-          "identifier": Matcher.FromProviderState(parameter: "userId", value: .string("123e4567-e89b-12d3-a456-426614174000")),
-          "first_name": "John",
-          "last_name": "Appleseed"
-        ]
-      )
-
-   let apiClient = RestManager()
-
-    PassingTestsExample.mockService.run { mockServiceURL, done in
-     // trigger your network request and assert the expectations
-     done()
-    }
+      .withRequest(.POST, regex: #"^/\w+/group/([a-z])+/users$"#, example:"/api/group/whoopeedeedoodah/users") { request in
+        try request.jsonBody(
+          .like(
+            [
+              // You can use matchers and generators here too, but are an anti-pattern.
+              // You should be able to have full control of your requests.
+              "first_name": "John",
+              "last_name": "Appleseed"
+            ]
+          )
+        )
+      }
+      .willRespond(with: 201) { response in 
+        try response.jsonBody(
+          .like(
+            [
+              "identifier": .randomUUID(like: UUID()),
+              "first_name": .like("John"),
+              "last_name": .like("Appleseed")
+            ]
+          )
+        )
+      }
+      
+      try await builder.verify { ctx in 
+        let apiClient = RestManager(baseUrl: ctx.mockServerURL)
+        let user = try await apiClient.createUser(firstName: "John", lastName: "Appleseed")
+                
+        XCTAssertEqual(user.firstName, "John")
+        XCTAssertEqual(user.lastName, "Appleseed")
+        XCTAssertFalse(user.identifier.isEmpty)
+      }
+   
   }
-  // etc.
 }
 ```
 
-`MockService` holds all the interactions between your consumer and a provider. For each test method, a new instance of `XCTestCase` class is allocated and its instance setup is executed.
-That means each test has it's own instance of `var mockService = MockService()`. Hence the reason we're using a `static var mockService` here to keep a reference to one instance of `MockService` for all the Pact tests. Alternatively you could wrap your `mockService` into a singleton.  
+The `PactBuilder` holds all the interactions between your consumer and a provider. As long as the consumer and provider names remain consistent between tests they will be accumulated into the same output pact `.json`.
+
 Suggestions to improve this are welcome! See [contributing][contributing].
 
 References:
@@ -196,21 +200,15 @@ References:
 
 ## Generated Pact contracts
 
-By default, generated Pact contracts are written to `/tmp/pacts`. If you want to specify a directory you want your Pact contracts to be written to, you can pass a `URL` object with absolute path to the desired directory when instantiating your `MockService` (Swift only):
+Generated Pact contracts are written to the directory configured in the `PactBuilder.Config`.
 
 ```swift
-MockService(
-    consumer: "consumer",
-    provider: "provider",
-    writePactTo: URL(fileURLWithPath: "/absolute/path/pacts/folder", isDirectory: true)
-)
-````
+    let pact = try Pact(consumer: "Consumer", provider: "Provider")
+      .withSpecification(.v4)
 
-Alternatively you can define a `PACT_OUTPUT_DIR` environment variable (in [`Run`](./Documentation/images/12_xcode_scheme_env_setup.png) section of your scheme) with the path to directory you want your Pact contracts to be written into.
-
-`PactSwift` first checks whether `URL` has been provided when initializing `MockService` object. If it is not provided it will check for `PACT_OUTPUT_DIR` environment variable. If env var is not set, it will attempt to write your Pact contract into `/tmp/pacts` directory.
-
-Note that sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
+    let config = PactBuilder.Config(pactDirectory: ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"])
+    builder = PactBuilder(pact: pact, config: config)
+```
 
 ## Sharing Pact contracts
 
@@ -326,20 +324,6 @@ Example generators help you generate random values and define the rules around t
 See [Wiki page about Example Generators][example-generators] for a list of example generators `PactSwift` implements and their basic usage.
 
 Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
-
-## Objective-C support
-
-PactSwift can be used in your Objective-C project with a couple of limitations, (e.g. initializers with multiple optional arguments are limited to only one or two available initializers). See [Demo projects repository][demo-projects] for more examples.
-
-```swift
-_mockService = [[PFMockService alloc] initWithConsumer: @"Consumer-app"
-                                              provider: @"Provider-server"
-                                      transferProtocol: TransferProtocolStandard];
-```
-
-`PF` stands for Pact Foundation.
-
-Please feel free to raise any [issues](https://github.com/surpher/PactSwift/issues) as you encounter them, thanks.
 
 ## Demo projects
 
