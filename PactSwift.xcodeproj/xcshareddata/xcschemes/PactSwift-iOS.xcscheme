@@ -94,13 +94,8 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "PACT_OUTPUT_DIR"
-            value = "$(PROJECT_DIR)/tmp/pacts"
+            value = "$(BUILD_DIR)/pacts"
             isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "PACT_ENABLE_LOGGING"
-            value = "all"
-            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
