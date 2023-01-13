@@ -30,8 +30,8 @@ final class InteractionQueryTests: InteractionTestCase {
 
 		try await builder.verify { ctx in
 
-			let url = try buildRequestURL(for: ctx, path: "/interaction", queryItems: ["item": "value"])
-			let (data, response) = try await session.data(from: url)
+			let url = try ctx.buildRequestURL(path: "/interaction", queryItems: ["item": "value"])
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -49,8 +49,8 @@ final class InteractionQueryTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/interaction")
-				let (_, response) = try await session.data(from: url)
+				let url = try ctx.buildRequestURL(path: "/interaction")
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -68,8 +68,8 @@ final class InteractionQueryTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/interaction", queryItems: ["item" : "1"])
-				let (_, response) = try await session.data(from: url)
+				let url = try ctx.buildRequestURL(path: "/interaction", queryItems: ["item" : "1"])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -194,8 +194,8 @@ final class InteractionQueryTests: InteractionTestCase {
 			.willRespond(with: 200)
 
 		try await builder.verify { ctx in
-			let url = try buildRequestURL(for: ctx, path: "/interaction", queryItems: ["item" : value])
-			let (_, response) = try await session.data(from: url)
+			let url = try ctx.buildRequestURL(path: "/interaction", queryItems: ["item" : value])
+			let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -212,17 +212,20 @@ final class InteractionQueryTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/interaction", queryItems: ["item" : value])
-				let (_, response) = try await session.data(from: url)
+				let url = try ctx.buildRequestURL(path: "/interaction", queryItems: ["item" : value])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
 			}
 		}
 	}
+}
 
-	func buildRequestURL(for context: PactBuilder.ConsumerContext, path: String, queryItems: [String: String?] = [:]) throws -> URL {
-		var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+extension PactBuilder.ConsumerContext {
+
+	func buildRequestURL(path: String, queryItems: [String: String?] = [:]) throws -> URL {
+		var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
 		components.path = path
 		components.queryItems = queryItems.map { URLQueryItem(name: $0.key, value: $0.value) }
 		return try XCTUnwrap(components.url)

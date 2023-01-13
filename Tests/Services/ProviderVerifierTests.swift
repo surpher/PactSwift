@@ -19,6 +19,7 @@ import XCTest
 
 @testable import PactSwift
 
+@MainActor
 final class ProviderVerifierTests: XCTestCase {
 
 	var errorReporter: ErrorCapture!

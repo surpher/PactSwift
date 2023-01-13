@@ -59,3 +59,4 @@ CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES
 // Xcode 14
 
 DEAD_CODE_STRIPPING = YES
+OTHER_SWIFT_FLAGS = -Xfrontend -warn-concurrency -Xfrontend -enable-actor-data-race-checks

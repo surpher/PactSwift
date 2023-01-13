@@ -27,8 +27,8 @@ final class InteractionRequestTests: InteractionTestCase {
 			.willRespond(with: 200)
 
 		try await builder.verify { ctx in
-			let url = try buildRequestURL(for: ctx, path: "/known")
-			let (data, response) = try await session.data(from: url)
+			let url = try ctx.buildRequestURL(path: "/known")
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -44,14 +44,14 @@ final class InteractionRequestTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/unknown")
-				let (_, response) = try await session.data(from: url)
+				let url = try ctx.buildRequestURL(path: "/unknown")
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
 			}
 		}
-	}	
+	}
 
 	func testRequest_WrongMethod() async throws {
 		try builder
@@ -61,10 +61,10 @@ final class InteractionRequestTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/unknown")
+				let url = try ctx.buildRequestURL(path: "/unknown")
 				var request = URLRequest(url: url)
 				request.httpMethod = "POST"
-				let (_, response) = try await session.data(for: request)
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -79,8 +79,8 @@ final class InteractionRequestTests: InteractionTestCase {
 			.willRespond(with: 200)
 
 		try await builder.verify { ctx in
-			let url = try buildRequestURL(for: ctx, path: "/b2")
-			let (data, response) = try await session.data(from: url)
+			let url = try ctx.buildRequestURL(path: "/b2")
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -96,17 +96,19 @@ final class InteractionRequestTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let url = try buildRequestURL(for: ctx, path: "/something")
-				let (_, response) = try await session.data(from: url)
+				let url = try ctx.buildRequestURL(path: "/something")
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(from: url)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
 			}
 		}
 	}
+}
 
-	func buildRequestURL(for context: PactBuilder.ConsumerContext, path: String) throws -> URL {
-		var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+extension PactBuilder.ConsumerContext {
+	func buildRequestURL(path: String) throws -> URL {
+		var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
 		components.path = path
 		return try XCTUnwrap(components.url)
 	}

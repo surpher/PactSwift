@@ -138,10 +138,10 @@ final class InteractionResponseBodyTests: InteractionTestCase {
 			}
 	}
 
-	func verify<T: Decodable>(_ type: T.Type, expectedStatus: Int, verifyBody: (T) -> Void) async throws {
+	func verify<T: Decodable & Sendable>(_ type: T.Type, expectedStatus: Int, verifyBody: @Sendable (T) -> Void) async throws {
 		try await builder.verify { ctx in
-			let request = try buildURLRequest(for: ctx, path: "/jsonresponse")
-			let (data, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/jsonresponse")
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, expectedStatus)
@@ -150,9 +150,11 @@ final class InteractionResponseBodyTests: InteractionTestCase {
 			verifyBody(body)
 		}
 	}
+}
 
-	func buildURLRequest(for context: PactBuilder.ConsumerContext, path: String) throws -> URLRequest {
-		var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+extension PactBuilder.ConsumerContext {
+	func buildURLRequest(path: String) throws -> URLRequest {
+		var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
 		components.path = path
 
 		var request = URLRequest(url: try XCTUnwrap(components.url))

@@ -19,7 +19,7 @@ import XCTest
 @testable import PactSwift
 
 final class InteractionHeaderTests: InteractionTestCase {
-	
+
 	func testRequestHeaderWithValue() async throws {
 		try builder
 			.uponReceiving("an interaction with header value")
@@ -30,8 +30,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 		
 		try await builder.verify { ctx in
 			
-			let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "value")])
-			let (data, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value")])
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 			
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -49,8 +49,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 		
 		try await builder.verify { ctx in
 			
-			let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "value")])
-			let (data, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value")])
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 			
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -68,9 +68,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 			}
 		
 		try await builder.verify { ctx in
-			
-			let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "value")])
-			let (data, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value")])
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 			
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -89,8 +88,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 		
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let request = try buildURLRequest(for: ctx, path: "/interaction")
-				let (_, response) = try await session.data(for: request)
+				let request = try ctx.buildURLRequest(path: "/interaction")
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 				
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -108,8 +107,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 		
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "wrong value")])
-				let (_, response) = try await session.data(for: request)
+				let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "wrong value")])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 				
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -127,8 +126,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "value1"), ("x-header", "value2")])
-				let (_, response) = try await session.data(for: request)
+				let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value1"), ("x-header", "value2")])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 200)
@@ -146,8 +145,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let request = try buildURLRequest(for: ctx, path: "/interaction", headers: [("x-header", "value1")])
-				let (_, response) = try await session.data(for: request)
+				let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value1")])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
@@ -266,8 +265,8 @@ final class InteractionHeaderTests: InteractionTestCase {
 			.willRespond(with: 200)
 
 		try await builder.verify { ctx in
-			let request = try buildURLRequest(for: ctx, path: "/headerinteraction", headers: [("item", value)])
-			let (_, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/headerinteraction", headers: [("item", value)])
+			let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -284,17 +283,19 @@ final class InteractionHeaderTests: InteractionTestCase {
 
 		try await suppressingPactFailure {
 			try await builder.verify { ctx in
-				let request = try buildURLRequest(for: ctx, path: "/headerinteraction", headers: [("item", value)])
-				let (_, response) = try await session.data(for: request)
+				let request = try ctx.buildURLRequest(path: "/headerinteraction", headers: [("item", value)])
+				let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 				let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 				XCTAssertEqual(httpResponse.statusCode, 500)
 			}
 		}
 	}
+}
 
-	private func buildURLRequest(for context: PactBuilder.ConsumerContext, path: String, headers: [(String, String)] = []) throws -> URLRequest {
-		var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+extension PactBuilder.ConsumerContext {
+	func buildURLRequest(path: String, headers: [(String, String)] = []) throws -> URLRequest {
+		var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
 		components.path = path
 		
 		var request = URLRequest(url: try XCTUnwrap(components.url))

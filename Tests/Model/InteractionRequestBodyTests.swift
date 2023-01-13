@@ -555,7 +555,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 			])
 		)
 
-		struct Body: Encodable {
+		struct Body: Encodable, Sendable {
 			@NullEncodable var key: String?
 		}
 
@@ -615,7 +615,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 		}
 
 		try await suppressingPactFailure {
-		try await verify(body: Body(key1: "not a bool", key2: "false", key3: false), expectedStatus: 500)
+			try await verify(body: Body(key1: "not a bool", key2: "false", key3: false), expectedStatus: 500)
 		}
 	}
 
@@ -702,18 +702,20 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 			.willRespond(with: 200)
 	}
 
-	func verify<T: Encodable>(body: T, expectedStatus: Int) async throws {
+	func verify<T: Encodable & Sendable>(body: T, expectedStatus: Int) async throws {
 		try await builder.verify { ctx in
-			let request = try buildURLRequest(for: ctx, path: "/jsonbody", body: body)
-			let (_, response) = try await session.data(for: request)
+			let request = try ctx.buildURLRequest(path: "/jsonbody", body: body)
+			let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, expectedStatus)
 		}
 	}
+}
 
-	func buildURLRequest<T: Encodable>(for context: PactBuilder.ConsumerContext, path: String, body: T) throws -> URLRequest {
-		var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+extension PactBuilder.ConsumerContext {
+	func buildURLRequest<T: Encodable>(path: String, body: T) throws -> URLRequest {
+		var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
 		components.path = path
 
 		var request = URLRequest(url: try XCTUnwrap(components.url))
@@ -723,11 +725,10 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 
 		return request
 	}
-
 }
 
 @propertyWrapper
-private struct NullEncodable<T>: Encodable where T: Encodable {
+private struct NullEncodable<T>: Encodable, Sendable where T: Encodable & Sendable {
 
 	var wrappedValue: T?
 

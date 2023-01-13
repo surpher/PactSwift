@@ -44,7 +44,7 @@ final class InteractionTests: InteractionTestCase {
 				URLQueryItem(name: "includeOthers", value: "false")
 			]
 
-			let (data, response) = try await session.data(from: try XCTUnwrap(components.url))
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(from: try XCTUnwrap(components.url))
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)
@@ -72,7 +72,7 @@ final class InteractionTests: InteractionTestCase {
 			request.httpMethod = "POST"
 			request.setValue("application/json", forHTTPHeaderField: "Accept")
 
-			let (data, response) = try await session.data(for: request)
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 201)
@@ -124,7 +124,7 @@ final class InteractionTests: InteractionTestCase {
 			request.setValue("application/json", forHTTPHeaderField: "Accept")
 			request.setValue("1", forHTTPHeaderField: "X-Version")
 
-			let (data, response) = try await session.data(for: request)
+			let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
 			let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
 			XCTAssertEqual(httpResponse.statusCode, 200)

@@ -20,12 +20,17 @@ import XCTest
 import PactSwiftMockServer
 
 class InteractionTestCase: XCTestCase {
-
-	let session = URLSession(configuration: .ephemeral)
+	
 	var builder: PactBuilder!
 
 	private var pactDirectory: String {
 		ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"]!
+	}
+
+	@MainActor
+	class override func setUp() {
+		super.setUp()
+		try! Logging.initialize()
 	}
 
 	override func setUpWithError() throws {
@@ -34,7 +39,6 @@ class InteractionTestCase: XCTestCase {
 	}
 
 	private func createBuilder() throws -> PactBuilder {
-		try Pact.initialize(logSinks: [.init(.standardError, filter: .trace)])
 		let pact = try Pact(consumer: "Consumer", provider: "Provider")
 			.withSpecification(.v4)
 			.withMetadata(namespace: "namespace1", name: "name1", value: "value1")
