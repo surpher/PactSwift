@@ -101,6 +101,16 @@ public extension Matcher {
 
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///   - values: The example values.
+	///
+	static func eachLike(_ value: [String: AnyMatcher]) -> AnyMatcher {
+		GenericMatcher(type: "type", value: [value]).asAny()
+	}
+
+	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
+	///
 	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -109,6 +119,19 @@ public extension Matcher {
 	///   - min: The minimum length of the array of values.
 	///
 	static func eachLike<T: Encodable>(_ value: T, min: Int) -> AnyMatcher {
+		GenericMatcher(type: "type", value: [value], min: min).asAny()
+	}
+
+	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
+	///
+	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///   - values: The example values.
+	///   - min: The minimum length of the array of values.
+	///
+	static func eachLike(_ value: [String: AnyMatcher], min: Int) -> AnyMatcher {
 		GenericMatcher(type: "type", value: [value], min: min).asAny()
 	}
 
@@ -127,6 +150,19 @@ public extension Matcher {
 
 	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
 	///
+	/// In addition, if the values represent a collection, the length of the actual value is compared against the maximum.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///   - values: The example values.
+	///   - max: The maximum length of the array of values.
+	///
+	static func eachLike(_ value: [String: AnyMatcher], max: Int) -> AnyMatcher {
+		GenericMatcher(type: "type", value: [value], max: max).asAny()
+	}
+
+	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
+	///
 	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum and maximum.
 	///
 	/// - Note: Requires `Pact.Specification.v2`.
@@ -136,6 +172,21 @@ public extension Matcher {
 	///   - max: The maximum length of the array of values.
 	///
 	static func eachLike<T: Encodable>(_ value: T, min: Int, max: Int) -> AnyMatcher {
+		precondition(min <= max, "min must be <= max")
+		return GenericMatcher(type: "type", value: [value], min: min, max: max).asAny()
+	}
+
+	/// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
+	///
+	/// In addition, if the values represent a collection, the length of the actual value is compared against the minimum and maximum.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///   - values: The example values.
+	///   - min: The minimum length of the array of values.
+	///   - max: The maximum length of the array of values.
+	///
+	static func eachLike(_ value: [String: AnyMatcher], min: Int, max: Int) -> AnyMatcher {
 		precondition(min <= max, "min must be <= max")
 		return GenericMatcher(type: "type", value: [value], min: min, max: max).asAny()
 	}
