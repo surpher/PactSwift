@@ -4,7 +4,7 @@
 
 Almost all software we write depends on some other code, library or development tool which allows us to build what we want faster. Although this project attempts to avoid bringing in 3rd party dependencies, there are is functionality already written that is critical to this projects success.
 
-# Decision
+## Decision
 
 The main dependency is the programmable in-process mock server that can receive network requests and respond with the response we define. This dependency is written in rust and is available at [pact-foundation/pact-reference/rust](https://github.com/pact-foundation/pact-reference/tree/main/rust/pact_mock_server_ffi).
 

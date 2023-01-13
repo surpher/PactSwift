@@ -10,5 +10,4 @@ PactSwift will henceforth only support Swift Package Manager. No effort will be 
 
 ## Consequences
 
-Projects using PactSwift as a dependency that still use Cocoapods or Carthage for package management will have to use it via SPM. 
-
+Projects using PactSwift as a dependency that still use Cocoapods or Carthage for package management will have to use it via SPM.

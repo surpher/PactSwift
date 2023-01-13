@@ -51,7 +51,7 @@ File structure follows Swift Package Manager boilerplate. Xcode's _Project Navig
 
 ### Indentation
 
-We are using **tabs** for indentation. The primary motivation behind using tabs for indentation is not around indentation itself but to deliberately discourage a separate practice: code formatting. 
+We are using **tabs** for indentation. The primary motivation behind using tabs for indentation is not around indentation itself but to deliberately discourage a separate practice: code formatting.
 
 Following the rule:
 
@@ -68,7 +68,7 @@ func myFunc() {
 }
 ```
 
-Xcode will automatically generate this style of formatting if you've selected "Syntax aware indenting" with "Automatically indent for ':'" on the Preferences -> Text Editing -> Indentation panel and you place a newline within a function call statement. We recommend *disabling* this feature in Xcode (and most of the other syntax aware indenting options).
+Xcode will automatically generate this style of formatting if you've selected "Syntax aware indenting" with "Automatically indent for ':'" on the Preferences -> Text Editing -> Indentation panel and you place a newline within a function call statement. We recommend _disabling_ this feature in Xcode (and most of the other syntax aware indenting options).
 
 The following is a **PREFERRED** approach:
 
