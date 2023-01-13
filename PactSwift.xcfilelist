@@ -1,7 +1,5 @@
 $(SRCROOT)/Sources/Extensions/Bundle+PactSwift.swift
 $(SRCROOT)/Sources/Toolbox/Logger.swift
-$(SRCROOT)/Sources/Toolbox/PactFileManager.swift
-$(SRCROOT)/Sources/Model/Constants.swift
 $(SRCROOT)/Sources/Model/ProviderVerifier+Error.swift
 $(SRCROOT)/Sources/Model/Interaction+Extensions.swift
 $(SRCROOT)/Sources/Model/PactInteractionNode.swift
