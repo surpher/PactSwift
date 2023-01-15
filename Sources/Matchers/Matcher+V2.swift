@@ -70,6 +70,25 @@ public extension Matcher {
 		.regex(#"^(?:0x)?[0-9a-fA-F]+$"#, example: example)
 	}
 
+	/// A matcher that executes a regular expression match against the string representation of a UUID.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: A `UUID` to use as an example.
+	static func uuid(_ example: UUID) -> AnyMatcher {
+		uuid(example.uuidString, format: UUIDFormat.upperCaseHyphenated)
+	}
+
+	/// A matcher that executes a regular expression match against the string representation of a UUID in the specified `format`.
+	///
+	/// - Note: Requires `Pact.Specification.v2`.
+	/// - Parameters:
+	///    - example: A UUID string to use as an example. Defaults to `936DA01f9abd4d9d80c702af85c822a8`.
+	///    - format: The format of the UUID.
+	static func uuid(_ example: String = UUIDFormat.simple.example, format: UUIDFormat = .simple) -> AnyMatcher {
+		regex(format.matchingRegex, example: example)
+	}
+
 	/// A matcher that executes a regular expression match against the string representation of a base64 encoded value (assumes no line breaks).
 	///
 	/// - Note: Requires `Pact.Specification.v2`.

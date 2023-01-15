@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7096C332974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */; };
+		A7096C342974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */; };
 		A7F1851F296BC525003AE3F2 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1851E296BC525003AE3F2 /* Matcher.swift */; };
 		A7F18520296BC525003AE3F2 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1851E296BC525003AE3F2 /* Matcher.swift */; };
 		A7F18522296BC55A003AE3F2 /* GenericMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F18521296BC55A003AE3F2 /* GenericMatcher.swift */; };
@@ -165,6 +167,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDFormatTests.swift; sourceTree = "<group>"; };
 		A7F1851E296BC525003AE3F2 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 		A7F18521296BC55A003AE3F2 /* GenericMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMatcher.swift; sourceTree = "<group>"; };
 		A7F18524296BC5C1003AE3F2 /* GeneratorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneratorType.swift; sourceTree = "<group>"; };
@@ -381,6 +384,7 @@
 				A7F18547296BD2B6003AE3F2 /* MatcherStatusCodeTests.swift */,
 				A7F1852D296BC6FE003AE3F2 /* MatcherTestCase.swift */,
 				A7F18544296BD23D003AE3F2 /* MatcherValuesTests.swift */,
+				A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -906,6 +910,7 @@
 				A7F18560296BDC21003AE3F2 /* MatcherGeneratedDateTimeTests.swift in Sources */,
 				A7F18557296BDB39003AE3F2 /* MatcherRandomBooleanTests.swift in Sources */,
 				A7F1853C296BCFE4003AE3F2 /* MatcherDateTimeTests.swift in Sources */,
+				A7096C332974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */,
 				ADBC3E5026DB2887006908E0 /* PactBrokerTests.swift in Sources */,
 				AD78FB48264FD21900765BD3 /* PactContractTests.swift in Sources */,
 				ADDE4702244D0FDE00E4F7EE /* ErrorCapture.swift in Sources */,
@@ -988,6 +993,7 @@
 				A7F18561296BDC21003AE3F2 /* MatcherGeneratedDateTimeTests.swift in Sources */,
 				A7F18540296BD168003AE3F2 /* MatcherBooleanTests.swift in Sources */,
 				A7F18558296BDB39003AE3F2 /* MatcherRandomBooleanTests.swift in Sources */,
+				A7096C342974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */,
 				ADC3AA3E247CBB550034446E /* MatcherIncludesTests.swift in Sources */,
 				A7F1853D296BCFE4003AE3F2 /* MatcherDateTimeTests.swift in Sources */,
 				ADBC3E5126DB2887006908E0 /* PactBrokerTests.swift in Sources */,
