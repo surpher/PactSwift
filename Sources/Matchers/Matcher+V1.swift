@@ -30,4 +30,8 @@ public extension Matcher {
 	static func equals<T: Encodable>(_ value: T) -> AnyMatcher {
 		GenericMatcher(type: "equality", value: value).asAny()
 	}
+
+	static func emptyArray() -> AnyMatcher {
+		equals([String]())
+	}
 }

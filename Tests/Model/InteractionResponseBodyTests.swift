@@ -127,6 +127,39 @@ final class InteractionResponseBodyTests: InteractionTestCase {
 		}
 	}
 
+	func testRequest_EmptyArrayBody() async throws {
+		try buildRequest(
+			"emptyArray",
+			responseBody: .emptyArray()
+		)
+
+		try await verify([Int].self, expectedStatus: 200) { body in
+			XCTAssertTrue(body.isEmpty)
+		}
+	}
+
+	func testRequest_EmptyNestedArrayBody() async throws {
+		try buildRequest(
+			"emptyNestedArray",
+			responseBody: .like(
+				[
+					"nest" : .emptyArray()
+				]
+			)
+		)
+
+		struct Body: Decodable {
+			struct Nest: Decodable {
+				var key: String
+			}
+			var nest: [Nest]
+		}
+
+		try await verify(Body.self, expectedStatus: 200) { body in
+			XCTAssertTrue(body.nest.isEmpty)
+		}
+	}
+
 	// MARK: - Helpers
 
 	func buildRequest(_ matcher: String, responseBody: AnyMatcher) throws {
