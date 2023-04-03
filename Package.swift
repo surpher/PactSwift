@@ -28,8 +28,7 @@ let package = Package(
 		.target(
 			name: "PactSwift",
 			dependencies: [
-				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
-				.product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux]))
+				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS]))
 			],
 			path: "./Sources"
 		),

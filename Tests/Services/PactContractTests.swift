@@ -19,10 +19,6 @@ import XCTest
 /*
 @testable import PactSwift
 
-#if os(Linux)
-import FoundationNetworking
-#endif
-
 private class MockServiceWrapper {
 	static let shared = MockServiceWrapper()
 
@@ -42,11 +38,7 @@ class PactContractTests: XCTestCase {
 
 	var mockService = MockServiceWrapper.shared.mockService
 
-	#if os(Linux)
-	let session = URLSession.shared
-	#else
 	let session = URLSession(configuration: .ephemeral)
-	#endif
 
 	static var errorCapture = MockServiceWrapper.shared.errorCapture
 	static let pactContractFileName = "\(MockServiceWrapper.shared.consumer)-\(MockServiceWrapper.shared.provider).json"
