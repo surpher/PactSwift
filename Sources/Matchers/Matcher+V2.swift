@@ -24,11 +24,17 @@ public extension Matcher {
 	///
 	/// Use this matcher when you're expecting API response values to fit an `enum` type.
 	///
+	/// Uses `example` value as test example. If `example` is not provided the first item of
+	/// alphabetically sorted set will be used as an example.
+	///
 	/// - Parameters:
 	///   - values: A `Set` of values to match against. Case sensitive.
-	static func oneOf<T: CustomStringConvertible>(_ values: Set<T>) -> AnyMatcher {
+	///   - example: The optional value to use as the example.
+	static func oneOf<T: CustomStringConvertible>(_ values: Set<T>, example: T? = nil) -> AnyMatcher {
+		var values: Set = values
+		if let example { values.insert(example) }
 		let descriptions = values.map(\.description).sorted()
-		return regex("^(\(descriptions.joined(separator: "|")))$", example: descriptions.first ?? "")
+		return regex("^(\(descriptions.joined(separator: "|")))$", example: (example?.description ?? values.first?.description) ?? "")
 	}
 
 	/// A matcher that executes a regular expression match against the string representation of a value.
