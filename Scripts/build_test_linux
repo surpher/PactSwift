@@ -54,7 +54,7 @@ if [[ "$CI" == true ]]; then
 		echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
 		cd $LIBPACT_FFI_DIR
 		git fetch --all --tags
-		git checkout tags/libpact_ffi-v0.3.11
+		git checkout tags/libpact_ffi-v0.3.15
 	fi
 
 	export LD_LIBRARY_PATH="/usr/local/lib"
