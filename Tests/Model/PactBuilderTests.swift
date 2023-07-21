@@ -269,6 +269,63 @@ class PactBuilderTests: XCTestCase {
 		XCTAssertTrue(testResult.matchers.allSatisfy { $0.match == "include" })
 	}
 
+	// MARK: - ContainsLike()
+
+	func testPact_SetsMatcher_ContainsLike_NestedMatchers() throws {
+		let expected = [
+			[
+				"bar": "string1"
+			],
+			[
+				"baz": "string2"
+			]
+		]
+		let testBody: Any = [
+			"data": [
+				"foo": Matcher.ContainsLike([
+					[
+						"bar": Matcher.SomethingLike("string1")
+					],
+					[
+						"baz": Matcher.SomethingLike("string2")
+					]
+				])
+			]
+		]
+
+		let testPact = prepareTestPact(responseBody: testBody)
+
+		let decoded = try JSONDecoder().decode(ContainsLikeNestedTestModel.self, from: testPact.data!)
+		let testResult = try XCTUnwrap(decoded.interactions.first?.response.matchingRules.body.node)
+		let variants = try XCTUnwrap(testResult.matchers.variants)
+
+		XCTAssertTrue(testResult.matchers.match == "arrayContains")
+		XCTAssertTrue(variants.allSatisfy { expected.contains($0) })
+	}
+
+	func testPact_SetsMatcher_ContainsLike() throws {
+		let expected = [
+			["foo", "bar"],
+			["string1", "string2"]
+		]
+		let testBody: Any = [
+			"data": [
+				"foo": Matcher.ContainsLike([
+					["foo", "bar"],
+					["string1", "string2"]
+				])
+			]
+		]
+
+		let testPact = prepareTestPact(responseBody: testBody)
+		let decoded = try JSONDecoder().decode(ContainsLikeTestModel.self, from: testPact.data!)
+		let testResult = try XCTUnwrap(decoded.interactions.first?.response.matchingRules.body.node)
+		let variants = try XCTUnwrap(testResult.matchers.variants)
+
+		XCTAssertTrue(testResult.matchers.match == "arrayContains")
+		XCTAssertTrue(variants.allSatisfy { expected.contains($0) })
+	}
+
 	// MARK: - Example generators
 
 	func testPact_SetsExampleGenerator_RandomBool() throws {
@@ -501,38 +558,101 @@ private extension PactBuilderTests {
 		}
 	}
 
-		// This test model is tightly coupled with the ExampleGenerator for the purpose of these tests
-		struct GenericExampleGeneratorTestModel: Decodable {
-			let interactions: [TestInteractionModel]
-			struct TestInteractionModel: Decodable {
-				let response: TestResponseModel
-				struct TestResponseModel: Decodable {
-					let generators: TestGeneratorModel
-					struct TestGeneratorModel: Decodable {
-						let body: TestNodeModel
-						struct TestNodeModel: Decodable {
-							let node: TestAttributesModel
-							let foo: TestAttributesModel?
-							let bar: TestAttributesModel?
-							enum CodingKeys: String, CodingKey {
-								case node = "$.data"
-								case foo = "$.foo"
-								case bar = "$.bar"
-							}
-							struct TestAttributesModel: Decodable {
-								let type: String
+	// This test model is tightly coupled with the ContainsLike Matcher for the purpouse of these tests
+	struct ContainsLikeTestModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let response: TestResponseModel
+			struct TestResponseModel: Decodable {
+				let matchingRules: TestMatchingRulesModel
+				struct TestMatchingRulesModel: Decodable {
+					let body: TestNodeModel
+					struct TestNodeModel: Decodable {
+						let node: TestMatchersModel
+						enum CodingKeys: String, CodingKey {
+							case node = "$.data.foo"
+						}
+						struct TestMatchersModel: Decodable {
+							let matchers: TestTypeModel
+							struct TestTypeModel: Decodable {
+								let match: String
+								let variants: [[String]]?
+								let regex: String?
+								let value: String?
 								let min: Int?
 								let max: Int?
-								let digits: Int?
-								let size: Int?
-								let regex: String?
-								let format: String?
 							}
 						}
 					}
 				}
 			}
 		}
+	}
+
+	// This test model is tightly coupled with the ContainsLike Matcher for the purpouse of these tests
+	struct ContainsLikeNestedTestModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let response: TestResponseModel
+			struct TestResponseModel: Decodable {
+				let matchingRules: TestMatchingRulesModel
+				struct TestMatchingRulesModel: Decodable {
+					let body: TestNodeModel
+					struct TestNodeModel: Decodable {
+						let node: TestMatchersModel
+
+						enum CodingKeys: String, CodingKey {
+							case node = "$.data.foo"
+						}
+						struct TestMatchersModel: Decodable {
+							let matchers: TestTypeModel
+							struct TestTypeModel: Decodable {
+								let match: String
+								let variants: [[String: String]]?
+								let regex: String?
+								let value: String?
+								let min: Int?
+								let max: Int?
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// This test model is tightly coupled with the ExampleGenerator for the purpose of these tests
+	struct GenericExampleGeneratorTestModel: Decodable {
+		let interactions: [TestInteractionModel]
+		struct TestInteractionModel: Decodable {
+			let response: TestResponseModel
+			struct TestResponseModel: Decodable {
+				let generators: TestGeneratorModel
+				struct TestGeneratorModel: Decodable {
+					let body: TestNodeModel
+					struct TestNodeModel: Decodable {
+						let node: TestAttributesModel
+						let foo: TestAttributesModel?
+						let bar: TestAttributesModel?
+						enum CodingKeys: String, CodingKey {
+							case node = "$.data"
+							case foo = "$.foo"
+							case bar = "$.bar"
+						}
+						struct TestAttributesModel: Decodable {
+							let type: String
+							let min: Int?
+							let max: Int?
+							let digits: Int?
+							let size: Int?
+							let regex: String?
+							let format: String?
+						}
+					}
+				}
+			}
+		}
+	}
 
 	// This test model is tightly coupled with the EachLike Matcher for the purpouse of these tests
 	struct SetLikeTestModel: Decodable {

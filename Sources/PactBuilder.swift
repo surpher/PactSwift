@@ -181,6 +181,9 @@ private extension PactBuilder {
 				processedElement = processedNode
 			}
 
+		case let matcher as Matcher.ContainsLike:
+			processedElement = try processContainsLikeMatcher(matcher, at: node)
+
 		// MARK: - Process Example generators
 
 		// NOTE: There is a bug in Swift on macOS 10.x where type casting against a protocol does not work as expected.
@@ -281,6 +284,28 @@ private extension PactBuilder {
 			rules: processedMatcherValue.rules,
 			generators: processedMatcherValue.generators
 		)
+	}
+
+	// Processes an `ContainsLike` matcher
+	func processContainsLikeMatcher(_ matcher: Matcher.ContainsLike, at node: String) throws -> ProcessingResult {
+		var processedMatcherValue: ProcessingResult
+
+		var processedValue = try process(element: matcher.value, at: node)
+		var processedVariants = try process(matcher.variants, at: node, isEachLike: false)
+
+		processedMatcherValue = (
+			node: processedValue.node,
+			rules: processedVariants.rules,
+			generators: processedVariants.generators
+		)
+		processedMatcherValue.rules[node] = AnyEncodable([
+			"matchers": [
+				"match": AnyEncodable("arrayContains"),
+				"variants": AnyEncodable(processedVariants.node)
+			]
+		])
+
+		return processedMatcherValue
 	}
 
 	// Processes an Example Generator

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16CCAAA12A695DDB003B3BF1 /* ContainsLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCAAA02A695DDB003B3BF1 /* ContainsLike.swift */; };
+		16CCAAA22A695DDB003B3BF1 /* ContainsLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCAAA02A695DDB003B3BF1 /* ContainsLike.swift */; };
+		16CCAAA42A6961F6003B3BF1 /* ContainsLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCAAA32A6961F6003B3BF1 /* ContainsLikeTests.swift */; };
+		16CCAAA52A6961F6003B3BF1 /* ContainsLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCAAA32A6961F6003B3BF1 /* ContainsLikeTests.swift */; };
 		55E8E3522936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
 		55E8E3532936F3AD003D57A6 /* AsyncMockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */; };
 		A782763E29372E35003809F9 /* MockServer+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = A782763D29372E35003809F9 /* MockServer+Async.swift */; };
@@ -261,6 +265,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		16CCAAA02A695DDB003B3BF1 /* ContainsLike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsLike.swift; sourceTree = "<group>"; };
+		16CCAAA32A6961F6003B3BF1 /* ContainsLikeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainsLikeTests.swift; sourceTree = "<group>"; };
 		55E8E3512936F3AD003D57A6 /* AsyncMockServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncMockServiceTests.swift; sourceTree = "<group>"; };
 		A782763D29372E35003809F9 /* MockServer+Async.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServer+Async.swift"; sourceTree = "<group>"; };
 		A7AF63CF29387BE900A7FD42 /* Task+Timeout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Timeout.swift"; sourceTree = "<group>"; };
@@ -456,6 +462,7 @@
 				ADC37268269825AA000DA90B /* OneOf.swift */,
 				ADD3C26F24416891002E73B9 /* RegexLike.swift */,
 				AD8DF438243EEBDB0062CB1A /* SomethingLike.swift */,
+				16CCAAA02A695DDB003B3BF1 /* ContainsLike.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -536,6 +543,7 @@
 				ADC3727326982D88000DA90B /* OneOfTests.swift */,
 				ADD3C27124416A3E002E73B9 /* RegexLikeTests.swift */,
 				AD7891B92441512E0014BCC8 /* SomethingLikeTests.swift */,
+				16CCAAA32A6961F6003B3BF1 /* ContainsLikeTests.swift */,
 			);
 			path = Matchers;
 			sourceTree = "<group>";
@@ -1110,6 +1118,7 @@
 				ADD031782512425800C6099B /* RandomInt.swift in Sources */,
 				A782763E29372E35003809F9 /* MockServer+Async.swift in Sources */,
 				AD72E54027B89CB900C7453F /* DateTime.swift in Sources */,
+				16CCAAA12A695DDB003B3BF1 /* ContainsLike.swift in Sources */,
 				AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				ADD3C27624416DAE002E73B9 /* IncludesLike.swift in Sources */,
 				ADD0316F25122E4B00C6099B /* RandomUUID.swift in Sources */,
@@ -1159,6 +1168,7 @@
 				ADBC3E5326DB322C006908E0 /* VersionSelectorTests.swift in Sources */,
 				AD7891B724414D500014BCC8 /* PactBuilderTests.swift in Sources */,
 				ADC3AA37247C8C4B0034446E /* InteractionTests.swift in Sources */,
+				16CCAAA42A6961F6003B3BF1 /* ContainsLikeTests.swift in Sources */,
 				ADBC3E5C26DB4846006908E0 /* ProviderVerifierTests.swift in Sources */,
 				ADD3C27224416A3E002E73B9 /* RegexLikeTests.swift in Sources */,
 				ADBC3E5626DB36A8006908E0 /* WIPPactsTests.swift in Sources */,
@@ -1238,6 +1248,7 @@
 				ADD031792512425800C6099B /* RandomInt.swift in Sources */,
 				A782763F29372E35003809F9 /* MockServer+Async.swift in Sources */,
 				AD72E54127B89CB900C7453F /* DateTime.swift in Sources */,
+				16CCAAA22A695DDB003B3BF1 /* ContainsLike.swift in Sources */,
 				AD9D7D8E26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */,
 				AD8FC7E82463BB9F00361854 /* PactHTTPMethod.swift in Sources */,
 				AD8FC7F72463BBB800361854 /* MatchingRuleExpressible.swift in Sources */,
@@ -1287,6 +1298,7 @@
 				ADBC3E5426DB322C006908E0 /* VersionSelectorTests.swift in Sources */,
 				AD8FC8062463BBD000361854 /* RegexLikeTests.swift in Sources */,
 				ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */,
+				16CCAAA52A6961F6003B3BF1 /* ContainsLikeTests.swift in Sources */,
 				ADBC3E5D26DB4846006908E0 /* ProviderVerifierTests.swift in Sources */,
 				AD8FC8052463BBD000361854 /* IntegerLikeTests.swift in Sources */,
 				ADBC3E5726DB36A8006908E0 /* WIPPactsTests.swift in Sources */,
