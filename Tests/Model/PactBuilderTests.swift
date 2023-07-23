@@ -56,7 +56,7 @@ class PactBuilderTests: XCTestCase {
 						[
 							"id": Matcher.SomethingLike("xxxxxx-xxxx-xxxx-xxxx-xxxxxxx"),
 							"email": Matcher.RegexLike(value: "admin@xxxxx.au", pattern: #"^([-\.\w]+@[-\w]+\.)+[\w-]{2,4}$"#)
-						]
+						] as [String : Any]
 					)
 				]
 			)
@@ -289,7 +289,7 @@ class PactBuilderTests: XCTestCase {
 					[
 						"baz": Matcher.SomethingLike("string2")
 					]
-				])
+				], useAllValues: true)
 			]
 		]
 
@@ -313,7 +313,7 @@ class PactBuilderTests: XCTestCase {
 				"foo": Matcher.ContainsLike([
 					["foo", "bar"],
 					["string1", "string2"]
-				])
+				], useAllValues: false)
 			]
 		]
 
@@ -355,7 +355,7 @@ class PactBuilderTests: XCTestCase {
 		let testBody: Any = [
 			"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy"),
 			"foo": ExampleGenerator.RandomDateTime(format: "HH:mm (dd/MM)")
-		]
+		] as [String : Any]
 
 		let testPact = prepareTestPact(responseBody: testBody)
 		let testResult = try XCTUnwrap(try JSONDecoder().decode(GenericExampleGeneratorTestModel.self, from: testPact.data!).interactions.first?.response.generators.body)
@@ -451,7 +451,7 @@ class PactBuilderTests: XCTestCase {
 		let testHeaders: Any = [
 			"foo": Matcher.SomethingLike("bar"),
 			"bar": ExampleGenerator.RandomBool(),
-		]
+		] as [String : Any]
 		let testBody: Any = [
 			"foo": Matcher.SomethingLike("baz"),
 		]
@@ -472,7 +472,7 @@ class PactBuilderTests: XCTestCase {
 		let testHeaders: Any = [
 			"foo": Matcher.SomethingLike("bar"),
 			"bar": ExampleGenerator.RandomBool(),
-		]
+		] as [String : Any]
 		let testBody: Any = [
 			"foo": Matcher.SomethingLike("baz"),
 		]

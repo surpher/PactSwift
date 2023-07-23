@@ -27,8 +27,8 @@ enum MatcherTestHelpers {
 	}
 
 	struct EncodableModel: Encodable {
-			let params: [[String: AnyEncodable]]
-		}
+		let params: [[String: AnyEncodable]]
+	}
 
 	struct DecodableModel: Decodable {
 		let match: String

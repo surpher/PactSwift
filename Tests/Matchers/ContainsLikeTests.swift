@@ -25,23 +25,24 @@ class ContainsLikeTests: XCTestCase {
 	func testInit_ContainsLike_Nested() throws {
 		let sut = Matcher.ContainsLike([
 			[
-				"foo": Matcher.SomethingLike(1),
+				"foo": Matcher.SomethingLike("string"),
 				"bar": Matcher.SomethingLike("string")
 			],
 			[
 				"baz": Matcher.EachLike("string")
 			]
-		])
+		], useAllValues: true)
 		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
 
 		XCTAssertTrue(result[0].match == "arrayContains")
 	}
 
 	func testInit_ContainsLike() throws {
-		let sut = Matcher.ContainsLike([[1, 2], ["string1", "string2"]])
+		let sut = Matcher.ContainsLike([
+			[1, 2], ["string1", "string2"]
+		], useAllValues: false)
 		let result = try MatcherTestHelpers.encodeDecode(sut.rules)
 
 		XCTAssertTrue(result[0].match == "arrayContains")
 	}
-
 }

@@ -448,7 +448,7 @@ class MockServiceTests: XCTestCase {
 				body: [
 					"name": Matcher.SomethingLike("Joe"),
 					"age": Matcher.IntegerLike(42)
-				]
+				] as [String : Any]
 			)
 			.willRespondWith(
 				status: 201,
@@ -586,7 +586,7 @@ class MockServiceTests: XCTestCase {
 					"nullable_key": Matcher.MatchNull(),
 					"one_of_string": Matcher.OneOf("white", "gray", "blue", "yellow", "green", "black"),
 					"one_of_int": Matcher.OneOf(3, 1, 2, 4)
-				]
+				] as [String : Any]
 			)
 
 		let testExpectation = expectation(description: #function)
@@ -631,7 +631,7 @@ class MockServiceTests: XCTestCase {
 			.willRespondWith(status: 200, body: [
 				"foo": "bar",
 				"baz": Matcher.EachLike(1)
-			])
+			] as [String : Any])
 
 		let testExpectation = expectation(description: #function)
 
@@ -678,7 +678,7 @@ class MockServiceTests: XCTestCase {
 					Matcher.EachLike("one", min: 2, max: 10, count: 5),
 					Matcher.EachLike(1, min: 1, max: 25),
 				]
-			])
+			] as [String : Any])
 
 		let testExpectation = expectation(description: #function)
 
@@ -733,7 +733,7 @@ class MockServiceTests: XCTestCase {
 				body: [
 					"identifier": Matcher.FromProviderState(parameter: "userId", value: .int(100)),
 					"name": Matcher.SomethingLike("Mary")
-				]
+				] as [String : Any]
 			)
 
 		let testExpectation = expectation(description: #function)
@@ -785,7 +785,7 @@ class MockServiceTests: XCTestCase {
 					"randomTime": ExampleGenerator.RandomTime(format: "HH:mm - ss"),
 					"randomDateTime": ExampleGenerator.RandomDateTime(format: "HH:mm - dd.MM.yy"),
 					"specificDateTime": ExampleGenerator.DateTime(format: testDateTimeFormat, use: testDateTime),
-				]
+				] as [String : Any]
 			)
 
 		let testExpectation = expectation(description: #function)
@@ -897,7 +897,7 @@ class MockServiceTests: XCTestCase {
 									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369))
 								]
 							)
-						]
+						] as [Any]
 					),
 					"regex_array": Matcher.EachLike(
 						[
@@ -912,7 +912,7 @@ class MockServiceTests: XCTestCase {
 							)
 						]
 					)
-				]
+				] as [String : Any]
 			)
 
 		let testExpectation = expectation(description: #function)

@@ -290,11 +290,11 @@ private extension PactBuilder {
 	func processContainsLikeMatcher(_ matcher: Matcher.ContainsLike, at node: String) throws -> ProcessingResult {
 		var processedMatcherValue: ProcessingResult
 
-		var processedValue = try process(element: matcher.value, at: node)
-		var processedVariants = try process(matcher.variants, at: node, isEachLike: false)
+		let processedValue = try process(element: matcher.value, at: node)
+		let processedVariants = try process(matcher.variants, at: node, isEachLike: false)
 
 		processedMatcherValue = (
-			node: processedValue.node,
+			node: matcher.useAllValues ? AnyEncodable(processedVariants.node) : processedValue.node,
 			rules: processedVariants.rules,
 			generators: processedVariants.generators
 		)

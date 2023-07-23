@@ -52,6 +52,7 @@ public extension Matcher {
 		}
 
 		internal let variants: [Any]
+		internal let useAllValues: Bool
 
 		// MARK: - Initializers
 
@@ -59,10 +60,12 @@ public extension Matcher {
 		///
 		/// - Parameters:
 		///   - variants: All possible variants.
+		///   - useAllValues: Indicates whether first or all values will be used during testing.
 		///
-		public init(_ variants: [Any]) {
+		public init(_ variants: [Any], useAllValues: Bool) {
 			self.value = variants.first as Any
 			self.variants = variants
+			self.useAllValues = useAllValues
 		}
 	}
 
