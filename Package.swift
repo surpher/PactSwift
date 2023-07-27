@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 
 import PackageDescription
 
@@ -6,9 +6,9 @@ let package = Package(
 	name: "PactSwift",
 
 	platforms: [
-		.macOS(.v10_12),
-		.iOS(.v12),
-		.tvOS(.v12)
+		.macOS(.v13),
+		.iOS(.v16),
+		.tvOS(.v16)
 	],
 
 	products: [
@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(url: "https://github.com/surpher/PactSwiftMockServer.git", .exact("0.4.3"))
+        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main")
 	],
 
 	targets: [
@@ -28,8 +28,7 @@ let package = Package(
 		.target(
 			name: "PactSwift",
 			dependencies: [
-				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
-				.product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux]))
+				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS]))
 			],
 			path: "./Sources"
 		),

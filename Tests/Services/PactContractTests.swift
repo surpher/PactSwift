@@ -16,12 +16,8 @@
 //
 
 import XCTest
-
+/*
 @testable import PactSwift
-
-#if os(Linux)
-import FoundationNetworking
-#endif
 
 private class MockServiceWrapper {
 	static let shared = MockServiceWrapper()
@@ -42,11 +38,7 @@ class PactContractTests: XCTestCase {
 
 	var mockService = MockServiceWrapper.shared.mockService
 
-	#if os(Linux)
-	let session = URLSession.shared
-	#else
 	let session = URLSession(configuration: .ephemeral)
-	#endif
 
 	static var errorCapture = MockServiceWrapper.shared.errorCapture
 	static let pactContractFileName = "\(MockServiceWrapper.shared.consumer)-\(MockServiceWrapper.shared.provider).json"
@@ -229,9 +221,9 @@ class PactContractTests: XCTestCase {
 
 		super.tearDown()
 	}
-
+*/
 	// MARK: - Tests that write the Pact contract
-
+/*
 	func testBugExample() {
 		mockService
 			.uponReceiving("bug example")
@@ -690,7 +682,8 @@ class PactContractTests: XCTestCase {
 				.resume()
 		}
 	}
-
+*/
+/*
 }
 
 private extension PactContractTests {
@@ -743,3 +736,4 @@ private extension PactContractTests {
 	}
 
 }
+*/

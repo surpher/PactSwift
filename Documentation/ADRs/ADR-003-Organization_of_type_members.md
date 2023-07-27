@@ -1,4 +1,6 @@
-# Context
+# ADR-003: Organization of type members
+
+## Context
 
 For legibility and discoverability, it is helpful to have a clear ordering of members within each type. Criteria which factor into this include:
 
@@ -8,59 +10,59 @@ For legibility and discoverability, it is helpful to have a clear ordering of me
 
 There are different approaches to how these should be prioritized in C++/Objective-C, whether you're focussing on the needs of the type's consumer or implementer and which slices of behavior you most want to separate.
 
-# Decision
+## Decision
 
 Where possible, members should be organized as follows:
 
-```
+```swift
 class MyClass: BaseClass {
 
-	// MARK: - Constants
-	
-	public static let valueA = 1
-	private static let valueB = 2
+  // MARK: - Constants
+ 
+  public static let valueA = 1
+  private static let valueB = 2
 
-	// MARK: - Types
-	
-	public struct SubTypeA {}
-	private struct SubTypeB {}
+  // MARK: - Types
+ 
+  public struct SubTypeA {}
+  private struct SubTypeB {}
 
-	// MARK: - Stored Properties
+  // MARK: - Stored Properties
 
-	public var propertyA = 1
-	private var propertyB = 2
+  public var propertyA = 1
+  private var propertyB = 2
 
-	// MARK: - Computed Properties
+  // MARK: - Computed Properties
 
-	public var propertyC: Int { return propertyA * 3 }
-	private var propertyD: Int { return propertyB * 4 }
+  public var propertyC: Int { return propertyA * 3 }
+  private var propertyD: Int { return propertyB * 4 }
 
-	// MARK: - Constructors
+  // MARK: - Constructors
 
-	public init() {}
-	private init(param: Int) {}
+  public init() {}
+  private init(param: Int) {}
 
-	// MARK: - Methods
+  // MARK: - Methods
 
-	public static func k() {}
+  public static func k() {}
 
-	public func f() {}
-	private func g() {}
+  public func f() {}
+  private func g() {}
 
-	private static func h() {}
+  private static func h() {}
 
-	// MARK: - BaseClass overrides
+  // MARK: - BaseClass overrides
 
-	public override var propertyL: Int { return propertyA * 3 }
-	public override func base() {}
-	
+  public override var propertyL: Int { return propertyA * 3 }
+  public override func base() {}
+ 
 }
 
 extension MyClass: SomeComformance {
 
-	public var i: Int { return 0 }
+ public var i: Int { return 0 }
 
-	public func j() {}
+ public func j() {}
 
 }
 ```
@@ -76,7 +78,7 @@ Important points to note:
 
 In most cases, these sections will not all be present... don't use a heading for a section not included
 
-# Consequences
+## Consequences
 
 There are a couple points that aren't totally decided.
 

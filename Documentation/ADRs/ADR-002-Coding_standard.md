@@ -1,18 +1,20 @@
-# Context
+# ADR-002: Coding Standard
+
+## Context
 
 We shouldn't feel bound by any pre-existing coding standards so this project and its code is written according to personal preferences based on practices that yielded good results acquired working in other projects with many collaborators. The code is relatively consistent but that might change once more developers contribute to the project.
 
 In general, Swift code has a fairly strong styling, relative to C or C++, due to opinionated aspects of the language itself and the styling used by the official language guides. Formatting around brace placement, `if` and `for` styling is fairly clearly set by the language.
 
-# Decision
+## Decision
 
 [Swiftlint configuration](./../../.swiftlint.yml) is used to enforce us adhering to _most_ of code style conventions.
 
-## Project file structure
+### Project file structure
 
 File structure follows Swift Package Manager boilerplate. Xcode's _Project Navigator_ displays all folders and files alphabetically for easier skimming and searching through the file structure.
 
-```
+```text
 .
 |-- .config.yml
 |-- .github
@@ -47,8 +49,9 @@ File structure follows Swift Package Manager boilerplate. Xcode's _Project Navig
 .   .   .
 ```
 
-## Indentation
-We are using **tabs** for indentation. The primary motivation behind using tabs for indentation is not around indentation itself but to deliberately discourage a separate practice: code formatting. 
+### Indentation
+
+We are using **tabs** for indentation. The primary motivation behind using tabs for indentation is not around indentation itself but to deliberately discourage a separate practice: code formatting.
 
 Following the rule:
 
@@ -56,7 +59,7 @@ Following the rule:
 
 With this rule in place switching between 4-space indents, 2-space indents or tabs is a trivial matter of search and replace and can be changed on a whim. Without this rule, the codebase cannot be trivially searched to verify indenting and cannot be easily converted between indentation styles. Validating formatting requires full code semantic analysis and user-preferences end up overriding any clear, consistent rule. Parsing and validating indentation requires only parsing of braces and parentheses.
 
-Let's look at a coding practice to **AVOID**:
+Let's look at a coding practice to **AVOID**:
 
 ```swift
 func myFunc() {
@@ -65,7 +68,7 @@ func myFunc() {
 }
 ```
 
-Xcode will automatically generate this style of formatting if you've selected "Syntax aware indenting" with "Automatically indent for ':'" on the Preferences -> Text Editing -> Indentation panel and you place a newline within a function call statement. We recommend *disabling* this feature in Xcode (and most of the other syntax aware indenting options).
+Xcode will automatically generate this style of formatting if you've selected "Syntax aware indenting" with "Automatically indent for ':'" on the Preferences -> Text Editing -> Indentation panel and you place a newline within a function call statement. We recommend _disabling_ this feature in Xcode (and most of the other syntax aware indenting options).
 
 The following is a **PREFERRED** approach:
 
@@ -110,7 +113,7 @@ This project follows a convention where single vertical space padding inside top
 
 Example to follow:
 
-```
+```swift
 struct MyStruct {
 
     var myInt: Int
@@ -145,7 +148,7 @@ class MyClass {
 }
 ```
 
-# Consequences
+## Consequences
 
 As this is an open-source project, it will be critical for anyone contributing to the codebase to follow these rules. Hopefully, setting up the project as best as possible for collaborative work will prove PRs will require less effort combing through differences that are not feature related (eg: we want to avoid PRs with changes due to code style/formatting).
 
