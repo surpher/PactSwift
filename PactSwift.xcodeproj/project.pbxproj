@@ -1177,9 +1177,9 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		A75EC3AF294313940054BADB /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ittybittyapps/PactSwiftMockServer";
+			repositoryURL = "https://github.com/surpher/PactSwiftMockServer";
 			requirement = {
-				branch = main;
+				branch = "feature/swift-concurrency";
 				kind = branch;
 			};
 		};

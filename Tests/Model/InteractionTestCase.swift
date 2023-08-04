@@ -17,7 +17,7 @@
 
 import XCTest
 @testable import PactSwift
-import PactSwiftMockServer
+@_exported import PactSwiftMockServer
 
 class InteractionTestCase: XCTestCase {
 	

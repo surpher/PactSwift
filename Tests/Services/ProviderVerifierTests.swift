@@ -19,6 +19,8 @@ import XCTest
 
 @testable import PactSwift
 
+@_exported  import PactSwiftMockServer
+
 @MainActor
 final class ProviderVerifierTests: XCTestCase {
 
@@ -105,7 +107,6 @@ final class ProviderVerifierTests: XCTestCase {
 		XCTAssertEqual(expectedError, "Provider Verification Error: The verification process failed, see output for errors.")
 		waitForExpectations(timeout: 0.1)
 	}
-
 }
 
 // MARK: - Mocks
@@ -123,5 +124,4 @@ private class MockVerifier: ProviderVerifying {
 	func verifyProvider(options args: String) -> Result<Bool, ProviderVerificationError> {
 		verifyProviderHandler?() ?? .success(true)
 	}
-
 }

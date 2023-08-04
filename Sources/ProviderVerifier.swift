@@ -16,9 +16,8 @@
 //
 
 import Foundation
+@_exported import PactSwiftMockServer
 import XCTest
-
-import PactSwiftMockServer
 
 /// Entry point for provider verification
 public final class ProviderVerifier {
@@ -66,7 +65,6 @@ public final class ProviderVerifier {
 			return .failure(VerificationError.error(error.description))
 		}
 	}
-
 }
 
 // MARK: - Private
@@ -81,5 +79,4 @@ private extension ProviderVerifier {
 			errorReporter.reportFailure(message)
 		}
 	}
-
 }

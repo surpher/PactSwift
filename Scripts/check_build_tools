@@ -11,13 +11,6 @@ else
 	echo "warning: SwiftLint not installed, use 'brew install swiftlint' to install it."
 fi
 
-if which carthage >/dev/null; then
-	echo "👍  carthage installed"
-else
-	echo "⚠️  carthage"
-	echo "warning: carthage not installed, use 'brew install carthage' to install it."
-fi
-
 # Checking for xcbeautify
 if which xcbeautify >/dev/null; then
 	echo "👍  xcbeautify installed"

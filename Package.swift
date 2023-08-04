@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main")
+        .package(url: "https://github.com/surpher/PactSwiftMockServer.git", branch: "feature/swift-concurrency")
 	],
 
 	targets: [
@@ -29,6 +29,7 @@ let package = Package(
 			name: "PactSwift",
 			dependencies: [
 				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS]))
+
 			],
 			path: "./Sources"
 		),
@@ -45,5 +46,4 @@ let package = Package(
 	],
 
 	swiftLanguageVersions: [.v5]
-
 )

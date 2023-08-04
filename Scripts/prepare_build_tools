@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-brew install rust
 brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
 brew install xcbeautify
 

@@ -12,10 +12,10 @@
     {
       "identity" : "pactswiftmockserver",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ittybittyapps/PactSwiftMockServer.git",
+      "location" : "https://github.com/surpher/PactSwiftMockServer.git",
       "state" : {
-        "branch" : "main",
-        "revision" : "8f690c7c1944871896523cc5ffefb6ef8b1cc856"
+        "branch" : "feature/swift-concurrency",
+        "revision" : "0db7b9b64f273082ceea21eaad4fd836cb43cbf6"
       }
     }
   ],

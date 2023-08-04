@@ -16,7 +16,7 @@
 //
 
 import Foundation
-import PactSwiftMockServer
+@_exported import PactSwiftMockServer
 
 public extension HeaderBuilder {
 	/// Set the `Content-Type` header.
