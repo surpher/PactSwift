@@ -4,7 +4,7 @@ set -eu
 set -o pipefail
 
 # Overridable Environment
-SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 12 Pro'}
+SIMULATOR_NAME=${SIMULATOR_NAME:-'iPhone 14 Pro'}
 SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
 
 # Determine architecture of current machine
@@ -28,10 +28,10 @@ echo "ℹ️ Resolving package dependencies"
 xcodebuild -resolvePackageDependencies
 
 echo "🏗 Building"
-swift build
+swift build | xcbeautify
 
 echo "🤖 Running tests"
-swift test
+swift test | xcbeautify
 
 # Run iOS tests
 echo "📱  Running iOS tests"

@@ -6,7 +6,7 @@ let package = Package(
 	name: "PactSwift",
 
 	platforms: [
-		.macOS(.v10_12),
+		.macOS(.v10_13),
 		.iOS(.v12),
 		.tvOS(.v12)
 	],
@@ -19,7 +19,7 @@ let package = Package(
 	],
 
 	dependencies: [
-		.package(name: "PactSwiftMockServer", url: "https://github.com/surpher/PactSwiftServer.git", .exact("0.4.7"))
+		.package(url: "https://github.com/surpher/PactSwiftServer.git", .exact("0.4.7"))
 	],
 
 	targets: [
@@ -28,8 +28,7 @@ let package = Package(
 		.target(
 			name: "PactSwift",
 			dependencies: [
-				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
-				.product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux]))
+				.product(name: "PactSwiftMockServer", package: "PactSwiftServer"),
 			],
 			path: "./Sources"
 		),

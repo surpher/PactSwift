@@ -16,9 +16,7 @@
 //
 
 import Foundation
-#if !os(Linux)
 import os.log
-#endif
 
 enum Logger {
 
@@ -38,17 +36,12 @@ enum Logger {
 		let stringData = data.flatMap { String(data: $0, encoding: .utf8) } ?? ""
 
 		if #available(iOS 10, OSX 10.14, *) {
-			#if !os(Linux)
 			os_log(
 				"PactSwift: %{private}s",
 				log: .default,
 				type: .default,
 				"\(message): \(stringData)"
 			)
-			#else
-			print(message: "PactSwift: \(message)\n\(stringData)")
-			#endif
-
 		} else {
 			print(message: "PactSwift: \(message)\n\(stringData)")
 		}

@@ -60,7 +60,6 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFMatcherFromProviderState)
 public class ObjcFromProviderState: NSObject, ObjcMatcher {
 
@@ -133,4 +132,3 @@ public class ObjcFromProviderState: NSObject, ObjcMatcher {
 	}
 
 }
-#endif

@@ -77,7 +77,6 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFMatcherRegexLike)
 public class ObjcRegexLike: NSObject, ObjcMatcher {
 
@@ -111,4 +110,3 @@ public class ObjcRegexLike: NSObject, ObjcMatcher {
 	}
 
 }
-#endif

@@ -41,7 +41,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorDateTimeExpression)
 public class OjbcDateTimeExpression: NSObject, ObjcGenerator {
 
@@ -61,4 +60,3 @@ public class OjbcDateTimeExpression: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

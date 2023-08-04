@@ -20,8 +20,7 @@ import XCTest
 
 import Foundation
 
-// FoundationNetworking for Linux does not seem to support the async `URLSession.data(from:)` methods.
-#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+#if canImport(_Concurrency) && compiler(>=5.7)
 final class MockServiceAsyncTests: XCTestCase {
 
 	var mockService: MockService!

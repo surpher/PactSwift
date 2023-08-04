@@ -19,9 +19,7 @@ import XCTest
 
 @testable import PactSwift
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
+#if compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
 #else
 import PactSwiftMockServer
@@ -34,16 +32,9 @@ class TransferProtocolTests: XCTestCase {
 		XCTAssertEqual(TransferProtocol.secure.protocol, "https")
 	}
 
-	#if os(Linux)
-	func testTransferProtocolBridge() {
-		XCTAssertEqual(TransferProtocol.standard.bridge, PactSwiftMockServerLinux.TransferProtocol.standard)
-		XCTAssertEqual(TransferProtocol.secure.bridge, PactSwiftMockServerLinux.TransferProtocol.secure)
-	}
-	#else
 	func testTransferProtocolBridge() {
 		XCTAssertEqual(TransferProtocol.standard.bridge, PactSwiftMockServer.TransferProtocol.standard)
 		XCTAssertEqual(TransferProtocol.secure.bridge, PactSwiftMockServer.TransferProtocol.secure)
 	}
-	#endif
 
 }

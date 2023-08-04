@@ -17,9 +17,7 @@
 
 import Foundation
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
+#if compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
 #else
 import PactSwiftMockServer
@@ -74,7 +72,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorRandomString)
 public class ObjcRandomString: NSObject, ObjcGenerator {
 
@@ -107,4 +104,3 @@ public class ObjcRandomString: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

@@ -18,9 +18,7 @@
 import Foundation
 import XCTest
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
+#if compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
 #else
 import PactSwiftMockServer

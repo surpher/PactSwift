@@ -125,6 +125,7 @@
 		AD92805626BE3361004FAA7E /* String+PactSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805426BE3361004FAA7E /* String+PactSwiftTests.swift */; };
 		AD92805826BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
 		AD92805926BE3705004FAA7E /* TransferProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD92805726BE3705004FAA7E /* TransferProtocolTests.swift */; };
+		AD92E18F2A7DE6E7005C70E5 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = AD92E18E2A7DE6E7005C70E5 /* PactSwiftMockServer */; };
 		AD957F3228A23A2300860AD1 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD957F3128A23A2300860AD1 /* Logger.swift */; };
 		AD957F3328A23A2300860AD1 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD957F3128A23A2300860AD1 /* Logger.swift */; };
 		AD9D7D8D26C8AD3400FE4137 /* ProviderStateGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9D7D8C26C8AD3400FE4137 /* ProviderStateGenerator.swift */; };
@@ -185,8 +186,6 @@
 		ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA36247C8C4B0034446E /* InteractionTests.swift */; };
 		ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */; };
 		ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */; };
-		ADC50E272A7D2A7B004E1E03 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */; };
-		ADC50E2B2A7D2D7E004E1E03 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */; };
 		ADD0315F2512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
 		ADD031602512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
 		ADD03164251219B700C6099B /* ExampleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03163251219B700C6099B /* ExampleGenerator.swift */; };
@@ -241,6 +240,7 @@
 		ADF959CB26C8F6EB00C35536 /* FromProviderStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */; };
 		ADF959CD26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */; };
 		ADF959CE26C8F98800C35536 /* ProviderStateGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADF959CC26C8F98800C35536 /* ProviderStateGeneratorTests.swift */; };
+		ADF994CE2A7DE1720011D974 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = ADF994CD2A7DE1720011D974 /* PactSwiftMockServer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -410,6 +410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADF994CE2A7DE1720011D974 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +419,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */,
-				ADC50E272A7D2A7B004E1E03 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +426,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD92E18F2A7DE6E7005C70E5 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,7 +435,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD8FC7C02463A06F00361854 /* PactSwift.framework in Frameworks */,
-				ADC50E2B2A7D2D7E004E1E03 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,6 +791,7 @@
 			);
 			name = PactSwift_iOS;
 			packageProductDependencies = (
+				ADF994CD2A7DE1720011D974 /* PactSwiftMockServer */,
 			);
 			productName = PACTSwift;
 			productReference = AD8817FE242C715A00BF510D /* PactSwift.framework */;
@@ -812,7 +813,6 @@
 			);
 			name = PactSwiftTests_iOS;
 			packageProductDependencies = (
-				ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */,
 			);
 			productName = PACTSwiftTests;
 			productReference = AD881807242C715B00BF510D /* PactSwiftTests_iOS.xctest */;
@@ -836,6 +836,7 @@
 			);
 			name = PactSwift_macOS;
 			packageProductDependencies = (
+				AD92E18E2A7DE6E7005C70E5 /* PactSwiftMockServer */,
 			);
 			productName = PactSwift_macOS;
 			productReference = AD8FC7B72463A06F00361854 /* PactSwift.framework */;
@@ -856,7 +857,6 @@
 			);
 			name = PactSwiftTests_macOS;
 			packageProductDependencies = (
-				ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */,
 			);
 			productName = PactSwift_macOSTests;
 			productReference = AD8FC7BF2463A06F00361854 /* PactSwiftTests_macOS.xctest */;
@@ -898,7 +898,7 @@
 			);
 			mainGroup = AD8817F4242C715A00BF510D;
 			packageReferences = (
-				ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */,
+				ADF994CC2A7DE1720011D974 /* XCRemoteSwiftPackageReference "PactSwiftServer" */,
 			);
 			productRefGroup = AD8817FF242C715A00BF510D /* Products */;
 			projectDirPath = "";
@@ -1475,7 +1475,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */ = {
+		ADF994CC2A7DE1720011D974 /* XCRemoteSwiftPackageReference "PactSwiftServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/surpher/PactSwiftServer.git";
 			requirement = {
@@ -1486,14 +1486,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */ = {
+		AD92E18E2A7DE6E7005C70E5 /* PactSwiftMockServer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
+			package = ADF994CC2A7DE1720011D974 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
 			productName = PactSwiftMockServer;
 		};
-		ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */ = {
+		ADF994CD2A7DE1720011D974 /* PactSwiftMockServer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
+			package = ADF994CC2A7DE1720011D974 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
 			productName = PactSwiftMockServer;
 		};
 /* End XCSwiftPackageProductDependency section */

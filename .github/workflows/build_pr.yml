@@ -1,110 +1,86 @@
-name: Build PR
+name: Build Pull Request
 
 on:
   pull_request:
     branches:
-      - 'main'
-
-env:
-  RUST_TARGET_PATH: pact-reference
+      - '!main'
 
 jobs:
-  test:
-    name: Run ${{ matrix.platform }} on ${{ matrix.host }}
-    runs-on: ${{ matrix.host }}
-
-    strategy:
-      fail-fast: true
-      matrix:
-        host: [macos-11, macos-12]
-        platform: [ios, macos]
-        include:
-          - platform: ios
-            scheme: "PactSwift-iOS"
-            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
-          - platform: macos
-            scheme: "PactSwift-macOS"
-            destination: "arch=x86_64"
+  test_macos:
+    name: "🤖 Test macOS"
+    runs-on: macos-13
 
     env:
-      SCHEME: ${{ matrix.scheme }}
-      DESTINATION: ${{ matrix.destination }}
+      XCODE_VERSION: 14.3.1
+
+    concurrency:
+      group: test_macos13_darwin_$SCHEME_${{ github.ref }}
+      cancel-in-progress: true
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: "🧑‍💻 Checkout repository"
+        uses: actions/checkout@v3
 
-      - name: Prepare Tools
+      - name: "⚙️ Use Xcode ${{ env.XCODE_VERSION }}"
+        run: sudo xcode-select -switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+
+      - name: "🧰 Prepare tools"
         run: |
           Scripts/prepare_build_tools
 
-      - name: Run tests (Xcode)
+      - name: "🧪 xcodebuild clean test"
         run: |
-          set -o pipefail && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+          set -o pipefail && xcodebuild -resolvePackageDependencies | xcbeautify && xcodebuild clean test -project PactSwift.xcodeproj -scheme "PactSwift-macOS" -destination "arch=x86_64" | xcbeautify
 
-      - name: Run tests (CLI - Swift Package)
+      - name: "⚗️ swift test"
         run: |
-          swift build
+          set -o pipefail && swift test -c release
+
+  test_ios:
+    name: "🤖 Test iOS"
+    runs-on: macos-13
+    needs: [test_macos]
+
+    env:
+      SCHEME: "PactSwift-iOS"
+      DESTINATION: "platform=iOS Simulator,name=iPhone 14 Pro"
+      XCODE_VERSION: 14.3.1
+
+    concurrency:
+      group: test_macos13_ios_$SCHEME_${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: "🧑‍💻 Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "⚙️ Use Xcode ${{ env.XCODE_VERSION }}"
+        run: sudo xcode-select -switch /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+
+      - name: "🧰 Prepare tools"
+        run: |
+          Scripts/prepare_build_tools
+      
+      - name: "♘ Test for Carthage"
+        run: |
+          set -o pipefail && carthage build --no-skip-current --use-xcframeworks
+
+      - name: "🧪 xcodebuild clean test"
+        run: |
+          set -o pipefail && xcodebuild -resolvePackageDependencies | xcbeautify && xcodebuild clean test -project PactSwift.xcodeproj -scheme "PactSwift-iOS" -destination "platform=iOS Simulator,name=iPhone 14 Pro" | xcbeautify
+      
+      - name: "⚗️ swift test"
+        run: |
           swift test -c release
 
-  test_linux:
-    name: Run on Ubuntu
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-
-    steps:
-      - uses: fwal/setup-swift@v1
-      - name: Get swift version
-        run: swift --version
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Protoc
-        uses: arduino/setup-protoc@v1
-
-      - name: "♼ Cache rust binaries"
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ env.RUST_TARGET_PATH }}
-          key: build-${{ runner.os }}-rust-pactswift-${{ hashFiles('**/Package.resolved') }}
-          restore-keys: |
-            build-${{ runner.os }}-rust-pactswift
-            build-${{ runner.os }}-rust-
-
-      - name: "⚗️  Build and Test"
-        run: |
-          Scripts/build_test_linux
-
-  test_carthage:
-    name: Verify for Carthage
-    runs-on: macos-12
-
-    strategy:
-      fail-fast: true
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Use Xcode 13.4.1
-        run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app
-
-      - name: Carthage build
-        run: |
-          carthage build --use-xcframeworks --no-skip-current
-
   after_success:
-    needs: [test, test_carthage, test_linux]
-    name: Build demo projects
+    needs: [test_ios]
+    name: "🚚 Build demo projects"
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
-
-      - name: Build demo projects
+      - name: "🚚 Build demo projects"
         run: |
           curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
+      

@@ -37,7 +37,6 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFMatcherNull)
 public class ObjcMatchNull: NSObject, ObjcMatcher {
 
@@ -49,4 +48,3 @@ public class ObjcMatchNull: NSObject, ObjcMatcher {
 	}
 
 }
-#endif

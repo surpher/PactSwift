@@ -19,10 +19,6 @@ import XCTest
 
 @testable import PactSwift
 
-#if os(Linux)
-import FoundationNetworking
-#endif
-
 private class MockServiceWrapper {
 	static let shared = MockServiceWrapper()
 
@@ -42,11 +38,7 @@ class PactContractTests: XCTestCase {
 
 	var mockService = MockServiceWrapper.shared.mockService
 
-	#if os(Linux)
-	let session = URLSession.shared
-	#else
 	let session = URLSession(configuration: .ephemeral)
-	#endif
 
 	static var errorCapture = MockServiceWrapper.shared.errorCapture
 	static let pactContractFileName = "\(MockServiceWrapper.shared.consumer)-\(MockServiceWrapper.shared.provider).json"
@@ -61,171 +53,171 @@ class PactContractTests: XCTestCase {
 	}
 
 	override class func tearDown() {
-			do {
-				let fileContents = try XCTUnwrap(FileManager.default.contents(atPath: PactFileManager.pactDirectoryPath + "/" + self.pactContractFileName))
-				let jsonObject = try JSONSerialization.jsonObject(with: fileContents, options: []) as! [String: Any]
+		do {
+			let fileContents = try XCTUnwrap(FileManager.default.contents(atPath: PactFileManager.pactDirectoryPath + "/" + self.pactContractFileName))
+			let jsonObject = try JSONSerialization.jsonObject(with: fileContents, options: []) as! [String: Any]
 
-				// Validate the final Pact contract file contains values that were specified in tests' expectations
+			// Validate the final Pact contract file contains values that were specified in tests' expectations
 
-				// MARK: - Validate Interactions
+			// MARK: - Validate Interactions
 
-				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				let numOfExpectedInteractions = 11
+			let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
+			let numOfExpectedInteractions = 11
 
-				assert(
-					interactions.count == numOfExpectedInteractions,
-					"Expected \(numOfExpectedInteractions) interactions in Pact contract but got \(interactions.count)!"
-				)
+			assert(
+				interactions.count == numOfExpectedInteractions,
+				"Expected \(numOfExpectedInteractions) interactions in Pact contract but got \(interactions.count)!"
+			)
 
-				// MARK: - Validate Matchers for Interactions
+			// MARK: - Validate Matchers for Interactions
 
-				// Validate interaction "bug example"
-				let bugExampleInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedMatchersOne = [
-					"$.array_of_objects",
-					"$.array_of_objects[*].key_for_explicit_array[0]",
-					"$.array_of_objects[*].key_for_explicit_array[1]",
-					"$.array_of_objects[*].key_for_explicit_array[2]",
-					"$.array_of_objects[*].key_for_explicit_array[3]",
-					"$.array_of_objects[*].key_for_explicit_array[4]",
-					"$.array_of_objects[*].key_for_matcher_array",
-					"$.array_of_objects[*].key_for_matcher_array[*]",
-					"$.array_of_objects[*].key_int",
-					"$.array_of_objects[*].key_string",
-					"$.array_of_strings",
-					"$.array_of_strings[*]",
-					"$.includes_like",
-				]
-				assert(
-					expectedMatchersOne.allSatisfy { expectedKey -> Bool in
-						bugExampleInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// Validate interaction "a request for roles with sub-roles"
-				let arrayOnRootInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for roles with sub-roles")
-				let expectedNodesForArrayOnRoot = [
-					"$[*].id"
-				]
-				assert(
-					expectedNodesForArrayOnRoot.allSatisfy { expectedKey -> Bool in
-						arrayOnRootInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// Validate interaction "Request for animals with children"
-				let animalsWithChildrenInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for animals with children")
-				let expectedNodesForAnimalsWithChildren = [
-					"$.animals",
-					"$.animals[*].children",
-					"$.animals[*].children[*]",
-				]
-				assert(
-					expectedNodesForAnimalsWithChildren.allSatisfy { expectedKey -> Bool in
-						animalsWithChildrenInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					}
-				)
-
-				// Validate interaction "Request for list of users in state"
-				let requestMatchers = try PactContractTests.extract(.matchingRules, in: .request, interactions: interactions, description: "Request for list of users in state")
-				let expectedMatchersTwo = [
-					"$.foo"
-				]
-				assert(
-					expectedMatchersTwo.allSatisfy { expectedKey -> Bool in
-						requestMatchers.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					}
-					, "Not all expected generators found in Pact contract file"
-				)
-
-				// Validate eachKeyLike matcher from interaction
-				let eachKeyLikeInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an object with wildcard matchers")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedEachKeyLikePaths = [
-					"$.articles",
-					"$.articles[*].variants.*",
-					"$.articles[*].variants.*.bundles.*",
-					"$.articles[*].variants.*.bundles.*.description",
-					"$.articles[*].variants.*.bundles.*.referencedArticles",
-					"$.articles[*].variants.*.bundles.*.referencedArticles[*].bundleId",
-				]
-				assert(
-					expectedEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
-						eachKeyLikeInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
-				)
-
-				// Validate eachKeyLike matcher from interaction
-				let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simpler object with wildcard matchers")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedSimplerEachKeyLikePaths = [
-					"$.*",
-					"$.*.field1",
-					"$.*.field2",
-				]
-				assert(
-					expectedSimplerEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
-						eachKeyLikeSimplerInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
-				)
-
-				// MARK: - Validate Generators
-
-				let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")
-				let expectedGeneratorsType = [
-					"$.array_of_arrays[*][2]": [
-						"type": "Uuid",
-						"format": "upper-case-hyphenated"
-					]
-				]
-
-				assert(
-					expectedGeneratorsType.allSatisfy { expectedKey, expectedValue -> Bool in
-						responseGenerators.contains { generatedKey, generatedValue -> Bool in
-							expectedKey == generatedKey
-							&& expectedValue["type"] == (generatedValue as? [String: String])?["type"]
-							&& expectedValue["format"] == (generatedValue as? [String: String])?["format"]
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// MARK: - Test two of same matchers used
-
-				let twoMatchersTest = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simple object")
-				let expectedTwoMatchers = [
-					"$.identifier",
-					"$.group_identifier",
-				]
-
-				assert(expectedTwoMatchers.allSatisfy { expectedKey -> Bool in
-					twoMatchersTest.contains { generatedKey, _ -> Bool in
+			// Validate interaction "bug example"
+			let bugExampleInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
+			// print("\nMATCHERS:\n\(matchersOne)")
+			let expectedMatchersOne = [
+				"$.array_of_objects",
+				"$.array_of_objects[*].key_for_explicit_array[0]",
+				"$.array_of_objects[*].key_for_explicit_array[1]",
+				"$.array_of_objects[*].key_for_explicit_array[2]",
+				"$.array_of_objects[*].key_for_explicit_array[3]",
+				"$.array_of_objects[*].key_for_explicit_array[4]",
+				"$.array_of_objects[*].key_for_matcher_array",
+				"$.array_of_objects[*].key_for_matcher_array[*]",
+				"$.array_of_objects[*].key_int",
+				"$.array_of_objects[*].key_string",
+				"$.array_of_strings",
+				"$.array_of_strings[*]",
+				"$.includes_like",
+			]
+			assert(
+				expectedMatchersOne.allSatisfy { expectedKey -> Bool in
+					bugExampleInteraction.contains { generatedKey, _ -> Bool in
 						expectedKey == generatedKey
 					}
 				},
-				 "Not all expected matchers are found in Pact interaction"
-				)
+				"Not all expected generators found in Pact contract file"
+			)
 
-			} catch {
-				XCTFail(error.localizedDescription)
-			}
+			// Validate interaction "a request for roles with sub-roles"
+			let arrayOnRootInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for roles with sub-roles")
+			let expectedNodesForArrayOnRoot = [
+				"$[*].id"
+			]
+			assert(
+				expectedNodesForArrayOnRoot.allSatisfy { expectedKey -> Bool in
+					arrayOnRootInteraction.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				},
+				"Not all expected generators found in Pact contract file"
+			)
+
+			// Validate interaction "Request for animals with children"
+			let animalsWithChildrenInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for animals with children")
+			let expectedNodesForAnimalsWithChildren = [
+				"$.animals",
+				"$.animals[*].children",
+				"$.animals[*].children[*]",
+			]
+			assert(
+				expectedNodesForAnimalsWithChildren.allSatisfy { expectedKey -> Bool in
+					animalsWithChildrenInteraction.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				}
+			)
+
+			// Validate interaction "Request for list of users in state"
+			let requestMatchers = try PactContractTests.extract(.matchingRules, in: .request, interactions: interactions, description: "Request for list of users in state")
+			let expectedMatchersTwo = [
+				"$.foo"
+			]
+			assert(
+				expectedMatchersTwo.allSatisfy { expectedKey -> Bool in
+					requestMatchers.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				}
+				, "Not all expected generators found in Pact contract file"
+			)
+
+			// Validate eachKeyLike matcher from interaction
+			let eachKeyLikeInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an object with wildcard matchers")
+			// print("\nMATCHERS:\n\(matchersOne)")
+			let expectedEachKeyLikePaths = [
+				"$.articles",
+				"$.articles[*].variants.*",
+				"$.articles[*].variants.*.bundles.*",
+				"$.articles[*].variants.*.bundles.*.description",
+				"$.articles[*].variants.*.bundles.*.referencedArticles",
+				"$.articles[*].variants.*.bundles.*.referencedArticles[*].bundleId",
+			]
+			assert(
+				expectedEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
+					eachKeyLikeInteraction.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				},
+				"Not all expected generators found in Pact contract file for eachKeyLike matcher"
+			)
+
+			// Validate eachKeyLike matcher from interaction
+			let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simpler object with wildcard matchers")
+			// print("\nMATCHERS:\n\(matchersOne)")
+			let expectedSimplerEachKeyLikePaths = [
+				"$.*",
+				"$.*.field1",
+				"$.*.field2",
+			]
+			assert(
+				expectedSimplerEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
+					eachKeyLikeSimplerInteraction.contains { generatedKey, _ -> Bool in
+						expectedKey == generatedKey
+					}
+				},
+				"Not all expected generators found in Pact contract file for eachKeyLike matcher"
+			)
+
+			// MARK: - Validate Generators
+
+			let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")
+			let expectedGeneratorsType = [
+				"$.array_of_arrays[*][2]": [
+					"type": "Uuid",
+					"format": "upper-case-hyphenated"
+				]
+			]
+
+			assert(
+				expectedGeneratorsType.allSatisfy { expectedKey, expectedValue -> Bool in
+					responseGenerators.contains { generatedKey, generatedValue -> Bool in
+						expectedKey == generatedKey
+						&& expectedValue["type"] == (generatedValue as? [String: String])?["type"]
+						&& expectedValue["format"] == (generatedValue as? [String: String])?["format"]
+					}
+				},
+				"Not all expected generators found in Pact contract file"
+			)
+
+			// MARK: - Test two of same matchers used
+
+			let twoMatchersTest = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simple object")
+			let expectedTwoMatchers = [
+				"$.identifier",
+				"$.group_identifier",
+			]
+
+			assert(expectedTwoMatchers.allSatisfy { expectedKey -> Bool in
+				twoMatchersTest.contains { generatedKey, _ -> Bool in
+					expectedKey == generatedKey
+				}
+			},
+			 "Not all expected matchers are found in Pact interaction"
+			)
+
+		} catch {
+			XCTFail(error.localizedDescription)
+		}
 
 		super.tearDown()
 	}

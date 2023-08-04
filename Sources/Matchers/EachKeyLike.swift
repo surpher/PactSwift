@@ -155,7 +155,6 @@ public extension Matcher {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFMatcherEachKeyLike)
 public class ObjcEachKeyLike: NSObject, ObjcMatcher {
 
@@ -178,4 +177,3 @@ public class ObjcEachKeyLike: NSObject, ObjcMatcher {
 	}
 
 }
-#endif

@@ -18,9 +18,7 @@
 import Foundation
 import XCTest
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
+#if compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
 #else
 import PactSwiftMockServer
@@ -42,11 +40,7 @@ open class MockService {
 	private let pactsDirectory: URL?
 	private let merge: Bool
 
-	#if os(Linux)
-	private var transferProtocolScheme: PactSwiftMockServerLinux.TransferProtocol
-	#else
 	private var transferProtocolScheme: PactSwiftMockServer.TransferProtocol
-	#endif
 
 	// MARK: - Initializers
 
@@ -158,7 +152,7 @@ open class MockService {
 		}
 	}
 
-	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+	#if canImport(_Concurrency) && compiler(>=5.7)
 	/// Runs the Pact test against the code making the API request
 	///
 	/// - Parameters:
@@ -245,7 +239,7 @@ extension MockService {
 		}
 	}
 
-	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+	#if canImport(_Concurrency) && compiler(>=5.7)
 	/// Writes a Pact contract file in JSON format
 	///
 	/// By default Pact contracts are written to `/tmp/pacts` folder.
@@ -333,7 +327,7 @@ private extension MockService {
 		}
 	}
 
-	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+	#if canImport(_Concurrency) && compiler(>=5.7)
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: @escaping @Sendable (String) async throws -> Void) async throws {
 		Logger.log(message: "Setting up pact test", data: pact.data)
@@ -364,10 +358,10 @@ private extension MockService {
 			_ = try await task.value
 
 			// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test.
-			// Only finalize when running in simulator, maOS or Linux. Running on a physical iOS device makes little sense due to
+			// Only finalize when running in simulator or macOS. Running on a physical iOS device makes little sense due to
 			// writing a pact file to device's disk. `libpact_ffi` does the actual file writing it writes it onto the
 			// disk of the device it is being run on.
-			#if targetEnvironment(simulator) || os(macOS) || os(Linux)
+			#if targetEnvironment(simulator) || os(macOS)
 			let message = try await finalize(file: file, line: line)
 			Logger.log(message: message, data: self.pact.data)
 			#else
@@ -387,10 +381,10 @@ private extension MockService {
 				switch $0 {
 				case .success:
 					// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test.
-					// Only finalize when running in simulator, maOS or Linux. Running on a physical iOS device makes little sense due to
+					// Only finalize when running in simulator or macOS. Running on a physical iOS device makes little sense due to
 					// writing a pact file to device's disk. `libpact_ffi` does the actual file writing it writes it onto the
 					// disk of the device it is being run on.
-					#if targetEnvironment(simulator) || os(macOS) || os(Linux)
+					#if targetEnvironment(simulator) || os(macOS)
 					finalize(file: file, line: line) {
 						switch $0 {
 						case .success(let message):

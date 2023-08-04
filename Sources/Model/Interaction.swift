@@ -17,18 +17,6 @@
 
 import Foundation
 
-#if os(Linux)
-/// Defines the interaction between a consumer and a provider
-public class Interaction: NSObject {
-	var interactionDescription: String?
-	var providerState: String?
-	var providerStates: [ProviderState]?
-	var request: Request?
-	var response: Response?
-
-	internal var encodingErrors = [EncodingError]()
-}
-#else
 /// Defines the interaction between a consumer and a provider
 @objc public class Interaction: NSObject {
 	var interactionDescription: String?
@@ -39,7 +27,6 @@ public class Interaction: NSObject {
 
 	internal var encodingErrors = [EncodingError]()
 }
-#endif
 
 extension Interaction: Encodable {
 
@@ -57,17 +44,10 @@ extension Interaction: Encodable {
 
 extension Interaction {
 
-	#if os(Linux)
-	convenience init(description: String) {
-		self.init()
-		self.interactionDescription = description
-	}
-	#else
 	@objc convenience init(description: String) {
 		self.init()
 		self.interactionDescription = description
 	}
-	#endif
 
 	convenience init(description: String, providerState: String, request: Request? = nil, response: Response? = nil) {
 		self.init()
@@ -239,7 +219,6 @@ extension Interaction {
 		return self
 	}
 
-	#if !os(Linux)
 	// MARK: - Objective-C -
 
 	/// Defines the description of the interaction
@@ -323,6 +302,5 @@ extension Interaction {
 		willRespondWith(status: status, headers: headers, body: body)
 		return self
 	}
-	#endif
 
 }

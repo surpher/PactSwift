@@ -33,7 +33,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorRandomBool)
 public class ObjcRandomBool: NSObject, ObjcGenerator {
 
@@ -45,4 +44,3 @@ public class ObjcRandomBool: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

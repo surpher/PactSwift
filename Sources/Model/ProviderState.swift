@@ -44,7 +44,6 @@ extension ProviderState: Equatable {
 }
 
 // MARK: - Objective-C
-#if !os(Linux)
 /*!
 		@brief Object describing expected provider state for an interaction
 
@@ -67,4 +66,3 @@ public final class ObjCProviderState: NSObject {
 	}
 
 }
-#endif

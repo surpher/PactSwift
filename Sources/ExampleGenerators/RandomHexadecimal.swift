@@ -45,7 +45,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorRandomHexadecimal)
 public class ObjcRandomHexadecimal: NSObject, ObjcGenerator {
 
@@ -64,4 +63,3 @@ public class ObjcRandomHexadecimal: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

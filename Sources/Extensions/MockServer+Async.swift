@@ -15,7 +15,7 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
+#if canImport(_Concurrency) && compiler(>=5.7)
 
 import Foundation
 @_implementationOnly import PactSwiftMockServer

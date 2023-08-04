@@ -19,10 +19,6 @@ import XCTest
 
 @testable import PactSwift
 
-#if os(Linux)
-import FoundationNetworking
-#endif
-
 class MockServiceTests: XCTestCase {
 
 	var mockService: MockService!
@@ -109,7 +105,6 @@ class MockServiceTests: XCTestCase {
 		waitForExpectations(timeout: 1)
 	}
 
-	#if !os(Linux)
 	// Linux does not seem to support this and URLSessionDelegate
 	func testMockService_SuccessfulGETRequest_OverSSL() {
 		mockService = MockService(
@@ -157,7 +152,6 @@ class MockServiceTests: XCTestCase {
 
 		waitForExpectations(timeout: 1)
 	}
-	#endif
 
 	func testMockService_Fails_WhenRequestMissing() {
 		mockService
@@ -991,7 +985,6 @@ private extension MockServiceTests {
 
 // MARK: - URLSessionDelegate
 
-#if !os(Linux)
 extension MockServiceTests: URLSessionDelegate {
 
 	func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -1010,7 +1003,6 @@ extension MockServiceTests: URLSessionDelegate {
 	}
 
 }
-#endif
 
 // MARK: - FileManager
 

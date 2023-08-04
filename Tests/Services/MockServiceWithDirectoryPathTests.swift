@@ -19,20 +19,12 @@ import XCTest
 
 @testable import PactSwift
 
-#if os(Linux)
-import FoundationNetworking
-#endif
-
 final class MockServiceWithDirectoryPathTests: XCTestCase {
 
 	static private let expectedTargetDirectory = URL(fileURLWithPath: "/tmp/pacts/custom/path", isDirectory: true)
 	static private var mockService: MockService!
 
-	#if os(Linux)
-	let session = URLSession.shared
-	#else
 	let session = URLSession(configuration: .ephemeral)
-	#endif
 
 	override class func setUp() {
 		mockService = MockService(consumer: "custom-dir-consumer", provider: "provider", writePactTo: MockServiceWithDirectoryPathTests.expectedTargetDirectory)

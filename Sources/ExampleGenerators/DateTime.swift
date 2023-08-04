@@ -34,7 +34,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorDateTime)
 public class ObjcDateTime: NSObject, ObjcGenerator {
 
@@ -52,4 +51,3 @@ public class ObjcDateTime: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

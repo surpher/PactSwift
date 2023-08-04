@@ -15,8 +15,6 @@
 //  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if !os(Linux)
-
 import XCTest
 
 @testable import PactSwift
@@ -161,5 +159,3 @@ class PFMockServiceTests: XCTestCase {
 	}
 
 }
-
-#endif

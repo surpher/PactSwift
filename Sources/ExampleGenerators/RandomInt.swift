@@ -46,7 +46,6 @@ public extension ExampleGenerator {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorRandomInt)
 public class ObjcRandomInt: NSObject, ObjcGenerator {
 
@@ -66,4 +65,3 @@ public class ObjcRandomInt: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

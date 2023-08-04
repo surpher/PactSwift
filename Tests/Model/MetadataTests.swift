@@ -28,11 +28,7 @@ class MetadataTests: XCTestCase {
 	#if !SWIFT_PACKAGE
 	func testMetadata_SetsPactSwiftVersion() throws {
 		guard let expectedResult = bundleVersion() else {
-			#if os(Linux)
-			print("This test is irrelevant on Linux platforms")
-			#else
 			XCTFail("Expected version number")
-			#endif
 			return
 		}
 		XCTAssertEqual(try XCTUnwrap(Metadata().pactSwift.version), expectedResult)

@@ -58,7 +58,6 @@ private enum NumberHelper {
 
 // MARK: - Objective-C
 
-#if !os(Linux)
 @objc(PFGeneratorRandomDecimal)
 public class ObjcRandomDecimal: NSObject, ObjcGenerator {
 
@@ -77,4 +76,3 @@ public class ObjcRandomDecimal: NSObject, ObjcGenerator {
 	}
 
 }
-#endif

@@ -17,20 +17,6 @@
 
 import Foundation
 
-#if os(Linux)
-/// The HTTP method expected in the interaction
-public enum PactHTTPMethod {
-	case GET
-	case HEAD
-	case POST
-	case PUT
-	case PATCH
-	case DELETE
-	case TRACE
-	case CONNECT
-	case OPTIONS
-}
-#else
 /// The HTTP method expected in the interaction
 @objc public enum PactHTTPMethod: Int {
 	case GET
@@ -43,7 +29,6 @@ public enum PactHTTPMethod {
 	case CONNECT
 	case OPTIONS
 }
-#endif
 
 extension PactHTTPMethod {
 
