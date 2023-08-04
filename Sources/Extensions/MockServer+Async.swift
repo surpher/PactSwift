@@ -21,7 +21,7 @@ import Foundation
 @_implementationOnly import PactSwiftMockServer
 
 extension MockServer {
-	
+
 	/// Spins up a mock server with expected interactions defined in the provided Pact
 	///
 	/// - Parameters:
@@ -37,7 +37,7 @@ extension MockServer {
 			}
 		}
 	}
-	
+
 	/// Verifies all interactions passed to mock server
 	///
 	/// By default pact files are written to `/tmp/pacts`.
@@ -51,7 +51,7 @@ extension MockServer {
 			}
 		}
 	}
-	
+
 	/// Finalises Pact tests by writing the pact contract file to disk
 	///
 	/// - Parameters:

@@ -198,14 +198,13 @@ open class MockService {
 		}
 	}
 	#endif
-	
+
 	/// Check there are no invalid interactions
 	private func checkForInvalidInteractions(_ interactions: [Interaction], file: FileString? = nil, line: UInt? = nil) -> Bool {
 		let errors = interactions.flatMap(\.encodingErrors)
 		for error in errors {
 			failWith(error.localizedDescription, file: file, line: line)
 		}
-				
 		return errors.isEmpty == false
 	}
 }
@@ -245,7 +244,7 @@ extension MockService {
 			}
 		}
 	}
-	
+
 	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	/// Writes a Pact contract file in JSON format
 	///
@@ -333,7 +332,7 @@ private extension MockService {
 			}
 		}
 	}
-	
+
 	#if canImport(_Concurrency) && compiler(>=5.7) && !os(Linux)
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 	func setupPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer, testFunction: @escaping @Sendable (String) async throws -> Void) async throws {
@@ -354,7 +353,7 @@ private extension MockService {
 			throw error
 		}
 	}
-	
+
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 	func verifyPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer) async throws {
 		do {
@@ -363,7 +362,7 @@ private extension MockService {
 			}
 			// await task completion (value is discarded)
 			_ = try await task.value
-			
+
 			// If the comsumer (in testFunction:) made the promised request to Mock Server, go and finalize the test.
 			// Only finalize when running in simulator, maOS or Linux. Running on a physical iOS device makes little sense due to
 			// writing a pact file to device's disk. `libpact_ffi` does the actual file writing it writes it onto the
@@ -380,7 +379,7 @@ private extension MockService {
 		}
 	}
 	#endif
-	
+
 	func verifyPactInteraction(timeout: TimeInterval, file: FileString?, line: UInt?, mockServer: MockServer) {
 		waitForPactTestWith(timeout: timeout, file: file, line: line) { [unowned self] completion in
 			// Ask Mock Server to verify the promised request (testFunction:) has been made

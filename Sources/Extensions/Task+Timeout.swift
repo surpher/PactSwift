@@ -21,7 +21,7 @@ import Foundation
 
 @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 extension Task where Failure == Error {
-	
+
 	// Start a new Task with a timeout. If the timeout expires before the operation is
 	// completed then the task is cancelled and an error is thrown.
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)

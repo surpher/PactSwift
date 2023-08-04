@@ -25,8 +25,6 @@
 		AD0AF27C272644E800848FB7 /* ExampleGeneratorTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0AF27A272644E800848FB7 /* ExampleGeneratorTestHelpers.swift */; };
 		AD10361424468AB3002C97CA /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD10361324468AB3002C97CA /* MockService.swift */; };
 		AD103618244693A6002C97CA /* MockServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD103617244693A6002C97CA /* MockServiceTests.swift */; };
-		AD23310826E9EEA900D984A5 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = AD23310726E9EEA900D984A5 /* PactSwiftMockServer */; };
-		AD23310A26E9EEB100D984A5 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = AD23310926E9EEB100D984A5 /* PactSwiftMockServer */; };
 		AD23310C26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23310B26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift */; };
 		AD23310D26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD23310B26E9F08000D984A5 /* MockServiceWithDirectoryPathTests.swift */; };
 		AD48EC5826CF90B40017E071 /* ProviderVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD48EC5726CF90B40017E071 /* ProviderVerifier.swift */; };
@@ -187,6 +185,8 @@
 		ADC3AA38247C8C4B0034446E /* InteractionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA36247C8C4B0034446E /* InteractionTests.swift */; };
 		ADC3AA3D247CBB550034446E /* IncludesLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */; };
 		ADC3AA3E247CBB550034446E /* IncludesLikeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC3AA3C247CBB550034446E /* IncludesLikeTests.swift */; };
+		ADC50E272A7D2A7B004E1E03 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */; };
+		ADC50E2B2A7D2D7E004E1E03 /* PactSwiftMockServer in Frameworks */ = {isa = PBXBuildFile; productRef = ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */; };
 		ADD0315F2512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
 		ADD031602512193500C6099B /* ExampleGeneratorExpressible.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD0315E2512193500C6099B /* ExampleGeneratorExpressible.swift */; };
 		ADD03164251219B700C6099B /* ExampleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADD03163251219B700C6099B /* ExampleGenerator.swift */; };
@@ -410,7 +410,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD23310826E9EEA900D984A5 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */,
+				ADC50E272A7D2A7B004E1E03 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,7 +426,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD23310A26E9EEB100D984A5 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD8FC7C02463A06F00361854 /* PactSwift.framework in Frameworks */,
+				ADC50E2B2A7D2D7E004E1E03 /* PactSwiftMockServer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -791,7 +791,6 @@
 			);
 			name = PactSwift_iOS;
 			packageProductDependencies = (
-				AD23310726E9EEA900D984A5 /* PactSwiftMockServer */,
 			);
 			productName = PACTSwift;
 			productReference = AD8817FE242C715A00BF510D /* PactSwift.framework */;
@@ -812,6 +811,9 @@
 				AD88180A242C715B00BF510D /* PBXTargetDependency */,
 			);
 			name = PactSwiftTests_iOS;
+			packageProductDependencies = (
+				ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */,
+			);
 			productName = PACTSwiftTests;
 			productReference = AD881807242C715B00BF510D /* PactSwiftTests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -834,7 +836,6 @@
 			);
 			name = PactSwift_macOS;
 			packageProductDependencies = (
-				AD23310926E9EEB100D984A5 /* PactSwiftMockServer */,
 			);
 			productName = PactSwift_macOS;
 			productReference = AD8FC7B72463A06F00361854 /* PactSwift.framework */;
@@ -854,6 +855,9 @@
 				AD8FC7C22463A06F00361854 /* PBXTargetDependency */,
 			);
 			name = PactSwiftTests_macOS;
+			packageProductDependencies = (
+				ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */,
+			);
 			productName = PactSwift_macOSTests;
 			productReference = AD8FC7BF2463A06F00361854 /* PactSwiftTests_macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -864,8 +868,9 @@
 		AD8817F5242C715A00BF510D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "PACT Foundation";
 				TargetAttributes = {
 					AD8817FD242C715A00BF510D = {
@@ -893,7 +898,7 @@
 			);
 			mainGroup = AD8817F4242C715A00BF510D;
 			packageReferences = (
-				AD23310626E9EEA900D984A5 /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */,
+				ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */,
 			);
 			productRefGroup = AD8817FF242C715A00BF510D /* Products */;
 			projectDirPath = "";
@@ -1470,25 +1475,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AD23310626E9EEA900D984A5 /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */ = {
+		ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/surpher/PactSwiftMockServer";
+			repositoryURL = "https://github.com/surpher/PactSwiftServer.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.4.2;
+				version = 0.4.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AD23310726E9EEA900D984A5 /* PactSwiftMockServer */ = {
+		ADC50E262A7D2A7B004E1E03 /* PactSwiftMockServer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AD23310626E9EEA900D984A5 /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */;
+			package = ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
 			productName = PactSwiftMockServer;
 		};
-		AD23310926E9EEB100D984A5 /* PactSwiftMockServer */ = {
+		ADC50E2A2A7D2D7E004E1E03 /* PactSwiftMockServer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AD23310626E9EEA900D984A5 /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */;
+			package = ADC50E252A7D2A7B004E1E03 /* XCRemoteSwiftPackageReference "PactSwiftServer" */;
 			productName = PactSwiftMockServer;
 		};
 /* End XCSwiftPackageProductDependency section */
