@@ -1,25 +1,23 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "PactMockServer",
-        "repositoryURL": "https://github.com/surpher/PactMockServer.git",
-        "state": {
-          "branch": null,
-          "revision": "11fe519e6d1b0c513c717ba507e89ba401bdf8de",
-          "version": "0.1.2"
-        }
-      },
-      {
-        "package": "PactSwiftMockServer",
-        "repositoryURL": "https://github.com/surpher/PactSwiftMockServer.git",
-        "state": {
-          "branch": null,
-          "revision": "50c130088b9c7fe7f278beee86b3d161605a1f98",
-          "version": "0.4.1"
-        }
+  "pins" : [
+    {
+      "identity" : "pactmockserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/surpher/PactMockServer.git",
+      "state" : {
+        "revision" : "11fe519e6d1b0c513c717ba507e89ba401bdf8de",
+        "version" : "0.1.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "pactswiftmockserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ittybittyapps/PactSwiftMockServer.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8f690c7c1944871896523cc5ffefb6ef8b1cc856"
+      }
+    }
+  ],
+  "version" : 2
 }

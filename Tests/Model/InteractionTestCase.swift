@@ -56,5 +56,4 @@ class InteractionTestCase: XCTestCase {
 			return
 		}
 	}
-
 }

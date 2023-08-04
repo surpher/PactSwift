@@ -4,6 +4,7 @@ disabled_rules:
   - large_tuple
   - operator_whitespace
   - trailing_whitespace
+  - todo
 opt_in_rules:
   - attributes
   - closure_body_length
@@ -47,10 +48,13 @@ opt_in_rules:
   - static_operator
   - toggle_bool
   - unneeded_parentheses_in_closure_argument
-  - unused_declaration
-  - unused_import
   - yoda_condition
   - xct_specific_matcher
+
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+  - explicit_self
 
 attributes:
   always_on_same_line: ["@IBAction", "@objc"]
@@ -72,3 +76,23 @@ excluded:
 
 trailing_comma:
   mandatory_comma: true
+
+custom_rules:
+  auto_generated_leftovers:
+    name: "Auto-generated leftovers"
+    message: "Delete auto-generated functions that you don't use"
+    regex: 'func [^\n]*\{\n(\s*super\.[^\n]*\n(\s*\/\/[^\n]*\n)*|(\s*\/\/[^\n]*\n)+)\s*\}'
+    severity: warning
+
+  todo_without_issue:
+    name: "Todo Without Issue"
+    message: "TODO comment must include issue reference eg: // TODO(#1234): Description"
+    regex: "(TODO|TO-DO|FIXME)(?!\\(.*?#\\d+\\):?\\s+)"
+    match_kinds: [comment]
+    severity: warning
+
+  numbers_smell:
+    name: "Raw numbers"
+    message: "Numbers smell; define a constant instead."
+    regex: '(return |case |\w\(|: |\?\? |\, |== |<=? |>=? |\+= |\-= |\/= |\*= |%= |\w\.\w+ = )\(*-?\d{2,}'
+    severity: warning

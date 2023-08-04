@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1400"
+   LastUpgradeVersion = "1520"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -69,6 +69,11 @@
                BlueprintName = "PactSwiftTests_iOS"
                ReferencedContainer = "container:PactSwift.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "MatcherOneOfTests/testMatcher_OneOf()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

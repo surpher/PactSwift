@@ -20,7 +20,9 @@
 set -eu
 
 # Adds support for Apple Silicon brew directory
-export PATH="$PATH:/opt/homebrew/bin"
+export PATH="$PATH:/opt/local/bin:/opt/homebrew/bin/:/usr/local/bin"
+
+set -eu
 
 SRCROOT=${SRCROOT:-"."}
 DERIVED_FILE_DIR=${DERIVED_FILE_DIR:-"."}
@@ -32,23 +34,22 @@ fi
 
 echo "--- 🤖 Linting $SRCROOT/Sources/*.swift"
 
-if which swiftlint >/dev/null; then
+if command -v "swiftlint"; then
 		# Build a list of Swift files in the Sources directory
-		find Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > $DERIVED_FILE_DIR/$1.xcfilelist
+		find Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > "$DERIVED_FILE_DIR/$1.xcfilelist"
 
 		# Update the xcfilelist if the list of Swift files has changed
-		cmp --silent $SRCROOT/$1.xcfilelist $DERIVED_FILE_DIR/$1.xcfilelist || cp -f $DERIVED_FILE_DIR/$1.xcfilelist $SRCROOT/$1.xcfilelist
+		cmp --silent "$SRCROOT/$1.xcfilelist" "$DERIVED_FILE_DIR/$1.xcfilelist" || cp -f "$DERIVED_FILE_DIR/$1.xcfilelist" "$SRCROOT/$1.xcfilelist"
 
 		# Run swiftlint (TODO: - swiftlint by iterating through the $1.xcfilelist)
 		# swiftlint --config $2 -- #filename0 #filename1 #filename2 ...
-		swiftlint --path Sources --config $2
+		swiftlint --no-cache --config "$2" Sources
 
 		# Output an empty derived file
-		touch $DERIVED_FILE_DIR/swiftlint.txt
+		touch "$DERIVED_FILE_DIR/swiftlint.txt"
 
 		# All hunky dory
 		echo "--- 👍 .swift files linted"
 else
-	echo "--- ⚠️ Swiftlint"
-	echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+	echo "warning: SwiftLint not installed! See https://github.com/realm/SwiftLint?tab=readme-ov-file#installation"
 fi
