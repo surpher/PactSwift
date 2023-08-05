@@ -41,7 +41,7 @@ if which swiftlint >/dev/null; then
 
 		# Run swiftlint (TODO: - swiftlint by iterating through the $1.xcfilelist)
 		# swiftlint --config $2 -- #filename0 #filename1 #filename2 ...
-		swiftlint --path Sources --config $2
+		swiftlint --config $2
 
 		# Output an empty derived file
 		touch $DERIVED_FILE_DIR/swiftlint.txt

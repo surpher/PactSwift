@@ -246,15 +246,15 @@ class PactContractTests: XCTestCase {
 								Matcher.DecimalLike(123.23),
 								Matcher.RegexLike(value: "2021-05-17", pattern: #"\d{4}-\d{2}-\d{2}"#),
 								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
-							],
+							] as [Any],
 							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(expression: "today +1 day", format: "yyyy-MM-dd")
-						]
+						] as [String : Any]
 					),
 					"array_of_strings": Matcher.EachLike(
 						Matcher.SomethingLike("A string")
 					),
 					"includes_like": Matcher.IncludesLike("included", generate: "Value _included_ is included in this string")
-				]
+				] as [String : Any]
 			)
 
 		mockService.run { [unowned self] baseURL, completed in
@@ -451,7 +451,7 @@ class PactContractTests: XCTestCase {
 									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369), count: 2)
 								]
 							)
-						]
+						] as [Any]
 					),
 					"regex_array": Matcher.EachLike(
 						[
@@ -467,7 +467,7 @@ class PactContractTests: XCTestCase {
 						]
 					),
 					"enum_value": Matcher.OneOf("night", "morning", "mid-day", "afternoon", "evening")
-				]
+				] as [String : Any]
 			)
 
 		mockService.run { [unowned self] baseURL, completed in
@@ -545,7 +545,7 @@ class PactContractTests: XCTestCase {
 					"randomCode": Matcher.FromProviderState(parameter: "rndCode", value: .string("some-random-code")),
 					"foo": Matcher.SomethingLike("bar"),
 					"baz": Matcher.SomethingLike("qux")
-				]
+				] as [String : Any]
 			)
 
 		mockService.run { [unowned self] baseURL, completed in
@@ -621,7 +621,7 @@ class PactContractTests: XCTestCase {
 											"referencedArticles": Matcher.EachLike([
 													"bundleId": Matcher.SomethingLike("someId")
 												])
-										])
+										] as [String : Any])
 									]
 								])
 							]
@@ -658,11 +658,11 @@ class PactContractTests: XCTestCase {
 					"abc": Matcher.EachKeyLike([
 						"field1": Matcher.SomethingLike("value1"),
 						"field2": Matcher.IntegerLike(123)
-					]),
+					] as [String : Any]),
 					"xyz": Matcher.EachKeyLike([
 						"field1": Matcher.SomethingLike("value2"),
 						"field2": Matcher.IntegerLike(456)
-					])
+					] as [String : Any])
 				]
 			)
 

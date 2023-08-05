@@ -202,7 +202,7 @@ class PactTests: XCTestCase {
 			],
 			"fuu": ["xyz", "abc"],
 			"num": [1, 2, 3]
-		]
+		] as [String : Any]
 
 		let interaction = Interaction(
 			description: "test Encodable Pact",

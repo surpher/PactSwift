@@ -79,8 +79,8 @@ class AnyEncodableTests: XCTestCase {
 				"Goo": [
 					"one": [1, 23.45],
 					"two": true
-				]
-			],
+				] as [String : Any]
+			] as [String : Any],
 			for: .body
 		).encoded().node
 

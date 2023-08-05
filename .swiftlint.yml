@@ -3,6 +3,9 @@ disabled_rules:
   - identifier_name
   - large_tuple
   - operator_whitespace
+  - unused_declaration
+  - unused_import
+
 opt_in_rules:
   - closure_body_length
   - closure_end_indentation
@@ -46,13 +49,12 @@ opt_in_rules:
   - toggle_bool
   - trailing_whitespace
   - unneeded_parentheses_in_closure_argument
-  - unused_declaration
-  - unused_import
   - yoda_condition
   - xct_specific_matcher
 
-attributes:
-  always_on_same_line: ["@IBAction", "@objc"]
+analyzer_rules:
+  - unused_declaration
+  - unused_import
 
 line_length:
   warning: 180
@@ -64,6 +66,9 @@ modifier_order:
 
 nesting:
   type_level: 2
+
+included:
+  - Sources
 
 excluded:
   - Carthage

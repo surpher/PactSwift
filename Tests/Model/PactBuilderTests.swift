@@ -48,7 +48,7 @@ class PactBuilderTests: XCTestCase {
 	}
 
 	func testPact_SetsNestedMatchers_in_SomethingLike() throws {
-		let testBody: Any = [
+		let testBody: [String : Any] = [
 			"body": Matcher.SomethingLike(
 				[
 					"refresh_token": Matcher.SomethingLike("xxxxxx"),
@@ -56,7 +56,7 @@ class PactBuilderTests: XCTestCase {
 						[
 							"id": Matcher.SomethingLike("xxxxxx-xxxx-xxxx-xxxx-xxxxxxx"),
 							"email": Matcher.RegexLike(value: "admin@xxxxx.au", pattern: #"^([-\.\w]+@[-\w]+\.)+[\w-]{2,4}$"#)
-						]
+						] as [String : Any]
 					)
 				]
 			)
@@ -295,7 +295,7 @@ class PactBuilderTests: XCTestCase {
 	}
 
 	func testPact_SetsExampleGenerator_RandomDateTime() throws {
-		let testBody: Any = [
+		let testBody: [String : Any] = [
 			"data": ExampleGenerator.RandomDate(format: "dd-MM-yyyy"),
 			"foo": ExampleGenerator.RandomDateTime(format: "HH:mm (dd/MM)")
 		]
@@ -391,11 +391,11 @@ class PactBuilderTests: XCTestCase {
 	// MARK: - Testing parsing for headers
 
 	func testPact_ProcessesMatchers_InHeaders() throws {
-		let testHeaders: Any = [
+		let testHeaders: [String : Any] = [
 			"foo": Matcher.SomethingLike("bar"),
 			"bar": ExampleGenerator.RandomBool(),
 		]
-		let testBody: Any = [
+		let testBody: [String : Any] = [
 			"foo": Matcher.SomethingLike("baz"),
 		]
 
@@ -412,11 +412,11 @@ class PactBuilderTests: XCTestCase {
 	func testPact_ProcessesMatcher_InRequestPath() throws {
 		let path = Matcher.RegexLike(value: "/some/1234", pattern: #"^/some/\d{4}+$"#)
 		
-		let testHeaders: Any = [
+		let testHeaders: [String : Any] = [
 			"foo": Matcher.SomethingLike("bar"),
 			"bar": ExampleGenerator.RandomBool(),
 		]
-		let testBody: Any = [
+		let testBody: [String : Any] = [
 			"foo": Matcher.SomethingLike("baz"),
 		]
 
