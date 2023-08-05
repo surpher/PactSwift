@@ -20,6 +20,7 @@ import Foundation
 import XCTest
 @testable import PactSwift
 
+@available(macOS 13.0, *)
 final class InteractionResponseBodyTests: InteractionTestCase {
 
 	func testRequest_Body() async throws {

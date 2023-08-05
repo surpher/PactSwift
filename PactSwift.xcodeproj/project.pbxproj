@@ -324,13 +324,6 @@
 			path = Matchers;
 			sourceTree = "<group>";
 		};
-		AD3192EA2BD5013C00A6C2AC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		AD641A362434354C00785CE1 /* Model */ = {
 			isa = PBXGroup;
 			children = (

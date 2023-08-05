@@ -5,6 +5,7 @@ disabled_rules:
   - operator_whitespace
   - trailing_whitespace
   - todo
+
 opt_in_rules:
   - attributes
   - closure_body_length
@@ -69,6 +70,9 @@ modifier_order:
 
 nesting:
   type_level: 2
+
+included:
+  - Sources
 
 excluded:
   - Carthage

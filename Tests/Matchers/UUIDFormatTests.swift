@@ -19,6 +19,7 @@ import XCTest
 
 @testable import PactSwift
 
+@available(macOS 13, *)
 class UUIDFormatTests: XCTestCase {
 	func testExampleMatchesRegex() throws {
 		for format in UUIDFormat.allCases {
