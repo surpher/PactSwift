@@ -15,12 +15,12 @@ jobs:
       matrix:
         host: [macos-12, macos-13]
         include:
+          - host: macos-14
+            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
+            xcode: '15.3'
           - host: macos-13
             destination: "platform=iOS Simulator,name=iPhone 14 Pro"
-            xcode: '15.0'
-          - host: macos-12
-            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
-            xcode: 14.1
+            xcode: '15.2'
 
     env:
       SCHEME: "PactSwift-iOS"
@@ -48,7 +48,7 @@ jobs:
       - name: "⚗️ Run tests (swift)"
         run: |
           set -o pipefail && swift test -c release
-    
+
   test_macos:
     name: "🤖 Test macOS"
     runs-on: ${{ matrix.host }}
@@ -56,12 +56,12 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        host: [macos-12, macos-13]
+        host: [macos-13, macos-14]
         include:
           - host: macos-13
-            xcode: '15.0'
-          - host: macos-12
-            xcode: 14.1
+            xcode: '15.2'
+          - host: macos-14
+            xcode: '15.3'
 
     env:
       SCHEME: "PactSwift-macOS"
