@@ -31,7 +31,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "2.0.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git")
 ]
 ```
 
@@ -71,7 +71,7 @@ swift test -Xlinker -L/usr/local/lib/
 ## Writing Pact tests
 
 - Instantiate a `Pact` object by defining [_pacticipants_][pacticipant],
-- Instantiate a `PactBuilder` object, 
+- Instantiate a `PactBuilder` object,
 - Define the state of the provider for an interaction (one Pact test),
 - Define the expected `request` for the interaction,
 - Define the expected `response` for the interaction,
@@ -114,8 +114,8 @@ class PassingTestsExample: XCTestCase {
       .withRequest(
         method: .GET,
         path: "/api/users",
-      )      
-      .willRespond(with: 200) { response in 
+      )
+      .willRespond(with: 200) { response in
         try response.jsonBody(
           .like(
             [
@@ -123,7 +123,7 @@ class PassingTestsExample: XCTestCase {
               "per_page": .like(20),
               "total": .randomInteger(20...500),
               "total_pages": .like(3),
-              "data": .eachLike( 
+              "data": .eachLike(
                 [
                   "id": .randomUUID(like: UUID()),
                   "first_name": .like("John"),
@@ -135,11 +135,11 @@ class PassingTestsExample: XCTestCase {
           )
         )
       }
-      
-      try await builder.verify { ctx in 
+
+      try await builder.verify { ctx in
         let apiClient = RestManager(baseUrl: ctx.mockServerURL)
         let users = try await apiClient.getUsers()
-                
+
         XCTAssertEqual(users.first?.firstName, "John")
         XCTAssertEqual(users.first?.lastName, "Tester")
         XCTAssertEqual(users.first?.renumeration, 125_000.00)
@@ -164,7 +164,7 @@ class PassingTestsExample: XCTestCase {
           )
         )
       }
-      .willRespond(with: 201) { response in 
+      .willRespond(with: 201) { response in
         try response.jsonBody(
           .like(
             [
@@ -175,16 +175,16 @@ class PassingTestsExample: XCTestCase {
           )
         )
       }
-      
-      try await builder.verify { ctx in 
+
+      try await builder.verify { ctx in
         let apiClient = RestManager(baseUrl: ctx.mockServerURL)
         let user = try await apiClient.createUser(firstName: "John", lastName: "Appleseed")
-                
+
         XCTAssertEqual(user.firstName, "John")
         XCTAssertEqual(user.lastName, "Appleseed")
         XCTAssertFalse(user.identifier.isEmpty)
       }
-   
+
   }
 }
 ```
@@ -219,112 +219,6 @@ When running on CI use the [`pact-broker`][pact-broker-client] command line tool
 
 See how you can use a simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
-## Provider verification
-
-In your unit tests suite, prepare a Pact Provider Verification unit test:
-
-1. Start your local Provider service
-2. Optionally, instrument your API with ability to configure [provider states](https://github.com/pact-foundation/pact-provider-verifier/)
-3. Run the Provider side verification step
-
-To dynamically retrieve pacts from a Pact Broker for a provider with token authentication, instantiate a `PactBroker` object with your configuration:
-
-```swift
-// The provider being verified
-let provider = ProviderVerifier.Provider(port: 8080)
-
-// The Pact broker configuration
-let pactBroker = PactBroker(
-  url: URL(string: "https://broker.url/")!,
-  auth: auth: .token(PactBroker.APIToken("auth-token")),
-  providerName: "Your API Service Name"
-)
-
-// Verification options
-let options = ProviderVerifier.Options(
-  provider: provider,
-  pactsSource: .broker(pactBroker)
-)
-
-// Run the provider verification task
-ProviderVerifier().verify(options: options) {
-  // do something (eg: shutdown the provider)
-}
-```
-
-To validate Pacts from local folders or specific Pact files use the desired case.
-
-<details><summary>Examples</summary>
-
-```swift
-// All Pact files from a directory
-ProviderVerifier()
-  .verify(options: ProviderVerifier.Options(
-    provider: provider,
-    pactsSource: .directories(["/absolute/path/to/directory/containing/pact/files/"])
-  ),
-  completionBlock: {
-    // do something
-  }
-)
-```
-
-```swift
-// Only the specific Pact files
-pactsSource: .files(["/absolute/path/to/file/consumerName-providerName.json"])
-```
-
-```swift
-// Only the specific Pact files at URL
-pactsSource: .urls([URL(string: "https://some.base.url/location/of/pact/consumerName-providerName.json")])
-```
-
-</details>
-
-### Submitting verification results
-
-To submit the verification results, provide `PactBroker.VerificationResults` object to `pactBroker`.
-
-<details><summary>Example</summary>
-
-Set the provider version and optional provider version tags. See [version numbers](https://docs.pact.io/pact_broker/pacticipant_version_numbers) for best practices on Pact versioning.
-
-```swift
-let pactBroker = PactBroker(
-  url: URL(string: "https://broker.url/")!,
-  auth: .token("auth-token"),
-  providerName: "Some API Service",
-  publishResults: PactBroker.VerificationResults(
-    providerVersion: "v1.0.0+\(ProcessInfo.processInfo.environment["GITHUB_SHA"])",
-    providerTags: ["\(ProcessInfo.processInfo.environment["GITHUB_REF"])"]
-  )
-)
-```
-
-</details>
-
-For a full working example of Provider Verification see `Pact-Linux-Provider` project in [pact-swift-examples][demo-projects] repository.
-
-## Matching
-
-In addition to verbatim value matching, you can use a set of useful matching objects that can increase expressiveness and reduce brittle test cases.
-
-See [Wiki page about Matchers][matchers] for a list of matchers `PactSwift` implements and their basic usage.
-
-Or peek into [/Sources/Matchers/][pact-swift-matchers].
-
-## Example Generators
-
-In addition to matching, you can use a set of example generators that generate random values each time you run your tests.
-
-In some cases, dates and times may need to be relative to the current date and time, and some things like tokens may have a very short life span.
-
-Example generators help you generate random values and define the rules around them.
-
-See [Wiki page about Example Generators][example-generators] for a list of example generators `PactSwift` implements and their basic usage.
-
-Or peek into [/Sources/ExampleGenerators/][pact-swift-example-generators].
-
 ## Demo projects
 
 [![PactSwift - Consumer](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml/badge.svg)](https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml)
@@ -345,38 +239,21 @@ This project takes inspiration from [pact-consumer-swift](https://github.com/DiU
 
 Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 
-[action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
-[action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
 [carthage_script]: ./Scripts/carthage
 [code-of-conduct]: ./CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
-[example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 
-[github-issues-52]: https://github.com/surpher/PactSwift/issues/52
-[issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
-[matchers]: https://github.com/surpher/pact-swift/wiki/Matchers
 [pacticipant]: https://docs.pact.io/pact_broker/advanced_topics/pacticipant/
 [pact-broker]: https://docs.pact.io/pact_broker
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
-[pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
-[pactswift-spec2]: https://github.com/surpher/PactSwift_spec2
 [pact-docs]: https://docs.pact.io
 [pact-reference-rust]: https://github.com/pact-foundation/pact-reference
 [pact-slack]: http://slack.pact.io
-[pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
-[pact-specification-v2]: https://github.com/pact-foundation/pact-specification/tree/version-2
-[pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/main/Sources/ExampleGenerators
-[pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/main/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
-[releases]: https://github.com/surpher/PactSwift/releases
-[rust-lang-installation]: https://www.rust-lang.org/tools/install
-[slack-channel]: https://pact-foundation.slack.com/archives/C9VBGNT4K
-
-[pact-swift-examples-workflow]: https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml
 
 [upgrading]: https://github.com/surpher/PactSwift/wiki/Upgrading
 
