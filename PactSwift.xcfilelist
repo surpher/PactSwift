@@ -1,5 +1,3 @@
-$(SRCROOT)/Sources/MockService+Concurrency.swift
-$(SRCROOT)/Sources/MockService+Extension.swift
 $(SRCROOT)/Sources/Extensions/Bundle+PactSwift.swift
 $(SRCROOT)/Sources/Toolbox/Logger.swift
 $(SRCROOT)/Sources/Model/ProviderVerifier+Error.swift
