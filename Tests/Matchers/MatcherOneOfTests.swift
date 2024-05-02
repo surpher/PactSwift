@@ -35,4 +35,20 @@ class MatcherOneOfTests: MatcherTestCase {
 			"""#
 		)
 	}
+  
+  func testMatcher_OneOfWithExample() throws {
+    let json = try jsonString(for: .oneOf(["enabled", "disabled"], example: "unknown"))
+    
+    XCTAssertEqual(
+      json,
+      #"""
+      {
+        "pact:matcher:type" : "regex",
+        "regex" : "^(disabled|enabled|unknown)$",
+        "value" : "unknown"
+      }
+      """#
+    )
+  }
+
 }

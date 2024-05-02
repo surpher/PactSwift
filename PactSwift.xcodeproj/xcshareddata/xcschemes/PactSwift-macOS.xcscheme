@@ -90,6 +90,11 @@
             value = "all"
             isEnabled = "NO">
          </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "PACT_OUTPUT_DIR"
+            value = "${BUILD_DIR}/pacts"
+            isEnabled = "YES">
+         </EnvironmentVariable>
       </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction

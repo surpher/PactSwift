@@ -19,7 +19,8 @@ let package = Package(
 	],
 
 	dependencies: [
-        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main")
+        .package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0")
 	],
 
 	targets: [
@@ -37,7 +38,8 @@ let package = Package(
 		.testTarget(
 			name: "PactSwiftTests",
 			dependencies: [
-				"PactSwift"
+				"PactSwift",
+        .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing")
 			],
 			path: "./Tests"
 		),

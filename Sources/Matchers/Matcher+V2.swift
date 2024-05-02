@@ -34,7 +34,7 @@ public extension Matcher {
 		var values: Set = values
 		if let example { values.insert(example) }
 		let descriptions = values.map(\.description).sorted()
-		return regex("^(\(descriptions.joined(separator: "|")))$", example: (example?.description ?? values.first?.description) ?? "")
+    return regex("^(\(descriptions.joined(separator: "|")))$", example: (example?.description ?? descriptions.first) ?? "")
 	}
 
 	/// A matcher that executes a regular expression match against the string representation of a value.
