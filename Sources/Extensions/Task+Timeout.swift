@@ -19,7 +19,7 @@ import Foundation
 
 @available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 extension Task where Failure == Error {
-	
+
 	// Start a new Task with a timeout. If the timeout expires before the operation is
 	// completed then the task is cancelled and an error is thrown.
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
@@ -28,7 +28,11 @@ extension Task where Failure == Error {
 			try await withThrowingTaskGroup(of: Success.self) { group -> Success in
 				group.addTask(operation: operation)
 				group.addTask {
+                    #if os(Linux)
+                    try await _Concurrency.Task.sleep(nanoseconds: UInt64(timeout * 1_000_000_000))
+                    #else
 					try await _Concurrency.Task.sleep(nanoseconds: UInt64(timeout * Double(NSEC_PER_SEC)))
+                    #endif
 					throw TimeoutError(interval: timeout)
 				}
 				guard let success = try await group.next() else {

@@ -18,15 +18,22 @@
 import Foundation
 
 #if os(Linux)
-import PactSwiftMockServerLinux
+    import PactSwiftMockServerLinux
 #elseif compiler(>=5.5)
-@_implementationOnly import PactSwiftMockServer
+    @_implementationOnly import PactSwiftMockServer
 #else
-import PactSwiftMockServer
+    import PactSwiftMockServer
 #endif
 
 extension MockServer {
-	
+
+    // Handling platform specifics
+    #if os(Linux)
+	    typealias TransferProtocolScheme = PactSwiftMockServerLinux.TransferProtocol
+	#else
+	    private var TransferProtocolScheme = PactSwiftMockServer.TransferProtocol
+	#endif
+
 	/// Spins up a mock server with expected interactions defined in the provided Pact
 	///
 	/// - Parameters:
@@ -35,14 +42,14 @@ extension MockServer {
 	///
 	@available(macOS 12.0, iOS 15.0, watchOS 8.0, tvOS 15.0, *)
 	@discardableResult
-	func setup(pact: Data, protocol: PactSwiftMockServer.TransferProtocol = .standard) async throws -> Int {
+	func setup(pact: Data, protocol: TransferProtocolScheme = .standard) async throws -> Int {
 		try await withCheckedThrowingContinuation { continuation in
 			self.setup(pact: pact, protocol: `protocol`) { result in
 				continuation.resume(with: result)
 			}
 		}
 	}
-	
+
 	/// Verifies all interactions passed to mock server
 	///
 	/// By default pact files are written to `/tmp/pacts`.
@@ -56,7 +63,7 @@ extension MockServer {
 			}
 		}
 	}
-	
+
 	/// Finalises Pact tests by writing the pact contract file to disk
 	///
 	/// - Parameters:
