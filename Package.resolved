@@ -1,25 +1,41 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "PactMockServer",
-        "repositoryURL": "https://github.com/surpher/PactMockServer.git",
-        "state": {
-          "branch": null,
-          "revision": "11fe519e6d1b0c513c717ba507e89ba401bdf8de",
-          "version": "0.1.2"
-        }
-      },
-      {
-        "package": "PactSwiftMockServer",
-        "repositoryURL": "https://github.com/surpher/PactSwiftMockServer.git",
-        "state": {
-          "branch": null,
-          "revision": "50c130088b9c7fe7f278beee86b3d161605a1f98",
-          "version": "0.4.1"
-        }
+  "pins" : [
+    {
+      "identity" : "pactmockserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/surpher/PactMockServer.git",
+      "state" : {
+        "revision" : "11fe519e6d1b0c513c717ba507e89ba401bdf8de",
+        "version" : "0.1.2"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "pactswiftmockserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/surpher/PactSwiftMockServer.git",
+      "state" : {
+        "revision" : "c2f02dfba35618dc81f2863267a3a0cbec0fe9a8",
+        "version" : "0.4.3"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "46989693916f56d1186bd59ac15124caef896560",
+        "version" : "1.3.1"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "bc1c29221f6dfeb0ebbfbc98eb95cd3d4967868e",
+        "version" : "3.4.0"
+      }
+    }
+  ],
+  "version" : 2
 }

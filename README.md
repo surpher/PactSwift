@@ -29,44 +29,82 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 
 #### Package.swift
 
-```sh
+```swift
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "0.11.0"))
+    .package(url: "https://github.com/surpher/PactSwift.git", .upToNextMinor(from: "1.0.0"))
+],
+
+targets: [
+    // Add PactSwift package only to your test target
+    testTarget(
+        name: "MyAwesomeAppTests",
+        dependencies: [
+            "MyAwesomeApp",
+            "PactSwift",
+        ]
+    )
 ]
 ```
 
+> [!IMPORTANT]
+>
+> - `PactSwift` is intended to be used only in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png). Do not link it to your app bundle!
+
 #### Linux
 
-<details><summary>Linux Installation Instructions</summary>
+`PactSwift` also runs on Linux. There are a few extra steps required to make it work, particularly the correct steps to link up the `libpact_ffi.so` binary.
 
-When using `PactSwift` on a Linux platform you will need to compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust] or fetch a `Pact FFI Library x.y.z` from [pact-reference releases](https://github.com/pact-foundation/pact-reference/releases).
-
-It is important that the version of `libpact_ffi.so` you build or fetch is compatible with the header files provided by `PactMockServer`. See [release notes](https://github.com/surpher/PactMockServer/releases) for details.
-
-See [`/Scripts/build_libpact_ffi`](https://github.com/surpher/PactSwiftMockServer/blob/main/Support/build_rust_dependencies) for some inspiration building libraries from Rust code. You can also go into [pact-swift-examples](https://github.com/surpher/pact-swift-examples) and look into the Linux example projects. There is one for consumer tests and one for provider verification. They contain the GitHub Workflows where building a pact_ffi `.so` binary and running Pact tests is automated with scripts.
-
-When testing your project you can either set `LD_LIBRARY_PATH` pointing to the folder containing your `libpact_ffi.so`:
+In your project where `PactSwift` is a dependency, execute the Swift Package Plugin command `download-ffi`:
 
 ```sh
-export LD_LIBRARY_PATH="/absolute/path/to/your/rust/target/release/:$LD_LIBRARY_PATH"
-swift build
-swift test -Xlinker -L/absolute/path/to/your/rust/target/release/
+swift package plugin download-ffi
 ```
 
-or you can move your `libpact_ffi.so` into `/usr/local/lib`:
+> [!TIP]
+> Use `--allow-writing-to-package-directory` flag to skip user interaction. Useful for CI workflows.
+
+The `download-ffi` plugin will download the `libpact_ffi` archive for the platform the command is being run on. The archive is downloaded from [github.com/pact-foundation/pact-reference/releases][pact-reference-releases]. Plugin validates that SHA256 matches and decompresses it into a local folder within your project. If SHA256 verification fails, it removes the downloaded archive file. See outputs for further configurtion instructions.
+
+You can also use the command plugin `libs-dir` to print the default path `download-ffi` used:
 
 ```sh
-mv /path/to/target/release/libpact_ffi.so /usr/local/lib/
-swift build
-swift test -Xlinker -L/usr/local/lib/
+swift package plugin libs-dir
 ```
+
+And run your pact tests to write pact contract files into `/tmp/pacts/` directory:
+
+```sh
+swift test -Xlinker -L$(swift package plugin libs-dir)
+```
+
+> [!NOTE]
+> Using `$(swift package plugin libs-dir)` will not work if you changed the configuration or moved the binaries to some other location on your machine.
+
+<details><summary>Compiling your own `libpact_ffi.so` binary from Rust code</summary>
+
+----
+
+When using `PactSwift` on a Linux platform you can compile your own `libpact_ffi.so` library for your Linux distribution from [pact-reference/rust/pact_ffi][pact-reference-rust].
+
+> [!IMPORTANT]
+> It is important that the version of `libpact_ffi.so` you build yourself is compatible with the header files in `PactMockServer`.  
+See [release notes](https://github.com/surpher/PactMockServer/releases) for details.
+
+See [`/Scripts/build_libpact_ffi`](https://github.com/surpher/PactSwiftMockServer/blob/main/Support/build_rust_dependencies) for some inspiration building libraries from Rust code. You can also go into [pact-swift-examples](https://github.com/surpher/pact-swift-examples) and look into the Linux example projects. There is one for consumer (app) tests and one for provider (API Service) verification. They contain the GitHub Workflows where building a pact_ffi `.so` binary and running Pact tests is automated with scripts.
+
+When testing your project you have to set `LD_LIBRARY_PATH` environment variable pointing to the folder containing your `libpact_ffi.so` and set the linker options when running `swift test`:
+
+```sh
+# Set the LD_LIBRARY_PATH environment variable
+export LD_LIBRARY_PATH="/absolute/path/to/pact-reference/rust/target/release/:$LD_LIBRARY_PATH"
+
+# Run unit tests for your project
+swift test -Xlinker -L/absolute/path/to/your/pact-reference/rust/target/release/
+```
+
+----
 
 </details>
-
-**NOTE:**
-
-- `PactSwift` is intended to be used in your [test target](./Documentation/images/11_xcode_carthage_xcframework.png).
-- If running on `x86_64` (Intel machine) see [Scripts/carthage][carthage_script] ([#3019-1][carthage-issue-3019-1], [#3019-2][carthage-issue-3019-2], [#3201][carthage-issue-3201])
 
 ## Writing Pact tests
 
@@ -149,39 +187,6 @@ class PassingTestsExample: XCTestCase {
       }
     }
   }
-
-  // Another Pact test example...
-  func testCreateUser() {
-    PassingTestsExample.mockService
-      .uponReceiving("A request to create a user")
-      .given(ProviderState(description: "user does not exist", params: ["first_name": "John", "last_name": "Appleseed"])
-      .withRequest(
-        method: .POST,
-        path: Matcher.RegexLike("/api/group/whoopeedeedoodah/users", term: #"^/\w+/group/([a-z])+/users$"#),
-        body: [
-          // You can use matchers and generators here too, but are an anti-pattern.
-          // You should be able to have full control of your requests.
-          "first_name": "John",
-          "last_name": "Appleseed"
-        ]
-      )
-      .willRespondWith(
-        status: 201,
-        body: [
-          "identifier": Matcher.FromProviderState(parameter: "userId", value: .string("123e4567-e89b-12d3-a456-426614174000")),
-          "first_name": "John",
-          "last_name": "Appleseed"
-        ]
-      )
-
-   let apiClient = RestManager()
-
-    PassingTestsExample.mockService.run { mockServiceURL, done in
-     // trigger your network request and assert the expectations
-     done()
-    }
-  }
-  // etc.
 }
 ```
 
@@ -210,7 +215,8 @@ Alternatively you can define a `PACT_OUTPUT_DIR` environment variable (in [`Run`
 
 `PactSwift` first checks whether `URL` has been provided when initializing `MockService` object. If it is not provided it will check for `PACT_OUTPUT_DIR` environment variable. If env var is not set, it will attempt to write your Pact contract into `/tmp/pacts` directory.
 
-Note that sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
+> [!NOTE]
+> Sandboxed apps (macOS apps) are limited in where they can write Pact contract files to. The default location seems to be the `Documents` folder in the sandbox (eg: `~/Library/Containers/xyz.example.your-project-name/Data/Documents`). Setting the environment variable `PACT_OUTPUT_DIR` might not work without some extra leg work tweaking various settings. Look at the logs in debug area for the Pact file location.
 
 ## Sharing Pact contracts
 
@@ -221,7 +227,7 @@ When running on CI use the [`pact-broker`][pact-broker-client] command line tool
 
 See how you can use a simple [Pact Broker Client][pact-broker-client] in your terminal (CI/CD) to upload and tag your Pact files. And most importantly check if you can [safely deploy][can-i-deploy] a new version of your app.
 
-## Provider verification
+## Provider verification (API Service)
 
 In your unit tests suite, prepare a Pact Provider Verification unit test:
 
@@ -361,41 +367,25 @@ This project takes inspiration from [pact-consumer-swift](https://github.com/DiU
 
 Logo and branding images provided by [@cjmlgrto](https://github.com/cjmlgrto).
 
-[action-default]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%28default%29%22
-[action-xcode11.5-beta]: https://github.com/surpher/PactSwift/actions?query=workflow%3A%22Test+-+Xcode+%2811.5-beta%29%22
 [can-i-deploy]: https://docs.pact.io/pact_broker/can_i_deploy
-[carthage_script]: ./Scripts/carthage
 [code-of-conduct]: ./CODE_OF_CONDUCT.md
 [codecov-io]: https://codecov.io/gh/surpher/PactSwift
 [contributing]: ./CONTRIBUTING.md
 [demo-projects]: https://github.com/surpher/pact-swift-examples
 [example-generators]: https://github.com/surpher/PactSwift/wiki/Example-generators
 
-[github-issues-52]: https://github.com/surpher/PactSwift/issues/52
-[issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md
 [matchers]: https://github.com/surpher/pact-swift/wiki/Matchers
 [pacticipant]: https://docs.pact.io/pact_broker/advanced_topics/pacticipant/
 [pact-broker]: https://docs.pact.io/pact_broker
 [pact-broker-client]: https://github.com/pact-foundation/pact_broker-client
-[pact-consumer-swift]: https://github.com/dius/pact-consumer-swift
-[pactswift-spec2]: https://github.com/surpher/PactSwift_spec2
 [pact-docs]: https://docs.pact.io
 [pact-reference-rust]: https://github.com/pact-foundation/pact-reference
+[pact-reference-releases]: https://github.com/pact-foundation/pact-reference/releases
 [pact-slack]: http://slack.pact.io
 [pact-specification-v3]: https://github.com/pact-foundation/pact-specification/tree/version-3
-[pact-specification-v2]: https://github.com/pact-foundation/pact-specification/tree/version-2
 [pact-swift-example-generators]: https://github.com/surpher/PactSwift/tree/main/Sources/ExampleGenerators
 [pact-swift-matchers]: https://github.com/surpher/PactSwift/tree/main/Sources/Matchers
 [pact-twitter]: http://twitter.com/pact_up
-[releases]: https://github.com/surpher/PactSwift/releases
-[rust-lang-installation]: https://www.rust-lang.org/tools/install
-[slack-channel]: https://pact-foundation.slack.com/archives/C9VBGNT4K
-
-[pact-swift-examples-workflow]: https://github.com/surpher/pact-swift-examples/actions/workflows/test_projects.yml
 
 [upgrading]: https://github.com/surpher/PactSwift/wiki/Upgrading
-
-[carthage-issue-3019-1]: https://github.com/Carthage/Carthage/issues/3019#issuecomment-665136323
-[carthage-issue-3019-2]: https://github.com/Carthage/Carthage/issues/3019#issuecomment-734415287
-[carthage-issue-3201]: https://github.com/Carthage/Carthage/issues/3201

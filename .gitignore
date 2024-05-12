@@ -54,6 +54,8 @@ Temporary Items
 build/
 DerivedData/
 tmp/
+lib/
+libs/
 
 ## Various settings
 *.pbxuser
@@ -106,3 +108,8 @@ Carthage/
 ## Binaries      ##
 ###################
 *.a
+
+###################
+## VSCode        ##
+###################
+.vscode
