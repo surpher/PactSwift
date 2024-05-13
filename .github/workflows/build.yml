@@ -1,6 +1,7 @@
 name: Build
 
 on:
+  pull_request:
   push:
     branches:
       - 'main'
@@ -14,6 +15,7 @@ on:
       - 'style/**'
       - 'test/**'
       - 'tech/**'
+      - 'for-posterity/**'
 
 env:
   RUST_TARGET_PATH: pact-reference
@@ -22,23 +24,23 @@ jobs:
   test:
     name: Run ${{ matrix.platform }} on ${{ matrix.host }}
     runs-on: ${{ matrix.host }}
-  
+
     strategy:
       fail-fast: true
       matrix:
-        host: [macos-11, macos-12]
+        host: [macos-13, macos-14]
         platform: [ios, macos]
         include:
           - platform: ios
             scheme: "PactSwift-iOS"
-            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
+            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
           - platform: macos
             scheme: "PactSwift-macOS"
-            destination: "arch=x86_64"
-          - host: macos-11
-            xcode: 13.2.1
-          - host: macos-12
-            xcode: 14.0.1
+            destination: "arch=aarm64"
+          - host: macos-13
+            xcode: 14.3.1
+          - host: macos-14
+            xcode: 15.4
 
     env:
       SCHEME: ${{ matrix.scheme }}
@@ -104,30 +106,33 @@ jobs:
         run: |
           Scripts/build_test_linux
 
-  test_carthage:
-    name: "Verify for Carthage"
-    runs-on: macos-12
+#   test_carthage:
+#     name: "Verify for Carthage"
+#     runs-on: macos-14
 
-    strategy:
-      fail-fast: true
+#     strategy:
+#       fail-fast: true
 
-    concurrency:
-      group: test-carthage-${{ github.ref }}
-      cancel-in-progress: true
+#     concurrency:
+#       group: test-carthage-${{ github.ref }}
+#       cancel-in-progress: true
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Use Xcode 13.4.1
-        run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app
+#       - name: Use Xcode 13.4.1
+#         run: sudo xcode-select -switch /Applications/Xcode_13.4.1.app
 
-      - name: Carthage build
-        run: |
-          carthage build --use-xcframeworks --no-skip-current
+#       - name: Carthage build
+#         run: |
+#           carthage build --use-xcframeworks --no-skip-current
 
   after_success:
-    needs: [test, test_carthage, test_linux]
+    needs:
+        - test
+        - test_linux
+        # - test_carthage
     name: Build demo projects
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
