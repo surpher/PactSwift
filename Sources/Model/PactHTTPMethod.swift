@@ -32,7 +32,8 @@ public enum PactHTTPMethod {
 }
 #else
 /// The HTTP method expected in the interaction
-@objc public enum PactHTTPMethod: Int {
+@objc 
+public enum PactHTTPMethod: Int {
 	case GET
 	case HEAD
 	case POST

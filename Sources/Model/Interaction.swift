@@ -30,7 +30,8 @@ public class Interaction: NSObject {
 }
 #else
 /// Defines the interaction between a consumer and a provider
-@objc public class Interaction: NSObject {
+@objc 
+public class Interaction: NSObject {
 	var interactionDescription: String?
 	var providerState: String?
 	var providerStates: [ProviderState]?
@@ -63,7 +64,8 @@ extension Interaction {
 		self.interactionDescription = description
 	}
 	#else
-	@objc convenience init(description: String) {
+	@objc 
+	convenience init(description: String) {
 		self.init()
 		self.interactionDescription = description
 	}

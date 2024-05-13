@@ -104,7 +104,8 @@ public class ObjcRandomUUID: NSObject, ObjcGenerator {
 	}
 
 	/// The format of the UUID value
-	@objc public enum ObjcUUIDFormat: Int {
+	@objc 
+	public enum ObjcUUIDFormat: Int {
 		case simple = 0
 		case lowercaseHyphenated = 1
 		case uppercaseHyphenated = 2

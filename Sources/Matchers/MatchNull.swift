@@ -44,7 +44,8 @@ public class ObjcMatchNull: NSObject, ObjcMatcher {
 	let type: MatchingRuleExpressible = Matcher.MatchNull()
 
 	/// The value returned by API provider matches `null`.
-	@objc public override init() {
+	@objc 
+	public override init() {
 		super.init()
 	}
 

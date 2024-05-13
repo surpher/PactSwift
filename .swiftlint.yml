@@ -47,13 +47,15 @@ opt_in_rules:
   - static_operator
   - toggle_bool
   - unneeded_parentheses_in_closure_argument
-  - unused_declaration
-  - unused_import
   - yoda_condition
   - xct_specific_matcher
 
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+
 attributes:
-  always_on_same_line: ["@IBAction", "@objc"]
+  always_on_same_line: []
 
 line_length:
   warning: 180

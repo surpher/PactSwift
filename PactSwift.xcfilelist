@@ -1,6 +1,8 @@
 $(SRCROOT)/Sources/Extensions/Bundle+PactSwift.swift
+$(SRCROOT)/Sources/Extensions/Task+Timeout.swift
 $(SRCROOT)/Sources/Extensions/Date+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/UUID+PactSwift.swift
+$(SRCROOT)/Sources/Extensions/MockServer+Async.swift
 $(SRCROOT)/Sources/Extensions/String+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Dictionary+PactSwift.swift
 $(SRCROOT)/Sources/Extensions/Sequence+PactSwift.swift

@@ -40,7 +40,8 @@ public enum TransferProtocol {
 @_implementationOnly import PactSwiftMockServer
 
 /// Defines the transfer protocol on which `MockService` runs.
-@objc public enum TransferProtocol: Int {
+@objc 
+public enum TransferProtocol: Int {
 	case standard
 	case secure
 
@@ -58,7 +59,8 @@ public enum TransferProtocol {
 import PactSwiftMockServer
 
 /// Defines the transfer protocol on which `MockService` runs.
-@objc public enum TransferProtocol: Int {
+@objc 
+public enum TransferProtocol: Int {
 	case standard
 	case secure
 

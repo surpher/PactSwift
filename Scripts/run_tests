@@ -11,14 +11,14 @@ SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
 ACTIVE_ARCH=$(uname -m)
 
 # Check for dependencies
-$SCRIPTS_DIR/check_build_tools
+"${SCRIPTS_DIR}"/check_build_tools
 
 # Carthage build
 echo "📦  Building as a Carthage dependency"
 if [[ $ACTIVE_ARCH == "x86_64" ]]; then
-	${SCRIPTS_DIR}/carthage build --no-skip-current --use-xcframeworks
+    "${SCRIPTS_DIR}"/carthage build --no-skip-current --use-xcframeworks
 else
-	carthage build --no-skip-current --use-xcframeworks
+    carthage build --no-skip-current --use-xcframeworks
 fi
 
 # Build and test for SPM

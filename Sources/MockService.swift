@@ -408,5 +408,4 @@ private extension MockService {
 			}
 		}
 	}
-
-}
+} // swiftlint:disable:this file_length

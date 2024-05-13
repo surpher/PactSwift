@@ -22,11 +22,11 @@ set -eu
 echo "--- 🤖 Ensuring there are no build settings in Xcode project file."
 
 PBXPROJ_FILE_PATH="${PROJECT_FILE_PATH}/project.pbxproj"
-NUMBER_OF_BUILD_SETTINGS=`grep "buildSettings" "$PBXPROJ_FILE_PATH" | wc -l`
-NUMBER_OF_EMPTY_BUILD_SETTINGS=`grep -B 0 -A 1 "buildSettings" "$PBXPROJ_FILE_PATH" | grep "};" | wc -l`
+NUMBER_OF_BUILD_SETTINGS="$(grep -c "buildSettings" "$PBXPROJ_FILE_PATH")"
+NUMBER_OF_EMPTY_BUILD_SETTINGS="$(grep -B 0 -A 1 "buildSettings" "$PBXPROJ_FILE_PATH" | grep "};" | wc -l)"
 
-if [ $NUMBER_OF_BUILD_SETTINGS != $NUMBER_OF_EMPTY_BUILD_SETTINGS ]; then
-  NUMBER_WITH_SETTINGS=`expr $NUMBER_OF_BUILD_SETTINGS - $NUMBER_OF_EMPTY_BUILD_SETTINGS`
+if [ "$NUMBER_OF_BUILD_SETTINGS" != "$NUMBER_OF_EMPTY_BUILD_SETTINGS" ]; then
+  NUMBER_WITH_SETTINGS=$(("$NUMBER_OF_BUILD_SETTINGS" - "$NUMBER_OF_EMPTY_BUILD_SETTINGS"))
 
   echo "error: Found ${NUMBER_WITH_SETTINGS} build settings in Xcode project file! Build settings should only be defined in ./Configurations/*.xcconfig files."
   exit 1

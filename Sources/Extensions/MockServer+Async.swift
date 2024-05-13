@@ -31,7 +31,7 @@ extension MockServer {
     #if os(Linux)
 	    typealias TransferProtocolScheme = PactSwiftMockServerLinux.TransferProtocol
 	#else
-	    private var TransferProtocolScheme = PactSwiftMockServer.TransferProtocol
+	    typealias TransferProtocolScheme = PactSwiftMockServer.TransferProtocol
 	#endif
 
 	/// Spins up a mock server with expected interactions defined in the provided Pact

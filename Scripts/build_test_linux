@@ -34,9 +34,9 @@ PACT_FOUNDATION_REPO="https://github.com/pact-foundation/pact-reference.git"
 
 if [ ! -d "$PWD/$PRODUCT_NAME.xcodeproj" ]
 then
-	echo "🚨 Run this from the same folder where your '$PRODUCT_NAME.xcodeproj' lives."
-	echo "⚠️  You are runing it in $PWD"
-	exit 1
+    echo "🚨 Run this from the same folder where your '$PRODUCT_NAME.xcodeproj' lives."
+    echo "⚠️  You are runing it in $PWD"
+    exit 1
 fi
 
 #######################
@@ -46,30 +46,30 @@ fi
 echo "👮‍♀️  Verifying project and dependencies' folder setup..."
 
 if [[ "$CI" == true ]]; then
-	echo "ℹ️ Adding submodule ${PACT_FOUNDATION_REPO}"
-	if [ ! -d "$PWD/pact-reference" ]; then
-		git submodule add $PACT_FOUNDATION_REPO
-		git submodule update --init
+    echo "ℹ️ Adding submodule ${PACT_FOUNDATION_REPO}"
+    if [ ! -d "$PWD/pact-reference" ]; then
+        git submodule add $PACT_FOUNDATION_REPO
+        git submodule update --init
 
-		echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
-		cd $LIBPACT_FFI_DIR
-		git fetch --all --tags
-		git checkout tags/libpact_ffi-v0.3.11
-	fi
+        echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
+        cd "$LIBPACT_FFI_DIR"
+        git fetch --all --tags
+        git checkout tags/libpact_ffi-v0.3.11
+    fi
 
-	export LD_LIBRARY_PATH="/usr/local/lib"
+    export LD_LIBRARY_PATH="/usr/local/lib"
 
 elif [ ! -d "$PWD/../pact-reference" ]; then
-	# TODO: fix this for running locally
-	echo "🚨 Missing pact-foundation/pact-reference repo."
-	echo "⚠️  Make sure you 'git clone ${PACT_FOUNDATION_REPO}' at the same folder level as your $PRODUCT_NAME."
-	exit 1
+    # TODO: fix this for running locally
+    echo "🚨 Missing pact-foundation/pact-reference repo."
+    echo "⚠️  Make sure you 'git clone ${PACT_FOUNDATION_REPO}' at the same folder level as your $PRODUCT_NAME."
+    exit 1
 else
-	echo "👍  Project setup seems to be in order."
+    echo "👍  Project setup seems to be in order."
 fi
 
 echo "ℹ️  Changing location to ${LIBPACT_FFI_DIR}"
-cd $LIBPACT_FFI_DIR
+cd "$LIBPACT_FFI_DIR"
 
 #######################
 # Setup               #
@@ -79,13 +79,13 @@ cd $LIBPACT_FFI_DIR
 
 echo "👮‍♀️  Checking if Rust is installed..."
 if which cargo >/dev/null; then
-	echo "👍  cargo installed"
+    echo "👍  cargo installed"
 elif command -v ~/.cargo/bin/cargo &> /dev/null; then
-	echo "👍  cargo installed in ~/.cargo/bin/"
+    echo "👍  cargo installed in ~/.cargo/bin/"
 else
-	echo "🚨  Rust/Cargo not installed"
-	echo "ERROR: cargo is required and is was found on this machine. See https://www.rust-lang.org/tools/install"
- 	exit 1
+    echo "🚨  Rust/Cargo not installed"
+    echo "ERROR: cargo is required and is was found on this machine. See https://www.rust-lang.org/tools/install"
+     exit 1
 fi
 
 ##############################################
@@ -105,7 +105,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$LIBPACT_PRODUCT_DIR
 #######################
 
 echo "ℹ️  Changing directory back to ${WORKSPACE}"
-cd ${WORKSPACE}
+cd "${WORKSPACE}"
 
 ##############################################################################################################
 # Run Swift buld and test                                                                                    #
@@ -113,7 +113,7 @@ cd ${WORKSPACE}
 ##############################################################################################################
 
 echo "ℹ️  Running swift build:"
-swift build -Xlinker -L$LIBPACT_PRODUCT_DIR
+swift build -Xlinker -L"$LIBPACT_PRODUCT_DIR"
 
 echo "ℹ️  Running swift test with -Xlinker -L$LIBPACT_PRODUCT_DIR"
-swift test -Xlinker -L$LIBPACT_PRODUCT_DIR
+swift test -Xlinker -L"$LIBPACT_PRODUCT_DIR"

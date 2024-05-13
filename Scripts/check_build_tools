@@ -5,23 +5,23 @@ set -o pipefail
 
 # Checking for SwiftLint
 if which swiftlint >/dev/null; then
-	echo "👍  swiftLint installed"
+    echo "👍  swiftLint installed"
 else
-	echo "⚠️  Swiftlint"
-	echo "warning: SwiftLint not installed, use 'brew install swiftlint' to install it."
+    echo "⚠️  Swiftlint"
+    echo "warning: SwiftLint not installed, use 'brew install swiftlint' to install it."
 fi
 
 if which carthage >/dev/null; then
-	echo "👍  carthage installed"
+    echo "👍  carthage installed"
 else
-	echo "⚠️  carthage"
-	echo "warning: carthage not installed, use 'brew install carthage' to install it."
+    echo "⚠️  carthage"
+    echo "warning: carthage not installed, use 'brew install carthage' to install it."
 fi
 
 # Checking for xcbeautify
 if which xcbeautify >/dev/null; then
-	echo "👍  xcbeautify installed"
+    echo "👍  xcbeautify installed"
 else
-	echo "⚠️  xcbeautify"
-	echo "warning: xcbeautify not installed, use 'brew install xcbeautify' to install it."
+    echo "⚠️  xcbeautify"
+    echo "warning: xcbeautify not installed, use 'brew install xcbeautify' to install it."
 fi

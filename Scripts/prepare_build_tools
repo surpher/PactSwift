@@ -5,5 +5,5 @@ brew tap thii/xcbeautify https://github.com/thii/xcbeautify.git
 brew install xcbeautify
 
 if [[ "$CI" == false ]]; then
-	brew install swiftlint
+    brew install swiftlint
 fi

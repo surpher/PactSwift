@@ -40,7 +40,8 @@ public class ObjcRandomBool: NSObject, ObjcGenerator {
 	let type: ExampleGeneratorExpressible = ExampleGenerator.RandomBool()
 
 	/// Generates a random boolean value
-	@objc public override init() {
+	@objc 
+	public override init() {
 		super.init()
 	}
 

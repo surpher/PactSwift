@@ -16,24 +16,18 @@
 //
 
 #if !os(Linux)
-
 import Foundation
 import XCTest
 
-#if os(Linux)
-import PactSwiftMockServerLinux
-#elseif compiler(>=5.5)
 @_implementationOnly import PactSwiftMockServer
-#else
-import PactSwiftMockServer
-#endif
 
 /// Initializes a `PFMockService` object that handles Pact interaction testing for projects written in Objective-C. For Swift projects use `MockService`.
 ///
 /// When initializing with `.secure` scheme, the SSL certificate on Mock Server
 /// is a self-signed certificate.
 ///
-@objc open class PFMockService: NSObject {
+@objc 
+open class PFMockService: NSObject {
 
 	// MARK: - Properties
 
@@ -82,7 +76,8 @@ import PactSwiftMockServer
 	/// - parameter description: A description of the API interaction
 	///
 	@discardableResult
-	@objc public func uponReceiving(_ description: String) -> Interaction {
+	@objc
+	public func uponReceiving(_ description: String) -> Interaction {
 		mockService.uponReceiving(description)
 	}
 
@@ -115,5 +110,4 @@ import PactSwiftMockServer
 	}
 
 }
-
 #endif
