@@ -14,8 +14,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/surpher/PactSwiftMockServer.git",
       "state" : {
-        "revision" : "c2f02dfba35618dc81f2863267a3a0cbec0fe9a8",
-        "version" : "0.4.3"
+        "revision" : "52df1915c4a1e702484bbdd9f41eb4fb915ba17f",
+        "version" : "0.5.0"
+      }
+    },
+    {
+      "identity" : "pactswiftserver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/surpher/PactSwiftServer.git",
+      "state" : {
+        "revision" : "12ecc92092ecd3640dcc2dcb98ce6b3d1f2d76f7",
+        "version" : "0.4.7"
       }
     },
     {

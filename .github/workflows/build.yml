@@ -15,28 +15,29 @@ on:
       - 'style/**'
       - 'test/**'
       - 'tech/**'
-      - 'for-posterity/**'
+      - 'legacy/**'
 
 env:
   RUST_TARGET_PATH: pact-reference
 
 jobs:
+
   test:
     name: Run ${{ matrix.platform }} on ${{ matrix.host }}
     runs-on: ${{ matrix.host }}
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         host: [macos-13, macos-14]
         platform: [ios, macos]
         include:
           - platform: ios
             scheme: "PactSwift-iOS"
-            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
+            destination: "platform=iOS Simulator,name=iPhone 14 Pro"
           - platform: macos
             scheme: "PactSwift-macOS"
-            destination: "arch=arm64"
+            destination: "arch=x86_64"
           - host: macos-13
             xcode: 14.3.1
           - host: macos-14
@@ -52,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Xcode ${{ matrix.xcode }}
         run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
@@ -87,7 +88,7 @@ jobs:
         run: swift --version
 
       - name: "⬇️  Checkout repository"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Protoc
         uses: arduino/setup-protoc@v1

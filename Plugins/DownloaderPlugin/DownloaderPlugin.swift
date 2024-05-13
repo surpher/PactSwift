@@ -72,6 +72,7 @@ private extension DownloaderPlugin {
     @discardableResult
     func unarchiveGzipArchiveAndRename(resource: URL, to newName: String) throws -> String {
         var destinationPath = resource.path
+        let lastPathComponent = (destinationPath as NSString).lastPathComponent
         print("info: Decompressing '\(destinationPath)'...")
         try shell(launchPath: launchPath, arguments: ["gzip", "-dvf", "\(destinationPath)"])
 
@@ -81,7 +82,7 @@ private extension DownloaderPlugin {
         // Rename resource
         let renameResult = try shell(
             launchPath: launchPath,
-            arguments: [ "mv", "-v", "\(destinationPath)", destinationPath.replacingOccurrences(of: destinationPath.lastPathComponent, with: newName) ]
+            arguments: [ "mv", "-v", "\(destinationPath)", destinationPath.replacingOccurrences(of: lastPathComponent, with: newName) ]
         )
 
         return renameResult

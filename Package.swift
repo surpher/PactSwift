@@ -5,7 +5,7 @@ let package = Package(
     name: "PactSwift",
 
     platforms: [
-        .macOS(.v10_12),
+        .macOS(.v10_15),
         .iOS(.v12),
         .tvOS(.v12)
     ],
@@ -32,7 +32,8 @@ let package = Package(
     ],
 
     dependencies: [
-        .package(url: "https://github.com/surpher/PactSwiftMockServer.git", exact: "0.4.3"),
+        .package(url: "https://github.com/surpher/PactSwiftServer.git", exact: "0.4.7"),
+        .package(url: "https://github.com/surpher/PactSwiftMockServer.git", exact: "0.5.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.1"),
         .package(url: "https://github.com/apple/swift-crypto.git", from: "3.0.0"),
     ],
@@ -43,7 +44,7 @@ let package = Package(
         .target(
             name: "PactSwift",
             dependencies: [
-                .product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
+                .product(name: "PactSwiftMockServer", package: "PactSwiftServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
                 .product(name: "PactSwiftMockServerLinux", package: "PactSwiftMockServer", condition: .when(platforms: [.linux]))
             ],
             path: "./Sources"
