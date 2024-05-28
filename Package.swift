@@ -8,7 +8,7 @@ let package = Package(
   platforms: [
     .macOS(.v13),
     .iOS(.v16),
-    .tvOS(.v16)
+    .tvOS(.v16),
   ],
   
   products: [
@@ -29,7 +29,7 @@ let package = Package(
     .target(
       name: "PactSwift",
       dependencies: [
-        .product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS]))
+        .product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
       ],
       path: "./Sources"
     ),
@@ -39,7 +39,7 @@ let package = Package(
       name: "PactSwiftTests",
       dependencies: [
         "PactSwift",
-        .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing")
+        .product(name: "InlineSnapshotTesting", package: "swift-snapshot-testing"),
       ],
       path: "./Tests"
     ),
