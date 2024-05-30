@@ -20,6 +20,7 @@ import InlineSnapshotTesting
 @testable import PactSwift
 
 final class PactContractTests: XCTestCase {
+
 	var pact: Pact!
 	var builder: PactBuilder!
 
@@ -622,10 +623,12 @@ final class PactContractTests: XCTestCase {
 
 		assertInlineSnapshot(of: matchers, as: .json)
 	}
+
 }
 
 
 private extension PactContractTests {
+
 	enum PactNode: String {
 		case matchingRules
 		case generators
@@ -691,7 +694,6 @@ private extension PactContractTests {
 			file: file,
 			line: line
 		)
-
 	}
 
 	func getJsonObject() throws -> [String: Any] {
@@ -704,10 +706,12 @@ private extension PactContractTests {
 		}
 		return jsonObject
 	}
+
 }
 
 
 private extension PactContractTests {
+	
 	static func getJsonObject(_ filename: String) throws -> [String: Any] {
 		let fileContents = try String(contentsOfFile: filename)
 		guard
