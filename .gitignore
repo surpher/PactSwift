@@ -44,7 +44,7 @@ Temporary Items
 /*.gcno
 
 ### Xcode Patch ###
-**/xcshareddata/WorkspaceSettings.xcsettings
+**/xcshareddata/WorkspaceSettings.xcsettingfeat/v2.0.0s
 
 ### Swift ###
 # Xcode
@@ -106,3 +106,10 @@ Carthage/
 ## Binaries      ##
 ###################
 *.a
+*.so
+lib/
+
+###################
+## VSCode        ##
+###################
+.vscode
