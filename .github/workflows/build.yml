@@ -49,15 +49,17 @@ jobs:
       - name: "🏭 Use Xcode ${{ matrix.xcode }}"
         run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
 
-      - name: "🧰 Prepare tools"
-        run: |
-          Scripts/prepare_build_tools
-
       - name: "🧪 Run tests (xcodebuild)"
         run: |
-          set -o pipefail && xcodebuild -resolvePackageDependencies && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
+          set -o pipefail && \
+          xcodebuild -resolvePackageDependencies && \
+          xcodebuild test \
+            -project PactSwift.xcodeproj \
+            -scheme "$SCHEME"\
+            -destination "$DESTINATION" \
+            | xcbeautify
 
-      - name: "⚗️ Run tests (swift)"
-        run: |
-          swift build
-          swift test -c release
+    #   - name: "⚗️ Run tests (swift)"
+    #     run: |
+    #       swift build
+    #       swift test -c release
