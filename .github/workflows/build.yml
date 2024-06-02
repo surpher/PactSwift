@@ -1,9 +1,16 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - 'main'
+  pull_request:
+    types:
+        - opened
+        - synchronize
+        - reopened
+        - ready_for_review
+  workflow_dispatch:
+
+env:
+  RUST_TARGET_PATH: pact-reference
 
 jobs:
   test_ios:
@@ -13,14 +20,19 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        host: [macos-12, macos-13]
+        host: [macos-13, macos-14]
+        platform: [ios, macos]
         include:
+          - platform: ios
+            scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
+          - platform: macos
+            scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
           - host: macos-13
-            destination: "platform=iOS Simulator,name=iPhone 14 Pro"
-            xcode: '15.0'
-          - host: macos-12
-            destination: "platform=iOS Simulator,name=iPhone 12 Pro"
-            xcode: 14.1
+            xcode: 14.3.1
+          - host: macos-14
+            xcode: 15.3
 
     env:
       SCHEME: "PactSwift-iOS"
@@ -47,56 +59,5 @@ jobs:
 
       - name: "⚗️ Run tests (swift)"
         run: |
-          set -o pipefail && swift test -c release
-    
-  test_macos:
-    name: "🤖 Test macOS"
-    runs-on: ${{ matrix.host }}
-
-    strategy:
-      fail-fast: true
-      matrix:
-        host: [macos-12, macos-13]
-        include:
-          - host: macos-13
-            xcode: '15.0'
-          - host: macos-12
-            xcode: 14.1
-
-    env:
-      SCHEME: "PactSwift-macOS"
-      DESTINATION: "arch=x86_64"
-
-    concurrency:
-      group: test_${{ matrix.host }}_${{ matrix.xcode }}_macOS_${{ github.ref }}
-      cancel-in-progress: true
-
-    steps:
-      - name: "🧑‍💻 Checkout repository"
-        uses: actions/checkout@v3
-
-      - name: "🏭 Use Xcode ${{ matrix.xcode }}"
-        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
-
-      - name: "🧰 Prepare tools"
-        run: |
-          Scripts/prepare_build_tools
-
-      - name: "🧪 Run tests (xcodebuild)"
-        run: |
-          set -o pipefail && xcodebuild -resolvePackageDependencies && xcodebuild clean test -project PactSwift.xcodeproj -scheme "$SCHEME" -destination "$DESTINATION" GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES | xcbeautify
-
-      - name: "⚗️ Run tests (swift)"
-        run: |
-          set -o pipefail && swift test -c release
-
-  after_success:
-    needs: [test_ios, test_macos]
-    name: "🚚 Build demo projects"
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: "🚚 Build demo projects"
-        run: |
-          curl -X POST https://api.github.com/repos/surpher/pact-swift-examples/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.PACT_SWIFT_TOKEN }} --data '{"event_type":"PactSwift - ${{ github.event.head_commit.message }}"}'
+          swift build
+          swift test -c release
