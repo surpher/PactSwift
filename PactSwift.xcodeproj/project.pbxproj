@@ -95,6 +95,8 @@
 		AD48EC5926CF90B40017E071 /* ProviderVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD48EC5726CF90B40017E071 /* ProviderVerifier.swift */; };
 		AD4B97132513A64700C37560 /* MatcherRandomStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B97122513A64700C37560 /* MatcherRandomStringTests.swift */; };
 		AD4B97142513A64700C37560 /* MatcherRandomStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4B97122513A64700C37560 /* MatcherRandomStringTests.swift */; };
+		AD4EC76A2C0C278600DEE0E9 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AD4EC7692C0C278600DEE0E9 /* InlineSnapshotTesting */; };
+		AD4EC76C2C0C279700DEE0E9 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = AD4EC76B2C0C279700DEE0E9 /* InlineSnapshotTesting */; };
 		AD5E9F0226D375BE0002580D /* ProviderVerifier+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */; };
 		AD5E9F0326D375BE0002580D /* ProviderVerifier+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0126D375BE0002580D /* ProviderVerifier+Error.swift */; };
 		AD5E9F0526D4684B0002580D /* WIPPacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5E9F0426D4684B0002580D /* WIPPacts.swift */; };
@@ -280,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD4EC76A2C0C278600DEE0E9 /* InlineSnapshotTesting in Frameworks */,
 				AD881808242C715B00BF510D /* PactSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +298,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD4EC76C2C0C279700DEE0E9 /* InlineSnapshotTesting in Frameworks */,
 				AD8FC7C02463A06F00361854 /* PactSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +592,9 @@
 				AD88180A242C715B00BF510D /* PBXTargetDependency */,
 			);
 			name = PactSwiftTests_iOS;
+			packageProductDependencies = (
+				AD4EC7692C0C278600DEE0E9 /* InlineSnapshotTesting */,
+			);
 			productName = PACTSwiftTests;
 			productReference = AD881807242C715B00BF510D /* PactSwiftTests_iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -630,6 +637,9 @@
 				AD8FC7C22463A06F00361854 /* PBXTargetDependency */,
 			);
 			name = PactSwiftTests_macOS;
+			packageProductDependencies = (
+				AD4EC76B2C0C279700DEE0E9 /* InlineSnapshotTesting */,
+			);
 			productName = PactSwift_macOSTests;
 			productReference = AD8FC7BF2463A06F00361854 /* PactSwiftTests_macOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -670,6 +680,7 @@
 			mainGroup = AD8817F4242C715A00BF510D;
 			packageReferences = (
 				A75EC3AF294313940054BADB /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */,
+				AD4EC7682C0C278600DEE0E9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = AD8817FF242C715A00BF510D /* Products */;
 			projectDirPath = "";
@@ -1172,6 +1183,14 @@
 				kind = branch;
 			};
 		};
+		AD4EC7682C0C278600DEE0E9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.16.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1184,6 +1203,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A75EC3AF294313940054BADB /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */;
 			productName = PactSwiftMockServer;
+		};
+		AD4EC7692C0C278600DEE0E9 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD4EC7682C0C278600DEE0E9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		AD4EC76B2C0C279700DEE0E9 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD4EC7682C0C278600DEE0E9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
