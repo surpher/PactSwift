@@ -43,9 +43,9 @@ class MatcherOneOfTests: MatcherTestCase {
 			json,
 			#"""
 			{
-				"pact:matcher:type" : "regex",
-				"regex" : "^(disabled|enabled|unknown)$",
-				"value" : "unknown"
+			  "pact:matcher:type" : "regex",
+			  "regex" : "^(disabled|enabled|unknown)$",
+			  "value" : "unknown"
 			}
 			"""#
 		)

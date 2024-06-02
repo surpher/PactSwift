@@ -99,74 +99,74 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: interaction, as: .json) {
 			"""
 			{
-				"$" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.array_of_objects" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.array_of_objects[*].key_for_datetime_expression" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"format" : "yyyy-MM-dd",
-							"match" : "datetime"
-						}
-					]
-				},
-				"$.array_of_objects[*].key_for_matcher_array" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type",
-							"min" : 0
-						}
-					]
-				},
-				"$.array_of_objects[*].key_int" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "integer"
-						}
-					]
-				},
-				"$.array_of_objects[*].key_string" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.array_of_strings" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type",
-							"min" : 0
-						}
-					]
-				},
-				"$.includes_like" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "include",
-							"value" : "included"
-						}
-					]
-				}
+			  "$" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.array_of_objects" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.array_of_objects[*].key_for_datetime_expression" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "format" : "yyyy-MM-dd",
+			        "match" : "datetime"
+			      }
+			    ]
+			  },
+			  "$.array_of_objects[*].key_for_matcher_array" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type",
+			        "min" : 0
+			      }
+			    ]
+			  },
+			  "$.array_of_objects[*].key_int" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "integer"
+			      }
+			    ]
+			  },
+			  "$.array_of_objects[*].key_string" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.array_of_strings" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type",
+			        "min" : 0
+			      }
+			    ]
+			  },
+			  "$.includes_like" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "include",
+			        "value" : "included"
+			      }
+			    ]
+			  }
 			}
 			"""
 		}
@@ -180,13 +180,13 @@ final class PactContractTests: XCTestCase {
 			.withRequest(method: .GET, path: "/animals")
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
-					.like([
-						"animals": .eachLike(
-							[
-								"children": .eachLike("Mary", min: 0),
-							]
-						)
-					])
+				  .like([
+				    "animals": .eachLike(
+				      [
+				        "children": .eachLike("Mary", min: 0),
+				      ]
+				    )
+				  ])
 				)
 			}
 		try await builder.verify { context in
@@ -206,31 +206,31 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: interaction, as: .json) {
 			"""
 			{
-				"$" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.animals" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.animals[*].children" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type",
-							"min" : 0
-						}
-					]
-				}
+			  "$" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.animals" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.animals[*].children" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type",
+			        "min" : 0
+			      }
+			    ]
+			  }
 			}
 			"""
 		}
@@ -244,11 +244,11 @@ final class PactContractTests: XCTestCase {
 			.withRequest(method: .GET, path: "/animals1")
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
-					.like([
-						"animals": .eachLike([
-							"children": .eachLike("Mary", min: 0),
-						])
-					])
+				  .like([
+				    "animals": .eachLike([
+				      "children": .eachLike("Mary", min: 0),
+				    ])
+				  ])
 				)}
 
 		try builder
@@ -257,11 +257,11 @@ final class PactContractTests: XCTestCase {
 			.withRequest(method: .GET, path: "/animals2")
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
-					.like([
-						"animals": .eachLike([
-							"children": .eachLike("Mary", min: 0),
-						])
-					])
+				  .like([
+				    "animals": .eachLike([
+				      "children": .eachLike("Mary", min: 0),
+				    ])
+				  ])
 				)}
 
 		try await builder.verify { context in
@@ -307,23 +307,23 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: interaction, as: .json) {
 			"""
 			{
-				"$" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$[*].id" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "regex",
-							"regex" : "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
-						}
-					]
-				}
+			  "$" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$[*].id" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "regex",
+			        "regex" : "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+			      }
+			    ]
+			  }
 			}
 			"""
 		}
@@ -410,8 +410,8 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: request, as: .json) {
 			#"""
 			{
-				"method" : "GET",
-				"path" : "\/arrays\/explicit"
+			  "method" : "GET",
+			  "path" : "\/arrays\/explicit"
 			}
 			"""#
 		}
@@ -419,23 +419,23 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: matchers, as: .json) {
 			"""
 			{
-				"$" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type",
-							"min" : 0
-						}
-					]
-				},
-				"$[*].id" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				}
+			  "$" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type",
+			        "min" : 0
+			      }
+			    ]
+			  },
+			  "$[*].id" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  }
 			}
 			"""
 		}
@@ -503,8 +503,8 @@ final class PactContractTests: XCTestCase {
 			.willRespond(with: 200) { response in
 				try response.jsonBody(
 					.like([
-						"identifier": .like(1),
-						"group_identifier": .like(1)
+					  "identifier": .like(1),
+					  "group_identifier": .like(1)
 					])
 				)}
 
@@ -521,30 +521,30 @@ final class PactContractTests: XCTestCase {
 		assertInlineSnapshot(of: matchers, as: .json) {
 			"""
 			{
-				"$" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.group_identifier" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				},
-				"$.identifier" : {
-					"combine" : "AND",
-					"matchers" : [
-						{
-							"match" : "type"
-						}
-					]
-				}
+			  "$" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.group_identifier" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  },
+			  "$.identifier" : {
+			    "combine" : "AND",
+			    "matchers" : [
+			      {
+			        "match" : "type"
+			      }
+			    ]
+			  }
 			}
 			"""
 		}
