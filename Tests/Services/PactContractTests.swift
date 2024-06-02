@@ -16,675 +16,616 @@
 //
 
 import XCTest
-/*
+import InlineSnapshotTesting
 @testable import PactSwift
 
-private class MockServiceWrapper {
-	static let shared = MockServiceWrapper()
+final class PactContractTests: XCTestCase {
 
-	let errorCapture = ErrorCapture()
-	let consumer = "sanity-consumer"
-	let provider = "sanity-provider"
+	var pact: Pact!
+	var builder: PactBuilder!
 
-	var mockService: MockService
+	static let consumerName = "sanity-consumer"
+	static let providerName = "sanity-provider"
+	static let pactDirectory = "/tmp/pacts"
 
-	init() {
-		mockService = MockService(consumer: consumer, provider: provider, merge: false, errorReporter: errorCapture)
+	static var pactFilePath: String {
+		"\(Self.pactDirectory)/\(Self.consumerName)-\(Self.providerName).json"
 	}
 
-}
-
-class PactContractTests: XCTestCase {
-
-	var mockService = MockServiceWrapper.shared.mockService
-
-	let session = URLSession(configuration: .ephemeral)
-
-	static var errorCapture = MockServiceWrapper.shared.errorCapture
-	static let pactContractFileName = "\(MockServiceWrapper.shared.consumer)-\(MockServiceWrapper.shared.provider).json"
-
-	// MARK: - Validate Pact contract at the end
-
 	override class func setUp() {
-		super.setUp()
+		PactContractTests.removeFile(Self.pactFilePath)
+	}
 
-		// Remove any previously generated Pact contracts for this test case
-		PactContractTests.removeFile(pactContractFileName)
+	override func setUpWithError() throws {
+		try super.setUpWithError()
+
+		guard builder == nil else { return }
+
+		pact = try Pact(consumer: Self.consumerName, provider: Self.providerName)
+			.withSpecification(.v4)
+
+		let config = PactBuilder.Config(pactDirectory: Self.pactDirectory)
+		builder = PactBuilder(pact: pact, config: config)
 	}
 
 	override class func tearDown() {
-			do {
-				let fileContents = try XCTUnwrap(FileManager.default.contents(atPath: PactFileManager.pactDirectoryPath + "/" + self.pactContractFileName))
-				let jsonObject = try JSONSerialization.jsonObject(with: fileContents, options: []) as! [String: Any]
+		do {
+			let pactJson = try getJsonObject(pactFilePath)
+			let interactions = try XCTUnwrap(pactJson["interactions"] as? [Any])
 
-				// Validate the final Pact contract file contains values that were specified in tests' expectations
 
-				// MARK: - Validate Interactions
-
-				let interactions = try XCTUnwrap(jsonObject["interactions"] as? [Any])
-				let numOfExpectedInteractions = 11
-
-				assert(
-					interactions.count == numOfExpectedInteractions,
-					"Expected \(numOfExpectedInteractions) interactions in Pact contract but got \(interactions.count)!"
-				)
-
-				// MARK: - Validate Matchers for Interactions
-
-				// Validate interaction "bug example"
-				let bugExampleInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "bug example")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedMatchersOne = [
-					"$.array_of_objects",
-					"$.array_of_objects[*].key_for_explicit_array[0]",
-					"$.array_of_objects[*].key_for_explicit_array[1]",
-					"$.array_of_objects[*].key_for_explicit_array[2]",
-					"$.array_of_objects[*].key_for_explicit_array[3]",
-					"$.array_of_objects[*].key_for_explicit_array[4]",
-					"$.array_of_objects[*].key_for_matcher_array",
-					"$.array_of_objects[*].key_for_matcher_array[*]",
-					"$.array_of_objects[*].key_int",
-					"$.array_of_objects[*].key_string",
-					"$.array_of_strings",
-					"$.array_of_strings[*]",
-					"$.includes_like",
-				]
-				assert(
-					expectedMatchersOne.allSatisfy { expectedKey -> Bool in
-						bugExampleInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// Validate interaction "a request for roles with sub-roles"
-				let arrayOnRootInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for roles with sub-roles")
-				let expectedNodesForArrayOnRoot = [
-					"$[*].id"
-				]
-				assert(
-					expectedNodesForArrayOnRoot.allSatisfy { expectedKey -> Bool in
-						arrayOnRootInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// Validate interaction "Request for animals with children"
-				let animalsWithChildrenInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "a request for animals with children")
-				let expectedNodesForAnimalsWithChildren = [
-					"$.animals",
-					"$.animals[*].children",
-					"$.animals[*].children[*]",
-				]
-				assert(
-					expectedNodesForAnimalsWithChildren.allSatisfy { expectedKey -> Bool in
-						animalsWithChildrenInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					}
-				)
-
-				// Validate interaction "Request for list of users in state"
-				let requestMatchers = try PactContractTests.extract(.matchingRules, in: .request, interactions: interactions, description: "Request for list of users in state")
-				let expectedMatchersTwo = [
-					"$.foo"
-				]
-				assert(
-					expectedMatchersTwo.allSatisfy { expectedKey -> Bool in
-						requestMatchers.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					}
-					, "Not all expected generators found in Pact contract file"
-				)
-
-				// Validate eachKeyLike matcher from interaction
-				let eachKeyLikeInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for an object with wildcard matchers")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedEachKeyLikePaths = [
-					"$.articles",
-					"$.articles[*].variants.*",
-					"$.articles[*].variants.*.bundles.*",
-					"$.articles[*].variants.*.bundles.*.description",
-					"$.articles[*].variants.*.bundles.*.referencedArticles",
-					"$.articles[*].variants.*.bundles.*.referencedArticles[*].bundleId",
-				]
-				assert(
-					expectedEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
-						eachKeyLikeInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
-				)
-
-				// Validate eachKeyLike matcher from interaction
-				let eachKeyLikeSimplerInteraction = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simpler object with wildcard matchers")
-				// print("\nMATCHERS:\n\(matchersOne)")
-				let expectedSimplerEachKeyLikePaths = [
-					"$.*",
-					"$.*.field1",
-					"$.*.field2",
-				]
-				assert(
-					expectedSimplerEachKeyLikePaths.allSatisfy { expectedKey -> Bool in
-						eachKeyLikeSimplerInteraction.contains { generatedKey, _ -> Bool in
-							expectedKey == generatedKey
-						}
-					},
-					"Not all expected generators found in Pact contract file for eachKeyLike matcher"
-				)
-
-				// MARK: - Validate Generators
-
-				let responseGenerators = try extract(.generators, in: .response, interactions: interactions, description: "Request for list of users")
-				let expectedGeneratorsType = [
-					"$.array_of_arrays[*][2]": [
-						"type": "Uuid",
-						"format": "upper-case-hyphenated"
-					]
-				]
-
-				assert(
-					expectedGeneratorsType.allSatisfy { expectedKey, expectedValue -> Bool in
-						responseGenerators.contains { generatedKey, generatedValue -> Bool in
-							expectedKey == generatedKey
-							&& expectedValue["type"] == (generatedValue as? [String: String])?["type"]
-							&& expectedValue["format"] == (generatedValue as? [String: String])?["format"]
-						}
-					},
-					"Not all expected generators found in Pact contract file"
-				)
-
-				// MARK: - Test two of same matchers used
-
-				let twoMatchersTest = try PactContractTests.extract(.matchingRules, in: .response, interactions: interactions, description: "Request for a simple object")
-				let expectedTwoMatchers = [
-					"$.identifier",
-					"$.group_identifier",
-				]
-
-				assert(expectedTwoMatchers.allSatisfy { expectedKey -> Bool in
-					twoMatchersTest.contains { generatedKey, _ -> Bool in
-						expectedKey == generatedKey
-					}
-				},
-				 "Not all expected matchers are found in Pact interaction"
-				)
-
-			} catch {
-				XCTFail(error.localizedDescription)
-			}
-
-		super.tearDown()
+			assert(5 == interactions.count)
+		} catch {
+			assert(false, "Test failure during teardown")
+		}
 	}
-*/
-	// MARK: - Tests that write the Pact contract
-/*
-	func testBugExample() {
-		mockService
-			.uponReceiving("bug example")
+
+	func testBugExample() async throws {
+		let bugExampleDescription = "bug example"
+		try builder
+			.uponReceiving(bugExampleDescription)
 			.given("some state")
 			.withRequest(method: .GET, path: "/bugfix")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"array_of_objects": Matcher.EachLike(
-						[
-							"key_string": Matcher.SomethingLike("String value"),
-							"key_int": Matcher.IntegerLike(123),
-							"key_for_matcher_array": Matcher.EachLike(
-								Matcher.SomethingLike("matcher_array_value")
-							),
-							"key_for_explicit_array": [
-								Matcher.SomethingLike("explicit_array_value_one"),
-								Matcher.SomethingLike(1),
-								Matcher.IntegerLike(936),
-								Matcher.DecimalLike(123.23),
-								Matcher.RegexLike(value: "2021-05-17", pattern: #"\d{4}-\d{2}-\d{2}"#),
-								Matcher.IncludesLike("in", "array", generate: "Included in explicit array")
-							],
-							"key_for_datetime_expression": ExampleGenerator.DateTimeExpression(expression: "today +1 day", format: "yyyy-MM-dd")
-						]
-					),
-					"array_of_strings": Matcher.EachLike(
-						Matcher.SomethingLike("A string")
-					),
-					"includes_like": Matcher.IncludesLike("included", generate: "Value _included_ is included in this string")
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"array_of_objects": .eachLike(
+							[
+								"key_string": .like("String value"),
+								"key_int": .integer(123),
+								"key_for_matcher_array": .eachLike("matcher_array_value", min: 0),
+								"key_for_datetime_expression": .datetime("today +1 day", format: "yyyy-MM-dd")
+							]
+						),
+						"array_of_strings": .eachLike("A string", min: 0),
+						"includes_like": .includes("included")
+					])
+				)
+			}
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/bugfix")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/bugfix")!
-			self.session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
+		try pact.writePactFile()
+
+		let interaction = try extract(
+			.matchingRules,
+			in: .response,
+			description: bugExampleDescription
+		)
+
+		assertInlineSnapshot(of: interaction, as: .json) {
+			"""
+			{
+				"$" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.array_of_objects" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.array_of_objects[*].key_for_datetime_expression" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"format" : "yyyy-MM-dd",
+							"match" : "datetime"
+						}
+					]
+				},
+				"$.array_of_objects[*].key_for_matcher_array" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type",
+							"min" : 0
+						}
+					]
+				},
+				"$.array_of_objects[*].key_int" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "integer"
+						}
+					]
+				},
+				"$.array_of_objects[*].key_string" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.array_of_strings" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type",
+							"min" : 0
+						}
+					]
+				},
+				"$.includes_like" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "include",
+							"value" : "included"
+						}
+					]
 				}
-				.resume()
+			}
+			"""
 		}
 	}
 
-	func testExample_AnimalsWithChildren() {
-		mockService
-			.uponReceiving("a request for animals with children")
+	func testExample_AnimalsWithChildren() async throws {
+		let animalsWithChildrenDescription = "a request for animals with children"
+		try builder
+			.uponReceiving(animalsWithChildrenDescription)
 			.given("animals have children")
 			.withRequest(method: .GET, path: "/animals")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"animals": Matcher.EachLike(
-						[
-							"children": Matcher.EachLike(
-								Matcher.SomethingLike("Mary"),
-								min: 0
-							),
-						]
-					)
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"animals": .eachLike(
+							[
+								"children": .eachLike("Mary", min: 0),
+							]
+						)
+					])
+				)
+			}
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/animals")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/animals")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
+		try pact.writePactFile()
+
+		let interaction = try extract(
+			.matchingRules,
+			in: .response,
+			description: animalsWithChildrenDescription
+		)
+
+		assertInlineSnapshot(of: interaction, as: .json) {
+			"""
+			{
+				"$" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.animals" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.animals[*].children" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type",
+							"min" : 0
+						}
+					]
 				}
-				.resume()
+			}
+			"""
 		}
 	}
 
-	func testExample_AnimalsWithChildrenMultipleInteractionsInOneTest() {
-		let firstInteraction = mockService
+	func testExample_AnimalsWithChildrenMultipleInteractionsInOneTest() async throws {
+		throw XCTSkip("Unsure how to build multiple requests at once...")
+		try builder
 			.uponReceiving("a request for animals with children")
 			.given("animals have children")
 			.withRequest(method: .GET, path: "/animals1")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"animals": Matcher.EachLike(
-						[
-							"children": Matcher.EachLike(
-								Matcher.SomethingLike("Mary"),
-								min: 0
-							),
-						]
-					)
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"animals": .eachLike([
+							"children": .eachLike("Mary", min: 0),
+						])
+					])
+				)}
 
-		let secondInteraction = mockService
+		try builder
 			.uponReceiving("a request for animals with Children")
 			.given("animals have children")
 			.withRequest(method: .GET, path: "/animals2")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"animals": Matcher.EachLike(
-						[
-							"children": Matcher.EachLike(
-								Matcher.SomethingLike("Mary"),
-								min: 0
-							),
-						]
-					)
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"animals": .eachLike([
+							"children": .eachLike("Mary", min: 0),
+						])
+					])
+				)}
 
-		mockService.run(verify: [firstInteraction, secondInteraction]) { [unowned self] baseURL, completed in
-			let urlOne = URL(string: "\(baseURL)/animals1")!
-			let urlTwo = URL(string: "\(baseURL)/animals2")!
+		try await builder.verify { context in
+			let urlOne = try context.buildRequestURL(path: "/animals1")
+			let urlTwo = try context.buildRequestURL(path: "/animals2")
 
-			let expOne = expectation(description: "one")
-			let expTwo = expectation(description: "two")
+			let requestOne = URLRequest(url: urlOne)
+			_ = try await URLSession(configuration: .ephemeral).data(for: requestOne)
 
-			session
-				.dataTask(with: urlOne) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					expOne.fulfill()
-				}
-				.resume()
-
-			session
-				.dataTask(with: urlTwo) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: urlOne.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					expTwo.fulfill()
-				}
-				.resume()
-
-			waitForExpectations(timeout: 5) { _ in
-				completed()
-			}
+			let requestTwo = URLRequest(url: urlTwo)
+			_ = try await URLSession(configuration: .ephemeral).data(for: requestTwo)
 		}
 	}
 
-	func testExample_ArrayOnRoot() {
-		mockService
+	func testExample_ArrayOnRoot() async throws {
+		try builder
 			.uponReceiving("a request for roles with sub-roles")
-			.given("roles have sub-rules")
+			.given("roles have sub-roles")
 			.withRequest(method: .GET, path: "/roles")
-			.willRespondWith(
-				status: 200,
-				body:
-					Matcher.EachLike(
-						[
-							"id": Matcher.RegexLike(
-								value: "1234abcd-1234-abcf-12ab-abcdef1234567",
-								pattern: #"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"#
-							)
-						]
-					)
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.eachLike([
+						"id": .regex(
+							"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}",
+							example: "1234abcd-1234-abcf-12ab-abcdef1234567"
+						)]
+									 )
+				)}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/roles")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/roles")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
+
+		try pact.writePactFile()
+
+		let interaction = try extract(
+			.matchingRules,
+			in: .response,
+			description: "a request for roles with sub-roles")
+
+		assertInlineSnapshot(of: interaction, as: .json) {
+			"""
+			{
+				"$" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$[*].id" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "regex",
+							"regex" : "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+						}
+					]
 				}
-				.resume()
+			}
+			"""
 		}
 	}
 
-	func testPactContract_WritesMatchersAndGenerators() {
-		mockService
+	func testPactContract_WritesMatchersAndGenerators() async throws {
+		throw XCTSkip(".eachLike does not work with array literals")
+		try builder
 			.uponReceiving("Request for list of users")
 			.given("users exist")
 			.withRequest(method: .GET, path: "/users")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"foo": Matcher.SomethingLike("bar"),
-					"baz": Matcher.EachLike(123, min: 1, max: 5, count: 3),
-					"array_of_arrays": Matcher.EachLike(
-						[
-							Matcher.SomethingLike("array_value"),
-							Matcher.RegexLike(value: "2021-05-15", pattern: #"\d{4}-\d{2}-\d{2}"#),
-							ExampleGenerator.RandomUUID(format: .uppercaseHyphenated),
-							Matcher.EachLike(
-								[
-									"3rd_level_nested": Matcher.EachLike(Matcher.IntegerLike(369), count: 2)
-								]
-							)
-						]
-					),
-					"regex_array": Matcher.EachLike(
-						[
-							"regex_key": Matcher.EachLike(
-								Matcher.RegexLike(value: "1235", pattern: #"\d{4}"#),
-								min: 2
-							),
-							"regex_nested_object": Matcher.EachLike(
-								[
-									"regex_nested_key": Matcher.RegexLike(value: "12345678", pattern: #"\d{8}"#)
-								]
-							)
-						]
-					),
-					"enum_value": Matcher.OneOf("night", "morning", "mid-day", "afternoon", "evening")
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"foo": .like("bar"),
+						"baz": .eachLike(123, min: 1, max: 5),
+						//                "array_of_arrays": .eachLike(
+						//                  [
+						//                    .like("array_value"),
+						//                    .regex("2021-05-15", pattern: #"\d{4}-\d{2}-\d{2}"#),
+						//                    .randomUUID(like: "7FB8BD72-A818-4C5A-B342-9523BE40BF8F", format: .upperCaseHyphenated)
+						//                    .eachLike(
+						//                      [
+						//                        "3rd_level_nested": .eachLike(.integer(369))
+						//                      ]
+						//                    )
+						//                  ]
+						//                ),
+						//                "regex_array": .eachLike(
+						//                  [
+						//                    "regex_key": .eachLike(
+						//                      .regex("1235", pattern: #"\d{4}"#),
+						//                      min: 2
+						//                    ),
+						//                    "regex_nested_object": .eachLike(
+						//                      [
+						//                        "regex_nested_key": .regex("12345678", pattern: #"\d{8}"#)
+						//                      ]
+						//                    )
+						//                  ]
+						//                ),
+						"enum_value": .oneOf(["night", "morning", "mid-day", "afternoon", "evening"])
+					])
+				)}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/users")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
-				}
-				.resume()
-			}
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/users")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
 	}
 
-	func testPactContract_ArrayAsRoot() {
-		mockService
-			.uponReceiving("Request for an explicit array")
+	func testPactContract_ArrayAsRoot() async throws {
+		let description = "Request for an explicit array"
+		try builder
+			.uponReceiving(description)
 			.given("array exist")
 			.withRequest(
 				method: .GET,
-				path: Matcher.RegexLike(value: "/arrays/explicit", pattern: #"^/arrays/e\w+$"#)
+				path: "/arrays/explicit"
+				// TODO: looks like path does not want a matcher
+				//        path: .regex("/arrays/explicit", pattern: #"^/arrays/e\w+$"#)
 			)
-			.willRespondWith(
-				status: 200,
-				body:
-					[
-						[
-							"id": Matcher.SomethingLike(19231421)
-						],
-						[
-							"id": Matcher.SomethingLike(49817231)
-						]
-					]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.eachLike([
+						"id": .like(19231421)
+					], min: 0)
+				)}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/arrays/explicit")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
-				}
-				.resume()
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/arrays/explicit")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
+
+		try pact.writePactFile()
+
+		let interactions = try getInteractions()
+		let interaction = try getInteractionBy(description: description, from: interactions)
+		let request = try XCTUnwrap(interaction["request"] as? [String: Any])
+		let matchers = try extract(.matchingRules, in: .response, description: description)
+
+		assertInlineSnapshot(of: request, as: .json) {
+			#"""
+			{
+				"method" : "GET",
+				"path" : "\/arrays\/explicit"
 			}
-	}
+			"""#
+		}
 
-	func testPactContract_WithMatcherInRequestBody() {
-		mockService
-			.uponReceiving("Request for list of users in state")
-			.given("users in that state exist")
-			.withRequest(
-				method: .POST,
-				path: Matcher.FromProviderState(parameter: "/users/state/${stateIdentifier}", value: .string("/users/state/nsw")),
-				body: ["foo": Matcher.SomethingLike("bar")]
-			)
-			.willRespondWith(
-				status: 200,
-				body: [
-					"identifier": Matcher.FromProviderState(parameter: "userId", value: .int(100)),
-					"randomCode": Matcher.FromProviderState(parameter: "rndCode", value: .string("some-random-code")),
-					"foo": Matcher.SomethingLike("bar"),
-					"baz": Matcher.SomethingLike("qux")
-				]
-			)
-
-		mockService.run { [unowned self] baseURL, completed in
-			var request = URLRequest(url: URL(string: "\(baseURL)/users/state/nsw")!)
-			request.httpMethod = "POST"
-			request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-			request.httpBody = #"{"foo": "bar"}"#.data(using: .utf8)
-
-			session
-				.dataTask(with: request) { _, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: request.debugDescription, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
+		assertInlineSnapshot(of: matchers, as: .json) {
+			"""
+			{
+				"$" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type",
+							"min" : 0
+						}
+					]
+				},
+				"$[*].id" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
 				}
-				.resume()
+			}
+			"""
 		}
 	}
 
-	func testPactContract_WithTwoMatchersOfSameType() {
-		mockService
-			.uponReceiving("Request for a simple object")
+	func testPactContract_WithMatcherInRequestBody() async throws {
+		throw XCTSkip("Missing matcher for provider state")
+		//    let description = "Request for list of users in state"
+		//    try builder
+		//      .uponReceiving(description)
+		//      .given("users in that state exist")
+		//      .withRequest(
+		//        method: .POST,
+		//        path: Matcher.FromProviderState(parameter: "/users/state/${stateIdentifier}", value: .string("/users/state/nsw")),
+		//        builder: { request in
+		//          try request.jsonBody(
+		//            .like(["foo": .like("bar")])
+		//          )
+		//        }
+		//      )
+		//      .willRespond(with: 200) { response in
+		//        try response.jsonBody(
+		//          .eachlike([
+		//            "identifier": Matcher.FromProviderState(parameter: "userId", value: .int(100)),
+		//            "randomCode": Matcher.FromProviderState(parameter: "rndCode", value: .string("some-random-code")),
+		//            "foo": .like("bar"),
+		//            "baz": .like("qux")
+		//          ])
+		//        )}
+		//    try await builder.verify { context in
+		//      var request = URLRequest(url: try context.buildRequestURL(path: "/users/state/nsw"))
+		//      request.httpMethod = "POST"
+		//      request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		//      request.httpBody = #"{"foo": "bar"}"#.data(using: .utf8)
+		//
+		//      session
+		//        .dataTask(with: request) { _, response, error in
+		//          guard
+		//            error == nil,
+		//            (response as? HTTPURLResponse)?.statusCode == 200
+		//          else {
+		//            self.fail(function: #function, request: request.debugDescription, response: response.debugDescription, error: error)
+		//            return
+		//          }
+		//          // We don't care about the network response here, so we tell PactSwift we're done with the Pact test
+		//          // This is tested in `MockServiceTests.swift`
+		//          completed()
+		//        }
+		//        .resume()
+		//    }
+		//
+		//    try pact.writePactFile()
+		//
+		//    let matchers = try extract(.matchingRules, in: .response, description: description)
+		//
+		//    assertInlineSnapshot(of: matchers, as: .json)
+	}
+
+	func testPactContract_WithTwoMatchersOfSameType() async throws {
+		let description = "Request for a simple object"
+		try builder
+			.uponReceiving(description)
 			.given("data exists")
 			.withRequest(method: .GET, path: "/users/data")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"identifier": Matcher.SomethingLike(1),
-					"group_identifier": Matcher.SomethingLike(1)
-				]
-			)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"identifier": .like(1),
+						"group_identifier": .like(1)
+					])
+				)}
 
-		mockService.run { [unowned self] baseURL, completed in
-			let url = URL(string: "\(baseURL)/users/data")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					// We don't care about the network response here, so we tell PactSwift we're done with the Pact test
-					// This is tested in `MockServiceTests.swift`
-					completed()
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/users/data")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
+		}
+
+		try pact.writePactFile()
+
+		let matchers = try extract(.matchingRules, in: .response, description: description)
+
+		assertInlineSnapshot(of: matchers, as: .json) {
+			"""
+			{
+				"$" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.group_identifier" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
+				},
+				"$.identifier" : {
+					"combine" : "AND",
+					"matchers" : [
+						{
+							"match" : "type"
+						}
+					]
 				}
-				.resume()
+			}
+			"""
 		}
 	}
 
-	func testPactContract_WithEachKeyLikeMatcher() {
-		mockService
-			.uponReceiving("Request for an object with wildcard matchers")
+	func testPactContract_WithEachKeyLikeMatcher() async throws {
+		throw XCTSkip("Missing matcher that ignores keys")
+		let description = "Request for an object with wildcard matchers"
+		try builder
+			.uponReceiving(description)
 			.given("keys in response itself are ignored")
 			.withRequest(method: .GET, path: "/articles/nested/keyLikeMatcher")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"articles": Matcher.EachLike(
-						[
-							"variants": [
-								"001": Matcher.EachKeyLike([
-									"bundles": [
-										"001-A": Matcher.EachKeyLike([
-											"description": Matcher.SomethingLike("someDescription"),
-											"referencedArticles": Matcher.EachLike([
-													"bundleId": Matcher.SomethingLike("someId")
-												])
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"articles": .eachLike([
+							"variants": .like([
+								"001": .like([
+									"bundles": .eachLike([
+										"001-A": .like([
+											"description": .like("someDescription"),
+											"referencedArticles": .eachLike([
+												"bundleId": .like("someId")
+											])
 										])
-									]
+									])
 								])
-							]
-						]
-					)
-				]
-			)
+							])
+						], min: 0)
+					])
+				)}
 
-		mockService.run { [unowned self] baseURL, done in
-			let url = URL(string: "\(baseURL)/articles/nested/keyLikeMatcher")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					done()
-				}
-				.resume()
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/articles/nested/keyLikeMatcher")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
 		}
+
+		try pact.writePactFile()
+
+		let matchers = try extract(.matchingRules, in: .response, description: description)
+
+		assertInlineSnapshot(of: matchers, as: .json)
 	}
 
-	func testPactContract_WithSimplerEachKeyLikeMatcher() {
-		mockService
-			.uponReceiving("Request for a simpler object with wildcard matchers")
+	func testPactContract_WithSimplerEachKeyLikeMatcher() async throws {
+		throw XCTSkip("Missing matcher that ignores keys")
+		let description = "Request for a simpler object with wildcard matchers"
+		try builder
+			.uponReceiving(description)
 			.given("keys in response itself are ignored")
 			.withRequest(method: .GET, path: "/articles/simpler/keyLikeMatcher")
-			.willRespondWith(
-				status: 200,
-				body: [
-					"abc": Matcher.EachKeyLike([
-						"field1": Matcher.SomethingLike("value1"),
-						"field2": Matcher.IntegerLike(123)
-					]),
-					"xyz": Matcher.EachKeyLike([
-						"field1": Matcher.SomethingLike("value2"),
-						"field2": Matcher.IntegerLike(456)
+			.willRespond(with: 200) { response in
+				try response.jsonBody(
+					.like([
+						"abc": .eachLike([
+							"field1": .like("value1"),
+							"field2": .integer(123)
+						]),
+						"xyz": .eachLike([
+							"field1": .like("value2"),
+							"field2": .integer(456)
+						])
 					])
-				]
-			)
 
-		mockService.run { [unowned self] baseURL, done in
-			let url = URL(string: "\(baseURL)/articles/simpler/keyLikeMatcher")!
-			session
-				.dataTask(with: url) { data, response, error in
-					guard
-						error == nil,
-						(response as? HTTPURLResponse)?.statusCode == 200
-					else {
-						self.fail(function: #function, request: url.absoluteString, response: response.debugDescription, error: error)
-						return
-					}
-					done()
-				}
-				.resume()
+				)}
+		try await builder.verify { context in
+			let url = try context.buildRequestURL(path: "/articles/simpler/keyLikeMatcher")
+			let request = URLRequest(url: url)
+			_ = try await URLSession(configuration: .ephemeral).data(for: request)
 		}
+
+		try pact.writePactFile()
+
+		let matchers = try extract(.matchingRules, in: .response, description: description)
+
+		assertInlineSnapshot(of: matchers, as: .json)
 	}
-*/
-/*
+
 }
+
 
 private extension PactContractTests {
 
@@ -698,42 +639,101 @@ private extension PactContractTests {
 		case response
 	}
 
-	func fail(function: String, request: String? = nil, response: String? = nil, error: Error? = nil) {
-		XCTFail(
-		"""
-		Expected network request to succeed in \(function)!
-		Request URL: \t\(String(describing: request))
-		Response:\t\(String(describing: response))
-		Reason: \t\(String(describing: error?.localizedDescription))
-		"""
+	func extract(
+		_ type: PactNode,
+		in direction: Direction,
+		description: String,
+		file: StaticString = #file,
+		line: UInt = #line
+	) throws -> [String: Any] {
+		let interactions = try getInteractions(file: file, line: line)
+		let interaction = try getInteractionBy(
+			description: description,
+			from: interactions,
+			file: file,
+			line: line
+		)
+		let direction = try XCTUnwrap(
+			interaction[direction.rawValue] as? [String: Any],
+			"Could not unwrap \(direction.rawValue) property",
+			file: file,
+			line: line
+		)
+		let type = try XCTUnwrap(
+			direction[type.rawValue] as? [String: Any],
+			"Could not unwrap \(type.rawValue) property",
+			file: file,
+			line: line
+		)
+		return try XCTUnwrap(
+			type["body"] as? [String: Any],
+			"Could not unwrap body property",
+			file: file,
+			line: line
 		)
 	}
 
-	static func extract(_ type: PactNode,  in direction: Direction, interactions: [Any], description: String) throws -> [String: Any] {
-		let interaction = interactions.first { interaction -> Bool in
-			(interaction as! [String: Any])["description"] as! String == description
-		}
-		return try XCTUnwrap((((interaction as? [String: Any])?[direction.rawValue] as? [String: Any])?[type.rawValue] as? [String: Any])?["body"] as? [String: Any])
+	func getInteractions(file: StaticString = #file, line: UInt = #line) throws -> [Any] {
+		let pactJson = try getJsonObject()
+		return try XCTUnwrap(pactJson["interactions"] as? [Any], file: file, line: line)
 	}
 
-	@discardableResult
-	static func fileExists(_ filename: String) -> Bool {
-		FileManager.default.fileExists(atPath: PactFileManager.pactDirectoryPath + "/\(filename)")
+	func getInteractionBy(
+		description: String,
+		from interactions: [Any],
+		file: StaticString = #file,
+		line: UInt = #line
+	) throws -> [String: Any] {
+		let filtered = interactions
+			.map { $0 as! [String: Any] }
+			.filter { $0["description"] as! String == description }
+		XCTAssertEqual(1, filtered.count, "Did not find one and only one interaction", file: file, line: line)
+		return try XCTUnwrap(
+			filtered.first,
+			"Interaction not found with description: \(description)",
+			file: file,
+			line: line
+		)
 	}
 
-	@discardableResult
-	static func removeFile(_ filename: String) -> Bool {
-		if fileExists(filename) {
-			do {
-				try FileManager.default.removeItem(at: URL(fileURLWithPath: PactFileManager.pactDirectoryPath + "/\(filename)"))
-				return true
-			} catch {
-				debugPrint("Could not remove file \(PactFileManager.pactDirectoryPath + "/\(filename)")")
-				return false
-			}
+	func getJsonObject() throws -> [String: Any] {
+		let fileContents = try String(contentsOfFile: Self.pactFilePath)
+		guard
+			let data = fileContents.data(using: .utf8),
+			let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+		else {
+			return [:]
 		}
-		return false
+		return jsonObject
 	}
 
 }
-*/
+
+
+private extension PactContractTests {
+	
+	static func getJsonObject(_ filename: String) throws -> [String: Any] {
+		let fileContents = try String(contentsOfFile: filename)
+		guard
+			let data = fileContents.data(using: .utf8),
+			let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+		else {
+			return [:]
+		}
+		return jsonObject
+	}
+
+	static func fileExists(_ filename: String) -> Bool {
+		FileManager.default.fileExists(atPath: filename)
+	}
+
+	static func removeFile(_ filename: String) {
+		guard fileExists(filename) else { return }
+		do {
+			try FileManager.default.removeItem(at: URL(fileURLWithPath: filename))
+		} catch {
+			debugPrint("Could not remove file \(filename)")
+		}
+	}
+
+}
