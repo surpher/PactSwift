@@ -1,0 +1,65 @@
+name: Build
+
+on:
+  pull_request:
+    types:
+        - opened
+        - synchronize
+        - reopened
+        - ready_for_review
+  workflow_dispatch:
+
+env:
+  RUST_TARGET_PATH: pact-reference
+
+jobs:
+  test_ios:
+    name: "🤖 Test iOS"
+    runs-on: ${{ matrix.host }}
+
+    strategy:
+      fail-fast: true
+      matrix:
+        host: [macos-13, macos-14]
+        platform: [ios, macos]
+        include:
+          - platform: ios
+            scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
+          - platform: macos
+            scheme: "PactSwift-macOS"
+            destination: "arch=x86_64"
+          - host: macos-13
+            xcode: 14.3.1
+          - host: macos-14
+            xcode: 15.3
+
+    env:
+      SCHEME: "PactSwift-iOS"
+      DESTINATION: ${{ matrix.destination }}
+
+    concurrency:
+      group: test_${{ matrix.host }}_${{ matrix.xcode }}_iOS_${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: "🧑‍💻 Checkout repository"
+        uses: actions/checkout@v3
+
+      - name: "🏭 Use Xcode ${{ matrix.xcode }}"
+        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
+
+      - name: "🧪 Run tests (xcodebuild)"
+        run: |
+          set -o pipefail && \
+          xcodebuild -resolvePackageDependencies && \
+          xcodebuild test \
+            -project PactSwift.xcodeproj \
+            -scheme "$SCHEME"\
+            -destination "$DESTINATION" \
+            | xcbeautify
+
+    #   - name: "⚗️ Run tests (swift)"
+    #     run: |
+    #       swift build
+    #       swift test -c release
