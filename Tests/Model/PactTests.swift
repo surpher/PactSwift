@@ -2,26 +2,17 @@
 //  Created by Oliver Jones on 10/1/2023.
 //  Copyright © 2023 Oliver Jones. All rights reserved.
 //
-//  Permission to use, copy, modify, and/or distribute this software for any
-//  purpose with or without fee is hereby granted, provided that the above
-//  copyright notice and this permission notice appear in all copies.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-//  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-//  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
-//  SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-//  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-//  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
-//  IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//  See LICENSE file for licensing information.
 //
 
-import XCTest
 @testable import PactSwift
+
+import XCTest
 
 final class PactTests: XCTestCase {
 
     func testPactVersion() throws {
-    let pact = Pact.init(consumer: "Foo", provider: "Bar")
-    XCTAssertEqual(pact.version, "0.4.3")
+        let pact = Pact.init(consumer: "Foo", provider: "Bar")
+        XCTAssertEqual(pact.version, "0.4.3")
     }
 }

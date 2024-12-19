@@ -18,7 +18,7 @@ If the above doesn't help, please [submit an issue][new-issue] via GitHub.
 
 ### Finding things to do
 
-The [Core Contributors][core-contributor] usually tag issues that are ready to be worked on and easily accessible for new contributors with the [“good first issue”][good-first-issue] label. If you’ve never contributed to `PactSwift` before, these are a great place to start!
+The [Core Contributors][core-contributor] usually tag issues that are ready to be worked on and easily accessible for new contributors with the [“good first issue”][good-first-issue] label. If you've never contributed to `PactSwift` before, these are a great place to start!
 
 If you want to work on something else, such as a new feature or fixing a bug, it would be helpful if you submit a new issue, so that we can have a chance to discuss it first. We might have some pointers for you on how to get started, or how to best integrate it with existing solutions.
 
@@ -28,12 +28,6 @@ Use Homebrew to install [SwiftLint](https://github.com/realm/SwiftLint):
 
 ```sh
 brew install swiftlint
-```
-
-Install [Carthage](https://github.com/Carthage/Carthage) to test your changes and PactSwift builds successfully when distributing through Carthage:
-
-```sh
-brew install carthage
 ```
 
 Install [xcbeautify](https://github.com/thii/xcbeautify)
@@ -77,13 +71,13 @@ When you are ready to submit the PR, everything you need to know about submittin
 
 Once a [Core Contributor][core-contributor] has reviewed your PR, you might need to make changes before it gets merged. To make it easier on us, please make sure to avoid amending commits or force pushing to your branch to make corrections. By avoiding rewriting the commit history, you will allow each round of edits to become its own visible commit. This helps the people who need to review your code easily understand exactly what has changed since the last time they looked. When you are done addressing your review, make sure you alert the reviewer in a comment or via GitHub's rerequest review command. See [GitHub's documentation for dealing with Pull Requests][pr-docs].
 
-After your contribution is merged, it’s not immediately available to all users. Your change will be shipped as part of the next release.
+After your contribution is merged, it's not immediately available to all users. Your change will be shipped as part of the next release.
 
 ## Code of Conduct
 
 Help us keep this project diverse, open and inclusive. Please read and follow our [Code of Conduct][code-of-conduct].
 
-## Thanks for Contributing!
+## Thanks for Contributing
 
 Thank you for taking the time to contribute to the project!
 
@@ -102,7 +96,6 @@ All contributions to this project are also under this license as per [GitHub's T
 [core-contributor]: Documentation/CORE_CONTRIBUTOR.md
 [fork-docs]: https://help.github.com/articles/working-with-forks/
 [github-terms-contribution]: https://help.github.com/en/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
-[gist-rust]: https://gist.github.com/surpher/bbf88e191e9d1f01ab2e2bbb85f9b528
 [good-first-issue]: https://github.com/surpher/PactSwift/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 [issues]: https://github.com/surpher/PactSwift/issues
 [license]: LICENSE.md

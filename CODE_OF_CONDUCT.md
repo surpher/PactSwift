@@ -2,12 +2,14 @@
 
 ## Our Pledge
 
-In the interest of fostering an open and welcoming environment, we as
-contributors and maintainers pledge to making participation in our project and
-our community a harassment-free experience for everyone, regardless of age, body
-size, disability, ethnicity, sex characteristics, gender identity and expression,
-level of experience, education, socio-economic status, nationality, personal
-appearance, race, religion, or sexual identity and orientation.
+We as members, contributors, and leaders pledge to make participation in our
+community a harassment-free experience for everyone, regardless of age, body
+size, visible or invisible disability, ethnicity, sex characteristics, gender
+identity and expression, level of experience, education, socio-economic status,
+nationality, personal appearance, race, caste, color, religion, or sexual identity
+and orientation.
+
+We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
 ## Our Standards
 
@@ -55,7 +57,7 @@ further defined and clarified by project maintainers.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported by contacting the project team at [@pact-up](https://twitter.com/pact_up?lang=en) 
+reported by contacting the project team at [@pact-up](https://twitter.com/pact_up?lang=en)
 or direct messaging one of the `pact-swift` core collaborators at [Slack](https://pact-foundation.slack.com/archives/C9VBGNT4K).
 All complaints will be reviewed and investigated and will result in a response that
 is deemed necessary and appropriate to the circumstances. The project team is
@@ -66,12 +68,15 @@ Project maintainers who do not follow or enforce the Code of Conduct in good
 faith may face temporary or permanent repercussions as determined by other
 members of the project's leadership.
 
+All community leaders are obligated to respect the privacy and security of the reporter of any incident.
+
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
-available at https://www.contributor-covenant.org/version/1/4/code-of-conduct.html
+This Code of Conduct is adapted from the [Contributor Covenant][contributor-covenant], version 2.1,
+available at [https://www.contributor-covenant.org/][code-of-conduct]
 
-[homepage]: https://www.contributor-covenant.org
+For answers to common questions about this code of conduct, see [Frequently Asked Questions].
 
-For answers to common questions about this code of conduct, see
-https://www.contributor-covenant.org/faq
+[Frequently Asked Questions]: https://www.contributor-covenant.org/faq
+[contributor-covenant]: https://www.contributor-covenant.org
+[code-of-conduct]: https://www.contributor-covenant.org/version/2/1/code-of-conduct.html

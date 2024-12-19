@@ -1,13 +1,22 @@
-# 1.1.0 - v1.1.0
+# CHANGELOG
+
+## 1.1.0 - v1.1.0
+
 * 8a30412 - Merge pull request #97 from huwr/huwr/sendable-done-function (Marko Justinek)
 * 34c8056 - Make the `done` function Sendable (Huw Rowlands)
-# 1.0.2 - v1.0.2
+
+## 1.0.2 - v1.0.2
+
 * d511cc4 - chore: Bumps dependency version number (Marko Justinek)
-# 1.0.1 - v1.0.1
+
+## 1.0.1 - v1.0.1
+
 * c3aed20 - chore: Bumps mock server version to v0.4.2 (Marko Justinek)
 * 2404e83 - fix: Resolves SomethingLike matcher ignoring nested matchers (#93) (#94) (Marko Justinek)
 * b024615 - Chore: Update README (Marko Justinek)
-# 1.0.0 - v1.0.0
+
+## 1.0.0 - v1.0.0
+
 * d8d2e51 - docs: Update build status badge in README (Marko Justinek)
 * 12d25bd - chore: Bump mock server version (Marko Justinek)
 * 9950c02 - ci: Refactor CI workflow for Linux (Marko Justinek)
@@ -18,7 +27,9 @@
 * a7195b4 - chore: Bumping up minimum macOSX deployment target (Marko Justinek)
 * dc616b9 - chore: Setting exact version for mock server dependency (Marko Justinek)
 * a56db23 - docs: Updates EachLike example in-code docs (Marko Justinek)
-# 0.13.1 - v0.13.1
+
+## 0.13.1 - v0.13.1
+
 * a4ce230 - tech: Re-introduces CI workflow on macOS 10.15 (surpher)
 * a376128 - fix: Adds compiler check for _implementationOnly imports (surpher)
 * 89af3d7 - bugfix: Fixes Obj-C interface for merge feature (surpher)
@@ -31,7 +42,9 @@
 * 8d415a9 - test: Increase timeout for test making multiple requests (surpher)
 * 27fe3b7 - fix: Remove print statement from unit test (surpher)
 * 0181b46 - chore: Adds project-level copyright template (surpher)
-# 0.13.0 - v0.13.0
+
+## 0.13.0 - v0.13.0
+
 * 2bbb90f - chore: Clean up in-code documentation (surpher)
 * 80667bd - fix: Fixes type-os in inline documentation (Marko Justinek)
 * 4856bd1 - refactor: Using typealias for code readability (Marko Justinek)
@@ -40,7 +53,9 @@
 * 9565d9c - fix: Invalid processing of eachKeyLike matcher (Marko Justinek)
 * 4d98eb5 - refactor: Making internal parameter a non-mutating property (Marko Justinek)
 * 197e5b0 - feature: Adds EachKeyLike matcher (Marko Justinek)
+
 # 0.12.1 - v0.12.1
+
 * f992c7c - tech: Updates to unit tests script (Marko Justinek)
 * 28a3d76 - chore: Lock in mock service dependency version (Marko Justinek)
 * 0501132 - feat: Init MockService with merge contract file Bool flag (Marko Justinek)
@@ -61,17 +76,23 @@
 * 959d987 - Update README.md (Marko Justinek)
 * 4709275 - docs: Update README (Marko Justinek)
 * e0c4d04 - chore: Update README (Marko Justinek)
-# 0.12.0 - v0.12.0
+
+## 0.12.0 - v0.12.0
+
 * 6611b13 - feat: Add support for datetime expressions (#84) (Marko Justinek)
 * 02807e6 - fix: CI build environment for legacy platform (Marko Justinek)
 * ba34db8 - tech: Remove pact_ffi commit pinning due cargo version (Marko Justinek)
 * 2e745b2 - tech: Configures GitHub actions to use Xcode 13.2 (Marko Justinek)
 * 33612da - docs: Update example in inline documentation (Marko Justinek)
-# 0.11.2 - v0.11.2
+
+## 0.11.2 - v0.11.2
+
 * 0d6d9b9 - test: Add basic tests for random UUID (Marko Justinek)
 * 0b10fbf - docs: Wrap inline documentation comments (Marko Justinek)
 * f41a291 - fix: Sets randomUUID value with format (Marko Justinek)
-# 0.11.1 - v0.11.1
+
+## 0.11.1 - v0.11.1
+
 * b134e29 - feat: Enhance random UUID example generator (Marko Justinek)
 * 812cc4e - fix: Silencing SwiftLint error (Marko Justinek)
 * a22a0e0 - doco: Update EachLike matcher code comments (Marko Justinek)
@@ -88,14 +109,18 @@
 * 768883b - doco: Update CONTRIBUTING with link to Conventional Commits (Marko Justinek)
 * 3c7c84c - tech: Adds a GitHub workflow for PRs (Marko Justinek)
 * 368a51b - tech: Require titles and commit messages to follow semantic messages (Marko Justinek)
-# 0.11.0 - v0.11.0
+
+## 0.11.0 - v0.11.0
+
 * ee6c1ca - fix: Failing unit tests (Marko Justinek)
 * 93286f5 - doco: Update readme for v0.11.0 (Marko Justinek)
 * ad6a51e - feature: Verify a set of interactions in Obj-C project (Marko Justinek)
 * 71e9a3c - refactor: Renames validate argument to verify (Marko Justinek)
 * f670aa4 - feature: Validate multiple interactions (Marko Justinek)
 * b9f16e0 - doco: Re-arrange README content (Marko Justinek)
-# 0.10.0 - v0.10.0
+
+## 0.10.0 - v0.10.0
+
 * 9b0231a - doco: Update README.md (Marko Justinek)
 * a353ff1 - chore: Update dependency version (Marko Justinek)
 * 78445ac - refactor: Rename argument in MockService initialser (Marko Justinek)
@@ -104,7 +129,9 @@
 * 8ec91fc - feat: Instantiate MockService with Pact directory path (Marko Justinek)
 * efd1d7f - chore: Update README.md (Marko Justinek)
 * 7f69099 - tech: Exit release script when no version args provided (Marko Justinek)
-# 0.9.0 - v0.9.0
+
+## 0.9.0 - v0.9.0
+
 * d8514f9 - chore: Use depenecy version that supports provider verification (Marko Justinek)
 * d9c3c62 - doco: Update README.md (Marko Justinek)
 * e989267 - refactor: Update APIToken type initializer (Marko Justinek)
@@ -118,28 +145,42 @@
 * 31edb21 - feature: Provider verification MVP (Marko Justinek)
 * 4e55bda - doco: Improve example test in README.md (Marko Justinek)
 * f2b6bec - tech: Run after_success CI step on ubuntu (Marko Justinek)
-# 0.8.2 - v0.8.2
+
+## 0.8.2 - v0.8.2
+
 * bfbbd78 - fix: Makes OneOf matchers init public (Marko Justinek)
 * 98cefb7 - doco: Update examples in README.md (Marko Justinek)
-# 0.8.1 - v0.8.1
+
+## 0.8.1 - v0.8.1
+
 * e353841 - chore: Update PactSwiftMockServer dependency version (Marko Justinek)
 * f023414 - doco: Update README and project structure ADR (Marko Justinek)
-# 0.8.0 - v0.8.0
+
+## 0.8.0 - v0.8.0
+
 * 934f7d1 - feat: Matching against Provider State injected value (Marko Justinek)
-# 0.7.1 - v0.7.1
+
+## 0.7.1 - v0.7.1
+
 * b663cdd - fix: Update Obj-C interface for PFMockService.run (Marko Justinek)
-# 0.7.0 - v0.7.0
+
+## 0.7.0 - v0.7.0
+
 * 18cee4f - fix: Each test runs on own mock server (Marko Justinek)
 * f31b2f4 - feat: Hides baseURL property to return it in .run() function (Marko Justinek)
 * 817b0b0 - ci: Remove pull request trigger (Marko Justinek)
 * fa39340 - ci: Add config file for Semantic PR checks (Marko Justinek)
 * 7b3fc1d - tech: Specifies on what branches to run CI (Marko Justinek)
-# 0.6.2 - v0.6.2
+
+## 0.6.2 - v0.6.2
+
 * 9796047 - fix: Dependency versions (Marko Justinek)
 * 2276fb6 - tech: Ignoring a test on Linux (Marko Justinek)
 * b77aa80 - fix: Bugfixes (Marko Justinek)
 * 9f59e3a - fix: Drop Linux testing on CI (Marko Justinek)
-# 0.6.1 - v0.6.1
+
+## 0.6.1 - v0.6.1
+
 * a3f74ed - feat: Linux support (Marko Justinek)
 * 6b63f31 - fix: Package.swift indentation (Marko Justinek)
 * ad4ec02 - tech: Fix release script (again) (Marko Justinek)
@@ -152,7 +193,9 @@
 * 482f02f - tech: Improve test script (Marko Justinek)
 * a0503f0 - chore: Update CONTRIBUTING.md (Marko Justinek)
 * 46cbb17 - chore: Improve the release script (Marko Justinek)
-# 0.5.0 - Release v0.5.0\n
+
+## 0.5.0 - Release v0.5.0\n
+
 * 3d0c4cc - chore: Release prep (Marko Justinek, Mon Jul 5 21:40:20 2021 +1000)
 * bca1caf - fix: CI build workflows for swift package (Marko Justinek, Mon Jul 5 17:54:40 2021 +1000)
 * 3edb4b2 - fix: Failing test in SPM (Marko Justinek, Mon Jul 5 17:43:24 2021 +1000)
