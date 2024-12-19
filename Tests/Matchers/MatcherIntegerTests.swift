@@ -21,18 +21,18 @@ import XCTest
 
 class MatcherIntegerTests: MatcherTestCase {
 
-	func testMatcher_Integer_SerializesToJSON() throws {
-		let json = try jsonString(for: .integer(1234))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "integer",
-			  "value" : 1234
-			}
-			"""#
-		)
-	}
+    func testMatcher_Integer_SerializesToJSON() throws {
+        let json = try jsonString(for: .integer(1234))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "integer",
+              "value" : 1234
+            }
+            """#
+        )
+    }
 
 }

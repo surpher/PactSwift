@@ -24,104 +24,104 @@ import XCTest
 @MainActor
 final class ProviderVerifierTests: XCTestCase {
 
-	var errorReporter: ErrorCapture!
-	var mockVerifier: ProviderVerifying!
-	var testSubject: ProviderVerifier!
+    var errorReporter: ErrorCapture!
+    var mockVerifier: ProviderVerifying!
+    var testSubject: ProviderVerifier!
 
-	override func setUpWithError() throws {
-		try super.setUpWithError()
+    override func setUpWithError() throws {
+        try super.setUpWithError()
 
-		errorReporter = ErrorCapture()
-		mockVerifier = MockVerifier()
-		testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
-	}
+        errorReporter = ErrorCapture()
+        mockVerifier = MockVerifier()
+        testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
+    }
 
-	override func tearDownWithError() throws {
-		errorReporter = nil
-		mockVerifier = nil
-		testSubject = nil
+    override func tearDownWithError() throws {
+        errorReporter = nil
+        mockVerifier = nil
+        testSubject = nil
 
-		try super.tearDownWithError()
-	}
+        try super.tearDownWithError()
+    }
 
-	// MARK: - Tests
+    // MARK: - Tests
 
-	func testVerifyProviderReturnsSuccess() {
-		let testOptions = ProviderVerifier.Options(
-			provider: .init(port: 1234),
-			pactsSource: .directories(["/tmp/pacts"])
-		)
+    func testVerifyProviderReturnsSuccess() {
+        let testOptions = ProviderVerifier.Options(
+            provider: .init(port: 1234),
+            pactsSource: .directories(["/tmp/pacts"])
+        )
 
-		guard case .success = testSubject.verify(options: testOptions) else {
-			XCTFail("Expected verification to succeed!")
-			return
-		}
-	}
+        guard case .success = testSubject.verify(options: testOptions) else {
+            XCTFail("Expected verification to succeed!")
+            return
+        }
+    }
 
-	func testVerifyProviderReturnsError() throws {
-		let testOptions = ProviderVerifier.Options(
-			provider: .init(port: 1234),
-			pactsSource: .directories(["/tmp/pacts"])
-		)
+    func testVerifyProviderReturnsError() throws {
+        let testOptions = ProviderVerifier.Options(
+            provider: .init(port: 1234),
+            pactsSource: .directories(["/tmp/pacts"])
+        )
 
-		let mockVerifier = MockVerifier { .failure(ProviderVerificationError.invalidArguments) }
-		let testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
+        let mockVerifier = MockVerifier { .failure(ProviderVerificationError.invalidArguments) }
+        let testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
 
-		guard case .failure = testSubject.verify(options: testOptions) else {
-			XCTFail("Expected verification to fail!")
-			return
-		}
+        guard case .failure = testSubject.verify(options: testOptions) else {
+            XCTFail("Expected verification to fail!")
+            return
+        }
 
-		let expectedError = try XCTUnwrap(errorReporter.error?.message)
-		XCTAssertEqual(expectedError, "Provider Verification Error: Invalid arguments were provided to the verification process.")
-	}
+        let expectedError = try XCTUnwrap(errorReporter.error?.message)
+        XCTAssertEqual(expectedError, "Provider Verification Error: Invalid arguments were provided to the verification process.")
+    }
 
-	func testVerifyingProviderTriggersCompletionBlock() {
-		let testOptions = ProviderVerifier.Options(
-			provider: .init(port: 1234),
-			pactsSource: .directories(["/tmp/pacts"])
-		)
+    func testVerifyingProviderTriggersCompletionBlock() {
+        let testOptions = ProviderVerifier.Options(
+            provider: .init(port: 1234),
+            pactsSource: .directories(["/tmp/pacts"])
+        )
 
-		let testExp = expectation(description: "Completion block on succcessful verification")
-		testSubject.verify(options: testOptions) {
-			testExp.fulfill()
-		}
+        let testExp = expectation(description: "Completion block on succcessful verification")
+        testSubject.verify(options: testOptions) {
+            testExp.fulfill()
+        }
 
-		waitForExpectations(timeout: 0.1)
-	}
+        waitForExpectations(timeout: 0.1)
+    }
 
-	func testVerifyingProviderFailureTriggersCompletionBlock() throws {
-		let testOptions = ProviderVerifier.Options(
-			provider: .init(port: 1234),
-			pactsSource: .directories(["/tmp/pacts"])
-		)
+    func testVerifyingProviderFailureTriggersCompletionBlock() throws {
+        let testOptions = ProviderVerifier.Options(
+            provider: .init(port: 1234),
+            pactsSource: .directories(["/tmp/pacts"])
+        )
 
-		let testExp = expectation(description: "Completion block on failed verification")
-		let mockVerifier = MockVerifier { .failure(ProviderVerificationError.verificationFailed) }
-		let testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
-		testSubject.verify(options: testOptions, completionBlock: {
-			testExp.fulfill()
-		})
+        let testExp = expectation(description: "Completion block on failed verification")
+        let mockVerifier = MockVerifier { .failure(ProviderVerificationError.verificationFailed) }
+        let testSubject = ProviderVerifier(verifier: mockVerifier, errorReporter: errorReporter)
+        testSubject.verify(options: testOptions, completionBlock: {
+            testExp.fulfill()
+        })
 
-		let expectedError = try XCTUnwrap(errorReporter.error?.message)
-		XCTAssertEqual(expectedError, "Provider Verification Error: The verification process failed, see output for errors.")
-		waitForExpectations(timeout: 0.1)
-	}
+        let expectedError = try XCTUnwrap(errorReporter.error?.message)
+        XCTAssertEqual(expectedError, "Provider Verification Error: The verification process failed, see output for errors.")
+        waitForExpectations(timeout: 0.1)
+    }
 }
 
 // MARK: - Mocks
 
 private class MockVerifier: ProviderVerifying {
 
-	typealias VerifyProviderHandler = () -> Result<Bool, ProviderVerificationError>
+    typealias VerifyProviderHandler = () -> Result<Bool, ProviderVerificationError>
 
-	let verifyProviderHandler: VerifyProviderHandler?
+    let verifyProviderHandler: VerifyProviderHandler?
 
-	init(verifyProviderHandler: VerifyProviderHandler? = nil) {
-		self.verifyProviderHandler = verifyProviderHandler
-	}
+    init(verifyProviderHandler: VerifyProviderHandler? = nil) {
+        self.verifyProviderHandler = verifyProviderHandler
+    }
 
-	func verifyProvider(options args: String) -> Result<Bool, ProviderVerificationError> {
-		verifyProviderHandler?() ?? .success(true)
-	}
+    func verifyProvider(options args: String) -> Result<Bool, ProviderVerificationError> {
+        verifyProviderHandler?() ?? .success(true)
+    }
 }

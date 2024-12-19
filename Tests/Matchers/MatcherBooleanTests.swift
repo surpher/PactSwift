@@ -21,17 +21,17 @@ import XCTest
 
 class MatcherBooleanTests: MatcherTestCase {
 
-	func testMatcher_MatchBoolean() throws {
-		let json = try jsonString(for: .bool(true))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "boolean",
-			  "value" : true
-			}
-			"""#
-		)
-	}
+    func testMatcher_MatchBoolean() throws {
+        let json = try jsonString(for: .bool(true))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "boolean",
+              "value" : true
+            }
+            """#
+        )
+    }
 }

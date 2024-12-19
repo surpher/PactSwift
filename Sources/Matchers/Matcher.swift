@@ -18,5 +18,5 @@
 import Foundation
 
 public protocol Matcher: Encodable {
-	// no additional members
+    // no additional members
 }

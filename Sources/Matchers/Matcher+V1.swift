@@ -21,17 +21,17 @@ import Foundation
 
 public extension Matcher {
 
-	/// A matcher that checks that the values are equal.
-	///
-	/// - Note: Requires `Pact.Specification.v1`.
-	/// - Parameters:
-	///   - value: The value to match with.
-	///
-	static func equals<T: Encodable>(_ value: T) -> AnyMatcher {
-		GenericMatcher(type: "equality", value: value).asAny()
-	}
+    /// A matcher that checks that the values are equal.
+    ///
+    /// - Note: Requires `Pact.Specification.v1`.
+    /// - Parameters:
+    ///   - value: The value to match with.
+    ///
+    static func equals<T: Encodable>(_ value: T) -> AnyMatcher {
+        GenericMatcher(type: "equality", value: value).asAny()
+    }
 
-	static func emptyArray() -> AnyMatcher {
-		equals([String]())
-	}
+    static func emptyArray() -> AnyMatcher {
+        equals([String]())
+    }
 }

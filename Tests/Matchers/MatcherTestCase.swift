@@ -21,23 +21,23 @@ import XCTest
 
 class MatcherTestCase: XCTestCase {
 
-	var encoder: JSONEncoder!
-	
-	override func setUpWithError() throws {
-		try super.setUpWithError()
-		
-		encoder = JSONEncoder()
-		encoder.outputFormatting = [.sortedKeys, .prettyPrinted, .withoutEscapingSlashes]
-	}
-	
-	override func tearDownWithError() throws {
-		encoder = nil
-		try super.tearDownWithError()
-	}
-	
-	func jsonString(for matcher: AnyMatcher) throws -> String {
-		let data = try encoder.encode(matcher)
-		return try XCTUnwrap(String(data: data, encoding: .utf8))
-	}
-	
+    var encoder: JSONEncoder!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+
+        encoder = JSONEncoder()
+        encoder.outputFormatting = [.sortedKeys, .prettyPrinted, .withoutEscapingSlashes]
+    }
+
+    override func tearDownWithError() throws {
+        encoder = nil
+        try super.tearDownWithError()
+    }
+
+    func jsonString(for matcher: AnyMatcher) throws -> String {
+        let data = try encoder.encode(matcher)
+        return try XCTUnwrap(String(data: data, encoding: .utf8))
+    }
+
 }

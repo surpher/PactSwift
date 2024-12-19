@@ -21,17 +21,17 @@ import XCTest
 
 class MatcherSemverTests: MatcherTestCase {
 
-	func testMatcher_MatchSemver() throws {
-		let json = try jsonString(for: .semver("1.2.3"))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "semver",
-			  "value" : "1.2.3"
-			}
-			"""#
-		)
-	}
+    func testMatcher_MatchSemver() throws {
+        let json = try jsonString(for: .semver("1.2.3"))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "semver",
+              "value" : "1.2.3"
+            }
+            """#
+        )
+    }
 }

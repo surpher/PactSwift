@@ -21,18 +21,18 @@ import XCTest
 
 class MatcherRandomBooleanTests: MatcherTestCase {
 
-	func testRandomBoolean_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomBoolean())
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:generator:type" : "RandomBoolean",
-			  "pact:matcher:type" : "type",
-			  "value" : true
-			}
-			"""#
-		)
-	}
+    func testRandomBoolean_SerializesToJSON() throws {
+        let json = try jsonString(for: .randomBoolean())
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:generator:type" : "RandomBoolean",
+              "pact:matcher:type" : "type",
+              "value" : true
+            }
+            """#
+        )
+    }
 }

@@ -19,9 +19,9 @@ import Foundation
 
 enum PactInteractionElement: String {
 
-	case body
-	case headers
-	case path
-	case query
+    case body
+    case headers
+    case path
+    case query
 
 }

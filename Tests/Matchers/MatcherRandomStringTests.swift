@@ -21,19 +21,19 @@ import XCTest
 
 class MatcherRandomStringTests: MatcherTestCase {
 
-	func testRandomString_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomString(like: "example", size: 20))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:generator:type" : "RandomString",
-			  "pact:matcher:type" : "type",
-			  "size" : 20,
-			  "value" : "example"
-			}
-			"""#
-		)
-	}
+    func testRandomString_SerializesToJSON() throws {
+        let json = try jsonString(for: .randomString(like: "example", size: 20))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:generator:type" : "RandomString",
+              "pact:matcher:type" : "type",
+              "size" : 20,
+              "value" : "example"
+            }
+            """#
+        )
+    }
 }

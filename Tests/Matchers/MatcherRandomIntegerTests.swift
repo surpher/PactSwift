@@ -21,20 +21,20 @@ import XCTest
 
 class MatcherRandomIntegerTests: MatcherTestCase {
 
-	func testRandomInteger_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomInteger(like: 23, range: 20...30))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "max" : 30,
-			  "min" : 20,
-			  "pact:generator:type" : "RandomInt",
-			  "pact:matcher:type" : "type",
-			  "value" : 23
-			}
-			"""#
-		)
-	}
+    func testRandomInteger_SerializesToJSON() throws {
+        let json = try jsonString(for: .randomInteger(like: 23, range: 20...30))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "max" : 30,
+              "min" : 20,
+              "pact:generator:type" : "RandomInt",
+              "pact:matcher:type" : "type",
+              "value" : 23
+            }
+            """#
+        )
+    }
 }

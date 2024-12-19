@@ -1,21 +1,12 @@
 {
   "pins" : [
     {
-      "identity" : "pactmockserver",
+      "identity" : "pactswiftmockserverxcframework",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/surpher/PactMockServer.git",
+      "location" : "https://github.com/surpher/PactSwiftMockServerXCFramework.git",
       "state" : {
-        "revision" : "11fe519e6d1b0c513c717ba507e89ba401bdf8de",
-        "version" : "0.1.2"
-      }
-    },
-    {
-      "identity" : "pactswiftmockserver",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/surpher/PactSwiftMockServer.git",
-      "state" : {
-        "branch" : "feature/swift-concurrency",
-        "revision" : "0db7b9b64f273082ceea21eaad4fd836cb43cbf6"
+        "revision" : "0b52f3f22af35f1fda3f56ad4bba46f9f1dc60fa",
+        "version" : "1.0.1"
       }
     }
   ],

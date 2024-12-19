@@ -18,16 +18,16 @@
 import Foundation
 
 enum GeneratorType: String, Encodable {
-	case randomInt = "RandomInt"
-	case uuid = "Uuid"
-	case randomDecimal = "RandomDecimal"
-	case randomHex = "RandomHexadecimal"
-	case randomString = "RandomString"
-	case regex = "Regex"
-	case date = "Date"
-	case time = "Time"
-	case dateTime = "DateTime"
-	case randomBoolean = "RandomBoolean"
-	case providerState = "ProviderState"
-	case mockServerUrl = "MockServerURL"
+    case randomInt = "RandomInt"
+    case uuid = "Uuid"
+    case randomDecimal = "RandomDecimal"
+    case randomHex = "RandomHexadecimal"
+    case randomString = "RandomString"
+    case regex = "Regex"
+    case date = "Date"
+    case time = "Time"
+    case dateTime = "DateTime"
+    case randomBoolean = "RandomBoolean"
+    case providerState = "ProviderState"
+    case mockServerUrl = "MockServerURL"
 }

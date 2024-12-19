@@ -19,19 +19,19 @@ import Foundation
 
 /// Type erasing wraper around `any Matcher`.
 public struct AnyMatcher: Matcher {
-	var matcher: any Matcher
+    var matcher: any Matcher
 
-	public init(_ matcher: any Matcher) {
-		self.matcher = matcher
-	}
+    public init(_ matcher: any Matcher) {
+        self.matcher = matcher
+    }
 
-	public func encode(to encoder: Encoder) throws {
-		try matcher.encode(to: encoder)
-	}
+    public func encode(to encoder: Encoder) throws {
+        try matcher.encode(to: encoder)
+    }
 }
 
 extension Matcher {
-	func asAny() -> AnyMatcher {
-		AnyMatcher(self)
-	}
+    func asAny() -> AnyMatcher {
+        AnyMatcher(self)
+    }
 }

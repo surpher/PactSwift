@@ -20,40 +20,40 @@ import XCTest
 @_exported import PactSwiftMockServer
 
 class InteractionTestCase: XCTestCase {
-	
-	var builder: PactBuilder!
 
-	private var pactDirectory: String {
-		ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"]!
-	}
+    var builder: PactBuilder!
 
-	@MainActor
-	class override func setUp() {
-		super.setUp()
-		try! Logging.initialize()
-	}
+    private var pactDirectory: String {
+        ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"]!
+    }
 
-	override func setUpWithError() throws {
-		try super.setUpWithError()
-		builder = try createBuilder()
-	}
+    @MainActor
+    class override func setUp() {
+        super.setUp()
+        try! Logging.initialize()
+    }
 
-	private func createBuilder() throws -> PactBuilder {
-		let pact = try Pact(consumer: "Consumer", provider: "Provider")
-			.withSpecification(.v4)
-			.withMetadata(namespace: "namespace1", name: "name1", value: "value1")
-			.withMetadata(namespace: "namespace2", name: "name2", value: "value2")
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        builder = try createBuilder()
+    }
 
-		let config = PactBuilder.Config(pactDirectory: pactDirectory)
+    private func createBuilder() throws -> PactBuilder {
+        let pact = try Pact(consumer: "Consumer", provider: "Provider")
+            .withSpecification(.v4)
+            .withMetadata(namespace: "namespace1", name: "name1", value: "value1")
+            .withMetadata(namespace: "namespace2", name: "name2", value: "value2")
 
-		return PactBuilder(pact: pact, config: config)
-	}
+        let config = PactBuilder.Config(pactDirectory: pactDirectory)
 
-	internal func suppressingPactFailure(_ block: () async throws -> Void) async throws {
-		do {
-			try await block()
-		} catch PactBuilder.Error.pactFailure {
-			return
-		}
-	}
+        return PactBuilder(pact: pact, config: config)
+    }
+
+    internal func suppressingPactFailure(_ block: () async throws -> Void) async throws {
+        do {
+            try await block()
+        } catch PactBuilder.Error.pactFailure {
+            return
+        }
+    }
 }

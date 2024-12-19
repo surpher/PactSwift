@@ -21,35 +21,35 @@ import XCTest
 
 class MatcherStatusCodeTests: MatcherTestCase {
 
-	func testMatcher_ClientError_SerializeAsJSON() throws {
-		let json = try jsonString(for: .statusCode(.clientError))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "statusCode",
-			  "value" : "clientError"
-			}
-			"""#
-		)
-	}
+    func testMatcher_ClientError_SerializeAsJSON() throws {
+        let json = try jsonString(for: .statusCode(.clientError))
 
-	func testMatcher_Codes_SerializeAsJSON() throws {
-		let json = try jsonString(for: .statusCode(.statusCodes([200, 201])))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "statusCode",
-			  "value" : [
-			    200,
-			    201
-			  ]
-			}
-			"""#
-		)
-	}
-	
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "statusCode",
+              "value" : "clientError"
+            }
+            """#
+        )
+    }
+
+    func testMatcher_Codes_SerializeAsJSON() throws {
+        let json = try jsonString(for: .statusCode(.statusCodes([200, 201])))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "statusCode",
+              "value" : [
+                200,
+                201
+              ]
+            }
+            """#
+        )
+    }
+
 }

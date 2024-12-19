@@ -3,47 +3,50 @@
 import PackageDescription
 
 let package = Package(
-	name: "PactSwift",
+  name: "PactSwift",
 
-	platforms: [
-		.macOS(.v13),
-		.iOS(.v16),
-		.tvOS(.v16)
-	],
+  platforms: [
+    .macOS(.v13),
+    .iOS(.v16),
+    .tvOS(.v16),
+  ],
 
-	products: [
-		.library(
-			name: "PactSwift",
-			targets: ["PactSwift"]
-		)
-	],
+  products: [
+    .library(
+      name: "PactSwift",
+      targets: [
+        "PactSwift"
+      ]
+    )
+  ],
 
-	dependencies: [
-        .package(url: "https://github.com/surpher/PactSwiftMockServer.git", branch: "feature/swift-concurrency")
-	],
+  dependencies: [
+    .package(url: "https://github.com/surpher/PactSwiftMockServerXCFramework.git", .upToNextMinor(from: "1.0.1"))
+  ],
 
-	targets: [
+  targets: [
 
-		// PactSwift
-		.target(
-			name: "PactSwift",
-			dependencies: [
-				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS]))
+    // PactSwift - Apple platforms
+    .target(
+      name: "PactSwift",
+      dependencies: [
+        .product(
+            name: "PactSwiftMockServer",
+            package: "PactSwiftMockServerXCFramework",
+            condition: .when(platforms: [.iOS, .macOS, .tvOS])
+        )
+      ],
+      path: "./Sources"
+    ),
 
-			],
-			path: "./Sources"
-		),
+    // Tests
+    .testTarget(
+      name: "PactSwiftTests",
+      dependencies: [
+        "PactSwift"
+      ],
+      path: "./Tests"
+    ),
 
-		// Tests
-		.testTarget(
-			name: "PactSwiftTests",
-			dependencies: [
-				"PactSwift"
-			],
-			path: "./Tests"
-		),
-
-	],
-
-	swiftLanguageVersions: [.v5]
+  ]
 )

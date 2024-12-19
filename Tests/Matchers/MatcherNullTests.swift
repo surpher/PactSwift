@@ -12,17 +12,17 @@ import XCTest
 
 class MatcherNullTests: MatcherTestCase {
 
-	func testMatcher_MatchNull() throws {
-		let json = try jsonString(for: .null())
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "null",
-			  "value" : null
-			}
-			"""#
-		)
-	}
+    func testMatcher_MatchNull() throws {
+        let json = try jsonString(for: .null())
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "null",
+              "value" : null
+            }
+            """#
+        )
+    }
 }

@@ -28,28 +28,28 @@ SRCROOT=${SRCROOT:-"."}
 DERIVED_FILE_DIR=${DERIVED_FILE_DIR:-"."}
 
 if [ $# -ne 2 ]; then
-		echo "usage: build_file_list_and_swiftlint project_name swiftlint_yml"
-		exit 1
+        echo "usage: build_file_list_and_swiftlint project_name swiftlint_yml"
+        exit 1
 fi
 
 echo "--- 🤖 Linting $SRCROOT/Sources/*.swift"
 
 if command -v "swiftlint"; then
-		# Build a list of Swift files in the Sources directory
-		find Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > "$DERIVED_FILE_DIR/$1.xcfilelist"
+        # Build a list of Swift files in the Sources directory
+        find Sources -name \*.swift -exec echo "\$(SRCROOT)/"{} \; > "$DERIVED_FILE_DIR/$1.xcfilelist"
 
-		# Update the xcfilelist if the list of Swift files has changed
-		cmp --silent "$SRCROOT/$1.xcfilelist" "$DERIVED_FILE_DIR/$1.xcfilelist" || cp -f "$DERIVED_FILE_DIR/$1.xcfilelist" "$SRCROOT/$1.xcfilelist"
+        # Update the xcfilelist if the list of Swift files has changed
+        cmp --silent "$SRCROOT/$1.xcfilelist" "$DERIVED_FILE_DIR/$1.xcfilelist" || cp -f "$DERIVED_FILE_DIR/$1.xcfilelist" "$SRCROOT/$1.xcfilelist"
 
-		# Run swiftlint (TODO: - swiftlint by iterating through the $1.xcfilelist)
-		# swiftlint --config $2 -- #filename0 #filename1 #filename2 ...
-		swiftlint --no-cache --config "$2" Sources
+        # Run swiftlint (TODO: - swiftlint by iterating through the $1.xcfilelist)
+        # swiftlint --config $2 -- #filename0 #filename1 #filename2 ...
+        swiftlint --no-cache --config "$2" Sources
 
-		# Output an empty derived file
-		touch "$DERIVED_FILE_DIR/swiftlint.txt"
+        # Output an empty derived file
+        touch "$DERIVED_FILE_DIR/swiftlint.txt"
 
-		# All hunky dory
-		echo "--- 👍 .swift files linted"
+        # All hunky dory
+        echo "--- 👍 .swift files linted"
 else
-	echo "warning: SwiftLint not installed! See https://github.com/realm/SwiftLint?tab=readme-ov-file#installation"
+    echo "warning: SwiftLint not installed! See https://github.com/realm/SwiftLint?tab=readme-ov-file#installation"
 fi

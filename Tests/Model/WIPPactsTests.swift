@@ -20,17 +20,17 @@ import XCTest
 
 final class WIPPactsTests: XCTestCase {
 
-	func testWIPPactsInitializesWithDate() {
-		let testDate = Date()
-		let testSubject = WIPPacts(since: testDate, providerVersion: "test")
+    func testWIPPactsInitializesWithDate() {
+        let testDate = Date()
+        let testSubject = WIPPacts(since: testDate, providerVersion: "test")
 
-		XCTAssertEqual(testSubject.sinceDate, testDate)
-	}
+        XCTAssertEqual(testSubject.sinceDate, testDate)
+    }
 
-	func testWIPPactsInitializesWithProviderVersion() {
-		let testSubject = WIPPacts(since: Date(), providerVersion: "test")
+    func testWIPPactsInitializesWithProviderVersion() {
+        let testSubject = WIPPacts(since: Date(), providerVersion: "test")
 
-		XCTAssertEqual(testSubject.providerVersion, "test")
-	}
+        XCTAssertEqual(testSubject.providerVersion, "test")
+    }
 
 }

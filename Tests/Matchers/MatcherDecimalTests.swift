@@ -21,31 +21,31 @@ import XCTest
 
 class MatcherDecimalTests: MatcherTestCase {
 
-	func testMatcher_DecimalNoFraction_SerializesToJSON() throws {
-		let json = try jsonString(for: .decimal(1234))
+    func testMatcher_DecimalNoFraction_SerializesToJSON() throws {
+        let json = try jsonString(for: .decimal(1234))
 
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "decimal",
-			  "value" : 1234
-			}
-			"""#
-		)
-	}
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "decimal",
+              "value" : 1234
+            }
+            """#
+        )
+    }
 
-	func testMatcher_Decimal_SerializesToJSON() throws {
-		let json = try jsonString(for: .decimal(1234.78))
+    func testMatcher_Decimal_SerializesToJSON() throws {
+        let json = try jsonString(for: .decimal(1234.78))
 
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "decimal",
-			  "value" : 1234.78
-			}
-			"""#
-		)
-	}
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "decimal",
+              "value" : 1234.78
+            }
+            """#
+        )
+    }
 }

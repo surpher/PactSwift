@@ -16,9 +16,9 @@ $SCRIPTS_DIR/check_build_tools
 # Carthage build
 echo "📦  Building as a Carthage dependency"
 if [[ $ACTIVE_ARCH == "x86_64" ]]; then
-	${SCRIPTS_DIR}/carthage build --no-skip-current --use-xcframeworks
+    ${SCRIPTS_DIR}/carthage build --no-skip-current --use-xcframeworks
 else
-	carthage build --no-skip-current --use-xcframeworks
+    carthage build --no-skip-current --use-xcframeworks
 fi
 
 # Build and test for SPM

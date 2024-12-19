@@ -21,20 +21,20 @@ import XCTest
 
 class MatcherGeneratedMockServerUrlTests: MatcherTestCase {
 
-	func testGeneratedMockServerUrl_SerializesToJSON() throws {
-		let json = try jsonString(for: .generatedMockServerUrl(example: "https://example.com/orders/1234", regex: #".*(/orders/\d+)$"#))
+    func testGeneratedMockServerUrl_SerializesToJSON() throws {
+        let json = try jsonString(for: .generatedMockServerUrl(example: "https://example.com/orders/1234", regex: #".*(/orders/\d+)$"#))
 
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "example" : "https://example.com/orders/1234",
-			  "pact:generator:type" : "MockServerURL",
-			  "pact:matcher:type" : "type",
-			  "regex" : ".*(/orders/\\d+)$",
-			  "value" : "https://example.com/orders/1234"
-			}
-			"""#
-		)
-	}
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "example" : "https://example.com/orders/1234",
+              "pact:generator:type" : "MockServerURL",
+              "pact:matcher:type" : "type",
+              "regex" : ".*(/orders/\\d+)$",
+              "value" : "https://example.com/orders/1234"
+            }
+            """#
+        )
+    }
 }

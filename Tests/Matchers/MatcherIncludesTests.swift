@@ -21,18 +21,18 @@ import XCTest
 
 class MatcherIncludesTests: MatcherTestCase {
 
-	func testMatcher_Includes_SerializesToJSON() throws {
-		let json = try jsonString(for: .includes("test"))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "include",
-			  "value" : "test"
-			}
-			"""#
-		)
-	}
+    func testMatcher_Includes_SerializesToJSON() throws {
+        let json = try jsonString(for: .includes("test"))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "include",
+              "value" : "test"
+            }
+            """#
+        )
+    }
 
 }

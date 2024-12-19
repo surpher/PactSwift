@@ -21,22 +21,22 @@ import Foundation
 
 struct ErrorReceived {
 
-	var message: String
-	var file: FileString?
-	var line: UInt?
+    var message: String
+    var file: FileString?
+    var line: UInt?
 
 }
 
 class ErrorCapture: ErrorReportable {
 
-	public var error: ErrorReceived?
+    public var error: ErrorReceived?
 
-	func reportFailure(_ message: String) {
-		self.error = ErrorReceived(message: message, file: nil, line: nil)
-	}
-	
-	func reportFailure(_ message: String, file: FileString, line: UInt) {
-		self.error = ErrorReceived(message: message, file: file, line: line)
-	}
+    func reportFailure(_ message: String) {
+        self.error = ErrorReceived(message: message, file: nil, line: nil)
+    }
+
+    func reportFailure(_ message: String, file: FileString, line: UInt) {
+        self.error = ErrorReceived(message: message, file: file, line: line)
+    }
 
 }

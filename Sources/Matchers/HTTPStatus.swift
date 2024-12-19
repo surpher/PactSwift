@@ -18,12 +18,12 @@
 import Foundation
 
 public enum HTTPStatus {
-	case information
-	case success
-	case redirect
-	case clientError
-	case serverError
-	case nonError
-	case error
-	case statusCodes([Int])
+    case information
+    case success
+    case redirect
+    case clientError
+    case serverError
+    case nonError
+    case error
+    case statusCodes([Int])
 }

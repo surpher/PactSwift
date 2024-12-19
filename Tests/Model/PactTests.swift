@@ -20,7 +20,8 @@ import XCTest
 
 final class PactTests: XCTestCase {
 
-	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.4.0")
-	}
+    func testPactVersion() throws {
+    let pact = Pact.init(consumer: "Foo", provider: "Bar")
+    XCTAssertEqual(pact.version, "0.4.3")
+    }
 }

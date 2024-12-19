@@ -21,17 +21,17 @@ import XCTest
 
 class MatcherNotEmptyTests: MatcherTestCase {
 
-	func testMatcher_MatchNotEmpty() throws {
-		let json = try jsonString(for: .notEmpty())
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "pact:matcher:type" : "notEmpty",
-			  "value" : "non-empty"
-			}
-			"""#
-		)
-	}
+    func testMatcher_MatchNotEmpty() throws {
+        let json = try jsonString(for: .notEmpty())
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "pact:matcher:type" : "notEmpty",
+              "value" : "non-empty"
+            }
+            """#
+        )
+    }
 }

@@ -21,19 +21,19 @@ import XCTest
 
 @available(macOS 13, *)
 class UUIDFormatTests: XCTestCase {
-	func testExampleMatchesRegex() throws {
-		for format in UUIDFormat.allCases {
-			let regex = try Regex(format.matchingRegex)
-			let match = try XCTUnwrap(format.example.wholeMatch(of: regex))
-			XCTAssertFalse(match.isEmpty)
-		}
-	}
+    func testExampleMatchesRegex() throws {
+        for format in UUIDFormat.allCases {
+            let regex = try Regex(format.matchingRegex)
+            let match = try XCTUnwrap(format.example.wholeMatch(of: regex))
+            XCTAssertFalse(match.isEmpty)
+        }
+    }
 
-	func testExampleMatchesRegex_Negative() throws {
-		for format in UUIDFormat.allCases {
-			let regex = try Regex(format.matchingRegex)
-			let match = "not a uuid".wholeMatch(of: regex)
-			XCTAssertNil(match)
-		}
-	}
+    func testExampleMatchesRegex_Negative() throws {
+        for format in UUIDFormat.allCases {
+            let regex = try Regex(format.matchingRegex)
+            let match = "not a uuid".wholeMatch(of: regex)
+            XCTAssertNil(match)
+        }
+    }
 }

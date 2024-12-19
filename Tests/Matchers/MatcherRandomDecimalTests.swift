@@ -21,19 +21,19 @@ import XCTest
 
 class MatcherRandomDecimalTests: MatcherTestCase {
 
-	func testRandomDecimal_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomDecimal(like: 12.23, digits: 10))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "digits" : 10,
-			  "pact:generator:type" : "RandomDecimal",
-			  "pact:matcher:type" : "type",
-			  "value" : 12.23
-			}
-			"""#
-		)
-	}
+    func testRandomDecimal_SerializesToJSON() throws {
+        let json = try jsonString(for: .randomDecimal(like: 12.23, digits: 10))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "digits" : 10,
+              "pact:generator:type" : "RandomDecimal",
+              "pact:matcher:type" : "type",
+              "value" : 12.23
+            }
+            """#
+        )
+    }
 }

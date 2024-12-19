@@ -26,30 +26,30 @@ set -o pipefail
 ####################
 
 function help {
-	echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
-	echo
-	echo "VERSION should be the version to release and should not include the 'v' prefix"
-	echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
-	echo
-	echo "FLAGS"
-	echo "  -d  Dry run, won't push anything"
-	echo
-	echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
-	echo
-	exit 2
+    echo "Usage: release VERSION RELEASE_NAME [DRY_RUN]"
+    echo
+    echo "VERSION should be the version to release and should not include the 'v' prefix"
+    echo "RELEASE_NAME should be the type of release 'Bugfix Release / Maintenance Release'"
+    echo
+    echo "FLAGS"
+    echo "  -d  Dry run, won't push anything"
+    echo
+    echo "  Example: ./Scripts/release 1.0.0 'Bugfix Release' -d"
+    echo
+    exit 2
 }
 
 function die {
-	echo "🚨  [ERROR] $@"
-	echo
-	exit 1
+    echo "🚨  [ERROR] $@"
+    echo
+    exit 1
 }
 
 function handleInput {
-	if [[ ! $1 =~ ^[Yy]$ ]]; then
-		echo "⚠️  Release aborted!"
-		exit 1
-	fi
+    if [[ ! $1 =~ ^[Yy]$ ]]; then
+        echo "⚠️  Release aborted!"
+        exit 1
+    fi
 }
 
 #####################
@@ -65,10 +65,10 @@ fi
 ##############################
 
 if [[ "$CI" == true ]] ; then
-	die "🚨  Running on CI is not supported! Requires user input while running the release script."
+    die "🚨  Running on CI is not supported! Requires user input while running the release script."
 else
-	echo "👮‍♀️  Running on local machine: 👍"
-	SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
+    echo "👮‍♀️  Running on local machine: 👍"
+    SCRIPTS_DIR="${BASH_SOURCE[0]%/*}"
 fi
 
 ##############################
@@ -120,29 +120,29 @@ VERSION_TAG="v$VERSION"
 ####################
 
 function updateVersionFile {
-	sed -i '' "2s/.*/let pactSwiftVersion = \"$@\"/" $VERSION_FILE
+    sed -i '' "2s/.*/let pactSwiftVersion = \"$@\"/" $VERSION_FILE
 
-	MARKETING_VERSION="MARKETING_VERSION = $@"
-	sed -i '' "2s/.*/$MARKETING_VERSION/" $CONFIGURATION_FILE
+    MARKETING_VERSION="MARKETING_VERSION = $@"
+    sed -i '' "2s/.*/$MARKETING_VERSION/" $CONFIGURATION_FILE
 }
 
 function pushNewVersion {
-	updateVersionFile "$VERSION"
+    updateVersionFile "$VERSION"
 
-	echo ${RELEASE_NAME} > TAG_MESSAGE_FILE.md
-	git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> TAG_MESSAGE_FILE.md
+    echo ${RELEASE_NAME} > TAG_MESSAGE_FILE.md
+    git log --pretty='* %h - %s (%an)' ${LATEST_TAG}..HEAD >> TAG_MESSAGE_FILE.md
 
-	git add $VERSION_FILE
-	git add $CONFIGURATION_FILE
-	git add $RELEASE_NOTES
+    git add $VERSION_FILE
+    git add $CONFIGURATION_FILE
+    git add $RELEASE_NOTES
 
-	git commit -m "${RELEASE_NAME}"
+    git commit -m "${RELEASE_NAME}"
 
-	echo "🏷  Tagging the current commit"
-	git tag "$VERSION_TAG" -F TAG_MESSAGE_FILE.md || die "Failed to tag version"
+    echo "🏷  Tagging the current commit"
+    git tag "$VERSION_TAG" -F TAG_MESSAGE_FILE.md || die "Failed to tag version"
 
-	echo "🚀  Tagging the current commit"
-	git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
+    echo "🚀  Tagging the current commit"
+    git push --atomic origin main $VERSION_TAG || die "Failed to push the release commit with tag '$VERSION_TAG' to origin"
 
 }
 
@@ -195,21 +195,21 @@ git diff --quiet HEAD "origin/$REMOTE_BRANCH" || die "HEAD is not aligned to ori
 echo "🏷  Tagging release version..."
 
 if [ -z "$DRY_RUN" ]; then
-	echo "🚅  Pushing release version tag to origin..."
+    echo "🚅  Pushing release version tag to origin..."
 
-	pushNewVersion
+    pushNewVersion
 
-	echo
-	echo "--------  🎉  Created a new PactSwift version tag  🎉 --------------------------------"
-	echo "--------  🏷   Version:	$VERSION_TAG"
-	echo "--------  ✏️   Name: 	$RELEASE_NAME"
-	echo "--------"
-	echo "--------  🚀  Go and link you draft release for '$VERSION_TAG' with this tagged commit."
-	echo "--------  🔗  https://github.com/surpher/PactSwift/releases"
-	echo
+    echo
+    echo "--------  🎉  Created a new PactSwift version tag  🎉 --------------------------------"
+    echo "--------  🏷   Version:    $VERSION_TAG"
+    echo "--------  ✏️   Name:     $RELEASE_NAME"
+    echo "--------"
+    echo "--------  🚀  Go and link you draft release for '$VERSION_TAG' with this tagged commit."
+    echo "--------  🔗  https://github.com/surpher/PactSwift/releases"
+    echo
 
 else
-	echo "-> Dry run completed."
+    echo "-> Dry run completed."
 fi
 
 ####################

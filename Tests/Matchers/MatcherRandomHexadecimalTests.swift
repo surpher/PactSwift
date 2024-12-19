@@ -21,19 +21,19 @@ import XCTest
 
 class MatcherRandomHexadecimalTests: MatcherTestCase {
 
-	func testRandomHexadecimal_SerializesToJSON() throws {
-		let json = try jsonString(for: .randomHexadecimal(like: "DEADBEEF", digits: 8))
-		
-		XCTAssertEqual(
-			json,
-			#"""
-			{
-			  "digits" : 8,
-			  "pact:generator:type" : "RandomHexadecimal",
-			  "pact:matcher:type" : "type",
-			  "value" : "DEADBEEF"
-			}
-			"""#
-		)
-	}
+    func testRandomHexadecimal_SerializesToJSON() throws {
+        let json = try jsonString(for: .randomHexadecimal(like: "DEADBEEF", digits: 8))
+
+        XCTAssertEqual(
+            json,
+            #"""
+            {
+              "digits" : 8,
+              "pact:generator:type" : "RandomHexadecimal",
+              "pact:matcher:type" : "type",
+              "value" : "DEADBEEF"
+            }
+            """#
+        )
+    }
 }
