@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "CAEBC60E-CEA5-4E47-8838-C208609C6564",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PactSwiftTests",
+        "name" : "PactSwiftTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+echo "🏗 Building"
+swift build | xcbeautify
+
+echo "🤖 Running tests"
+swift test | xcbeautify
