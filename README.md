@@ -31,7 +31,7 @@ Note: see [Upgrading][upgrading] for notes on upgrading and breaking changes.
 
 ```sh
 dependencies: [
-    .package(url: "https://github.com/surpher/PactSwift.git")
+    .package(url: "https://github.com/surpher/PactSwift.git", exact: "1.0.1"))
 ]
 ```
 
