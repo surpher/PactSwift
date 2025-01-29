@@ -54,6 +54,7 @@ Temporary Items
 build/
 DerivedData/
 tmp/
+.tmp/
 
 ## Various settings
 *.pbxuser
