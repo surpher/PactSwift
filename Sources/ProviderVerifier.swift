@@ -41,10 +41,15 @@ public final class ProviderVerifier {
     ///   - line: The line on which to report the error on
     ///   - completionBlock: Completion block executed at the end of verification
     ///
-    /// - Returns: A `Result<Bool, VerificationError>` where error describes the failure
+    /// - Returns: A `Result<Bool, VerificationError>` where error describes the failure.
     ///
     @discardableResult
-    public func verify(options: Options, file: FileString? = #file, line: UInt? = #line, completionBlock: (() -> Void)? = nil) -> Result<Bool, ProviderVerifier.VerificationError> {
+    public func verify(
+        options: Options,
+        file: FileString? = #file,
+        line: UInt? = #line,
+        completionBlock: (() -> Void)? = nil
+    ) -> Result<Bool, ProviderVerifier.VerificationError> {
         switch verifier.verifyProvider(options: options.args) {
         case .success(let value):
             completionBlock?()

@@ -21,7 +21,7 @@ let package = Package(
   ],
 
   dependencies: [
-    .package(url: "https://github.com/surpher/PactSwiftMockServerXCFramework.git", .upToNextMinor(from: "1.0.1"))
+    .package(url: "https://github.com/surpher/PactSwiftMockServerXCFramework.git", .upToNextMinor(from: "1.0.1")),
   ],
 
   targets: [
@@ -47,6 +47,6 @@ let package = Package(
       ],
       path: "./Tests"
     ),
-
-  ]
+  ],
+  swiftLanguageVersions: [.v5]
 )

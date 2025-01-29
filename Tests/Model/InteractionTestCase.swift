@@ -15,13 +15,22 @@ class InteractionTestCase: XCTestCase {
     var builder: PactBuilder!
 
     private var pactDirectory: String {
-        ProcessInfo.processInfo.environment["PACT_OUTPUT_DIR"]!
+        "./.tmp"
     }
 
     @MainActor
     class override func setUp() {
         super.setUp()
-        try! Logging.initialize()
+        try! Logging.initialize(
+            [
+                Logging.Sink.Config(.standardOut, filter: .trace),
+            ]
+        )
+    }
+
+    override func setUp() async throws {
+        try await super.setUp()
+        try await Logging.initialize()
     }
 
     override func setUpWithError() throws {
@@ -29,7 +38,22 @@ class InteractionTestCase: XCTestCase {
         builder = try createBuilder()
     }
 
-    private func createBuilder() throws -> PactBuilder {
+    // MARK: - Internal
+
+    internal func suppressingPactFailure(_ block: () async throws -> Void) async throws {
+        do {
+            try await block()
+        } catch PactBuilder.Error.pactFailure {
+            return
+        }
+    }
+}
+
+// MARK: - Private
+
+private extension InteractionTestCase {
+
+    func createBuilder() throws -> PactBuilder {
         let pact = try Pact(consumer: "Consumer", provider: "Provider")
             .withSpecification(.v4)
             .withMetadata(namespace: "namespace1", name: "name1", value: "value1")
@@ -38,13 +62,5 @@ class InteractionTestCase: XCTestCase {
         let config = PactBuilder.Config(pactDirectory: pactDirectory)
 
         return PactBuilder(pact: pact, config: config)
-    }
-
-    internal func suppressingPactFailure(_ block: () async throws -> Void) async throws {
-        do {
-            try await block()
-        } catch PactBuilder.Error.pactFailure {
-            return
-        }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 /// A generic ``Matcher`` for serialising simple matchers to JSON.
 struct GenericMatcher<ValueType: Encodable>: Matcher {
 
-    var type: String
+    var type: MatcherType
     var value: ValueType
     var generator: GeneratorType?
     var min: Int?

@@ -360,7 +360,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try buildRequest(
             "integer",
             body: .like([
-                "key": .integer(1)
+                "someKey": .integer(1)
             ])
         )
 
@@ -392,7 +392,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try buildRequest(
             "decimal",
             body: .like([
-                "key": .decimal(123)
+                "someKey": .decimal(123)
             ])
         )
 
@@ -423,6 +423,8 @@ final class InteractionRequestBodyTests: InteractionTestCase {
     }
 
     func testRequest_BodyMatchingNumber_Negative() async throws {
+        try XCTSkipIf(true, "🐞 https://github.com/pact-foundation/pact-reference/issues/484")
+
         try buildRequest(
             "number",
             body: .like([
@@ -460,7 +462,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try buildRequest(
             "datetime",
             body: .like([
-                "key": .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
+                "someKey": .datetime("2022-01-01 12:33:22", format: "yyyy-MM-dd HH:mm:ss")
             ])
         )
 
@@ -524,7 +526,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try buildRequest(
             "time",
             body: .like([
-                "key": .time("12:33:22", format: "HH:mm:ss")
+                "someKey": .time("12:33:22", format: "HH:mm:ss")
             ])
         )
 
@@ -668,7 +670,7 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try buildRequest(
             "semVer",
             body: .like([
-                "key": .semver("1.0.0")
+                "someKey": .semver("1.0.0")
             ])
         )
 
@@ -680,6 +682,27 @@ final class InteractionRequestBodyTests: InteractionTestCase {
             try await verify(body: Body(key: "not semver"), expectedStatus: 500)
         }
     }
+}
+
+// MARK: - Extensions
+
+extension PactBuilder.ConsumerContext {
+    func buildURLRequest<T: Encodable>(path: String, body: T) throws -> URLRequest {
+        var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
+        components.path = path
+
+        var request = URLRequest(url: try XCTUnwrap(components.url))
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = try JSONEncoder().encode(body)
+
+        return request
+    }
+}
+
+// MARK: - Private extension
+
+private extension InteractionRequestBodyTests {
 
     // MARK: - Helpers
 
@@ -700,20 +723,6 @@ final class InteractionRequestBodyTests: InteractionTestCase {
             let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
             XCTAssertEqual(httpResponse.statusCode, expectedStatus)
         }
-    }
-}
-
-extension PactBuilder.ConsumerContext {
-    func buildURLRequest<T: Encodable>(path: String, body: T) throws -> URLRequest {
-        var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
-        components.path = path
-
-        var request = URLRequest(url: try XCTUnwrap(components.url))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpMethod = "POST"
-        request.httpBody = try JSONEncoder().encode(body)
-
-        return request
     }
 }
 

@@ -9,6 +9,7 @@ import Foundation
 @_exported import PactSwiftMockServer
 
 public extension HeaderBuilder {
+
     /// Set the `Content-Type` header.
     @discardableResult
     func contentType(_ contentType: String) throws -> Self {

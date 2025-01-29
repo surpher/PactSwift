@@ -19,21 +19,21 @@ public extension Matcher {
     static func statusCode(_ statusCode: HTTPStatus) -> AnyMatcher {
         switch statusCode {
         case .information:
-            return GenericMatcher(type: "statusCode", value: "information").asAny()
+            return GenericMatcher(type: .statusCode, value: "information").asAny()
         case .success:
-            return GenericMatcher(type: "statusCode", value: "success").asAny()
+            return GenericMatcher(type: .statusCode, value: "success").asAny()
         case .redirect:
-            return GenericMatcher(type: "statusCode", value: "redirect").asAny()
+            return GenericMatcher(type: .statusCode, value: "redirect").asAny()
         case .clientError:
-            return GenericMatcher(type: "statusCode", value: "clientError").asAny()
+            return GenericMatcher(type: .statusCode, value: "clientError").asAny()
         case .serverError:
-            return GenericMatcher(type: "statusCode", value: "serverError").asAny()
+            return GenericMatcher(type: .statusCode, value: "serverError").asAny()
         case .nonError:
-            return GenericMatcher(type: "statusCode", value: "nonError").asAny()
+            return GenericMatcher(type: .statusCode, value: "nonError").asAny()
         case .error:
-            return GenericMatcher(type: "statusCode", value: "error").asAny()
+            return GenericMatcher(type: .statusCode, value: "error").asAny()
         case .statusCodes(let codes):
-            return GenericMatcher(type: "statusCode", value: codes).asAny()
+            return GenericMatcher(type: .statusCode, value: codes).asAny()
         }
     }
 
@@ -42,7 +42,7 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v4`.
     ///
     static func notEmpty() -> AnyMatcher {
-        GenericMatcher(type: "notEmpty", value: "non-empty").asAny()
+        GenericMatcher(type: .notEmpty, value: "non-empty").asAny()
     }
 
     /// A matcher that matches a value that must be valid based on the `semver` specification.
@@ -53,8 +53,9 @@ public extension Matcher {
     ///   - value: An example value (eg: `"1.2.3"`)
     ///
     static func semver(_ value: String) -> AnyMatcher {
-        GenericMatcher(type: "semver", value: value).asAny()
+        GenericMatcher(type: .semVer, value: value).asAny()
     }
 
     // TODO: "eachKey", "eachValue"
+    // https://github.com/pact-foundation/pact-specification/tree/version-4?tab=readme-ov-file#supported-matching-rules
 }

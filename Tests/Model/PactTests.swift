@@ -13,6 +13,6 @@ final class PactTests: XCTestCase {
 
     func testPactVersion() throws {
         let pact = Pact.init(consumer: "Foo", provider: "Bar")
-        XCTAssertEqual(pact.version, "0.4.3")
+        XCTAssertEqual(pact.ffi_version, "0.4.25")
     }
 }

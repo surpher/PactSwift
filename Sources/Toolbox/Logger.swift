@@ -12,7 +12,8 @@ enum Logger {
 
     /// Logs Pact related messages.
     ///
-    /// Looks for environment variable `PACT_ENABLE_LOGGING = "all"`. Can be set in project's scheme. Uses `os_log` on Apple platforms.
+    /// Looks for environment variable `PACT_ENABLE_LOGGING = "all"`.
+    /// Can be set in project's scheme. Uses `os_log` on Apple platforms.
     ///
     /// - Parameters:
     ///    - message: The message to log

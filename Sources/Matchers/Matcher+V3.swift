@@ -16,7 +16,7 @@ public extension Matcher {
     ///   - value: The substring to match with.
     ///
     static func includes<T: StringProtocol & Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "include", value: value).asAny()
+        GenericMatcher(type: .include, value: value).asAny()
     }
 
     /// A matcher that checks if the type of the value is an integer.
@@ -24,7 +24,7 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v3`.
     ///
     static func integer<T: BinaryInteger & Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "integer", value: value).asAny()
+        GenericMatcher(type: .integer, value: value).asAny()
     }
 
     /// A matcher that checks if the type of the value is a number with decimal places.
@@ -32,7 +32,7 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v3`.
     ///
     static func decimal<T: FloatingPoint & Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "decimal", value: value).asAny()
+        GenericMatcher(type: .decimal, value: value).asAny()
     }
 
     /// A matcher that checks if the type of the value is an number.
@@ -40,7 +40,7 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v3`.
     ///
     static func number<T: Numeric & Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "number", value: value).asAny()
+        GenericMatcher(type: .number, value: value).asAny()
     }
 
     /// A matcher that matches the string representation of a value against the datetime format.
@@ -51,7 +51,7 @@ public extension Matcher {
     ///   - format: The date time format to match against  (eg, `"yyyy-MM-dd HH:mm:ss"`).
     ///
     static func datetime(_ value: String, format: String) -> AnyMatcher {
-        GenericMatcher(type: "timestamp", value: value, format: format).asAny()
+        GenericMatcher(type: .timestamp, value: value, format: format).asAny()
     }
 
     /// A matcher that matches the string representation of a value against the time format.
@@ -62,7 +62,7 @@ public extension Matcher {
     ///   - format: The time format to match against  (eg, `"HH:mm:ss"`).
     ///
     static func time(_ value: String, format: String) -> AnyMatcher {
-        GenericMatcher(type: "time", value: value, format: format).asAny()
+        GenericMatcher(type: .time, value: value, format: format).asAny()
     }
 
     /// A matcher that matches the string representation of a value against the date format.
@@ -73,7 +73,7 @@ public extension Matcher {
     ///   - format: The date format to match against (eg, `"yyyy-MM-dd"`).
     ///
     static func date(_ value: String, format: String) -> AnyMatcher {
-        GenericMatcher(type: "date", value: value, format: format).asAny()
+        GenericMatcher(type: .date, value: value, format: format).asAny()
     }
 
     /// A matcher that matches if the value is a null value (this is content specific, for JSON will match a JSON null).
@@ -81,7 +81,7 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v3`.
     ///
     static func null() -> AnyMatcher {
-        GenericMatcher(type: "null", value: nil as String?).asAny()
+        GenericMatcher(type: .null, value: nil as String?).asAny()
     }
 
     /// A matcher that matches if the value is a boolean value (booleans and the string values `"true"` and `"false"`).
@@ -89,10 +89,11 @@ public extension Matcher {
     /// - Note: Requires `Pact.Specification.v3`.
     ///
     static func bool(_ value: Bool) -> AnyMatcher {
-        GenericMatcher(type: "boolean", value: value).asAny()
+        GenericMatcher(type: .boolean, value: value).asAny()
     }
 
     /* TODO: Disabled some matchers that I'm unsure how to use at the moment. 🤔
+    // https://github.com/pact-foundation/pact-specification/tree/version-3?tab=readme-ov-file#supported-matchers
 
     /// A matcher that matches binary data by its content type (magic file check).
     ///

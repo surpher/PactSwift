@@ -21,6 +21,8 @@ public struct AnyMatcher: Matcher {
     }
 }
 
+// MARK: - Extensions
+
 extension Matcher {
 
     func asAny() -> AnyMatcher {

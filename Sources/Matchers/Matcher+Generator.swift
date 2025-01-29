@@ -22,7 +22,7 @@ public extension Matcher {
     ///   - regex: A regex to extract the relevant part of the example, eg: `"^.*(/orders/\\d+)$"` that will be combine with the mock server URL.
     ///     **Note** this regex *must* include a single capture group!
     static func generatedMockServerUrl(example: String, regex: String) -> AnyMatcher {
-        GenericMatcher(type: "type", value: example, generator: .mockServerUrl, regex: regex, example: example).asAny()
+        GenericMatcher(type: .type, value: example, generator: .mockServerUrl, regex: regex, example: example).asAny()
     }
 
     /// Generate a random string value.
@@ -32,11 +32,11 @@ public extension Matcher {
     ///   - size: The size of string to generate (uses the length of the example `value` by default).
     ///
     static func randomString(like value: String, size: Int? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .randomString, size: size ?? value.count).asAny()
+        GenericMatcher(type: .type, value: value, generator: .randomString, size: size ?? value.count).asAny()
     }
 
     static func randomInteger<T: BinaryInteger & Encodable>(like value: T, range: ClosedRange<Int>? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .randomInt, min: range?.lowerBound, max: range?.upperBound).asAny()
+        GenericMatcher(type: .type, value: value, generator: .randomInt, min: range?.lowerBound, max: range?.upperBound).asAny()
     }
 
     /// Generate a random `Int` within the specified `range`.
@@ -45,23 +45,23 @@ public extension Matcher {
     ///   - range: The range of values that the generated number should be within.
     ///
     static func randomInteger(_ range: ClosedRange<Int>) -> AnyMatcher {
-        GenericMatcher(type: "type", value: range.randomElement(), generator: .randomInt, min: range.lowerBound, max: range.upperBound).asAny()
+        GenericMatcher(type: .type, value: range.randomElement(), generator: .randomInt, min: range.lowerBound, max: range.upperBound).asAny()
     }
 
     static func randomDecimal<T: FloatingPoint & Encodable>(like value: T, digits: Int? = nil ) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .randomDecimal, digits: digits).asAny()
+        GenericMatcher(type: .type, value: value, generator: .randomDecimal, digits: digits).asAny()
     }
 
     static func randomBoolean() -> AnyMatcher {
-        GenericMatcher(type: "type", value: true, generator: .randomBoolean).asAny()
+        GenericMatcher(type: .type, value: true, generator: .randomBoolean).asAny()
     }
 
     static func randomUUID(like value: String, format: UUIDFormat = .simple) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .uuid, format: format.rawValue).asAny()
+        GenericMatcher(type: .type, value: value, generator: .uuid, format: format.rawValue).asAny()
     }
 
     static func randomUUID(like value: UUID) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value.uuidString, generator: .uuid, format: UUIDFormat.upperCaseHyphenated.rawValue).asAny()
+        GenericMatcher(type: .type, value: value.uuidString, generator: .uuid, format: UUIDFormat.upperCaseHyphenated.rawValue).asAny()
     }
 
     /// Generate a random hexadecimal value.
@@ -71,7 +71,7 @@ public extension Matcher {
     ///   - digits: The number of digits to generate (uses the length of the example `value` by default).
     ///
     static func randomHexadecimal(like value: String, digits: Int? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .randomHex, digits: digits ?? value.count).asAny()
+        GenericMatcher(type: .type, value: value, generator: .randomHex, digits: digits ?? value.count).asAny()
     }
 
     /// Generate a random date.
@@ -132,14 +132,14 @@ public extension Matcher {
     /// `"next week @ next hour"` | `"2000-01-08T11:00Z"`
     /// `"last month @ last hour"` | `"1999-12-01T09:00Z"`
     static func generatedDate(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .date, format: format, expression: expression).asAny()
+        GenericMatcher(type: .type, value: value, generator: .date, format: format, expression: expression).asAny()
     }
 
     static func generatedDatetime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .dateTime, format: format, expression: expression).asAny()
+        GenericMatcher(type: .type, value: value, generator: .dateTime, format: format, expression: expression).asAny()
     }
 
     static func generatedTime(_ value: String, format: String, expression: String? = nil) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value, generator: .time, format: format, expression: expression).asAny()
+        GenericMatcher(type: .type, value: value, generator: .time, format: format, expression: expression).asAny()
     }
 }

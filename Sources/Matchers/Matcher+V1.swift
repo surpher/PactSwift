@@ -18,7 +18,7 @@ public extension Matcher {
     ///   - value: The value to match with.
     ///
     static func equals<T: Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "equality", value: value).asAny()
+        GenericMatcher(type: .equality, value: value).asAny()
     }
 
     static func emptyArray() -> AnyMatcher {

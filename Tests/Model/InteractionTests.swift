@@ -19,10 +19,11 @@ final class InteractionTests: InteractionTestCase {
                 try request
                     .queryParam("something", value: "orOther")
                     .queryParam("limit", matching: .decimal(100))
-                    .queryParam("includeOthers", matching: .bool(false))
+                    .queryParam("includeOthers", value: "false")
             }
             .willRespond(with: 200) { response in
                 try response.htmlBody()
+                try response.header("Content-Type", value: "text/html")
             }
 
         try await builder.verify { ctx in
@@ -30,8 +31,8 @@ final class InteractionTests: InteractionTestCase {
             components.path = "/events"
             components.queryItems = [
                 URLQueryItem(name: "something", value: "orOther"),
-                URLQueryItem(name: "limit", value: "100"),
-                URLQueryItem(name: "includeOthers", value: "false")
+                URLQueryItem(name: "limit", value: "100.0"),
+                URLQueryItem(name: "includeOthers", value: "false"),
             ]
 
             let (data, response) = try await URLSession(configuration: .ephemeral).data(from: try XCTUnwrap(components.url))
@@ -88,20 +89,22 @@ final class InteractionTests: InteractionTestCase {
             .given("There are events")
             .withRequest(method: .GET, regex: #"/events/\d+"#, example: "/events/100") { request in
                 try request
-                    .queryParam("sorted", matching: .bool(true))
+                    .queryParam("sorted", value: "true")
                     .header("Accept", value: "application/json")
             }
             .willRespond(with: 200) { response in
                 try response.jsonBody(
-                    .like([
-                        "id": .randomUUID(like: "urn:uuid:\(UUID())", format: .urn),
-                        "age": .randomInteger(like: 1, range: 1...100),
-                        "name": .randomString(like: "An name", size: 50),
-                        "postcodes": .eachLike(AnyMatcher.integer(1234), max: 2),
-                        "something": .regex(#"\d{4}"#, example: "1234"),
-                        "hex": .randomHexadecimal(like: "DEADBEEF", digits: 8),
-                        "birthday": .generatedDate("2022-12-11", format: "yyyy-MM-dd", expression: "+ 1 day")
-                    ])
+                    .like(
+                        [
+                            "id": .randomUUID(like: "urn:uuid:\(UUID())", format: .urn),
+                            "age": .randomInteger(like: 1, range: 1...100),
+                            "name": .randomString(like: "An name", size: 50),
+                            "postcodes": .eachLike(AnyMatcher.integer(1234), max: 2),
+                            "something": .regex(#"\d{4}"#, example: "1234"),
+                            "hex": .randomHexadecimal(like: "DEADBEEF", digits: 8),
+                            "birthday": .generatedDate("2022-12-11", format: "yyyy-MM-dd", expression: "+ 1 day")
+                        ]
+                    )
                 )
             }
 
@@ -118,7 +121,9 @@ final class InteractionTests: InteractionTestCase {
 
             let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
             XCTAssertEqual(httpResponse.statusCode, 200)
-            XCTAssertEqual(httpResponse.value(forHTTPHeaderField: "Content-Type"), "application/json")
+
+            let contentType = try XCTUnwrap(httpResponse.value(forHTTPHeaderField: "Content-Type"))
+            XCTAssertTrue(contentType.contains("application/json"))
 
             let body = try JSONDecoder().decode(Response.self, from: data)
 

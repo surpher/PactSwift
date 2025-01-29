@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/surpher/PactSwiftMockServerXCFramework.git",
       "state" : {
-        "revision" : "0b52f3f22af35f1fda3f56ad4bba46f9f1dc60fa",
-        "version" : "1.0.1"
+        "revision" : "669e8918d89ff9af4346b41366479c574802a748",
+        "version" : "1.0.3"
       }
     }
   ],

@@ -11,19 +11,19 @@ import XCTest
 
 class MatcherOneOfTests: MatcherTestCase {
 
-    // TODO: - This test is disabled due to being fragile - it randomly assigns the value of key `"$.value"`!
     func testMatcher_OneOf() throws {
         let json = try jsonString(for: .oneOf(["enabled", "disabled"]))
 
-        XCTAssertEqual(
-            json,
-            #"""
-            {
-              "pact:matcher:type" : "regex",
-              "regex" : "^(disabled|enabled)$",
-              "value" : "disabled"
-            }
-            """#
+        let jsonData = json.data(using: .utf8)!
+        let decoded = try JSONDecoder().decode([String: String].self, from: jsonData)
+
+        XCTAssertEqual(decoded["pact:matcher:type"], "regex")
+        XCTAssertEqual(decoded["regex"], "^(disabled|enabled)$")
+
+        let value = try XCTUnwrap(decoded["value"])
+        XCTAssertTrue(
+            ["disabled", "enabled"].contains(value),
+            "Expected value to be either 'disabled' or 'enabled', but got '\(value)'!"
         )
     }
 }

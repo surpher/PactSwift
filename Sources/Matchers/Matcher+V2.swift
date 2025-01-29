@@ -35,7 +35,7 @@ public extension Matcher {
     ///   - example: An example value that matches the `regex`.
     ///
     static func regex(_ regex: String, example: String) -> AnyMatcher {
-        GenericMatcher(type: "regex", value: example, regex: regex).asAny()
+        GenericMatcher(type: .regex, value: example, regex: regex).asAny()
     }
 
     /// A matcher that executes a regular expression match against the string representation of an IP4 address.
@@ -101,7 +101,7 @@ public extension Matcher {
     ///   - value: An example value to match the type of.
     ///
     static func like<T: Encodable>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value).asAny()
+        GenericMatcher(type: .type, value: value).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -111,7 +111,7 @@ public extension Matcher {
     ///   - values: The example values.
     ///
     static func like(_ value: [String: AnyMatcher]) -> AnyMatcher {
-        GenericMatcher(type: "type", value: value).asAny()
+        GenericMatcher(type: .type, value: value).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -121,7 +121,7 @@ public extension Matcher {
     ///   - values: The example values.
     ///
     static func eachLike(_ value: [String: AnyMatcher]) -> AnyMatcher {
-        GenericMatcher(type: "type", value: [value]).asAny()
+        GenericMatcher(type: .type, value: [value]).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -134,7 +134,7 @@ public extension Matcher {
     ///   - min: The minimum length of the array of values.
     ///
     static func eachLike<T: Encodable>(_ value: T, min: Int) -> AnyMatcher {
-        GenericMatcher(type: "type", value: [value], min: min).asAny()
+        GenericMatcher(type: .type, value: [value], min: min).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -147,7 +147,7 @@ public extension Matcher {
     ///   - min: The minimum length of the array of values.
     ///
     static func eachLike(_ value: [String: AnyMatcher], min: Int) -> AnyMatcher {
-        GenericMatcher(type: "type", value: [value], min: min).asAny()
+        GenericMatcher(type: .type, value: [value], min: min).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -160,7 +160,7 @@ public extension Matcher {
     ///   - max: The maximum length of the array of values.
     ///
     static func eachLike<T: Encodable>(_ value: T, max: Int) -> AnyMatcher {
-        GenericMatcher(type: "type", value: [value], max: max).asAny()
+        GenericMatcher(type: .type, value: [value], max: max).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -173,7 +173,7 @@ public extension Matcher {
     ///   - max: The maximum length of the array of values.
     ///
     static func eachLike(_ value: [String: AnyMatcher], max: Int) -> AnyMatcher {
-        GenericMatcher(type: "type", value: [value], max: max).asAny()
+        GenericMatcher(type: .type, value: [value], max: max).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -188,7 +188,7 @@ public extension Matcher {
     ///
     static func eachLike<T: Encodable>(_ value: T, min: Int, max: Int) -> AnyMatcher {
         precondition(min <= max, "min must be <= max")
-        return GenericMatcher(type: "type", value: [value], min: min, max: max).asAny()
+        return GenericMatcher(type: .type, value: [value], min: min, max: max).asAny()
     }
 
     /// A matcher that executes a type based match against the values, that is, they are equal if they are the same type.
@@ -203,6 +203,6 @@ public extension Matcher {
     ///
     static func eachLike(_ value: [String: AnyMatcher], min: Int, max: Int) -> AnyMatcher {
         precondition(min <= max, "min must be <= max")
-        return GenericMatcher(type: "type", value: [value], min: min, max: max).asAny()
+        return GenericMatcher(type: .type, value: [value], min: min, max: max).asAny()
     }
 }
