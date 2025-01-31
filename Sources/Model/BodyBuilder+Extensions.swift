@@ -12,7 +12,7 @@ public extension BodyBuilder {
 
     /// Add a null body with the specified `contentType` (defaults to `text/plain`).
     @discardableResult
-    func body(contentType: String? = "text/plain") throws -> Self {
+    func nullBody(contentType: String? = "text/plain") throws -> Self {
         try body(nil, contentType: contentType)
     }
 

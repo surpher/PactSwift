@@ -29,5 +29,4 @@ class MatcherTestCase: XCTestCase {
         let data = try encoder.encode(matcher)
         return try XCTUnwrap(String(data: data, encoding: .utf8))
     }
-
 }

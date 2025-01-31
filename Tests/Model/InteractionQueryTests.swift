@@ -10,6 +10,81 @@ import XCTest
 
 final class InteractionQueryTests: InteractionTestCase {
 
+    // MARK: - Unsupported matchers
+    // These are only here until pact_ffi resolves reported bugs
+    // - https://github.com/pact-foundation/pact-reference/issues/483
+    // - https://github.com/pact-foundation/pact-reference/issues/484
+    // - https://github.com/pact-foundation/pact-reference/issues/485
+
+    let unsupportedMatchers = [
+        MatcherType.semVer,
+        .statusCode,
+        .time,
+        .timestamp,
+        .date,
+        .include,
+    ]
+
+    func testUnsupportedSemVerMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(named: "unsupported", matcher: .semver("3.2.1"), value: "3.2.1")
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
+    func testUnsupportedStatusCodeMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(named: "unsupported", matcher: .statusCode(.redirect), value: "301")
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
+    func testUnsupportedTimeMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(named: "unsupported", matcher: .time("11:59", format: "HH:mm"), value: "10:59")
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
+    func testUnsupportedDateMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(
+                named: "unsupported",
+                matcher: .date("31/01/2025", format: "dd/MM/yyyy"),
+                value: "29/02/2000"
+            )
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
+    func testUnsupportedTimestampMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(
+                named: "unsupported",
+                matcher: .datetime("31/01/2025 11:59:59", format: "dd/MM/yyyy HH:mm:ss"),
+                value: "29/02/2000 00:00:00"
+            )
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
+    func testUnsupportedIncludeMatcher() async throws {
+        await AsyncAssertThrowsError(
+            try await performMatcherTest(
+                named: "unsupported",
+                matcher: .includes("sub"),
+                value: "sub"
+            )
+        ) { error in
+            XCTAssertEqual(error as? PactSwiftError, .notImplemented)
+        }
+    }
+
     // MARK: - Tests
 
     func testQueryParamWithValue() async throws {
@@ -66,6 +141,34 @@ final class InteractionQueryTests: InteractionTestCase {
                 let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
                 XCTAssertEqual(httpResponse.statusCode, 500)
             }
+        }
+    }
+
+    func testQueryParams() async throws {
+        try builder
+            .uponReceiving("an interaction with item value \(#function)")
+            .withRequest(path: "/interaction") { request in
+                try request.queryParams(
+                    [
+                        URLQueryItem(name: "Foo", value: "Bar"),
+                        URLQueryItem(name: "Bar", value: nil),
+                        URLQueryItem(name: "Baz", value: "84z"),
+                    ]
+                )
+            }
+            .willRespond(with: 200)
+
+        try await builder.verify { ctx in
+            let queryItems = [
+                "Foo": "Bar",
+                "Baz": "84z",
+            ]
+            let url = try ctx.buildRequestURL(path: "/interaction", queryItems: queryItems)
+            let (data, response) = try await URLSession(configuration: .ephemeral).data(from: url)
+
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 200)
+            XCTAssertTrue(data.isEmpty)
         }
     }
 
@@ -189,6 +292,52 @@ final class InteractionQueryTests: InteractionTestCase {
     func testQueryParamMatchingDateTime_Negative() async throws {
         try XCTSkipIf(true, "🐞 https://github.com/pact-foundation/pact-reference/issues/483")
         try await performMatcherNegativeTest(named: "datetime", matcher: .datetime("2022-01-09 12:02:12", format: "yyyy-MM-dd HH:mm:ss"), value: "not timestamp")
+    }
+
+    // MARK: - Numeric matcher tests
+
+    func testQueryParamMatchingInt8() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Int8(123)), value: "123")
+    }
+
+    func testQueryParamMatchingInt16() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Int16(1337)), value: "7331")
+    }
+
+    func testQueryParamMatchingInt32() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Int32(123_456)), value: "654321")
+    }
+
+    func testQueryParamMatchingInt64() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Int64(123_456_789)), value: "-987654321")
+    }
+
+    func testQueryParamMatchingUInt() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(UInt(123_456_789)), value: "123492387")
+    }
+
+    func testQueryParamMatchingUInt8() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(UInt8(234)), value: "123")
+    }
+
+    func testQueryParamMatchingUInt16() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(UInt16(1337)), value: "7331")
+    }
+
+    func testQueryParamMatchingUInt32() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(UInt32(123_456_789)), value: "123492387")
+    }
+
+    func testQueryParamMatchingUInt64() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(UInt64(123_456_789)), value: "987654321")
+    }
+
+    func testQueryParamMatchingDecimalNumber() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Decimal(UInt8(123))), value: "321")
+    }
+
+    func testQueryParamMatchingFloatNumber() async throws {
+        try await performMatcherTest(named: "number", matcher: .number(Float(1.0)), value: "2.0")
     }
 }
 

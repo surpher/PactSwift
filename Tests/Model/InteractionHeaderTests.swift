@@ -10,6 +10,24 @@ import XCTest
 
 final class InteractionHeaderTests: InteractionTestCase {
 
+    func testHeaderContentType() async throws {
+        try builder
+            .uponReceiving("an interaction with header value \(#function)")
+            .withRequest(path: "/interaction") { request in
+                try request.contentType("text/plain")
+            }
+            .willRespond(with: 200)
+
+        try await builder.verify { ctx in
+            let request = try ctx.buildURLRequest(path: "/interaction", headers: [("Content-Type", "text/plain")])
+            let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
+
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 200)
+            XCTAssertTrue(data.isEmpty)
+        }
+    }
+
     func testRequestHeaderWithValue() async throws {
         try builder
             .uponReceiving("an interaction with header value")
@@ -19,7 +37,6 @@ final class InteractionHeaderTests: InteractionTestCase {
             .willRespond(with: 200)
 
         try await builder.verify { ctx in
-
             let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value")])
             let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
@@ -38,7 +55,6 @@ final class InteractionHeaderTests: InteractionTestCase {
             }
 
         try await builder.verify { ctx in
-
             let request = try ctx.buildURLRequest(path: "/interaction", headers: [("x-header", "value")])
             let (data, response) = try await URLSession(configuration: .ephemeral).data(for: request)
 
@@ -284,6 +300,7 @@ final class InteractionHeaderTests: InteractionTestCase {
 }
 
 extension PactBuilder.ConsumerContext {
+
     func buildURLRequest(path: String, headers: [(String, String)] = []) throws -> URLRequest {
         var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
         components.path = path

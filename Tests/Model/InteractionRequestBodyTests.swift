@@ -27,6 +27,108 @@ final class InteractionRequestBodyTests: InteractionTestCase {
         try await verify(body: Body(key: "value"), expectedStatus: 200)
     }
 
+    func testRequest_XMLBody() async throws {
+        let xmlBody = """
+        <xml>
+          <foo>Foo</foo>
+          <bar>Bar</bar>
+        </xml>
+        """
+        let path = "/xmlbody"
+        let expectedStatusCode = 201
+
+        try builder
+            .uponReceiving("a request with a body \(#function)")
+            .withRequest(method: .POST, path: path) { request in
+                try request.body(xmlBody, contentType: "application/xml")
+            }
+            .willRespond(with: expectedStatusCode)
+
+        try await builder.verify { context in
+            let request = try context.buildURLRequest(
+                path: path,
+                body: xmlBody,
+                contentType: .xml
+            )
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
+
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, expectedStatusCode)
+        }
+    }
+
+    func testRequest_PlainTextBody() async throws {
+        let plainTextBody = #"Foo is Bar, but Bar is Baz."#
+        let path = "/plainbody"
+        let expectedStatusCode = 201
+
+        try builder
+            .uponReceiving("a request with a body \(#function)")
+            .withRequest(method: .POST, path: path) { request in
+                try request.body(plainTextBody, contentType: "text/plain")
+            }
+            .willRespond(with: expectedStatusCode)
+
+        try await builder.verify { context in
+            let request = try context.buildURLRequest(
+                path: path,
+                body: plainTextBody,
+                contentType: .plain
+            )
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
+
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, expectedStatusCode)
+        }
+    }
+
+    func testNullBody() async throws  {
+        try builder
+            .uponReceiving("a request with NULL body")
+            .withRequest(method: .POST, path: "/nullBody") { request in
+                try request.nullBody()
+            }
+            .willRespond(with: 218)
+
+        try await builder.verify { context in
+            var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+            components.path = "/nullBody"
+
+            var request = URLRequest(url: try XCTUnwrap(components.url))
+            request.httpMethod = "POST"
+            request.httpBody = nil
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 218)
+        }
+    }
+
+    func testJSONBody() async throws  {
+        try builder
+            .uponReceiving("a request with JSON body")
+            .withRequest(method: .POST, path: "/jsonBody") { request in
+                try request.jsonBody(#"{"foo":"bar"}"#)
+            }
+            .willRespond(with: 201)
+
+        try await builder.verify { context in
+            var components = try XCTUnwrap(URLComponents(url: context.mockServerURL, resolvingAgainstBaseURL: false))
+            components.path = "/jsonBody"
+
+            var request = URLRequest(url: try XCTUnwrap(components.url))
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "content-type")
+            request.httpBody = #"{"foo":"bar"}"#.data(using: .utf8)!
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: request)
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 201)
+        }
+    }
+
     func testRequest_WrongBody() async throws {
         try buildRequest(
             "like",
@@ -687,14 +789,38 @@ final class InteractionRequestBodyTests: InteractionTestCase {
 // MARK: - Extensions
 
 extension PactBuilder.ConsumerContext {
-    func buildURLRequest<T: Encodable>(path: String, body: T) throws -> URLRequest {
+
+    enum ContentType: String {
+        case json = "application/json"
+        case xml = "application/xml"
+        case plain = "text/plain"
+    }
+
+    enum ConsumerContextError<T: Encodable>: Error {
+        case encodingFailure(T?)
+    }
+
+    func encode<T: Encodable>(_ body: T, as type: ContentType) throws -> Data? {
+        switch type {
+        case .json:
+            return try JSONEncoder().encode(body)
+        case .xml,
+                .plain:
+            if let body = body as? String {
+                return body.data(using: .utf8)
+            }
+            throw ConsumerContextError.encodingFailure(body)
+        }
+    }
+
+    func buildURLRequest<T: Encodable>(path: String, body: T, contentType: ContentType = .json) throws -> URLRequest {
         var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
         components.path = path
 
         var request = URLRequest(url: try XCTUnwrap(components.url))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(contentType.rawValue, forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = try JSONEncoder().encode(body)
+        request.httpBody = try encode(body, as: contentType)
 
         return request
     }

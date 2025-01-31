@@ -156,7 +156,7 @@ private extension QueryBuilder {
     }
 
     func asAnyMatcher<T: BinaryInteger>(_ value: T) -> AnyMatcher {
-        GenericMatcher(type: .regex, value: String(value), regex: "\\d+").asAny()
+        GenericMatcher(type: .regex, value: String(value), regex: "-?\\d+").asAny()
     }
 
     func asAnyMatcher<T: BinaryFloatingPoint>(_ value: T) -> AnyMatcher {
