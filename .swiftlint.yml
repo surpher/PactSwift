@@ -100,3 +100,11 @@ custom_rules:
     message: "Numbers smell; define a constant instead."
     regex: '(return |case |\w\(|: |\?\? |\, |== |<=? |>=? |\+= |\-= |\/= |\*= |%= |\w\.\w+ = )\(*-?\d{2,}'
     severity: warning
+
+  copyright_header:
+    included: ".*\\.swift" # Apply to all Swift files
+    name: "File Header"
+    message: "File header does not match the required format."
+    regex: |
+      ^\/\/\n\/\/  Created by [A-Za-zÀ-ÖØ-öø-ÿ-]+(?: [A-Za-zÀ-ÖØ-öø-ÿ-]+)* on \d{1,2}/\d{1,2}/\d{4}\.\n\/\/  Copyright © \d{4} [A-Za-zÀ-ÖØ-öø-ÿ-]+(?: [A-Za-zÀ-ÖØ-öø-ÿ-]+)*\. All rights reserved\.\n\/\/\n\/\/  See LICENSE file for licensing information\.\n\/\/$
+    severity: warning
