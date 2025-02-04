@@ -28,10 +28,8 @@ extension PactBuilder.ConsumerContext {
                 self = .octetStream
             case Types.multipartFormData.rawValue:
                 self = .multipartFormData
-            case _ where rawValue.hasPrefix("multipart/form-data"):
-                self = .custom(rawValue)
             default:
-                return nil
+                self = .custom(rawValue)
             }
         }
 
