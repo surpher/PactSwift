@@ -198,4 +198,74 @@ final class InteractionTests: InteractionTestCase {
             XCTAssertEqual(fileData, data)
         }
     }
+
+    func testSendingMultipartForm() async throws {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let multipartData = try multipartData(boundary: boundary)
+
+        try builder
+            .uponReceiving("A request to submit form data")
+            .given(
+                .init(
+                    description: "Some state expecting multipart form-data",
+                    name: #function,
+                    value: String(describing: #line)
+                )
+            )
+            .withRequest(method: .POST, path: "/submissions") { request in
+                try request.body(multipartData, contentType: "multipart/form-data; boundary=\(boundary)")
+            }
+            .willRespond(with: 200)
+
+        try await builder.verify { context in
+            let urlRequest = try context.buildURLRequest(
+                path: "/submissions",
+                data: multipartData,
+                contentType: .custom("multipart/form-data; boundary=\(boundary)")
+            )
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: urlRequest)
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 200)
+        }
+    }
+}
+
+// MARK: - Private
+
+private extension InteractionTests {
+
+    func multipartData(boundary: String) throws -> Data {
+        var body = Data()
+
+        let imageFileName = "test_image"
+        let imageFileExt = "jpg"
+        guard let imagePath = Bundle.module.path(forResource: imageFileName, ofType: imageFileExt) else {
+            throw TestError.failure("Could not load test image!")
+        }
+
+        // Add text field
+        let textFieldName = "Foo"
+        let textFieldValue = "BarBaz"
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(textFieldName)\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(textFieldValue)\r\n".data(using: .utf8)!)
+
+        // Add a binary file
+        let fileFieldName = "file"
+        let fileName = "\(imageFileName).\(imageFileExt)"
+        let mimeType = "image/jpeg"
+        let fileData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
+
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(fileFieldName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(fileData)
+        body.append("\r\n".data(using: .utf8)!)
+
+        // Close the boundary
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+
+        return body
+    }
 }
