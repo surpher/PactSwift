@@ -175,15 +175,3 @@ final class InteractionResponseBodyTests: InteractionTestCase {
         }
     }
 }
-
-extension PactBuilder.ConsumerContext {
-    func buildURLRequest(path: String) throws -> URLRequest {
-        var components = try XCTUnwrap(URLComponents(url: mockServerURL, resolvingAgainstBaseURL: false))
-        components.path = path
-
-        var request = URLRequest(url: try XCTUnwrap(components.url))
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        return request
-    }
-}

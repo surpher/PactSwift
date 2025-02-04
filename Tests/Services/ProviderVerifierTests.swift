@@ -71,7 +71,7 @@ final class ProviderVerifierTests: XCTestCase {
             pactsSource: .directories(["/tmp/pacts"])
         )
 
-        let testExp = expectation(description: "Completion block on succcessful verification")
+        let testExp = expectation(description: "Completion block on successful verification")
         testSubject.verify(options: testOptions) {
             testExp.fulfill()
         }

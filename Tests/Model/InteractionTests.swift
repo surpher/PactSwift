@@ -138,4 +138,64 @@ final class InteractionTests: InteractionTestCase {
         }
     }
 
+    func testSendingABinaryBody() async throws {
+        guard let imagePath = Bundle.module.path(forResource: "test_image", ofType: "jpg") else {
+            throw TestError.failure("Could not load test image!")
+        }
+
+        let fileData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
+
+        try builder
+            .uponReceiving("A request to upload a file")
+            .given(
+                .init(
+                    description: "Some state expecting binary body",
+                    name: #function,
+                    value: String(describing: #line)
+                )
+            )
+            .withRequest(method: .POST, path: "/uploads") { request in
+                try request.body(fileData, contentType: "application/octet-stream")
+            }
+            .willRespond(with: 201)
+
+        try await builder.verify { context in
+            let urlRequest = try context.buildURLRequest(path: "/uploads", data: fileData, contentType: .octetStream)
+
+            let (_, response) = try await URLSession(configuration: .ephemeral).data(for: urlRequest)
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 201)
+        }
+    }
+
+    func testReceivingABinaryBody() async throws {
+        guard let imagePath = Bundle.module.path(forResource: "test_image", ofType: "jpg") else {
+            throw TestError.failure("Could not load test image!")
+        }
+
+        let fileData = try Data(contentsOf: URL(fileURLWithPath: imagePath))
+
+        try builder
+            .uponReceiving("A request to fetch a file")
+            .given(
+                .init(
+                    description: "Some state providing binary body",
+                    name: #function,
+                    value: String(describing: #line)
+                )
+            )
+            .withRequest(method: .GET, path: "/uploads/1")
+            .willRespond(with: 200)  { response in
+                try response.body(fileData, contentType: "application/octet-stream")
+            }
+
+        try await builder.verify { context in
+            let urlRequest = try context.buildURLRequest(path: "/uploads/1")
+
+            let (data, response) = try await URLSession(configuration: .ephemeral).data(for: urlRequest)
+            let httpResponse = try XCTUnwrap(response as? HTTPURLResponse)
+            XCTAssertEqual(httpResponse.statusCode, 200)
+            XCTAssertEqual(fileData, data)
+        }
+    }
 }

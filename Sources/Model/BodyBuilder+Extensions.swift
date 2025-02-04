@@ -12,8 +12,8 @@ public extension BodyBuilder {
 
     /// Add a null body with the specified `contentType` (defaults to `text/plain`).
     @discardableResult
-    func nullBody(contentType: String? = "text/plain") throws -> Self {
-        try body(nil, contentType: contentType)
+    func nullBody(contentType: String? = nil) throws -> Self {
+        try body(nil, contentType: contentType ?? "text/plain")
     }
 
     /// Adds a json body to the ``Interaction``.

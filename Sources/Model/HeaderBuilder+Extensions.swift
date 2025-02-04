@@ -18,12 +18,12 @@ public extension HeaderBuilder {
 
     @discardableResult
     func header(_ name: String, value: String) throws -> Self {
-       try header(name, values: [value])
+        try header(name, value: value)
     }
 
     @discardableResult
     func header(_ name: String, matching: AnyMatcher) throws -> Self {
-       let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!
-       return try header(name, values: [valueString])
+        let valueString = try String(data: JSONEncoder().encode(matching), encoding: .utf8)!
+        return try header(name, value: valueString)
     }
 }
