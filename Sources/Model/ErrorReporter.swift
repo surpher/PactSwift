@@ -16,6 +16,8 @@
 //
 
 import Foundation
+
+#if canImport(XCTest)
 import XCTest
 
 class ErrorReporter: ErrorReportable {
@@ -31,3 +33,21 @@ class ErrorReporter: ErrorReportable {
 	}
 
 }
+
+#else
+
+class ErrorReporter: ErrorReportable {
+
+	/// Reports test failure in file and on line where this method is called
+	func reportFailure(_ message: String) {
+		preconditionFailure(message)
+	}
+
+	/// Reports test failure in provided file and on provided line
+	func reportFailure(_ message: String, file: FileString, line: UInt) {
+		preconditionFailure("\(file):\(line): \(message)")
+	}
+
+}
+
+#endif
