@@ -9,6 +9,10 @@ on:
         - ready_for_review
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}_${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   RUST_TARGET_PATH: pact-reference
 
@@ -20,34 +24,22 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        host: [macos-13, macos-14]
+        host: [macos-15, macos-15-intel]
+        xcode: [16, 26]
         platform: [ios, macos]
-        include:
-          - platform: ios
-            scheme: "PactSwift-iOS"
-            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
-          - platform: macos
-            scheme: "PactSwift-macOS"
-            destination: "arch=x86_64"
-          - host: macos-13
-            xcode: 14.3.1
-          - host: macos-14
-            xcode: 15.3
 
     env:
-      SCHEME: "PactSwift-iOS"
-      DESTINATION: ${{ matrix.destination }}
-
-    concurrency:
-      group: test_${{ matrix.host }}_${{ matrix.xcode }}_iOS_${{ github.ref }}
-      cancel-in-progress: true
+      SCHEME: ${{ matrix.platform == 'ios' && 'PactSwift-iOS' || 'PactSwift-macOS' }}
+      DESTINATION: ${{ matrix.platform == 'ios' && 'platform=iOS Simulator,name=iPhone 16 Pro' || 'arch=x86_64' }}
 
     steps:
       - name: "🧑‍💻 Checkout repository"
         uses: actions/checkout@v3
 
       - name: "🏭 Use Xcode ${{ matrix.xcode }}"
-        run: sudo xcode-select -switch /Applications/Xcode_${{ matrix.xcode }}.app
+        run: |
+          XCODE_PATH=$(find /Applications -maxdepth 1 -name "Xcode_${{ matrix.xcode }}*.app" | sort -V | tail -1)
+          sudo xcode-select -switch "$XCODE_PATH"
 
       - name: "🧪 Run tests (xcodebuild)"
         run: |
