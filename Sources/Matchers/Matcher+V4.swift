@@ -20,11 +20,50 @@ import Foundation
 // MARK: - Pact Specification v4 matchers
 
 public extension Matcher {
-	// TODO: "arrayContains"
 
-	/// A matcher that matches the response status code.
+	/// A matcher that checks that the actual array contains an element matching every provided
+	/// variant.
+	///
+	/// Each variant is an example object whose values may themselves be matchers. Variant order
+	/// does not matter, and the actual array may contain additional elements.
+	///
+	/// For example, to assert that a HAL `actions` array contains both an "add-item" and a
+	/// "delete-item" action:
+	///
+	/// ```swift
+	/// .arrayContains([
+	///   ["name": .regex("add\\-item", example: "add-item"), "method": .regex("POST", example: "POST")],
+	///   ["name": .regex("delete\\-item", example: "delete-item"), "method": .regex("DELETE", example: "DELETE")],
+	/// ])
+	/// ```
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
+	/// - Parameters:
+	///   - variants: Example objects describing the variants that the actual array must satisfy.
+	///
+	static func arrayContains(_ variants: [[String: AnyMatcher]]) -> AnyMatcher {
+		ArrayContainsMatcher(variants: variants).asAny()
+	}
+
+	/// A matcher that checks that the actual array contains an element matching every provided
+	/// variant.
+	///
+	/// Variant order does not matter, and the actual array may contain additional elements. Use
+	/// this overload for matcher-wrapped scalar, array, or otherwise prebuilt variants.
+	///
+	/// - Note: Requires `Pact.Specification.v4`.
+	/// - Parameters:
+	///   - variants: Matchers describing the variants that the actual array must satisfy.
+	///
+	static func arrayContains(_ variants: [AnyMatcher]) -> AnyMatcher {
+		ArrayContainsMatcher(variants: variants).asAny()
+	}
+
+	/// A matcher that checks the response status against a status class or explicit set of codes.
+	///
+	/// - Note: Requires `Pact.Specification.v4`.
+	/// - Parameters:
+	///   - statusCode: The status class or explicit status codes that are accepted.
 	///
 	static func statusCode(_ statusCode: HTTPStatus) -> AnyMatcher {
 		switch statusCode {
@@ -47,7 +86,7 @@ public extension Matcher {
 		}
 	}
 
-	/// A matcher that matches a value that must be present and not empty (not null or the empty string).
+	/// A matcher that requires a value to be present, non-null, and not an empty string.
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
 	///
@@ -55,12 +94,12 @@ public extension Matcher {
 		GenericMatcher(type: "notEmpty", value: "non-empty").asAny()
 	}
 
-	/// A matcher that matches a value that must be valid based on the `semver` specification.
+	/// A matcher that requires the string representation of a value to be a valid semantic version.
 	///
 	/// - Note: Requires `Pact.Specification.v4`.
 	///
 	/// - Parameters:
-	///   - value: An example value (eg: `"1.2.3"`)
+	///   - value: An example semantic version, such as `"1.2.3"`.
 	///
 	static func semver(_ value: String) -> AnyMatcher {
 		GenericMatcher(type: "semver", value: value).asAny()

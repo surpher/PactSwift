@@ -35,7 +35,7 @@ jobs:
             xcode: 15.3
 
     env:
-      SCHEME: "PactSwift-iOS"
+      SCHEME: ${{ matrix.scheme }}
       DESTINATION: ${{ matrix.destination }}
 
     concurrency:

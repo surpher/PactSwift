@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F13100010000000000000000 /* ArrayContainsMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13100100000000000000000 /* ArrayContainsMatcher.swift */; };
+		F13100020000000000000000 /* ArrayContainsMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13100100000000000000000 /* ArrayContainsMatcher.swift */; };
+		F13100030000000000000000 /* MatcherArrayContainsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13100110000000000000000 /* MatcherArrayContainsTests.swift */; };
+		F13100040000000000000000 /* MatcherArrayContainsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13100110000000000000000 /* MatcherArrayContainsTests.swift */; };
 		A7096C332974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */; };
 		A7096C342974C73A0020BBD4 /* UUIDFormatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */; };
 		A7F1851F296BC525003AE3F2 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F1851E296BC525003AE3F2 /* Matcher.swift */; };
@@ -169,6 +173,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F13100100000000000000000 /* ArrayContainsMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayContainsMatcher.swift; sourceTree = "<group>"; };
+		F13100110000000000000000 /* MatcherArrayContainsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatcherArrayContainsTests.swift; sourceTree = "<group>"; };
 		A7096C322974C73A0020BBD4 /* UUIDFormatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDFormatTests.swift; sourceTree = "<group>"; };
 		A7F1851E296BC525003AE3F2 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
 		A7F18521296BC55A003AE3F2 /* GenericMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericMatcher.swift; sourceTree = "<group>"; };
@@ -309,6 +315,7 @@
 		AD01C9392432A31F00B75C9D /* Matchers */ = {
 			isa = PBXGroup;
 			children = (
+				F13100100000000000000000 /* ArrayContainsMatcher.swift */,
 				A7F185A5296FDCDB003AE3F2 /* AnyMatcher.swift */,
 				A7F18524296BC5C1003AE3F2 /* GeneratorType.swift */,
 				A7F18521296BC55A003AE3F2 /* GenericMatcher.swift */,
@@ -362,6 +369,7 @@
 		AD7891B8244150FF0014BCC8 /* Matchers */ = {
 			isa = PBXGroup;
 			children = (
+				F13100110000000000000000 /* MatcherArrayContainsTests.swift */,
 				ADF959C926C8F6EB00C35536 /* FromProviderStateTests.swift */,
 				A7F1853E296BD168003AE3F2 /* MatcherBooleanTests.swift */,
 				A7F18541296BD1D8003AE3F2 /* MatcherContentTypeTests.swift */,
@@ -868,6 +876,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13100010000000000000000 /* ArrayContainsMatcher.swift in Sources */,
 				AD879B9D258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				A7F18582296BE726003AE3F2 /* BodyBuilder+Extensions.swift in Sources */,
 				AD48EC5826CF90B40017E071 /* ProviderVerifier.swift in Sources */,
@@ -902,6 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13100030000000000000000 /* MatcherArrayContainsTests.swift in Sources */,
 				A7F18542296BD1D8003AE3F2 /* MatcherContentTypeTests.swift in Sources */,
 				AD7891C024415C710014BCC8 /* MatcherIntegerTests.swift in Sources */,
 				ADBC3E5326DB322C006908E0 /* VersionSelectorTests.swift in Sources */,
@@ -951,6 +961,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13100020000000000000000 /* ArrayContainsMatcher.swift in Sources */,
 				AD879B9E258242AC00F85B0B /* PactSwiftVersion.swift in Sources */,
 				A7F18581296BE725003AE3F2 /* BodyBuilder+Extensions.swift in Sources */,
 				AD8FC7E32463BB9F00361854 /* ErrorReporter.swift in Sources */,
@@ -985,6 +996,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13100040000000000000000 /* MatcherArrayContainsTests.swift in Sources */,
 				A7F18543296BD1D8003AE3F2 /* MatcherContentTypeTests.swift in Sources */,
 				AD8FC8032463BBD000361854 /* MatcherDecimalTests.swift in Sources */,
 				A7F1855B296BDB58003AE3F2 /* MatcherRandomUUIDTests.swift in Sources */,
