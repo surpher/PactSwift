@@ -20,26 +20,38 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        host: [macos-13, macos-14]
-        platform: [ios, macos]
         include:
-          - platform: ios
+          - host: macos-15
+            xcode: "16.4"
             scheme: "PactSwift-iOS"
-            destination: "platform=iOS Simulator,name=iPhone 15 Pro"
-          - platform: macos
+            destination: "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.5"
+          - host: macos-26
+            xcode: "26.5"
+            scheme: "PactSwift-iOS"
+            destination: "platform=iOS Simulator,name=iPhone 17 Pro,OS=26.5"
+          # - host: macos-27
+          #   xcode: "27.0 (beta)"
+          #   scheme: "PactSwift-iOS"
+          #   destination: "platform=iOS Simulator,name=iPhone 17 Pro,OS=27.0"
+          - host: macos-15
+            xcode: "16.4"
             scheme: "PactSwift-macOS"
             destination: "arch=x86_64"
-          - host: macos-13
-            xcode: 14.3.1
-          - host: macos-14
-            xcode: 15.3
+          - host: macos-26
+            xcode: "26.5"
+            scheme: "PactSwift-macOS"
+            destination: "arch=arm64"
+          # - host: macos-27
+          #   xcode: "27.0 (beta)"
+          #   scheme: "PactSwift-macOS"
+          #   destination: "arch=x86_64"
 
     env:
-      SCHEME: "PactSwift-iOS"
+      SCHEME: ${{ matrix.scheme }}
       DESTINATION: ${{ matrix.destination }}
 
     concurrency:
-      group: test_${{ matrix.host }}_${{ matrix.xcode }}_iOS_${{ github.ref }}
+      group: test_${{ matrix.host }}_${{ matrix.xcode }}_${{ matrix.scheme}}_${{ matrix.destination }}_${{ github.ref }}
       cancel-in-progress: true
 
     steps:
@@ -55,7 +67,7 @@ jobs:
           xcodebuild -resolvePackageDependencies && \
           xcodebuild test \
             -project PactSwift.xcodeproj \
-            -scheme "$SCHEME"\
+            -scheme "$SCHEME" \
             -destination "$DESTINATION" \
             | xcbeautify
 
