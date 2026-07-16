@@ -19,6 +19,12 @@
 
 set -eu
 
+if [ "${CARTHAGE:-}" = "YES" ]; then
+  echo "--- Skipping SwiftLint for Carthage build"
+  touch "${DERIVED_FILE_DIR:-.}/swiftlint.txt"
+  exit 0
+fi
+
 # Adds support for Apple Silicon brew directory
 export PATH="$PATH:/opt/homebrew/bin"
 
