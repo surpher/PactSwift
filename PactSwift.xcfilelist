@@ -24,5 +24,6 @@ $(SRCROOT)/Sources/Matchers/Matcher+V1.swift
 $(SRCROOT)/Sources/Matchers/Matcher+V3.swift
 $(SRCROOT)/Sources/Matchers/Matcher.swift
 $(SRCROOT)/Sources/Matchers/HTTPStatus.swift
+$(SRCROOT)/Sources/Matchers/ArrayContainsMatcher.swift
 $(SRCROOT)/Sources/Matchers/AnyMatcher.swift
 $(SRCROOT)/Sources/ProviderVerifier.swift
