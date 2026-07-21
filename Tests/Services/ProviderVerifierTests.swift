@@ -120,7 +120,7 @@ private class MockVerifier: ProviderVerifying {
 		self.verifyProviderHandler = verifyProviderHandler
 	}
 
-	func verifyProvider(options args: String) -> Result<Bool, ProviderVerificationError> {
+	func verifyProvider(options: VerificationOptions) -> Result<Bool, ProviderVerificationError> {
 		verifyProviderHandler?() ?? .success(true)
 	}
 
