@@ -56,7 +56,7 @@ public final class ProviderVerifier {
 	///
 	@discardableResult
 	public func verify(options: Options, file: FileString? = #file, line: UInt? = #line, completionBlock: (() -> Void)? = nil) -> Result<Bool, ProviderVerifier.VerificationError> {
-		switch verifier.verifyProvider(options: options.args) {
+		switch verifier.verifyProvider(options: options.verificationOptions) {
 		case .success(let value):
 			completionBlock?()
 			return .success(value)

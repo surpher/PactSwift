@@ -17,115 +17,115 @@
 
 import XCTest
 
+import PactSwiftMockServer
+
 @testable import PactSwift
 
 final class ProviderVerifierOptionsTests: XCTestCase {
 
-	func testArgsWithConfiguredProvider() {
+	func testMapsConfiguredProvider() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(url: URL(string: "https://localhost")!, port: 1234),
 			pactsSource: .directories(["/tmp/pacts"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--port\n1234"))
-		XCTAssertTrue(testSubject.args.contains("--hostname\nhttps://localhost"))
+		let provider = testSubject.verificationOptions.provider
+		XCTAssertEqual(provider.port, 1234)
+		XCTAssertEqual(provider.scheme, "https")
+		XCTAssertEqual(provider.host, "localhost")
 	}
 
-	func testArgsWhenPactSourceIsDirectories() {
+	func testMapsDirectoriesSource() {
 		let testSubject = ProviderVerifier.Options(
 			provider: ProviderVerifier.Provider(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--port\n8080"))
-		XCTAssertTrue(testSubject.args.contains("--dir\n/tmp/pacts"))
+		XCTAssertEqual(testSubject.verificationOptions.provider.port, 8080)
+		XCTAssertEqual(testSubject.verificationOptions.sources.compactMap(\.directoryPath), ["/tmp/pacts"])
 	}
 
-	func testArgsWhenPactsSourceIsFiles() {
+	func testMapsFilesSource() {
 		let testSubject = ProviderVerifier.Options(
 			provider: ProviderVerifier.Provider(port: 8080),
 			pactsSource: .files(["/tmp/pacts/one.json", "/tmp/pacts/two.json"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--port\n8080"))
-		XCTAssertTrue(testSubject.args.contains("--file\n/tmp/pacts/one.json"))
-		XCTAssertTrue(testSubject.args.contains("--file\n/tmp/pacts/two.json"))
+		XCTAssertEqual(
+			testSubject.verificationOptions.sources.compactMap(\.filePath),
+			["/tmp/pacts/one.json", "/tmp/pacts/two.json"]
+		)
 	}
 
-	func testArgsWhenPactsSourceIsURLs() {
+	func testMapsURLsSource() {
 		let testSubject = ProviderVerifier.Options(
 			provider: ProviderVerifier.Provider(port: 8080),
 			pactsSource: .urls([URL(string: "http://some.url/file.json")!])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--port\n8080"))
-		XCTAssertTrue(testSubject.args.contains("--url\nhttp://some.url/file.json"))
+		XCTAssertEqual(
+			testSubject.verificationOptions.sources.compactMap(\.urlValue),
+			[URL(string: "http://some.url/file.json")!]
+		)
 	}
 
-	func testArgsWithStateChangeURL() {
+	func testMapsStateChangeURL() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"]),
 			stateChangeURL: URL(string: "https://provider.url/stateChangeURL")!
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--state-change-url\nhttps://provider.url/stateChangeURL"))
-	}
-
-	func testArgsWithLogLevel() {
-		let testSubject = ProviderVerifier.Options(
-			provider: .init(port: 8080),
-			pactsSource: .directories(["/tmp/pacts"]),
-			logLevel: .trace
+		XCTAssertEqual(
+			testSubject.verificationOptions.stateChange?.url,
+			URL(string: "https://provider.url/stateChangeURL")!
 		)
-
-		XCTAssertTrue(testSubject.args.contains("--loglevel\ntrace"))
 	}
 
-	func testArgsWithFilterProviderStates() {
+	func testMapsFilterNoState() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"]),
 			filter: .noState
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--filter-no-state\ntrue"))
+		XCTAssertEqual(testSubject.verificationOptions.filter?.noState, true)
 	}
 
-	func testArgsWithFilterStates() {
+	// NOTE: the FFI accepts a single filter state, so only the first is forwarded.
+	func testMapsFilterStatesToFirst() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"]),
 			filter: .states(["state A", "state B"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--filter-state\nstate A"))
-		XCTAssertTrue(testSubject.args.contains("--filter-state\nstate B"))
+		XCTAssertEqual(testSubject.verificationOptions.filter?.state, "state A")
 	}
 
-	func testArgsWithFilterDescriptions() {
+	// NOTE: the FFI accepts a single filter description, so only the first is forwarded.
+	func testMapsFilterDescriptionsToFirst() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"]),
 			filter: .descriptions(["A description", "B description"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--filter-description\nA description"))
-		XCTAssertTrue(testSubject.args.contains("--filter-description\nB description"))
+		XCTAssertEqual(testSubject.verificationOptions.filter?.description, "A description")
 	}
 
-	func testArgsWithFilterConsumers() {
+	func testMapsFilterConsumers() {
 		let testSubject = ProviderVerifier.Options(
 			provider: .init(port: 8080),
 			pactsSource: .directories(["/tmp/pacts"]),
 			filter: .consumers(["Mobile Consumer", "Web Consumer"])
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--filter-consumer\nMobile Consumer"))
-		XCTAssertTrue(testSubject.args.contains("--filter-consumer\nWeb Consumer"))
+		XCTAssertEqual(testSubject.verificationOptions.consumerFilters, ["Mobile Consumer", "Web Consumer"])
+		XCTAssertNil(testSubject.verificationOptions.filter)
 	}
 
-	func testArgsWithPactBrokerUsingToken() {
+	func testMapsBrokerUsingToken() throws {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .token(PactBroker.APIToken("test-token")),
@@ -137,12 +137,13 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--broker-url\nhttps://broker.url"))
-		XCTAssertTrue(testSubject.args.contains("--token\ntest-token"))
-		XCTAssertTrue(testSubject.args.contains("--provider-name\nAPI Provider Name"))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		XCTAssertEqual(broker.url, URL(string: "https://broker.url")!)
+		XCTAssertEqual(broker.authentication?.tokenValue, "test-token")
+		XCTAssertEqual(testSubject.verificationOptions.provider.name, "API Provider Name")
 	}
 
-	func testArgsWithPactBrokerBasicAuth() {
+	func testMapsBrokerBasicAuth() throws {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -154,11 +155,12 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--user\ntest-user"))
-		XCTAssertTrue(testSubject.args.contains("--password\ntest-pass"))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		XCTAssertEqual(broker.authentication?.basicUsername, "test-user")
+		XCTAssertEqual(broker.authentication?.basicPassword, "test-pass")
 	}
 
-	func testArgsPublishingVerification() {
+	func testMapsPublishingVerification() {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -171,12 +173,11 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--publish\n"))
-		XCTAssertTrue(testSubject.args.contains("--provider-version\ntest-998877"))
-		XCTAssertTrue(testSubject.args.contains("--provider-tags\ntest,unit"))
+		XCTAssertEqual(testSubject.verificationOptions.publish?.providerVersion, "test-998877")
+		XCTAssertEqual(testSubject.verificationOptions.publish?.providerTags, ["test", "unit"])
 	}
 
-	func testArgsPublishingVerificationWithoutTags() {
+	func testMapsPublishingVerificationWithoutTags() {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -189,12 +190,26 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--publish\n"))
-		XCTAssertTrue(testSubject.args.contains("--provider-version\ntest-123456"))
-		XCTAssertFalse(testSubject.args.contains("--provider-tags"))
+		XCTAssertEqual(testSubject.verificationOptions.publish?.providerVersion, "test-123456")
+		XCTAssertEqual(testSubject.verificationOptions.publish?.providerTags, [])
 	}
 
-	func testArgsBrokerWithConsumerTags() {
+	func testDoesNotPublishByDefault() throws {
+		let testBroker = PactBroker(
+			url: URL(string: "https://broker.url")!,
+			auth: .auth(.init(username: "test-user", password: "test-pass")),
+			providerName: "API Provider Name"
+		)
+
+		let testSubject = ProviderVerifier.Options(
+			provider: .init(port: 1234),
+			pactsSource: .broker(testBroker)
+		)
+
+		XCTAssertNil(testSubject.verificationOptions.publish)
+	}
+
+	func testMapsBrokerConsumerVersionSelectors() throws {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -210,18 +225,16 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--consumer-version-selectors\n{"))
-		XCTAssertTrue(testSubject.args.contains("\"tag\":\"prod\""))
-		XCTAssertTrue(testSubject.args.contains("\"tag\":\"v2.3.5\""))
-		XCTAssertTrue(testSubject.args.contains("\"fallbackTag\":\"main\""))
-		XCTAssertTrue(testSubject.args.contains("\"fallbackTag\":\"prod\""))
-		XCTAssertTrue(testSubject.args.contains("\"latest\":true"))
-		XCTAssertTrue(testSubject.args.contains("\"latest\":false"))
-		XCTAssertTrue(testSubject.args.contains("\"consumer\":\"Test-app\""))
-		XCTAssertTrue(testSubject.args.contains("\"consumer\":\"Web-app\""))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		XCTAssertEqual(broker.consumerVersionSelectors.count, 2)
+		let joined = broker.consumerVersionSelectors.joined(separator: " ")
+		XCTAssertTrue(joined.contains("\"tag\":\"prod\""))
+		XCTAssertTrue(joined.contains("\"tag\":\"v2.3.5\""))
+		XCTAssertTrue(joined.contains("\"consumer\":\"Test-app\""))
+		XCTAssertTrue(joined.contains("\"consumer\":\"Web-app\""))
 	}
 
-	func testArgsBrokerWithPendingPacts() {
+	func testMapsBrokerPendingPacts() throws {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -234,10 +247,11 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--enable-pending\ntrue"))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		XCTAssertTrue(broker.enablePending)
 	}
 
-	func testArgsBrokerDefaultsNotIncludePendingPacts() {
+	func testBrokerDefaultsToNoPendingOrWIP() throws {
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
 			auth: .auth(.init(username: "test-user", password: "test-pass")),
@@ -249,28 +263,13 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertFalse(testSubject.args.contains("--enable-pending"))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		XCTAssertFalse(broker.enablePending)
+		XCTAssertNil(broker.includeWIPPactsSince)
 	}
 
-	func testArgsBrokerDefaltsNotIncludeWIPPacts() {
-		let testBroker = PactBroker(
-			url: URL(string: "https://broker.url")!,
-			auth: .auth(.init(username: "test-user", password: "test-pass")),
-			providerName: "API Provider Name"
-		)
-
-		let testSubject = ProviderVerifier.Options(
-			provider: .init(port: 1234),
-			pactsSource: .broker(testBroker)
-		)
-
-		XCTAssertFalse(testSubject.args.contains("--enable-pending"))
-		XCTAssertFalse(testSubject.args.contains("--include-wip"))
-	}
-
-	func testArgsBrokerIncludeWIPPacts() {
+	func testMapsBrokerIncludeWIPPacts() throws {
 		let testDate = Date()
-		let todaysISODateString = isoDate(testDate)
 
 		let testBroker = PactBroker(
 			url: URL(string: "https://broker.url")!,
@@ -284,19 +283,51 @@ final class ProviderVerifierOptionsTests: XCTestCase {
 			pactsSource: .broker(testBroker)
 		)
 
-		XCTAssertTrue(testSubject.args.contains("--enable-pending\ntrue"))
-		XCTAssertTrue(testSubject.args.contains("--include-wip-pacts-since\n\(todaysISODateString)"))
-		XCTAssertTrue(testSubject.args.contains("--provider-version\nv1.2.3"))
+		let broker = try XCTUnwrap(testSubject.verificationOptions.sources.first?.brokerConfig)
+		// Enabling WIP pacts also enables pending pacts.
+		XCTAssertTrue(broker.enablePending)
+		XCTAssertEqual(broker.includeWIPPactsSince, testDate)
 	}
 
 }
 
-private extension ProviderVerifierOptionsTests {
+private extension VerificationOptions.Source {
 
-	func isoDate(_ date: Date) -> String {
-		let formatter = DateFormatter()
-		formatter.dateFormat = "YYYY-MM-dd"
-		return formatter.string(from: date)
+	var directoryPath: String? {
+		if case .directory(let path) = self { return path }
+		return nil
 	}
 
+	var filePath: String? {
+		if case .file(let path) = self { return path }
+		return nil
+	}
+
+	var urlValue: URL? {
+		if case .url(let url, _) = self { return url }
+		return nil
+	}
+
+	var brokerConfig: VerificationOptions.Broker? {
+		if case .broker(let broker) = self { return broker }
+		return nil
+	}
+}
+
+private extension VerificationOptions.Authentication {
+
+	var tokenValue: String? {
+		if case .token(let token) = self { return token }
+		return nil
+	}
+
+	var basicUsername: String? {
+		if case .basic(let username, _) = self { return username }
+		return nil
+	}
+
+	var basicPassword: String? {
+		if case .basic(_, let password) = self { return password }
+		return nil
+	}
 }

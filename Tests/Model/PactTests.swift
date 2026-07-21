@@ -21,6 +21,7 @@ import XCTest
 final class PactTests: XCTestCase {
 
 	func testPactVersion() throws {
-		XCTAssertEqual(Pact.version, "0.4.0")
+		let pact = Pact(consumer: "Consumer", provider: "Provider")
+		XCTAssertEqual(pact.ffi_version, "0.5.4")
 	}
 }
