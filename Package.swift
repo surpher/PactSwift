@@ -8,7 +8,6 @@ let package = Package(
 	platforms: [
 		.macOS(.v13),
 		.iOS(.v16),
-		.tvOS(.v16),
 	],
 	
 	products: [
@@ -19,17 +18,17 @@ let package = Package(
 	],
 	
 	dependencies: [
-		.package(url: "https://github.com/ittybittyapps/PactSwiftMockServer.git", branch: "main"),
+		.package(url: "https://github.com/surpher/PactSwiftMockServerXCFramework", exact: "1.2.0"),
 		.package(url: "https://github.com/pointfreeco/swift-snapshot-testing", exact: "1.16.0"),
 	],
-	
+
 	targets: [
-		
+
 		// PactSwift
 		.target(
 			name: "PactSwift",
 			dependencies: [
-				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServer", condition: .when(platforms: [.iOS, .macOS, .tvOS])),
+				.product(name: "PactSwiftMockServer", package: "PactSwiftMockServerXCFramework", condition: .when(platforms: [.iOS, .macOS])),
 			],
 			path: "./Sources"
 		),
