@@ -37,7 +37,7 @@ jobs:
       DESTINATION: ${{ matrix.destination }}
 
     concurrency:
-      group: test_${{ matrix.host }}_${{ matrix.xcode }}_iOS_${{ github.ref }}
+      group: test_${{ matrix.host }}_${{ matrix.xcode }}_${{ matrix.platform }}_${{ github.ref }}
       cancel-in-progress: true
 
     steps:
