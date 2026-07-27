@@ -1187,12 +1187,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A75EC3AF294313940054BADB /* XCRemoteSwiftPackageReference "PactSwiftMockServer" */ = {
+		A75EC3AF294313940054BADB /* XCRemoteSwiftPackageReference "PactSwiftMockServerXCFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ittybittyapps/PactSwiftMockServer";
+			repositoryURL = "https://github.com/surpher/PactSwiftMockServerXCFramework";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.2.0;
 			};
 		};
 		AD4EC7682C0C278600DEE0E9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
